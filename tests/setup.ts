@@ -3,6 +3,7 @@
  */
 
 // Set test environment variables
+// Note: Tests directory is excluded from Next.js build via tsconfig.json
 process.env.NODE_ENV = 'test';
 process.env.NEXT_PUBLIC_APP_URL = 'http://localhost:3000';
 process.env.API_SECRET_KEY = 'test-secret-key';
