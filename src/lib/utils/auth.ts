@@ -78,9 +78,9 @@ export function createAuthAuditLog(
   result: AuthValidationResult,
   endpoint: string
 ) {
-  const clientIP = request.ip ||
-    request.headers.get('x-forwarded-for') ||
+  const clientIP = request.headers.get('x-forwarded-for') ||
     request.headers.get('x-real-ip') ||
+    request.headers.get('cf-connecting-ip') ||
     'unknown';
 
   return {
