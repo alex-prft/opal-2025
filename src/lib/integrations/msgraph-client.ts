@@ -46,6 +46,10 @@ export class MSGraphClient {
       // Set expiry to 5 minutes before actual expiry for safety
       this.tokenExpiry = new Date(Date.now() + (data.expires_in - 300) * 1000);
 
+      if (!this.accessToken) {
+        throw new Error('Failed to retrieve access token from Microsoft Graph');
+      }
+
       return this.accessToken;
     } catch (error) {
       console.error('MS Graph getAccessToken error:', error);
