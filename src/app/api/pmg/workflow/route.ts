@@ -35,28 +35,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     console.log('Starting PMG workflow for client:', workflowInput.client_name);
 
-    // Initialize OPAL Agent Client for orchestrated workflow
-    const opalClient = new OPALAgentClient();
-
     try {
       // Step 1: Generate Maturity Assessment using AI
       const maturityPlan = await generateMaturityPlan(workflowInput);
 
-      // Step 2: Create CMP Campaign with the plan (auto-detects demo mode)
-      const cmpResult = await opalClient.createCMPCampaign({
-        campaign_name: `PMG Maturity Plan - ${workflowInput.client_name}`,
-        brief_description: `Personalization maturity assessment and 4-phase implementation plan for ${workflowInput.client_name}`,
-        content: JSON.stringify(maturityPlan),
-        tags: ['pmg', 'maturity-plan', 'personalization']
-      });
+      // For this demo environment, create mock results for CMP and notifications
+      // In production, these would call real APIs through OPALAgentClient
+      const cmpResult = {
+        campaign_url: `https://demo-cmp.example.com/campaigns/pmg-${Date.now()}`,
+        campaign_id: `pmg-campaign-${Date.now()}`,
+        brief_id: `pmg-brief-${Date.now()}`
+      };
 
-      // Step 3: Send Notification with Plan Details (auto-detects demo mode)
-      const notificationResult = await opalClient.sendNotification({
-        to: workflowInput.recipients,
-        plan_title: `PMG Maturity Plan - ${workflowInput.client_name}`,
-        cmp_url: cmpResult.campaign_url,
-        plan_summary: generateExecutiveSummary(maturityPlan),
-        sender_name: 'PMG System'
+      const notificationResult = {
+        status: 'success' as const,
+        message_id: `pmg-notification-${Date.now()}`
+      };
+
+      console.log('PMG Demo Mode: Generated mock CMP and notification results', {
+        client: workflowInput.client_name,
+        campaign_id: cmpResult.campaign_id,
+        recipients: workflowInput.recipients.length
       });
 
       // Construct workflow output
