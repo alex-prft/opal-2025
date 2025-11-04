@@ -71,8 +71,7 @@ export default function Home() {
                   Generate Your Personalization Maturity Plan
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                  PMG creates a structured 4-phase approach (Crawl → Walk → Run → Fly) with detailed
-                  implementation roadmaps, audience strategies, and technology requirements.
+                  Accelerate your personalization and experimentation strategy with Opal AI
                 </p>
               </div>
 
