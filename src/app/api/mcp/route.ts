@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     switch (method) {
       case 'tools/call':
-        const { name, arguments: toolArgs } = params;
+        const { name, args: toolArgs } = params;
         const result = await mcpServer.callTool(name, toolArgs);
         return NextResponse.json({ result });
 
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ content });
 
       case 'prompts/get':
-        const { name: promptName, arguments: promptArgs } = params;
+        const { name: promptName, args: promptArgs } = params;
         const prompt = await mcpServer.getPrompt(promptName, promptArgs);
         return NextResponse.json({ prompt });
 
