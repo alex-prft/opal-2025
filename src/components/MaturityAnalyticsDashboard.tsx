@@ -480,7 +480,7 @@ export default function MaturityAnalyticsDashboard({ workflowResult }: MaturityA
                         <div className="space-y-2">
                           <h5 className="text-sm font-medium text-gray-700">Key Tactics:</h5>
                           <ul className="text-sm space-y-1">
-                            {strategy.tactics.slice(0, 3).map((tactic, i) => (
+                            {strategy.tactics.slice(0, 3).map((tactic: string, i: number) => (
                               <li key={i} className="flex items-start gap-2">
                                 <span className="text-green-500 mt-1">✓</span>
                                 <span>{tactic}</span>
@@ -553,7 +553,7 @@ export default function MaturityAnalyticsDashboard({ workflowResult }: MaturityA
                           <div>
                             <div className="font-medium text-gray-700 mb-1">Technologies:</div>
                             <div className="flex flex-wrap gap-1">
-                              {useCase.technologies.map((tech, i) => (
+                              {useCase.technologies.map((tech: string, i: number) => (
                                 <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
                                   {tech}
                                 </span>
