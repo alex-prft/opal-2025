@@ -40,10 +40,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }, { status: 400 });
     }
 
-    // Initialize SendGrid client
-    const sendGridClient = new SendGridClient();
-
     try {
+      // Initialize SendGrid client
+      const sendGridClient = new SendGridClient();
       // Validate email addresses
       const validationResult = sendGridClient.validateEmailAddresses(to);
 
