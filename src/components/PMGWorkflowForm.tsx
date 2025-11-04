@@ -132,10 +132,10 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
             onChange={(e) => setFormData(prev => ({ ...prev, company_size: e.target.value as any }))}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
-            <option value="small">Small (< 100 employees)</option>
+            <option value="small">Small (&lt; 100 employees)</option>
             <option value="medium">Medium (100-1000 employees)</option>
             <option value="large">Large (1000-10000 employees)</option>
-            <option value="enterprise">Enterprise (> 10000 employees)</option>
+            <option value="enterprise">Enterprise (&gt; 10000 employees)</option>
           </select>
         </div>
 

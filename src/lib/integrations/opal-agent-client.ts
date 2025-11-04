@@ -63,7 +63,7 @@ export class OPALAgentClient {
     cmp_url: string;
     plan_summary: string;
     sender_name: string;
-  }): Promise<{ status: 'success' | 'error'; message_id?: string }> {
+  }): Promise<{ status: 'success' | 'failed'; message_id?: string }> {
     try {
       const response = await fetch(`${this.baseURL}/api/tools/notify`, {
         method: 'POST',
@@ -91,7 +91,7 @@ export class OPALAgentClient {
       };
     } catch (error) {
       console.error('Notification error:', error);
-      return { status: 'error' };
+      return { status: 'failed' };
     }
   }
 
