@@ -1,6 +1,6 @@
-# Opal AI Personalization System 2025
+# Opal Personalization Maturity Generator (PMG)
 
-This is an advanced AI-powered personalization maturity assessment and strategy generation system built with [Next.js](https://nextjs.org), featuring comprehensive integration with the Optimizely ecosystem and designed for seamless Opal workflow automation.
+**PMG** is an advanced AI-powered personalization maturity assessment and strategy generation system built with [Next.js](https://nextjs.org), featuring comprehensive integration with the Optimizely ecosystem and designed for seamless Opal workflow automation.
 
 ## System Features
 
@@ -136,7 +136,7 @@ CMP_BASE_URL=https://api.optimizely.com/v2  # Optional, defaults shown
 ```bash
 SENDGRID_API_KEY=your_sendgrid_api_key
 SENDGRID_SENDER_EMAIL=noreply@yourdomain.com
-SENDGRID_SENDER_NAME="Opal AI Personalization System"  # Optional, defaults shown
+SENDGRID_SENDER_NAME="PMG - Personalization Maturity Generator"  # Optional, defaults shown
 ```
 
 #### Application Configuration

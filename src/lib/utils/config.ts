@@ -88,7 +88,7 @@ export function getSendGridConfig(): SendGridConfig {
   return {
     api_key: process.env.SENDGRID_API_KEY!,
     sender_email: process.env.SENDGRID_SENDER_EMAIL!,
-    sender_name: process.env.SENDGRID_SENDER_NAME || 'Opal AI Personalization System'
+    sender_name: process.env.SENDGRID_SENDER_NAME || 'PMG - Personalization Maturity Generator'
   };
 }
 
