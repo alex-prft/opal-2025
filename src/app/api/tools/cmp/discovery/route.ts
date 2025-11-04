@@ -37,17 +37,11 @@ export async function GET(): Promise<NextResponse> {
               required: false
             }
           ],
-          endpoint: "/api/tools/cmp",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "Campaign Management Platform",
-        version: "1.0.0",
-        description: "Create and manage personalization campaigns with shareable URLs",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);

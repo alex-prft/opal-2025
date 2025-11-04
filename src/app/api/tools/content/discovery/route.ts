@@ -37,17 +37,11 @@ export async function GET(): Promise<NextResponse> {
               required: false
             }
           ],
-          endpoint: "/api/tools/content",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "Content Recommendations Engine",
-        version: "1.0.0",
-        description: "AI-powered content recommendations based on audience segments",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);

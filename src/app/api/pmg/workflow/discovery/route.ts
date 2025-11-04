@@ -61,17 +61,11 @@ export async function GET(): Promise<NextResponse> {
               required: true
             }
           ],
-          endpoint: "/api/pmg/workflow",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "PMG Maturity Generator",
-        version: "1.0.0",
-        description: "Complete personalization maturity assessment and strategic planning workflow",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);

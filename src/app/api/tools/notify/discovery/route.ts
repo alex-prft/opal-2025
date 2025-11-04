@@ -61,17 +61,11 @@ export async function GET(): Promise<NextResponse> {
               required: false
             }
           ],
-          endpoint: "/api/tools/notify",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "Email Notification Service",
-        version: "1.0.0",
-        description: "Send email notifications and plan delivery via SendGrid",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);

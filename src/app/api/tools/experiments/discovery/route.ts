@@ -37,17 +37,11 @@ export async function GET(): Promise<NextResponse> {
               required: false
             }
           ],
-          endpoint: "/api/tools/experiments",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "Experimentation Analytics",
-        version: "1.0.0",
-        description: "Historical experiment data and performance metrics analysis",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);

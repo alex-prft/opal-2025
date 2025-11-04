@@ -37,17 +37,11 @@ export async function GET(): Promise<NextResponse> {
               required: false
             }
           ],
-          endpoint: "/api/tools/audience",
+          endpoint: "/",
           http_method: "POST",
-          auth_requirements: ["bearer_token"]
+          auth_requirements: []
         }
-      ],
-      tool_info: {
-        name: "ODP Audience Insights",
-        version: "1.0.0",
-        description: "Retrieve audience insights and user profiles from Optimizely Data Platform",
-        provider: "Opal PMG System"
-      }
+      ]
     };
 
     return NextResponse.json(discoveryResponse);
