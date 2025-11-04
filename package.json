@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:integration": "jest tests/integration"
+    "test:integration": "jest tests/integration",
+    "deploy:prod": "./scripts/deploy-prod.sh"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
@@ -25,15 +26,16 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/jest": "^29.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "jest": "^29.0.0",
-    "tailwindcss": "^4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
     "ts-jest": "^29.0.0",
     "typescript": "^5"
   }

@@ -53,11 +53,33 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
         }));
       };
 
+      // Listen for complete Perficient data prefill event
+      const handlePerficientDataPrefill = (event: CustomEvent) => {
+        const { clientName, industry, currentCapabilities, businessObjectives, emailRecipients, technologies } = event.detail;
+
+        // Parse current capabilities and business objectives from strings to arrays
+        const capabilitiesArray = currentCapabilities.split(',').map((item: string) => item.trim());
+        const objectivesArray = businessObjectives.split(',').map((item: string) => item.trim());
+        const recipientsArray = emailRecipients.split(',').map((email: string) => email.trim());
+
+        setFormData(prev => ({
+          ...prev,
+          client_name: clientName,
+          industry: industry,
+          current_capabilities: capabilitiesArray,
+          business_objectives: objectivesArray,
+          additional_marketing_technology: technologies,
+          recipients: recipientsArray
+        }));
+      };
+
       window.addEventListener('prefillMarketingTech', handleMarketingTechPrefill as EventListener);
+      window.addEventListener('prefillPerficientData', handlePerficientDataPrefill as EventListener);
 
       return () => {
         delete (window as any).fillPerficientData;
         window.removeEventListener('prefillMarketingTech', handleMarketingTechPrefill as EventListener);
+        window.removeEventListener('prefillPerficientData', handlePerficientDataPrefill as EventListener);
       };
     }
   }, []);

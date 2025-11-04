@@ -1,19 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import PMGWorkflowForm from '@/components/PMGWorkflowForm';
-import ModernMaturityPlanDisplay from '@/components/ModernMaturityPlanDisplay';
-import MaturityAnalyticsDashboard from '@/components/MaturityAnalyticsDashboard';
-import LoadingResultsPage from '@/components/LoadingResultsPage';
-import { PMGWorkflowOutput } from '@/lib/types/maturity';
+import Link from 'next/link';
 import {
   BarChart3,
   Zap,
   Target,
-  TrendingUp,
   Users,
   Brain,
   Sparkles,
@@ -22,208 +15,25 @@ import {
 } from 'lucide-react';
 
 export default function ModernHomepage() {
-  const [workflowResult, setWorkflowResult] = useState<PMGWorkflowOutput | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
-
-  const handleWorkflowComplete = (result: PMGWorkflowOutput) => {
-    setWorkflowResult(result);
-    setIsLoading(false);
-    setShowLoadingAnimation(false);
-  };
-
-  const handleWorkflowStart = () => {
-    setIsLoading(true);
-    setShowLoadingAnimation(true);
-    setWorkflowResult(null);
-  };
-
-  const handleLoadingAnimationComplete = () => {
-    setShowLoadingAnimation(false);
-  };
-
-  const handlePerficientClick = () => {
-    // Scroll to the form section and prefill marketing tech
-    const formSection = document.getElementById('assessment-form');
-    if (formSection) {
-      formSection.scrollIntoView({ behavior: 'smooth' });
-
-      // Trigger prefill via a custom event
-      const prefillEvent = new CustomEvent('prefillMarketingTech', {
-        detail: {
-          technologies: ['Salesforce CRM', 'Salesforce Data Studio', 'Salesforce Marketing Cloud', 'Snowflake', 'Sitecore', 'Adobe Analytics', 'Contentsquare']
-        }
-      });
-      window.dispatchEvent(prefillEvent);
-    }
-  };
 
   const features = [
     {
       icon: <Brain className="h-6 w-6" />,
       title: "AI-Powered Strategy",
-      description: "Advanced AI analyzes your current capabilities and generates personalized roadmaps"
+      description: "AI analyzes capabilities and generates personalized roadmaps"
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
       title: "Data-Driven Insights",
-      description: "Comprehensive analytics and benchmarking against industry standards"
+      description: "Analytics and benchmarking against industry standards"
     },
     {
       icon: <Target className="h-6 w-6" />,
       title: "Precision Targeting",
-      description: "Create highly targeted experiences with advanced audience segmentation"
+      description: "Create targeted experiences with audience segmentation"
     },
-    {
-      icon: <TrendingUp className="h-6 w-6" />,
-      title: "Measurable Growth",
-      description: "Track ROI and performance metrics with real-time analytics dashboards"
-    }
   ];
 
-  const maturityPhases = [
-    {
-      phase: "Crawl",
-      title: "Foundation Building",
-      description: "A/B testing and simple personalization",
-      icon: "🐛",
-      color: "from-red-500/10 to-red-500/5 border-red-200"
-    },
-    {
-      phase: "Walk",
-      title: "Structured Growth",
-      description: "Advanced experimentation and data-driven audiences",
-      icon: "🚶",
-      color: "from-yellow-500/10 to-yellow-500/5 border-yellow-200"
-    },
-    {
-      phase: "Run",
-      title: "Advanced Execution",
-      description: "Smart personalization and integrated systems",
-      icon: "🏃",
-      color: "from-green-500/10 to-green-500/5 border-green-200"
-    },
-    {
-      phase: "Fly",
-      title: "Mature Optimization",
-      description: "AI-powered omnichannel experiences",
-      icon: "🦅",
-      color: "from-blue-500/10 to-blue-500/5 border-blue-200"
-    }
-  ];
-
-  if (showLoadingAnimation) {
-    return <LoadingResultsPage onComplete={handleLoadingAnimationComplete} />;
-  }
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary border-t-transparent mb-4"></div>
-            <h3 className="text-lg font-semibold mb-2">Finalizing your strategy...</h3>
-            <p className="text-muted-foreground text-center">Just a few more moments</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (workflowResult) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-        {/* Header */}
-        <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg p-3">
-                  <Sparkles className="h-6 w-6" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold">Strategy Results</h1>
-                  <p className="text-muted-foreground text-sm">AI Personalization Strategy</p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                onClick={() => setWorkflowResult(null)}
-                className="gap-2"
-              >
-                <ArrowRight className="h-4 w-4" />
-                Generate New Strategy
-              </Button>
-            </div>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-8 space-y-8">
-          <Tabs defaultValue="strategy" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="strategy">Strategy Plan</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics Dashboard</TabsTrigger>
-              <TabsTrigger value="mcp">MCP Integration</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="strategy">
-              <ModernMaturityPlanDisplay workflowResult={workflowResult} />
-            </TabsContent>
-
-            <TabsContent value="analytics">
-              <MaturityAnalyticsDashboard workflowResult={workflowResult} />
-            </TabsContent>
-
-            <TabsContent value="mcp">
-              <Card>
-                <CardHeader>
-                  <CardTitle>MCP Server Integration</CardTitle>
-                  <CardDescription>
-                    Model Context Protocol server for AI agent integration with personalization tools
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">Available Tools</h4>
-                      <div className="space-y-1 text-sm">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span>Strategy Assessment</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span>Audience Profile Lookup</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span>Content Recommendations</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span>Experiment Analytics</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">Server Endpoint</h4>
-                      <code className="block p-2 bg-muted rounded text-sm">
-                        /api/mcp
-                      </code>
-                      <p className="text-xs text-muted-foreground">
-                        RESTful API endpoint implementing Model Context Protocol for AI agent integration
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
@@ -232,23 +42,19 @@ export default function ModernHomepage() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg p-3">
+              <Link href="/" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg p-3 hover:from-blue-700 hover:to-indigo-700 transition-colors">
                 <Sparkles className="h-8 w-8" />
-              </div>
+              </Link>
               <div>
                 <h1 className="text-2xl font-bold">Accelerate Results with Optimizely Opal</h1>
-                <p className="text-muted-foreground">AI Personalization Strategy with your Optimizely Data and Martech Tools</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="gap-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                onClick={handlePerficientClick}
-              >
-                <Zap className="h-4 w-4" />
-                Perficient AI App
+              <Button asChild variant="secondary" size="sm" className="gap-2">
+                <Link href="/engine">
+                  <Zap className="h-4 w-4" />
+                  Try the Engine
+                </Link>
               </Button>
               <span className="text-sm text-muted-foreground">BETA v1.0</span>
             </div>
@@ -261,77 +67,62 @@ export default function ModernHomepage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight">
-              Start Your Personalization and Experimentation Strategy
+              AI Strategy Generator for Personalization and Experimentation
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Accelerate your personalization and experimentation strategy with Opal AI.
-              Get data-driven insights and a comprehensive roadmap tailored to your organization.
+              Get data-driven insights and a customized plan to your business using your Optimizely Data and Martech Tools. Created by Perficient.
             </p>
           </div>
 
           {/* Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {features.map((feature, index) => (
-              <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm">
-                <CardContent className="pt-6">
-                  <div className="flex flex-col items-center text-center space-y-3">
-                    <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                      {feature.icon}
+          <div className="w-full max-w-6xl mx-auto">
+            <div className="flex flex-wrap lg:flex-nowrap justify-center gap-3 mt-12">
+              {features.map((feature, index) => (
+                <Card key={index} className="border-0 shadow-sm bg-white/60 backdrop-blur-sm flex-1 min-w-0 max-w-xs">
+                  <CardContent className="p-3">
+                    <div className="flex flex-col items-center text-center space-y-1.5">
+                      <div className="p-1.5 bg-primary/10 rounded-lg text-primary">
+                        {feature.icon}
+                      </div>
+                      <h3 className="font-semibold text-xs leading-tight">{feature.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-snug px-1">{feature.description}</p>
                     </div>
-                    <h3 className="font-semibold">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <div className="mt-12">
+            <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-6 text-lg gap-3 shadow-lg hover:shadow-xl transition-all">
+              <Link href="/engine">
+                Begin Your Strategy
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Maturity Phase Overview */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h3 className="text-2xl font-bold mb-4">4-Phase Maturity Framework</h3>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Our comprehensive framework guides you through progressive stages of personalization maturity
-          </p>
+      {/* How It Works Section */}
+      <section className="container mx-auto px-4 py-16 bg-gradient-to-r from-slate-50 to-gray-50">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="space-y-4">
+            <h3 className="text-3xl font-bold">How It Works</h3>
+            <p className="text-lg text-muted-foreground">
+              Our 4-phase maturity framework guides you through progressive stages of personalization excellence
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Button asChild variant="outline" size="lg" className="gap-2">
+              <Link href="/how-it-works">
+                Learn About Our Framework
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {maturityPhases.map((phase, index) => (
-            <Card key={phase.phase} className={`bg-gradient-to-br ${phase.color} border`}>
-              <CardContent className="pt-6">
-                <div className="text-center space-y-3">
-                  <div className="text-4xl mb-2">{phase.icon}</div>
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-lg">{phase.phase.toUpperCase()}</h4>
-                    <h5 className="font-semibold text-sm">{phase.title}</h5>
-                    <p className="text-xs text-muted-foreground">{phase.description}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <section className="container mx-auto px-4 pb-16">
-        <Card className="max-w-4xl mx-auto shadow-lg bg-white">
-          <CardHeader className="text-center pb-8">
-            <CardTitle className="text-2xl">Get Your Personalized Strategy</CardTitle>
-            <CardDescription className="text-lg">
-              Complete the assessment below to receive your comprehensive personalization roadmap
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <PMGWorkflowForm
-              onWorkflowStart={handleWorkflowStart}
-              onWorkflowComplete={handleWorkflowComplete}
-              isLoading={isLoading}
-            />
-          </CardContent>
-        </Card>
       </section>
 
       {/* Footer */}
@@ -342,6 +133,9 @@ export default function ModernHomepage() {
               © 2025 Opal Personalization Generator from Perficient. Powered by Opal AI.
             </div>
             <div className="flex space-x-6">
+              <Button variant="link" size="sm" asChild>
+                <Link href="/how-it-works">How It Works</Link>
+              </Button>
               <Button variant="link" size="sm" asChild>
                 <a href="/api/mcp">MCP API</a>
               </Button>

@@ -84,11 +84,11 @@ export default function LoadingResultsPage({ onComplete }: LoadingResultsPagePro
           // All tools completed, wait a moment then call onComplete
           setTimeout(() => {
             onComplete();
-          }, 1500);
+          }, 500);
           return prev;
         }
       });
-    }, 2500); // Each tool takes 2.5 seconds
+    }, 1000); // Each tool takes 1 second for 7 total seconds (6 tools + 0.5s final delay)
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -186,7 +186,7 @@ export default function LoadingResultsPage({ onComplete }: LoadingResultsPagePro
         {/* Estimated Time */}
         <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg p-4 inline-block shadow-md">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            ⏱️ Estimated completion: {Math.max(0, (optimizelyTools.length - currentToolIndex - 1) * 2.5)} seconds remaining
+            ⏱️ Estimated completion: {Math.max(0, (optimizelyTools.length - currentToolIndex - 1) * 1)} seconds remaining
           </p>
         </div>
       </div>
