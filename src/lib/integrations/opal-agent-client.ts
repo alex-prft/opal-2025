@@ -31,10 +31,10 @@ export class OPALAgentClient {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          campaign_name: campaignData.campaign_name,
-          brief_description: campaignData.brief_description,
-          content: campaignData.content,
-          tags: campaignData.tags
+          title: campaignData.campaign_name,
+          plan_markdown: campaignData.content,
+          project_key: 'pmg-workflow',
+          tasks: []
         })
       });
 
