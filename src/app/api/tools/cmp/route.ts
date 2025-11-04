@@ -32,10 +32,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }, { status: 400 });
     }
 
-    // Initialize CMP client
-    const cmpClient = new CMPClient();
-
     try {
+      // Initialize CMP client
+      const cmpClient = new CMPClient();
+
       // Publish the complete plan to CMP
       const publishResult = await cmpClient.publishPlan({
         title,
@@ -117,10 +117,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const campaignId = url.searchParams.get('campaign_id');
 
     if (campaignId) {
-      // Get specific campaign details
-      const cmpClient = new CMPClient();
-
       try {
+        // Get specific campaign details
+        const cmpClient = new CMPClient();
         const campaignDetails = await cmpClient.getCampaignDetails(campaignId);
         const shareableUrl = await cmpClient.getShareableURL(campaignId);
 
@@ -206,9 +205,8 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
       }, { status: 400 });
     }
 
-    const cmpClient = new CMPClient();
-
     try {
+      const cmpClient = new CMPClient();
       const updatedCampaign = await cmpClient.updateCampaignStatus(campaign_id, status);
 
       return NextResponse.json<APIResponse<any>>({
