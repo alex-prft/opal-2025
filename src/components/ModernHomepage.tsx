@@ -46,7 +46,8 @@ export default function ModernHomepage() {
                 <Sparkles className="h-8 w-8" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold">Accelerate Results with Optimizely Opal</h1>
+                <h1 className="text-2xl font-bold">Opal AI Strategy Assistant</h1>
+                <p className="text-sm text-muted-foreground">Created by Perficient</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -67,7 +68,7 @@ export default function ModernHomepage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight">
-              AI Strategy Generator for Personalization and Experimentation
+              Easiest Way To Understand Your Optimizely Data
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Get data-driven insights and a customized plan to your business using your Optimizely Data and Martech Tools. Created by Perficient.
@@ -128,20 +129,9 @@ export default function ModernHomepage() {
       {/* Footer */}
       <footer className="border-t bg-white">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center">
+          <div className="text-center">
             <div className="text-sm text-muted-foreground">
               © 2025 Opal Personalization Generator from Perficient. Powered by Opal AI.
-            </div>
-            <div className="flex space-x-6">
-              <Button variant="link" size="sm" asChild>
-                <Link href="/how-it-works">How It Works</Link>
-              </Button>
-              <Button variant="link" size="sm" asChild>
-                <a href="/api/mcp">MCP API</a>
-              </Button>
-              <Button variant="link" size="sm" asChild>
-                <a href="https://github.com/alex-prft/opal-2025">GitHub</a>
-              </Button>
             </div>
           </div>
         </div>

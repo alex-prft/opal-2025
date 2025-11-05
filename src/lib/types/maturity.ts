@@ -192,11 +192,11 @@ export interface VendorRecommendation {
 export interface PMGWorkflowInput {
   client_name: string;
   industry: string;
-  company_size: 'small' | 'medium' | 'large' | 'enterprise';
+  company_size: 'Marketing Team' | 'Content Creator' | 'UX Designer or Developer' | 'Executive Team';
   current_capabilities: string[];
   business_objectives: string[];
   additional_marketing_technology: string[];
-  timeline_preference: '6-months' | '12-months' | '18-months' | '24-months';
+  timeline_preference: 'Last 3 Months' | 'Last 6 Months' | 'Last 12 Months' | 'All Time';
   budget_range: 'under-100k' | '100k-500k' | '500k-1m' | 'over-1m';
   recipients: string[];
 }

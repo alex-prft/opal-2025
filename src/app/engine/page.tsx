@@ -8,25 +8,30 @@ import PMGWorkflowForm from '@/components/PMGWorkflowForm';
 import ModernMaturityPlanDisplay from '@/components/ModernMaturityPlanDisplay';
 import MaturityAnalyticsDashboard from '@/components/MaturityAnalyticsDashboard';
 import LoadingResultsPage from '@/components/LoadingResultsPage';
+import PasswordProtection from '@/components/PasswordProtection';
 import { PMGWorkflowOutput } from '@/lib/types/maturity';
 import {
   Sparkles,
   CheckCircle,
   ArrowRight,
-  ArrowLeft,
-  Zap
+  ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function EnginePage() {
   const [workflowResult, setWorkflowResult] = useState<PMGWorkflowOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   const handleWorkflowComplete = (result: PMGWorkflowOutput) => {
-    setWorkflowResult(result);
-    setIsLoading(false);
-    setShowLoadingAnimation(false);
+    // Save result to sessionStorage for the results page
+    sessionStorage.setItem('pmg_latest_result', JSON.stringify(result));
+
+    // Redirect to results page
+    router.push('/engine/results');
   };
 
   const handleWorkflowStart = () => {
@@ -39,26 +44,17 @@ export default function EnginePage() {
     setShowLoadingAnimation(false);
   };
 
-  const handlePerficientClick = () => {
-    // Scroll to the form section and prefill all Perficient data
-    const formSection = document.getElementById('assessment-form');
-    if (formSection) {
-      formSection.scrollIntoView({ behavior: 'smooth' });
-
-      // Trigger prefill via a custom event with all Perficient data
-      const prefillEvent = new CustomEvent('prefillPerficientData', {
-        detail: {
-          clientName: 'Perficient Inc.',
-          industry: 'Technology Consulting',
-          currentCapabilities: 'Basic A/B testing, Simple segmentation, Manual campaign optimization',
-          businessObjectives: 'Increase conversion rates by 25%, Improve customer engagement, Reduce time-to-market for campaigns, Scale personalization efforts',
-          emailRecipients: 'alex.harris@perficient.com',
-          technologies: ['Salesforce CRM', 'Salesforce Data Studio', 'Salesforce Marketing Cloud', 'Snowflake', 'Sitecore', 'Adobe Analytics', 'Contentsquare']
-        }
-      });
-      window.dispatchEvent(prefillEvent);
-    }
+  const handleAuthenticated = () => {
+    setIsAuthenticated(true);
   };
+
+  if (!isAuthenticated) {
+    return (
+      <PasswordProtection onAuthenticated={handleAuthenticated}>
+        <div />
+      </PasswordProtection>
+    );
+  }
 
   if (showLoadingAnimation) {
     return <LoadingResultsPage onComplete={handleLoadingAnimationComplete} />;
@@ -195,15 +191,6 @@ export default function EnginePage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="gap-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                onClick={handlePerficientClick}
-              >
-                <Zap className="h-4 w-4" />
-                Perficient AI App
-              </Button>
               <span className="text-sm text-muted-foreground">BETA v1.0</span>
             </div>
           </div>
@@ -215,7 +202,7 @@ export default function EnginePage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight">
-              Generate Your Personalization Strategy
+              Generate Your Customized Recommendations
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Answer a few questions about your current setup and goals to get started

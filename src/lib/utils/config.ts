@@ -8,18 +8,22 @@ export function getOptimizelyConfig(): OptimizelyConfig {
     'EXPERIMENTATION_API_KEY',
     'EXPERIMENTATION_PROJECT_ID',
     'CONTENT_RECS_API_KEY',
-    'CONTENT_RECS_ACCOUNT_ID',
-    'CMP_API_KEY',
-    'CMP_WORKSPACE_ID'
+    'CONTENT_RECS_ACCOUNT_ID'
   ];
 
+  // Check core required variables
   for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
       throw new Error(`Missing required environment variable: ${envVar}`);
     }
   }
 
-  return {
+  // CMP is optional for now
+  const hasCMPConfig = process.env.CMP_API_KEY &&
+                      process.env.CMP_API_KEY !== 'REPLACE_WITH_IFPA_CMP_API_KEY' &&
+                      process.env.CMP_WORKSPACE_ID;
+
+  const config: OptimizelyConfig = {
     odp: {
       api_key: process.env.ODP_API_KEY!,
       project_id: process.env.ODP_PROJECT_ID!,
@@ -34,13 +38,19 @@ export function getOptimizelyConfig(): OptimizelyConfig {
       api_key: process.env.CONTENT_RECS_API_KEY!,
       account_id: process.env.CONTENT_RECS_ACCOUNT_ID!,
       base_url: process.env.CONTENT_RECS_BASE_URL || 'https://api.idio.co'
-    },
-    cmp: {
+    }
+  };
+
+  // Add CMP configuration only if properly configured
+  if (hasCMPConfig) {
+    config.cmp = {
       api_key: process.env.CMP_API_KEY!,
       workspace_id: process.env.CMP_WORKSPACE_ID!,
       base_url: process.env.CMP_BASE_URL || 'https://api.optimizely.com/v2'
-    }
-  };
+    };
+  }
+
+  return config;
 }
 
 export function getMSGraphConfig(): MSGraphConfig {

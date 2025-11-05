@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PMGWorkflowInput, PMGWorkflowOutput } from '@/lib/types/maturity';
+import LoadingAnimation, { LoadingPresets } from '@/components/LoadingAnimation';
 
 interface PMGWorkflowFormProps {
   onWorkflowStart: () => void;
@@ -11,21 +12,23 @@ interface PMGWorkflowFormProps {
 
 export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, isLoading }: PMGWorkflowFormProps) {
   const [formData, setFormData] = useState<PMGWorkflowInput>({
-    client_name: '',
-    industry: '',
-    company_size: 'medium',
-    current_capabilities: [],
-    business_objectives: [],
-    additional_marketing_technology: [],
-    timeline_preference: '12-months',
+    client_name: 'Freshproduce.com - IFPA',
+    industry: 'Produce and Floral Trade Association',
+    company_size: 'Marketing Team',
+    current_capabilities: ['A/B testing', 'Personalization', 'Email Marketing', 'Search Engine Optimization', 'Content Marketing'],
+    business_objectives: ['Increase Membership', 'Improve Content engagement', 'Promote Events', 'Scale personalization efforts'],
+    additional_marketing_technology: ['Salesforce CRM', 'Salesforce Marketing Cloud', 'Intercom', 'Hotjar', 'Optimizely Web Experimentation', 'Optimizely Personalization', 'Optimizely CMS 12', 'Optimizely Data Platform', 'Optimizely Content Recommendations'],
+    timeline_preference: 'Last 3 Months',
     budget_range: '100k-500k',
-    recipients: []
+    recipients: ['alex.harris@perficient.com', 'JRucinski@freshproduce.com']
   });
 
   const [currentCapability, setCurrentCapability] = useState('');
   const [currentObjective, setCurrentObjective] = useState('');
   const [currentMarketingTech, setCurrentMarketingTech] = useState('');
   const [currentRecipient, setCurrentRecipient] = useState('');
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const [showLoadingOverlay, setShowLoadingOverlay] = useState(false);
 
   // Perficient auto-fill function
   const fillPerficientData = () => {
@@ -92,6 +95,13 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
       return;
     }
 
+    // Store the input data in sessionStorage for use in other pages
+    sessionStorage.setItem('pmg_input_data', JSON.stringify(formData));
+
+    // Create abort controller for cancellation
+    const controller = new AbortController();
+    setAbortController(controller);
+    setShowLoadingOverlay(true);
     onWorkflowStart();
 
     try {
@@ -101,7 +111,8 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
           'Content-Type': 'application/json',
           'Authorization': 'Bearer opal-personalization-secret-2025'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        signal: controller.signal
       });
 
       if (!response.ok) {
@@ -109,11 +120,28 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
       }
 
       const result = await response.json();
+      setShowLoadingOverlay(false);
       onWorkflowComplete(result.data);
     } catch (error) {
+      setShowLoadingOverlay(false);
+      setAbortController(null);
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('Workflow was cancelled by user');
+        return; // Don't show error for user-cancelled operations
+      }
+
       console.error('Workflow error:', error);
       alert(`Failed to generate maturity plan: ${error}`);
     }
+  };
+
+  const handleCancel = () => {
+    if (abortController) {
+      abortController.abort();
+      setAbortController(null);
+    }
+    setShowLoadingOverlay(false);
   };
 
   const addCapability = () => {
@@ -162,7 +190,17 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
   };
 
   return (
-    <form id="assessment-form" onSubmit={handleSubmit} className="space-y-6">
+    <>
+      {showLoadingOverlay && (
+        <LoadingAnimation
+          {...LoadingPresets.pmgWorkflow}
+          onCancel={handleCancel}
+          variant="overlay"
+          cancelButtonText="Cancel Process"
+        />
+      )}
+
+      <form id="assessment-form" onSubmit={handleSubmit} className="space-y-6">
       {/* Basic Information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -194,33 +232,33 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Company Size
+            Choose Your Role
           </label>
           <select
             value={formData.company_size}
             onChange={(e) => setFormData(prev => ({ ...prev, company_size: e.target.value as any }))}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
-            <option value="small">Small (&lt; 100 employees)</option>
-            <option value="medium">Medium (100-1000 employees)</option>
-            <option value="large">Large (1000-10000 employees)</option>
-            <option value="enterprise">Enterprise (&gt; 10000 employees)</option>
+            <option value="Marketing Team">Marketing Team</option>
+            <option value="Content Creator">Content Creator</option>
+            <option value="UX Designer or Developer">UX Designer or Developer</option>
+            <option value="Executive Team">Executive Team</option>
           </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Timeline Preference
+            Date Range for Analytics
           </label>
           <select
             value={formData.timeline_preference}
             onChange={(e) => setFormData(prev => ({ ...prev, timeline_preference: e.target.value as any }))}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
-            <option value="6-months">6 Months (Fast Track)</option>
-            <option value="12-months">12 Months (Standard)</option>
-            <option value="18-months">18 Months (Comprehensive)</option>
-            <option value="24-months">24 Months (Enterprise)</option>
+            <option value="Last 3 Months">Last 3 Months</option>
+            <option value="Last 6 Months">Last 6 Months</option>
+            <option value="Last 12 Months">Last 12 Months</option>
+            <option value="All Time">All Time</option>
           </select>
         </div>
       </div>
@@ -348,23 +386,6 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
         </div>
       </div>
 
-      {/* Budget Range */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Budget Range
-        </label>
-        <select
-          value={formData.budget_range}
-          onChange={(e) => setFormData(prev => ({ ...prev, budget_range: e.target.value as any }))}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        >
-          <option value="under-100k">Under $100K</option>
-          <option value="100k-500k">$100K - $500K</option>
-          <option value="500k-1m">$500K - $1M</option>
-          <option value="over-1m">Over $1M</option>
-        </select>
-      </div>
-
       {/* Recipients */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -429,5 +450,6 @@ export default function PMGWorkflowForm({ onWorkflowStart, onWorkflowComplete, i
         </button>
       </div>
     </form>
+    </>
   );
 }
