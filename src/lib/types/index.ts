@@ -147,6 +147,7 @@ export interface APIResponse<T> {
   data?: T;
   error?: string;
   timestamp: string;
+  metadata?: any;
 }
 
 export interface WorkflowInput {
@@ -174,7 +175,7 @@ export interface OptimizelyConfig {
     account_id: string;
     base_url: string;
   };
-  cmp: {
+  cmp?: {
     api_key: string;
     workspace_id: string;
     base_url: string;

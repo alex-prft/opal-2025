@@ -80,7 +80,7 @@ export class GA4Client {
       });
 
       this.analyticsDataClient = new BetaAnalyticsDataClient({
-        auth: jwtClient,
+        auth: jwtClient as any,
       });
 
       console.log('GA4 client initialized successfully');
@@ -143,7 +143,7 @@ export class GA4Client {
 
       // Apply content filter if provided
       if (contentFilter) {
-        contentMetricsRequest.dimensionFilter = {
+        (contentMetricsRequest as any).dimensionFilter = {
           filter: {
             fieldName: 'pagePath',
             stringFilter: {

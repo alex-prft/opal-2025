@@ -58,7 +58,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       await browser.close();
 
       // Return PDF as downloadable file
-      return new NextResponse(pdfBuffer, {
+      return new NextResponse(Buffer.from(pdfBuffer), {
         headers: {
           'Content-Type': 'application/pdf',
           'Content-Disposition': `attachment; filename="IFPA-Personalization-Strategy-${new Date().toISOString().split('T')[0]}.pdf"`,

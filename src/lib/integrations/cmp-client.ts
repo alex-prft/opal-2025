@@ -2,13 +2,17 @@ import { OptimizelyConfig } from '../types';
 import { getOptimizelyConfig } from '../utils/config';
 
 export class CMPClient {
-  private config: OptimizelyConfig['cmp'];
+  private config: NonNullable<OptimizelyConfig['cmp']>;
   private isDemoMode: boolean = false;
 
   constructor() {
     try {
       const fullConfig = getOptimizelyConfig();
-      this.config = fullConfig.cmp;
+      if (fullConfig.cmp) {
+        this.config = fullConfig.cmp;
+      } else {
+        throw new Error('CMP config not available');
+      }
     } catch (error) {
       // If Optimizely config is not available, use demo mode
       console.log('Optimizely config not available, using demo mode for CMP');

@@ -204,10 +204,10 @@ async function handleWorkflowCompleted(payload: OpalWebhookPayload, opalClient: 
       if (payload.metadata?.client_id) {
         await opalClient.sendNotification({
           to: ['workflow-notifications@ifpa.org'],
-          subject: `Opal Workflow Completed: ${payload.workflow_name}`,
-          message: `The workflow "${payload.workflow_name}" has completed successfully.`,
-          workflow_id: payload.workflow_id,
-          data: payload.data
+          plan_title: `Opal Workflow Completed: ${payload.workflow_name}`,
+          cmp_url: '#',
+          plan_summary: `The workflow "${payload.workflow_name}" has completed successfully.`,
+          sender_name: 'Opal System'
         });
       }
     }
@@ -235,10 +235,10 @@ async function handleWorkflowFailed(payload: OpalWebhookPayload, opalClient: OPA
     if (payload.metadata?.client_id) {
       await opalClient.sendNotification({
         to: ['workflow-alerts@ifpa.org'],
-        subject: `Opal Workflow Failed: ${payload.workflow_name}`,
-        message: `The workflow "${payload.workflow_name}" has failed. Please check the logs for details.`,
-        workflow_id: payload.workflow_id,
-        error: payload.data
+        plan_title: `Opal Workflow Failed: ${payload.workflow_name}`,
+        cmp_url: '#',
+        plan_summary: `The workflow "${payload.workflow_name}" has failed. Please check the logs for details.`,
+        sender_name: 'Opal System'
       });
     }
   } catch (error) {

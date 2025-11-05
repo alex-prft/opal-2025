@@ -206,7 +206,7 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Budget Est.</p>
-                  <p className="text-2xl font-bold">{maturity_plan.budget_estimate}</p>
+                  <p className="text-2xl font-bold">{maturity_plan.budget_estimates?.[0]?.cost_range || 'TBD'}</p>
                 </div>
                 <DollarSign className="h-8 w-8 text-green-600" />
               </div>
@@ -266,17 +266,17 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
           <TabsContent value="roadmap" className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Implementation Roadmap</h3>
-              {(maturity_plan.roadmap_items || []).map((item, index) => (
+              {Object.values(maturity_plan.roadmap || {}).flat().map((item: any, index: number) => (
                 <Card key={index}>
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h4 className="font-semibold text-lg">{item.title}</h4>
+                        <h4 className="font-semibold text-lg">{item.milestone}</h4>
                         <p className="text-muted-foreground">{item.description}</p>
                       </div>
                       <div className="flex gap-2">
-                        <Badge className={getPriorityColor(item.priority)}>
-                          {item.priority || 'Unknown'} Priority
+                        <Badge className={getPriorityColor('medium')}>
+                          Medium Priority
                         </Badge>
                         <Badge variant="outline">
                           {item.timeline}
@@ -286,15 +286,15 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <div className="text-sm text-muted-foreground">Success Criteria</div>
-                        <div className="font-medium">{item.success_criteria}</div>
+                        <div className="font-medium">{item.success_criteria?.join(', ') || 'TBD'}</div>
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground">Dependencies</div>
-                        <div className="text-sm">{item.dependencies.join(', ') || 'None'}</div>
+                        <div className="text-sm">{item.dependencies?.join(', ') || 'None'}</div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Effort Level</div>
-                        <Badge variant="secondary">{item.effort_estimate}</Badge>
+                        <div className="text-sm text-muted-foreground">Owner</div>
+                        <Badge variant="secondary">{item.owner || 'TBD'}</Badge>
                       </div>
                     </div>
                   </CardContent>
@@ -306,26 +306,16 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
           <TabsContent value="priorities" className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Strategic Priorities</h3>
-              {(maturity_plan.strategic_priorities || []).map((priority, index) => (
+              {(maturity_plan.strategic_priorities || []).map((priority: string, index: number) => (
                 <Card key={index}>
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="space-y-2">
-                        <h4 className="font-semibold">{priority.name}</h4>
-                        <p className="text-muted-foreground">{priority.description}</p>
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className="flex items-center gap-1">
-                            <DollarSign className="h-4 w-4" />
-                            {priority.budget_allocation}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {priority.timeline}
-                          </span>
-                        </div>
+                        <h4 className="font-semibold">Priority {index + 1}</h4>
+                        <p className="text-muted-foreground">{priority}</p>
                       </div>
-                      <Badge className={getPriorityColor(priority.priority_level)}>
-                        {priority.priority_level || 'Unknown'}
+                      <Badge className={getPriorityColor('high')}>
+                        High Priority
                       </Badge>
                     </div>
                   </CardContent>
@@ -403,10 +393,10 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
                   {(maturity_plan.resource_requirements || []).map((resource, index) => (
                     <div key={index} className="p-4 border rounded-md">
                       <h4 className="font-medium mb-2">{resource.role}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
+                      <p className="text-sm text-muted-foreground mb-2">{resource.skills_needed?.join(', ')}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Time Commitment:</span>
-                        <Badge variant="secondary">{resource.time_commitment}</Badge>
+                        <span className="text-sm">FTE Requirement:</span>
+                        <Badge variant="secondary">{resource.fte_requirement}</Badge>
                       </div>
                     </div>
                   ))}
@@ -425,7 +415,7 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
                     {(maturity_plan.vendor_recommendations || []).map((vendor, index) => (
                       <div key={index} className="flex items-center justify-between p-3 border rounded-md">
                         <div>
-                          <h4 className="font-medium">{vendor.name}</h4>
+                          <h4 className="font-medium">{vendor.vendor_name}</h4>
                           <p className="text-sm text-muted-foreground">{vendor.use_case}</p>
                         </div>
                         <Badge variant="outline">{vendor.category}</Badge>

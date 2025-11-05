@@ -254,9 +254,13 @@ async function regenerateWebhookSecret(provider: string): Promise<NextResponse> 
 
 function calculateErrorRate(provider: 'ga4' | 'salesforce'): number {
   const errors = webhookErrors[provider].length;
-  const total = Array.from(
-    provider === 'ga4' ? ga4WebhookDataStore.values() : salesforceWebhookStore.values()
-  ).flat().length;
+  let total = 0;
+
+  if (provider === 'ga4') {
+    total = Array.from(ga4WebhookDataStore.values()).flat().length;
+  } else {
+    total = Array.from(salesforceWebhookStore.values()).flat().length;
+  }
 
   return total > 0 ? (errors / total) * 100 : 0;
 }

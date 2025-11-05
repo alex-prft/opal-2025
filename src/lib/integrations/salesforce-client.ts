@@ -355,21 +355,21 @@ export class SalesforceClient {
       content_performance: [
         {
           content_type: 'Market Intelligence Reports',
-          total_downloads: 2840,
-          avg_engagement_score: 8.2,
-          member_feedback_rating: 4.6
+          view_count: 4200,
+          download_count: 2840,
+          engagement_score: 8.2
         },
         {
           content_type: 'Industry Best Practices',
-          total_downloads: 1950,
-          avg_engagement_score: 7.8,
-          member_feedback_rating: 4.4
+          view_count: 3100,
+          download_count: 1950,
+          engagement_score: 7.8
         },
         {
           content_type: 'Webinar Recordings',
-          total_downloads: 3200,
-          avg_engagement_score: 7.5,
-          member_feedback_rating: 4.2
+          view_count: 5800,
+          download_count: 3200,
+          engagement_score: 7.5
         }
       ],
       recommendations: [

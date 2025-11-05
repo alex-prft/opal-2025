@@ -215,12 +215,13 @@ async function generateMaturityPlan(input: PMGWorkflowInput): Promise<MaturityPl
  */
 function determineCurrentPhase(input: PMGWorkflowInput): MaturityPhase {
   const capabilityCount = input.current_capabilities.length;
-  const companySize = input.company_size;
+  const persona = input.company_size;
 
-  if (capabilityCount === 0 || companySize === 'small') return 'crawl';
-  if (capabilityCount <= 3 || companySize === 'medium') return 'walk';
-  if (capabilityCount <= 6 || companySize === 'large') return 'run';
-  return 'fly';
+  if (capabilityCount === 0) return 'crawl';
+  if (capabilityCount <= 3 && persona === 'Marketing Team') return 'walk';
+  if (capabilityCount <= 6 && (persona === 'Content Creator' || persona === 'UX Designer or Developer')) return 'run';
+  if (persona === 'Executive Team') return 'fly';
+  return capabilityCount <= 3 ? 'walk' : 'run';
 }
 
 /**
@@ -230,8 +231,8 @@ function determineTargetPhase(input: PMGWorkflowInput): MaturityPhase {
   const timeline = input.timeline_preference;
   const budget = input.budget_range;
 
-  if (timeline === '6-months' || budget === 'under-100k') return 'walk';
-  if (timeline === '12-months' || budget === '100k-500k') return 'run';
+  if (timeline === 'Last 3 Months' || budget === 'under-100k') return 'walk';
+  if (timeline === 'Last 6 Months' || budget === '100k-500k') return 'run';
   return 'fly';
 }
 
@@ -244,14 +245,14 @@ function calculateMaturityScore(input: PMGWorkflowInput): number {
   // Adjust based on current capabilities
   score += Math.min(input.current_capabilities.length * 0.3, 2);
 
-  // Adjust based on company size
-  const sizeMultiplier = {
-    'small': 0,
-    'medium': 0.5,
-    'large': 1,
-    'enterprise': 1.5
+  // Adjust based on persona/role
+  const roleMultiplier = {
+    'Marketing Team': 0.5,
+    'Content Creator': 0.5,
+    'UX Designer or Developer': 1,
+    'Executive Team': 1.5
   };
-  score += sizeMultiplier[input.company_size];
+  score += roleMultiplier[input.company_size] || 0;
 
   return Math.min(Math.round(score * 10) / 10, 5);
 }
