@@ -11,7 +11,8 @@ import {
   Brain,
   Sparkles,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  Activity
 } from 'lucide-react';
 
 export default function ModernHomepage() {
@@ -51,6 +52,12 @@ export default function ModernHomepage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <Button asChild variant="outline" size="sm" className="gap-2">
+                <Link href="/monitoring">
+                  <Activity className="h-4 w-4" />
+                  OPAL Monitoring
+                </Link>
+              </Button>
               <Button asChild variant="secondary" size="sm" className="gap-2">
                 <Link href="/engine">
                   <Zap className="h-4 w-4" />
