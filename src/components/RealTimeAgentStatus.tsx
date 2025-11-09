@@ -20,21 +20,21 @@ function AgentStatusBubble({ agentId, agentName, status, executionTime, progress
   const getStatusColor = (status: AgentStatus) => {
     switch (status) {
       case 'idle':
-        return 'bg-gray-400';
+        return 'bg-gray-400'; // Unknown/no recent activity
       case 'starting':
-        return 'bg-blue-400 animate-pulse';
+        return 'bg-blue-400 animate-pulse'; // Agent initializing
       case 'running':
-        return 'bg-blue-500 animate-ping';
+        return 'bg-blue-500 animate-ping'; // Agent processing
       case 'completed':
-        return 'bg-green-500';
+        return 'bg-green-500'; // Successfully sent data to OSA
       case 'failed':
-        return 'bg-red-500';
+        return 'bg-red-500'; // Failed to send data to OSA
       case 'timeout':
-        return 'bg-orange-500';
+        return 'bg-red-500'; // Failed due to timeout (red for failure)
       case 'retrying':
-        return 'bg-yellow-500 animate-bounce';
+        return 'bg-yellow-500 animate-bounce'; // Attempting retry
       default:
-        return 'bg-gray-300';
+        return 'bg-gray-400'; // Unknown status (grey)
     }
   };
 
@@ -61,21 +61,21 @@ function AgentStatusBubble({ agentId, agentName, status, executionTime, progress
 
     switch (status) {
       case 'idle':
-        return 'Agent is idle, waiting for workflow';
+        return 'No recent OPAL to OSA sync activity';
       case 'starting':
-        return 'Agent is initializing...';
+        return 'OPAL agent initializing data sync...';
       case 'running':
-        return `Agent is processing${progress ? ` (${formatProgress(progress)})` : ''}`;
+        return `OPAL agent processing and syncing to OSA${progress ? ` (${formatProgress(progress)})` : ''}`;
       case 'completed':
-        return `Agent completed successfully${executionTime ? ` in ${formatTime(executionTime)}` : ''}`;
+        return `OPAL data successfully synced to OSA${executionTime ? ` in ${formatTime(executionTime)}` : ''}`;
       case 'failed':
-        return 'Agent encountered an error';
+        return 'OPAL to OSA sync failed - data not delivered';
       case 'timeout':
-        return 'Agent exceeded timeout threshold';
+        return 'OPAL to OSA sync timed out - data delivery failed';
       case 'retrying':
-        return 'Agent is retrying after failure';
+        return 'OPAL agent retrying failed OSA sync';
       default:
-        return 'Unknown agent status';
+        return 'OPAL to OSA sync status unknown';
     }
   };
 
@@ -196,11 +196,11 @@ export default function RealTimeAgentStatus({ className }: RealTimeAgentStatusPr
           const failedAgents = statusCounts.failed + statusCounts.timeout;
 
           if (activeAgents > 0) {
-            return `${activeAgents} active, ${completedAgents} completed, ${failedAgents} failed`;
+            return `${activeAgents} syncing, ${completedAgents} synced to OSA, ${failedAgents} sync failed`;
           } else if (completedAgents > 0) {
-            return `${completedAgents} completed, ${failedAgents} failed`;
+            return `${completedAgents} synced to OSA, ${failedAgents} sync failed`;
           } else {
-            return 'All agents idle';
+            return 'No recent OPAL to OSA sync activity';
           }
         })()}
       </div>
