@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PMGWorkflowOutput, MaturityPhase } from '@/lib/types/maturity';
+import { OSAWorkflowOutput, MaturityPhase } from '@/lib/types/maturity';
 import DetailedMaturityMatrix from './DetailedMaturityMatrix';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -9,11 +9,22 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, Target, Award, Clock, Users, Shield, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
 
 interface MaturityPlanDisplayProps {
-  workflowResult: PMGWorkflowOutput;
+  workflowResult: OSAWorkflowOutput;
 }
 
 export default function ModernMaturityPlanDisplay({ workflowResult }: MaturityPlanDisplayProps) {
   const { maturity_plan, executive_summary, next_steps, cmp_campaign_id } = workflowResult;
+
+  // Return early if no maturity plan is available
+  if (!maturity_plan) {
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          <p className="text-muted-foreground">No maturity plan data available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const phaseColors = {
     crawl: { bg: 'bg-red-50', text: 'text-red-800', border: 'border-red-200' },
@@ -108,7 +119,7 @@ export default function ModernMaturityPlanDisplay({ workflowResult }: MaturityPl
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
-                {next_steps.map((step, index) => (
+                {next_steps?.map((step, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">
                       {index + 1}

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LoadingAnimation, { LoadingPresets } from '@/components/LoadingAnimation';
-import { PMGWorkflowOutput } from '@/lib/types/maturity';
+import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import {
   Zap,
   TrendingUp,
@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 interface AEOAuditDashboardProps {
-  workflowResult?: PMGWorkflowOutput | null;
+  workflowResult?: OSAWorkflowOutput | null;
 }
 
 export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardProps) {
@@ -45,7 +45,7 @@ export default function AEOAuditDashboard({ workflowResult }: AEOAuditDashboardP
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer opal-personalization-secret-2025'
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_SECRET_KEY || 'opal-personalization-secret-2025'}`
         },
         body: JSON.stringify({
           analyze_optimization: true,

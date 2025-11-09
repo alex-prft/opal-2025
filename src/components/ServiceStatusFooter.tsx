@@ -11,19 +11,29 @@ import {
   ChevronUp,
   ChevronDown,
   X,
-  RefreshCw
+  RefreshCw,
+  LogOut,
+  Settings
 } from 'lucide-react';
+import { useAuthStatus, useAuth } from '@/lib/contexts/AuthContext';
+import Link from 'next/link';
 
 export default function ServiceStatusFooter() {
   const { issues, clearIssues, resolveIssue } = useServiceStatus();
+  const { isAuthenticated, isLoading } = useAuthStatus();
+  const { logout } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   const activeIssues = issues.filter(issue => !issue.resolved);
   const resolvedIssues = issues.filter(issue => issue.resolved);
 
-  // Don't show footer if no issues and not recently resolved
-  if (!isVisible || (activeIssues.length === 0 && resolvedIssues.length === 0)) {
+  // Show footer if there are issues, recently resolved issues, or user is authenticated
+  // Hide if explicitly dismissed and no critical issues
+  const hasIssues = activeIssues.length > 0 || resolvedIssues.length > 0;
+  const shouldShow = isVisible && (hasIssues || (isAuthenticated && !isLoading));
+
+  if (!shouldShow) {
     return null;
   }
 
@@ -51,6 +61,14 @@ export default function ServiceStatusFooter() {
 
   const getOverallStatus = () => {
     if (activeIssues.length === 0) {
+      // If user is authenticated but no issues, show user status
+      if (isAuthenticated && resolvedIssues.length === 0) {
+        return {
+          icon: <CheckCircle className="h-4 w-4 text-green-500" />,
+          text: 'Logged In - All Services Operational',
+          color: 'text-green-700'
+        };
+      }
       return {
         icon: <CheckCircle className="h-4 w-4 text-green-500" />,
         text: 'All Services Operational',
@@ -118,6 +136,33 @@ export default function ServiceStatusFooter() {
                   ) : (
                     <ChevronUp className="h-3 w-3 ml-1" />
                   )}
+                </Button>
+              )}
+
+              {/* Admin button for authenticated users */}
+              {isAuthenticated && (
+                <Link href="/engine/admin">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2"
+                  >
+                    <Settings className="h-3 w-3 mr-1" />
+                    Admin
+                  </Button>
+                </Link>
+              )}
+
+              {/* Logout button for authenticated users */}
+              {isAuthenticated && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={logout}
+                  className="h-7 px-2"
+                >
+                  <LogOut className="h-3 w-3 mr-1" />
+                  Logout
                 </Button>
               )}
 

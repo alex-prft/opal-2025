@@ -25,14 +25,25 @@ import {
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
-import { PMGWorkflowOutput } from '@/lib/types/maturity';
+import { OSAWorkflowOutput } from '@/lib/types/maturity';
 
 interface MaturityAnalyticsDashboardProps {
-  workflowResult: PMGWorkflowOutput;
+  workflowResult: OSAWorkflowOutput;
 }
 
 export default function MaturityAnalyticsDashboard({ workflowResult }: MaturityAnalyticsDashboardProps) {
   const { maturity_plan } = workflowResult;
+
+  // Return early if no maturity plan is available
+  if (!maturity_plan) {
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          <p className="text-muted-foreground">No maturity plan data available for analytics.</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   // Chart Data
   const maturityScoreData = [

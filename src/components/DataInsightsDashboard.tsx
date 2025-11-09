@@ -77,7 +77,7 @@ export default function DataInsightsDashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer opal-personalization-secret-2025'
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_SECRET_KEY || 'opal-personalization-secret-2025'}`
         },
         body: JSON.stringify({
           analyze_audience: true,

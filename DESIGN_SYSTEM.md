@@ -116,7 +116,7 @@ This project implements a comprehensive design system using shadcn/ui components
 - **Prompts**: Assessment workflows, recommendations
 
 ### Tool Registry
-1. **PMG Assessment**: Complete maturity evaluation
+1. **OSA Assessment**: Complete maturity evaluation
 2. **Audience Lookup**: User profile queries
 3. **Content Recommendations**: AI-powered content suggestions
 4. **Experiment Analytics**: Historical performance data

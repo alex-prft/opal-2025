@@ -1,0 +1,368 @@
+{
+  "Strategy Plans": {
+    "OSA": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Quick Wins": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Maturity": {
+      "opal_instructions": [
+        "personalization-maturity-rubric",
+        "personas"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Phases": {
+      "opal_instructions": [
+        "marketing-strategy.md",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow",
+        "personalization_idea_generator"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Roadmap": {
+      "opal_instructions": [
+        "technical-implementation-guidelines",
+        "company-overview"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    }
+  },
+  "Optimizely DXP Tools": {
+    "Content Recs": {
+      "opal_instructions": [
+        "content-guidelines"
+      ],
+      "opal_agents": [
+        "content_review"
+      ],
+      "opal_tools": [
+        "osa_contentrecs_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs"
+      ]
+    },
+    "CMS": {
+      "opal_instructions": [
+        "content-guidelines",
+        "data-governance-privacy",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "content_review"
+      ],
+      "opal_tools": [
+        "osa_cmspaas_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "CMS"
+      ]
+    },
+    "ODP": {
+      "opal_instructions": [
+        "data-governance-privacy",
+        "personas"
+      ],
+      "opal_agents": [
+        "audience_suggester"
+      ],
+      "opal_tools": [
+        "osa_odp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP"
+      ]
+    },
+    "WEBX": {
+      "opal_instructions": [
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "WebX"
+      ]
+    },
+    "CMP": {
+      "opal_instructions": [
+        "data-governance-privacy",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "cmp_organizer"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "CMP"
+      ]
+    }
+  },
+  "Analytics Insights": {
+    "OSA": {
+      "opal_instructions": [
+        "content-guidelines",
+        "personas",
+        "data-governance-privacy",
+        "kpi-experimentation"
+      ],
+      "opal_agents": [
+        "content_review"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "CMP"
+      ]
+    },
+    "Content": {
+      "opal_instructions": [
+        "content-guidelines",
+        "brand-tone-guidelines",
+        "kpi-experimentation"
+      ],
+      "opal_agents": [
+        "content_review"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "CMP"
+      ]
+    },
+    "Audiences": {
+      "opal_instructions": [
+        "personas",
+        "data-governance-privacy",
+        "kpi-experimentation"
+      ],
+      "opal_agents": [
+        "audience_suggester"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Customer Experience": {
+      "opal_instructions": [
+        "content-guidelines",
+        "personas",
+        "kpi-experimentation",
+        "brand-tone-guidelines"
+      ],
+      "opal_agents": [
+        "geo_audit"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Other": {
+      "opal_instructions": [
+        "data-governance-privacy"
+      ],
+      "opal_agents": [
+        "geo_audit"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    }
+  },
+  "Experience Optimization": {
+    "Content": {
+      "opal_instructions": [
+        "content-guidelines",
+        "brand-tone-guidelines"
+      ],
+      "opal_agents": [
+        "content_review"
+      ],
+      "opal_tools": [
+        "osa_contentrecs_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Experimentation": {
+      "opal_instructions": [
+        "kpi-experimentation",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Personalization": {
+      "opal_instructions": [
+        "brand-tone-guidelines",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "personalization_idea_generator"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "User Experience": {
+      "opal_instructions": [
+        "brand-tone-guidelines",
+        "kpi-experimentation"
+      ],
+      "opal_agents": [
+        "personalization_idea_generator"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    },
+    "Technology": {
+      "opal_instructions": [
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "strategy_assistant_workflow"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ]
+    }
+  }
+}

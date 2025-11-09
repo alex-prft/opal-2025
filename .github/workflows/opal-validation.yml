@@ -1,0 +1,206 @@
+name: OPAL Discovery Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      validate_production:
+        description: 'Also validate production endpoints'
+        required: false
+        default: 'true'
+        type: boolean
+
+jobs:
+  validate-opal-endpoints:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: |
+        npm ci
+        npm install -g tsx
+
+    - name: 🏗️ Build application
+      run: npm run build
+
+    - name: 🚀 Start development server
+      run: |
+        npm run start &
+        echo $! > server.pid
+
+        # Wait for server to start
+        echo "Waiting for server to start..."
+        for i in {1..30}; do
+          if curl -f http://localhost:3000/api/tools/workflow/discovery 2>/dev/null; then
+            echo "Server is ready!"
+            break
+          fi
+          if [ $i -eq 30 ]; then
+            echo "❌ Server failed to start within 30 seconds"
+            exit 1
+          fi
+          sleep 1
+        done
+
+    - name: 🔍 Validate Local OPAL Endpoints
+      run: |
+        echo "🔍 Validating OPAL discovery endpoints..."
+        npm run validate:opal
+
+    - name: 🌍 Validate Production Endpoints (if requested)
+      if: github.event.inputs.validate_production == 'true' || github.ref == 'refs/heads/main'
+      run: |
+        echo "🌍 Validating production OPAL endpoints..."
+        npm run validate:opal:prod
+
+    - name: 🛑 Stop development server
+      if: always()
+      run: |
+        if [ -f server.pid ]; then
+          kill $(cat server.pid) || true
+          rm server.pid
+        fi
+
+    - name: 📋 Create validation report
+      if: failure()
+      run: |
+        echo "## 🚨 OPAL Validation Failed" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "The OPAL discovery endpoints failed validation. This will prevent tools from registering in OPAL." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Common Fixes:" >> $GITHUB_STEP_SUMMARY
+        echo "1. **Parameter Format**: Ensure parameters field is an array, not an object" >> $GITHUB_STEP_SUMMARY
+        echo "2. **Missing Fields**: All functions must have: name, description, parameters, endpoint, http_method" >> $GITHUB_STEP_SUMMARY
+        echo "3. **Relative Paths**: Use /tools/function_name, not /api/tools/..." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Documentation:" >> $GITHUB_STEP_SUMMARY
+        echo "- [OPAL Discovery Format Reference](./docs/OPAL-Discovery-Format-Reference.md)" >> $GITHUB_STEP_SUMMARY
+        echo "- [OPAL Troubleshooting Guide](./docs/OPAL-Troubleshooting-Guide.md)" >> $GITHUB_STEP_SUMMARY
+
+  # Additional job to run validation on preview deployments (Vercel)
+  validate-preview-deployment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: 🔄 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: |
+        npm ci
+        npm install -g tsx
+
+    - name: ⏳ Wait for Vercel deployment
+      id: wait_for_deployment
+      run: |
+        echo "Waiting for Vercel preview deployment..."
+
+        # Extract PR number
+        PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+        echo "PR Number: $PR_NUMBER"
+
+        # Wait for deployment (simplified - in real usage you'd integrate with Vercel API)
+        sleep 30
+
+        # For now, skip this validation if we can't determine preview URL
+        echo "preview_url=skip" >> $GITHUB_OUTPUT
+
+    - name: 🔍 Validate Preview Deployment
+      if: steps.wait_for_deployment.outputs.preview_url != 'skip'
+      run: |
+        PREVIEW_URL="${{ steps.wait_for_deployment.outputs.preview_url }}"
+        echo "Validating preview deployment at: $PREVIEW_URL"
+        npm run validate:opal:url -- --base-url="$PREVIEW_URL"
+
+  # Security check for OPAL endpoints
+  opal-security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout repository
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: |
+        npm ci
+        npm install -g tsx
+
+    - name: 🏗️ Build application
+      run: npm run build
+
+    - name: 🚀 Start development server
+      run: |
+        npm run start &
+        echo $! > server.pid
+
+        # Wait for server to start
+        for i in {1..30}; do
+          if curl -f http://localhost:3000/api/tools/workflow/discovery 2>/dev/null; then
+            break
+          fi
+          sleep 1
+        done
+
+    - name: 🔒 Security Validation
+      run: |
+        echo "🔒 Running OPAL security checks..."
+
+        # Check that discovery endpoints don't require authentication
+        echo "Testing anonymous access..."
+        STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/api/tools/workflow/discovery)
+        if [ "$STATUS" != "200" ]; then
+          echo "❌ Discovery endpoint requires authentication (returns $STATUS)"
+          exit 1
+        fi
+
+        # Check that discovery endpoints don't leak sensitive data
+        echo "Checking for sensitive data..."
+        RESPONSE=$(curl -s http://localhost:3000/api/tools/workflow/discovery)
+
+        # Check for common sensitive patterns
+        if echo "$RESPONSE" | grep -E "(password|secret|key|token)" -i; then
+          echo "⚠️ Potential sensitive data found in discovery response"
+          echo "$RESPONSE" | grep -E "(password|secret|key|token)" -i
+        fi
+
+        # Verify no caching on discovery
+        echo "Checking cache headers..."
+        CACHE_HEADER=$(curl -s -I http://localhost:3000/api/tools/workflow/discovery | grep -i "cache-control")
+        if echo "$CACHE_HEADER" | grep "max-age" | grep -v "no-cache"; then
+          echo "⚠️ Discovery endpoint has caching enabled: $CACHE_HEADER"
+        fi
+
+        echo "✅ Security checks passed"
+
+    - name: 🛑 Stop development server
+      if: always()
+      run: |
+        if [ -f server.pid ]; then
+          kill $(cat server.pid) || true
+          rm server.pid
+        fi

@@ -1,0 +1,137 @@
+{
+  "strategy_assistant_workflow": {
+    "name": "Strategy Assistant Workflow",
+    "description": "Primary agent for processing strategic planning inputs and generating comprehensive recommendations",
+    "capabilities": [
+      "Strategic planning analysis",
+      "Maturity assessment scoring",
+      "ROI projection calculations",
+      "Implementation roadmap generation",
+      "Cross-functional workflow orchestration"
+    ],
+    "instructions_required": [
+      "company-overview",
+      "marketing-strategy",
+      "technical-implementation-guidelines"
+    ],
+    "tools_used": [
+      "workflow_data_sharing"
+    ]
+  },
+  "content_review": {
+    "name": "Content Review Agent",
+    "description": "Specialized agent for analyzing content performance, engagement metrics, and optimization opportunities",
+    "capabilities": [
+      "Content performance analysis",
+      "NLP topic analysis",
+      "Engagement scoring",
+      "Content optimization recommendations",
+      "Brand guideline compliance checking"
+    ],
+    "instructions_required": [
+      "content-guidelines",
+      "brand-tone-guidelines",
+      "kpi-experimentation"
+    ],
+    "tools_used": [
+      "osa_contentrecs_tools",
+      "osa_cmspaas_tools",
+      "workflow_data_sharing"
+    ]
+  },
+  "audience_suggester": {
+    "name": "Audience Suggestion Agent",
+    "description": "Agent focused on audience analysis, segmentation, and personalization strategy development",
+    "capabilities": [
+      "Audience segmentation analysis",
+      "Behavioral pattern recognition",
+      "Personalization strategy development",
+      "Customer journey mapping",
+      "Privacy-compliant data processing"
+    ],
+    "instructions_required": [
+      "personas",
+      "data-governance-privacy",
+      "kpi-experimentation"
+    ],
+    "tools_used": [
+      "osa_odp_tools",
+      "workflow_data_sharing"
+    ]
+  },
+  "experiment_blueprinter": {
+    "name": "Experiment Blueprint Agent",
+    "description": "Specialized agent for A/B test planning, statistical analysis, and experimentation strategy",
+    "capabilities": [
+      "A/B test blueprint generation",
+      "Statistical significance calculations",
+      "Experiment design optimization",
+      "Test velocity analysis",
+      "Conversion impact projection"
+    ],
+    "instructions_required": [
+      "kpi-experimentation",
+      "technical-implementation-guidelines"
+    ],
+    "tools_used": [
+      "osa_webx_tools"
+    ]
+  },
+  "personalization_idea_generator": {
+    "name": "Personalization Idea Generator",
+    "description": "Agent for generating personalization strategies and implementation recommendations",
+    "capabilities": [
+      "Personalization strategy development",
+      "Dynamic content recommendations",
+      "User experience optimization",
+      "Cross-channel personalization planning",
+      "Maturity-based implementation phasing"
+    ],
+    "instructions_required": [
+      "personalization-maturity-rubric",
+      "brand-tone-guidelines",
+      "technical-implementation-guidelines"
+    ],
+    "tools_used": [
+      "osa_cmp_tools",
+      "workflow_data_sharing"
+    ]
+  },
+  "cmp_organizer": {
+    "name": "Campaign Management Platform Organizer",
+    "description": "Agent specialized in email campaign optimization and multi-channel marketing coordination",
+    "capabilities": [
+      "Email campaign performance analysis",
+      "Send time optimization",
+      "Cross-channel campaign coordination",
+      "Customer journey optimization",
+      "Campaign ROI analysis"
+    ],
+    "instructions_required": [
+      "data-governance-privacy",
+      "technical-implementation-guidelines"
+    ],
+    "tools_used": [
+      "osa_cmp_tools"
+    ]
+  },
+  "geo_audit": {
+    "name": "Geographic Audit Agent",
+    "description": "Agent for geographic analysis, regional performance assessment, and location-based optimization",
+    "capabilities": [
+      "Geographic performance analysis",
+      "Regional optimization recommendations",
+      "Location-based personalization",
+      "Multi-market strategy development",
+      "Compliance and privacy by region"
+    ],
+    "instructions_required": [
+      "data-governance-privacy",
+      "content-guidelines",
+      "kpi-experimentation"
+    ],
+    "tools_used": [
+      "workflow_data_sharing"
+    ]
+  }
+}

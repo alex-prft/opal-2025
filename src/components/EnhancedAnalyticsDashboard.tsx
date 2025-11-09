@@ -26,7 +26,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { PMGWorkflowOutput } from '@/lib/types/maturity';
+import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import LoadingAnimation, { LoadingPresets } from '@/components/LoadingAnimation';
 import {
   Download,
@@ -45,7 +45,7 @@ import {
 } from 'lucide-react';
 
 interface EnhancedAnalyticsDashboardProps {
-  workflowResult: PMGWorkflowOutput;
+  workflowResult: OSAWorkflowOutput;
 }
 
 interface AnalyticsData {
@@ -89,7 +89,7 @@ export default function EnhancedAnalyticsDashboard({ workflowResult }: EnhancedA
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer opal-personalization-secret-2025'
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_SECRET_KEY || 'opal-personalization-secret-2025'}`
           },
           body: JSON.stringify({ date_range: dateRange }),
           signal: controller.signal
@@ -98,7 +98,7 @@ export default function EnhancedAnalyticsDashboard({ workflowResult }: EnhancedA
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer opal-personalization-secret-2025'
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_SECRET_KEY || 'opal-personalization-secret-2025'}`
           },
           body: JSON.stringify({ date_range: dateRange }),
           signal: controller.signal
@@ -147,6 +147,17 @@ export default function EnhancedAnalyticsDashboard({ workflowResult }: EnhancedA
 
   const { maturity_plan } = workflowResult;
 
+  // Return early if no maturity plan is available
+  if (!maturity_plan) {
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          <p className="text-muted-foreground">No maturity plan data available for enhanced analytics.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   // Helper functions for calculating metrics
   function calculateContentPerformanceScore() {
     if (!analyticsData.ga4Data?.top_content) return 0;
@@ -163,12 +174,12 @@ export default function EnhancedAnalyticsDashboard({ workflowResult }: EnhancedA
   }
 
   function calculatePersonalizationROI(websiteEngagement: number) {
-    const baseROI = maturity_plan.overall_maturity_score * 23.5; // Base ROI calculation
+    const baseROI = (maturity_plan?.overall_maturity_score || 0) * 23.5; // Base ROI calculation
     const engagementMultiplier = (websiteEngagement / 100) * 1.5;
     return Math.round((baseROI * engagementMultiplier) * 10) / 10;
   }
 
-  // Enhanced metrics combining GA4 + Salesforce + PMG data
+  // Enhanced metrics combining GA4 + Salesforce + OSA data
   const websiteEngagement = analyticsData.ga4Data?.overall_engagement_rate || 0;
   const memberEngagement = analyticsData.salesforceData?.member_engagement_rate || 0;
   const contentPerformance = calculateContentPerformanceScore();
@@ -178,7 +189,7 @@ export default function EnhancedAnalyticsDashboard({ workflowResult }: EnhancedA
   const combinedMetrics = {
     websiteEngagement,
     memberEngagement,
-    maturityScore: maturity_plan.overall_maturity_score,
+    maturityScore: maturity_plan?.overall_maturity_score || 0,
     contentPerformance,
     audienceGrowth,
     personalizationROI

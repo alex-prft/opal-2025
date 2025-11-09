@@ -1,0 +1,323 @@
+{
+  "name": "OSA - WebX Technical Analysis Tools",
+  "description": "Web experience and technical analysis tools for GEO audits, performance assessment, and technical personalization feasibility in OSA workflows",
+  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/webx/discovery",
+  "registry_id": "osa_webx",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "perform_geo_audit",
+      "description": "Comprehensive Generative Engine Optimization audit for AI citation readiness and search engine visibility",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "website_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Target website URL for GEO audit"
+          },
+          "audit_scope": {
+            "type": "object",
+            "properties": {
+              "page_depth": {
+                "type": "number",
+                "default": 3,
+                "description": "Maximum crawl depth for audit"
+              },
+              "include_subdomains": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include subdomain analysis"
+              },
+              "focus_areas": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["structured_data", "ai_citation_readiness", "schema_markup", "content_optimization", "technical_seo"]
+                },
+                "description": "Specific GEO focus areas for audit"
+              }
+            }
+          },
+          "ai_engine_compatibility": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["google_ai", "bing_copilot", "claude", "chatgpt", "perplexity"]
+            },
+            "description": "AI engines to optimize for citation readiness"
+          },
+          "competitive_analysis": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include competitive GEO analysis"
+          }
+        },
+        "required": ["website_url"]
+      }
+    },
+    {
+      "name": "analyze_core_web_vitals",
+      "description": "Assess Core Web Vitals and performance metrics for personalization implementation impact",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target_pages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Specific pages to analyze for Core Web Vitals"
+          },
+          "performance_metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["lcp", "fid", "cls", "fcp", "ttfb", "speed_index"]
+            },
+            "default": ["lcp", "fid", "cls"],
+            "description": "Performance metrics to evaluate"
+          },
+          "testing_conditions": {
+            "type": "object",
+            "properties": {
+              "device_types": {
+                "type": "array",
+                "items": {"type": "string"},
+                "default": ["desktop", "mobile"],
+                "description": "Device types for testing"
+              },
+              "network_conditions": {
+                "type": "array",
+                "items": {"type": "string"},
+                "default": ["fast_3g", "slow_3g", "4g"],
+                "description": "Network conditions to simulate"
+              },
+              "geographic_locations": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Geographic locations for performance testing"
+              }
+            }
+          },
+          "personalization_impact_assessment": {
+            "type": "boolean",
+            "default": true,
+            "description": "Assess potential impact of personalization on performance"
+          }
+        },
+        "required": ["target_pages"]
+      }
+    },
+    {
+      "name": "evaluate_technical_constraints",
+      "description": "Identify technical constraints and requirements for personalization implementation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "website_technology": {
+            "type": "object",
+            "properties": {
+              "cms_platform": {
+                "type": "string",
+                "description": "Content management system in use"
+              },
+              "frontend_framework": {
+                "type": "string",
+                "description": "Frontend framework or technology stack"
+              },
+              "cdn_provider": {
+                "type": "string",
+                "description": "Content delivery network provider"
+              },
+              "analytics_platforms": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Analytics and tracking platforms in use"
+              }
+            }
+          },
+          "personalization_requirements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "personalization_type": {"type": "string"},
+                "technical_complexity": {"type": "string"},
+                "performance_impact": {"type": "string"}
+              }
+            },
+            "description": "Planned personalization implementations to evaluate"
+          },
+          "scalability_assessment": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include scalability and load impact assessment"
+          },
+          "integration_requirements": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Required integrations for personalization"
+          }
+        },
+        "required": ["personalization_requirements"]
+      }
+    },
+    {
+      "name": "assess_schema_markup_implementation",
+      "description": "Evaluate and recommend schema markup for enhanced AI citation and search visibility",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["organization", "article", "product", "event", "faq", "breadcrumb", "local_business", "review"]
+            },
+            "description": "Content types to evaluate for schema markup"
+          },
+          "current_markup_audit": {
+            "type": "boolean",
+            "default": true,
+            "description": "Audit existing schema markup implementation"
+          },
+          "ai_optimization": {
+            "type": "boolean",
+            "default": true,
+            "description": "Focus on AI-friendly schema optimization"
+          },
+          "industry_specific_schemas": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Industry-specific schemas relevant to IFPA"
+          },
+          "implementation_priority": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"],
+            "default": "high",
+            "description": "Implementation priority level"
+          }
+        },
+        "required": ["content_types"]
+      }
+    },
+    {
+      "name": "perform_mobile_optimization_audit",
+      "description": "Comprehensive mobile experience audit for personalization readiness",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mobile_audit_scope": {
+            "type": "object",
+            "properties": {
+              "responsive_design": {
+                "type": "boolean",
+                "default": true,
+                "description": "Evaluate responsive design implementation"
+              },
+              "mobile_performance": {
+                "type": "boolean",
+                "default": true,
+                "description": "Assess mobile-specific performance metrics"
+              },
+              "touch_interactions": {
+                "type": "boolean",
+                "default": true,
+                "description": "Evaluate touch interaction optimization"
+              },
+              "mobile_personalization": {
+                "type": "boolean",
+                "default": true,
+                "description": "Assess mobile personalization opportunities"
+              }
+            }
+          },
+          "device_testing": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ios_phone", "android_phone", "tablet", "desktop"]
+            },
+            "default": ["ios_phone", "android_phone"],
+            "description": "Device types for testing"
+          },
+          "accessibility_compliance": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include accessibility compliance assessment"
+          }
+        }
+      }
+    },
+    {
+      "name": "generate_performance_baseline",
+      "description": "Establish comprehensive performance baseline for personalization impact measurement",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "baseline_metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["page_load_speed", "time_to_interactive", "bounce_rate", "conversion_rate", "user_engagement", "search_visibility"]
+            },
+            "description": "Metrics to include in performance baseline"
+          },
+          "measurement_period": {
+            "type": "string",
+            "enum": ["1_week", "2_weeks", "1_month", "3_months"],
+            "default": "1_month",
+            "description": "Period for baseline measurement"
+          },
+          "traffic_segments": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Traffic segments for baseline segmentation"
+          },
+          "benchmark_comparison": {
+            "type": "boolean",
+            "default": true,
+            "description": "Compare against industry benchmarks"
+          },
+          "personalization_readiness_score": {
+            "type": "boolean",
+            "default": true,
+            "description": "Generate overall personalization readiness score"
+          }
+        },
+        "required": ["baseline_metrics"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${WEBX_API_KEY}"
+  },
+  "integration_endpoints": {
+    "performance_analysis": "https://ifpa-strategy.vercel.app/api/tools/webx/performance",
+    "geo_audit": "https://ifpa-strategy.vercel.app/api/tools/webx/geo",
+    "technical_assessment": "https://ifpa-strategy.vercel.app/api/tools/webx/technical",
+    "mobile_audit": "https://ifpa-strategy.vercel.app/api/tools/webx/mobile"
+  },
+  "configuration": {
+    "performance_testing": {
+      "timeout_seconds": 60,
+      "retry_attempts": 3,
+      "concurrent_tests": 2
+    },
+    "quality_thresholds": {
+      "minimum_geo_score": 60,
+      "core_web_vitals_pass": 75,
+      "mobile_optimization_threshold": 70,
+      "personalization_readiness_threshold": 60
+    },
+    "reporting": {
+      "include_recommendations": true,
+      "priority_scoring": true,
+      "implementation_guidance": true
+    }
+  }
+}

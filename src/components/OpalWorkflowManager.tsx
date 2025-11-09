@@ -86,8 +86,8 @@ export default function OpalWorkflowManager() {
         // For now, we'll create demo workflows
         setWorkflows([
           {
-            workflow_id: 'pmg-strategy-workflow',
-            workflow_name: 'PMG Strategy Analysis',
+            workflow_id: 'osa-strategy-workflow',
+            workflow_name: 'OSA Strategy Analysis',
             status: 'active',
             last_updated: new Date().toISOString(),
             trigger_source: 'schedule'
@@ -124,7 +124,7 @@ export default function OpalWorkflowManager() {
       // Get current form data from sessionStorage if available
       let inputData = {};
       try {
-        const savedInput = sessionStorage.getItem('pmg_input_data');
+        const savedInput = sessionStorage.getItem('osa_input_data');
         if (savedInput) {
           inputData = JSON.parse(savedInput);
         }

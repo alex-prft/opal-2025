@@ -6,7 +6,7 @@ import { mcpServer } from '@/lib/mcp/server';
  * Provides standardized interface for AI agents to interact with Opal personalization tools
  *
  * Note: This endpoint works locally but has deployment routing issues in production.
- * Use the PMG workflow endpoint at /api/pmg/workflow for production access to core functionality.
+ * Use the OSA workflow endpoint at /api/osa/workflow for production access to core functionality.
  */
 
 export async function GET(request: NextRequest) {
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
             }
           },
           instructions: "Use GET with ?action=list_tools, ?action=list_resources, or ?action=list_prompts to explore available capabilities. Use POST to execute tools or get prompts.",
-          note: "Production routing issue - use /api/pmg/workflow for core personalization assessment functionality"
+          note: "Production routing issue - use /api/osa/workflow for core personalization assessment functionality"
         });
     }
   } catch (error) {

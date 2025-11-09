@@ -1,0 +1,296 @@
+{
+  "name": "OSA - Content Recommendations Tools",
+  "description": "Content recommendation and analysis tools for content review, optimization, and personalized content strategy development in OSA workflows",
+  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/discovery",
+  "registry_id": "osa_contentrecs",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "analyze_website_content",
+      "description": "Comprehensive content analysis including quality scoring, SEO assessment, and personalization potential identification",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "website_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Target website URL for content analysis"
+          },
+          "analysis_scope": {
+            "type": "object",
+            "properties": {
+              "page_types": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["homepage", "product_pages", "category_pages", "blog_articles", "resource_pages", "member_portal"]
+                },
+                "description": "Types of pages to analyze"
+              },
+              "content_depth": {
+                "type": "string",
+                "enum": ["surface", "comprehensive", "deep_analysis"],
+                "default": "comprehensive",
+                "description": "Depth of content analysis"
+              },
+              "include_multimedia": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include analysis of images, videos, and interactive content"
+              }
+            }
+          },
+          "quality_criteria": {
+            "type": "object",
+            "properties": {
+              "readability_standards": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Readability and accessibility standards to evaluate"
+              },
+              "seo_factors": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include SEO quality assessment"
+              },
+              "brand_consistency": {
+                "type": "boolean",
+                "default": true,
+                "description": "Evaluate brand voice and consistency"
+              }
+            }
+          }
+        },
+        "required": ["website_url"]
+      }
+    },
+    {
+      "name": "identify_personalization_opportunities",
+      "description": "Analyze content to identify specific personalization opportunities based on audience segments and member behavior",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_inventory": {
+            "type": "object",
+            "description": "Content inventory from website analysis"
+          },
+          "audience_segments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "segment_id": {"type": "string"},
+                "characteristics": {"type": "object"},
+                "content_preferences": {"type": "object"}
+              }
+            },
+            "description": "Target audience segments for personalization"
+          },
+          "personalization_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["messaging", "imagery", "product_focus", "content_depth", "navigation", "calls_to_action"]
+            },
+            "description": "Types of personalization to identify"
+          },
+          "business_objectives": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Business goals to align personalization opportunities with"
+          }
+        },
+        "required": ["audience_segments"]
+      }
+    },
+    {
+      "name": "generate_content_recommendations",
+      "description": "Generate specific content recommendations for optimization and personalization implementation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "personalization_opportunities": {
+            "type": "array",
+            "description": "Identified personalization opportunities from analysis"
+          },
+          "content_gaps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "gap_type": {"type": "string"},
+                "affected_segments": {"type": "array"},
+                "priority_level": {"type": "string"}
+              }
+            },
+            "description": "Identified content gaps to address"
+          },
+          "recommendation_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["optimization", "new_content", "restructuring", "personalization_variants", "seo_enhancement"]
+            },
+            "description": "Types of recommendations to generate"
+          },
+          "implementation_timeline": {
+            "type": "string",
+            "enum": ["immediate", "short_term", "medium_term", "long_term"],
+            "description": "Target implementation timeframe"
+          }
+        },
+        "required": ["personalization_opportunities"]
+      }
+    },
+    {
+      "name": "assess_content_performance",
+      "description": "Evaluate current content performance metrics and identify high-performing content patterns",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "performance_metrics": {
+            "type": "object",
+            "properties": {
+              "engagement_data": {
+                "type": "object",
+                "description": "User engagement metrics by content type"
+              },
+              "conversion_data": {
+                "type": "object",
+                "description": "Conversion performance by content"
+              },
+              "seo_performance": {
+                "type": "object",
+                "description": "Search engine performance metrics"
+              }
+            }
+          },
+          "analysis_period": {
+            "type": "string",
+            "enum": ["30_days", "90_days", "6_months", "12_months"],
+            "default": "90_days",
+            "description": "Time period for performance analysis"
+          },
+          "benchmark_comparison": {
+            "type": "boolean",
+            "default": true,
+            "description": "Compare against industry benchmarks"
+          },
+          "segment_breakdown": {
+            "type": "boolean",
+            "default": true,
+            "description": "Break down performance by audience segments"
+          }
+        },
+        "required": ["performance_metrics"]
+      }
+    },
+    {
+      "name": "create_content_matrix",
+      "description": "Create comprehensive content matrix mapping content types to audience segments and personalization strategies",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_inventory": {
+            "type": "object",
+            "description": "Complete content inventory and categorization"
+          },
+          "audience_segments": {
+            "type": "array",
+            "description": "Defined audience segments for mapping"
+          },
+          "personalization_strategies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "strategy_id": {"type": "string"},
+                "content_requirements": {"type": "object"},
+                "implementation_complexity": {"type": "string"}
+              }
+            },
+            "description": "Personalization strategies to map"
+          },
+          "matrix_format": {
+            "type": "string",
+            "enum": ["detailed_specifications", "implementation_guide", "priority_matrix"],
+            "default": "detailed_specifications",
+            "description": "Format for content matrix output"
+          }
+        },
+        "required": ["content_inventory", "audience_segments", "personalization_strategies"]
+      }
+    },
+    {
+      "name": "optimize_content_for_seo",
+      "description": "Generate SEO optimization recommendations for enhanced search visibility and AI citation readiness",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "page_url": {"type": "string"},
+                "content_type": {"type": "string"},
+                "current_seo_score": {"type": "number"}
+              }
+            },
+            "description": "Content pages for SEO optimization"
+          },
+          "seo_objectives": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["search_rankings", "ai_citation_readiness", "featured_snippets", "local_seo", "voice_search"]
+            },
+            "description": "SEO optimization objectives"
+          },
+          "target_keywords": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "keyword": {"type": "string"},
+                "search_volume": {"type": "number"},
+                "competition_level": {"type": "string"}
+              }
+            },
+            "description": "Target keywords for optimization"
+          },
+          "competitor_analysis": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include competitor content analysis"
+          }
+        },
+        "required": ["content_pages", "seo_objectives"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${CONTENT_RECS_API_KEY}"
+  },
+  "integration_endpoints": {
+    "content_analysis": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/analyze",
+    "seo_assessment": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/seo",
+    "personalization_engine": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/personalization",
+    "performance_metrics": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/performance"
+  },
+  "configuration": {
+    "account_id": "${CONTENT_RECS_ACCOUNT_ID}",
+    "analysis_settings": {
+      "crawl_depth": 3,
+      "concurrent_requests": 5,
+      "timeout_seconds": 30
+    },
+    "quality_thresholds": {
+      "minimum_content_score": 60,
+      "seo_readiness_threshold": 70,
+      "personalization_potential_threshold": 50
+    }
+  }
+}

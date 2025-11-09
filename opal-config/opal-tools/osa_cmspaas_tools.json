@@ -1,0 +1,343 @@
+{
+  "name": "OSA - CMS PaaS Integration Tools",
+  "description": "Content Management System Platform-as-a-Service tools for content optimization, personalized content creation, and content strategy implementation in OSA workflows",
+  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/discovery",
+  "registry_id": "osa_cmspaas",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "audit_content_structure",
+      "description": "Analyze existing content structure and organization for personalization readiness",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cms_connection": {
+            "type": "object",
+            "properties": {
+              "platform_type": {
+                "type": "string",
+                "enum": ["contentful", "optimizely_cms", "drupal", "wordpress", "strapi", "sanity"],
+                "description": "CMS platform type"
+              },
+              "api_endpoint": {"type": "string", "description": "CMS API endpoint"},
+              "content_types": {"type": "array", "items": {"type": "string"}, "description": "Content types to audit"}
+            },
+            "description": "CMS platform connection details"
+          },
+          "audit_criteria": {
+            "type": "object",
+            "properties": {
+              "personalization_fields": {
+                "type": "boolean",
+                "default": true,
+                "description": "Check for personalization-ready field structures"
+              },
+              "taxonomy_analysis": {
+                "type": "boolean",
+                "default": true,
+                "description": "Analyze taxonomy and categorization systems"
+              },
+              "metadata_completeness": {
+                "type": "boolean",
+                "default": true,
+                "description": "Assess metadata completeness for targeting"
+              },
+              "content_versioning": {
+                "type": "boolean",
+                "default": true,
+                "description": "Evaluate content versioning capabilities"
+              }
+            },
+            "description": "Criteria for content structure audit"
+          },
+          "personalization_requirements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "requirement_type": {"type": "string"},
+                "target_audiences": {"type": "array"},
+                "content_variations_needed": {"type": "number"}
+              }
+            },
+            "description": "Personalization requirements to validate against"
+          }
+        },
+        "required": ["cms_connection"]
+      }
+    },
+    {
+      "name": "generate_content_templates",
+      "description": "Create personalized content templates and structures for audience-specific content creation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "audience_segments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "segment_id": {"type": "string"},
+                "content_preferences": {"type": "object"},
+                "messaging_guidelines": {"type": "object"}
+              }
+            },
+            "description": "Audience segments for template creation"
+          },
+          "content_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["homepage_hero", "product_descriptions", "blog_articles", "email_templates", "landing_pages", "resource_guides"]
+            },
+            "description": "Types of content templates to generate"
+          },
+          "personalization_variables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "variable_name": {"type": "string"},
+                "variable_type": {"type": "string"},
+                "default_value": {"type": "string"},
+                "segment_mappings": {"type": "object"}
+              }
+            },
+            "description": "Dynamic personalization variables for templates"
+          },
+          "brand_guidelines": {
+            "type": "object",
+            "properties": {
+              "voice_and_tone": {"type": "object"},
+              "visual_guidelines": {"type": "object"},
+              "compliance_requirements": {"type": "array"}
+            },
+            "description": "Brand guidelines for template consistency"
+          }
+        },
+        "required": ["audience_segments", "content_types"]
+      }
+    },
+    {
+      "name": "optimize_existing_content",
+      "description": "Optimize existing content for personalization and improved performance",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_inventory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "content_id": {"type": "string"},
+                "content_type": {"type": "string"},
+                "current_performance": {"type": "object"},
+                "optimization_opportunities": {"type": "array"}
+              }
+            },
+            "description": "Content inventory for optimization"
+          },
+          "optimization_objectives": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["seo_improvement", "personalization_readiness", "engagement_optimization", "conversion_optimization", "accessibility_enhancement"]
+            },
+            "description": "Optimization objectives to focus on"
+          },
+          "target_segments": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Audience segments to optimize content for"
+          },
+          "optimization_constraints": {
+            "type": "object",
+            "properties": {
+              "maintain_existing_urls": {"type": "boolean"},
+              "preserve_seo_rankings": {"type": "boolean"},
+              "budget_limitations": {"type": "object"}
+            },
+            "description": "Constraints and limitations for optimization"
+          }
+        },
+        "required": ["content_inventory", "optimization_objectives"]
+      }
+    },
+    {
+      "name": "create_content_variation_matrix",
+      "description": "Generate comprehensive content variation matrix for personalization implementation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "base_content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "content_piece": {"type": "string"},
+                "content_elements": {"type": "object"},
+                "variation_potential": {"type": "array"}
+              }
+            },
+            "description": "Base content pieces for variation creation"
+          },
+          "personalization_dimensions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dimension_name": {"type": "string"},
+                "variation_options": {"type": "array"},
+                "audience_mapping": {"type": "object"}
+              }
+            },
+            "description": "Dimensions for content personalization"
+          },
+          "matrix_complexity": {
+            "type": "string",
+            "enum": ["simple", "moderate", "complex", "advanced"],
+            "default": "moderate",
+            "description": "Complexity level for variation matrix"
+          },
+          "content_production_capacity": {
+            "type": "object",
+            "properties": {
+              "team_size": {"type": "number"},
+              "production_timeline": {"type": "string"},
+              "budget_constraints": {"type": "object"}
+            },
+            "description": "Content production capacity and constraints"
+          }
+        },
+        "required": ["base_content", "personalization_dimensions"]
+      }
+    },
+    {
+      "name": "implement_content_governance",
+      "description": "Establish content governance framework for personalized content management",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "governance_requirements": {
+            "type": "object",
+            "properties": {
+              "approval_workflows": {"type": "array", "description": "Content approval workflows"},
+              "quality_standards": {"type": "object", "description": "Quality and brand standards"},
+              "compliance_rules": {"type": "array", "description": "Legal and regulatory compliance"},
+              "version_control": {"type": "object", "description": "Content versioning requirements"}
+            },
+            "description": "Content governance requirements and rules"
+          },
+          "stakeholder_roles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role_name": {"type": "string"},
+                "permissions": {"type": "array"},
+                "responsibilities": {"type": "array"}
+              }
+            },
+            "description": "Stakeholder roles and permissions"
+          },
+          "automation_preferences": {
+            "type": "object",
+            "properties": {
+              "automated_workflows": {"type": "boolean"},
+              "content_validation": {"type": "boolean"},
+              "publication_scheduling": {"type": "boolean"}
+            },
+            "description": "Automation preferences for governance"
+          },
+          "cms_integration": {
+            "type": "object",
+            "properties": {
+              "platform_capabilities": {"type": "object"},
+              "custom_field_requirements": {"type": "array"},
+              "workflow_integrations": {"type": "array"}
+            },
+            "description": "CMS platform integration requirements"
+          }
+        },
+        "required": ["governance_requirements", "stakeholder_roles"]
+      }
+    },
+    {
+      "name": "measure_content_performance",
+      "description": "Implement comprehensive content performance measurement for personalization effectiveness",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "performance_metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["engagement_rate", "conversion_rate", "time_on_page", "bounce_rate", "social_shares", "lead_generation", "seo_performance"]
+            },
+            "description": "Performance metrics to track"
+          },
+          "measurement_framework": {
+            "type": "object",
+            "properties": {
+              "baseline_period": {"type": "string"},
+              "reporting_frequency": {"type": "string"},
+              "attribution_model": {"type": "string"}
+            },
+            "description": "Framework for performance measurement"
+          },
+          "personalization_impact_tracking": {
+            "type": "object",
+            "properties": {
+              "control_vs_personalized": {"type": "boolean"},
+              "segment_performance_breakdown": {"type": "boolean"},
+              "individual_variation_tracking": {"type": "boolean"}
+            },
+            "description": "Personalization-specific impact tracking"
+          },
+          "analytics_integration": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["google_analytics", "adobe_analytics", "optimizely_stats", "custom_dashboard"]
+            },
+            "description": "Analytics platforms for integration"
+          }
+        },
+        "required": ["performance_metrics", "measurement_framework"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${CMS_PAAS_API_KEY}"
+  },
+  "integration_endpoints": {
+    "content_audit": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/audit",
+    "template_generation": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/templates",
+    "content_optimization": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/optimize",
+    "governance_setup": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/governance",
+    "performance_tracking": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/performance"
+  },
+  "configuration": {
+    "supported_cms_platforms": [
+      "contentful",
+      "optimizely_cms",
+      "drupal",
+      "wordpress",
+      "strapi",
+      "sanity"
+    ],
+    "content_optimization": {
+      "ai_content_analysis": true,
+      "seo_optimization": true,
+      "accessibility_compliance": true,
+      "performance_optimization": true
+    },
+    "template_generation": {
+      "dynamic_personalization": true,
+      "brand_consistency_validation": true,
+      "multi_language_support": true
+    }
+  }
+}

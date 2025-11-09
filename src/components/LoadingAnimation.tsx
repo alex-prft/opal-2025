@@ -164,8 +164,8 @@ export default function LoadingAnimation({
 
 // Preset loading configurations
 export const LoadingPresets = {
-  pmgWorkflow: {
-    title: "Processing PMG Workflow",
+  osaWorkflow: {
+    title: "Processing Strategy Analysis",
     description: "Analyzing your personalization maturity and generating recommendations...",
     estimatedTime: 15,
   },

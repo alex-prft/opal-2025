@@ -3,7 +3,7 @@
  * Determines if a business has specific capabilities based on their input data
  */
 
-import { PMGWorkflowInput } from '@/lib/types/maturity';
+import { OSAWorkflowInput } from '@/lib/types/maturity';
 
 export interface CapabilityCheck {
   hasExperimentation: boolean;
@@ -90,9 +90,9 @@ const DATA_PLATFORM_KEYWORDS = [
 ];
 
 /**
- * Checks if a business has specific capabilities based on their PMG workflow input
+ * Checks if a business has specific capabilities based on their OSA workflow input
  */
-export function checkBusinessCapabilities(input: PMGWorkflowInput): CapabilityCheck {
+export function checkBusinessCapabilities(input: OSAWorkflowInput): CapabilityCheck {
   // Combine all relevant fields for capability checking
   const allCapabilities = [
     ...input.current_capabilities,
@@ -121,7 +121,7 @@ function hasCapability(capabilityString: string, keywords: string[]): boolean {
  * Gets capability-aware recommendations based on business capabilities
  */
 export function getFilteredRecommendations(
-  input: PMGWorkflowInput,
+  input: OSAWorkflowInput,
   allRecommendations: any[]
 ): any[] {
   const capabilities = checkBusinessCapabilities(input);
@@ -150,7 +150,7 @@ export function getFilteredRecommendations(
  * Creates capability-aware use case experiments
  */
 export function getFilteredExperiments(
-  input: PMGWorkflowInput,
+  input: OSAWorkflowInput,
   allExperiments: any[]
 ): any[] {
   const capabilities = checkBusinessCapabilities(input);
@@ -167,7 +167,7 @@ export function getFilteredExperiments(
  * Creates capability-aware personalization strategies
  */
 export function getFilteredPersonalizationStrategies(
-  input: PMGWorkflowInput,
+  input: OSAWorkflowInput,
   allStrategies: any[]
 ): any[] {
   const capabilities = checkBusinessCapabilities(input);
@@ -185,7 +185,7 @@ export function getFilteredPersonalizationStrategies(
 /**
  * Gets capability status summary for display
  */
-export function getCapabilitySummary(input: PMGWorkflowInput): {
+export function getCapabilitySummary(input: OSAWorkflowInput): {
   capabilities: CapabilityCheck;
   recommendations: string[];
   warnings: string[];

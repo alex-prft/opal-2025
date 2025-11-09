@@ -4,7 +4,8 @@
  * and provides intelligent recommendations for personalization strategies
  */
 
-import { PMGWorkflowInput } from '@/lib/types/maturity';
+import { OSAWorkflowInput } from '@/lib/types/maturity';
+import { opalDataStore } from '@/lib/opal/supabase-data-store';
 
 // Marketing Technology Knowledge Base
 export interface MarketingTechCapability {
@@ -250,14 +251,14 @@ class PersonalizationRAG {
   ];
 
   // Generate intelligent recommendations based on form input
-  generateRecommendations(input: PMGWorkflowInput): {
+  generateRecommendations(input: OSAWorkflowInput): {
     useCases: PersonalizationUseCase[];
     omnichannelStrategies: OmnichannelRecommendation[];
     technologySynergies: string[];
     quickWins: PersonalizationUseCase[];
   } {
     const relevantTech = this.knowledgeBase.filter(tech =>
-      input.additional_marketing_technology.some(inputTech =>
+      (input.additional_marketing_technology || []).some(inputTech =>
         tech.technology.toLowerCase().includes(inputTech.toLowerCase()) ||
         inputTech.toLowerCase().includes(tech.technology.toLowerCase())
       )
@@ -276,7 +277,241 @@ class PersonalizationRAG {
     };
   }
 
-  private generateUseCases(relevantTech: MarketingTechCapability[], input: PMGWorkflowInput): PersonalizationUseCase[] {
+  // NEW: Generate recommendations using Opal agent data when available
+  async generateOpalRecommendations(input: OSAWorkflowInput, workflowId?: string): Promise<{
+    useCases: PersonalizationUseCase[];
+    omnichannelStrategies: OmnichannelRecommendation[];
+    technologySynergies: string[];
+    quickWins: PersonalizationUseCase[];
+    opalInsights: {
+      [key: string]: any;
+    };
+  }> {
+    let opalInsights: any = {};
+
+    // Try to get Opal data if workflow ID is provided
+    if (workflowId) {
+      const workflow = await opalDataStore.getWorkflow(workflowId);
+
+      if (workflow && workflow.status === 'completed') {
+        // Extract agent data from the results object
+        opalInsights = {
+          contentInsights: workflow.results['content_review']?.output,
+          geoInsights: workflow.results['geo_audit']?.output,
+          audienceInsights: workflow.results['audience_suggester']?.output,
+          experimentInsights: workflow.results['experiment_blueprinter']?.output,
+          personalizationInsights: workflow.results['personalization_idea_generator']?.output
+        };
+      }
+    }
+
+    // Generate Opal-enhanced recommendations
+    const useCases = this.generateOpalEnhancedUseCases(input, opalInsights);
+    const omnichannelStrategies = this.generateOpalEnhancedOmnichannelStrategies(input, opalInsights);
+    const technologySynergies = this.generateOpalEnhancedTechnologySynergies(input, opalInsights);
+    const quickWins = useCases.filter(useCase => useCase.complexity === 'low' || useCase.complexity === 'medium');
+
+    return {
+      useCases: useCases.slice(0, 12), // More recommendations with Opal data
+      omnichannelStrategies: omnichannelStrategies.slice(0, 8), // More strategies with Opal insights
+      technologySynergies,
+      quickWins: quickWins.slice(0, 6), // More quick wins
+      opalInsights
+    };
+  }
+
+  // NEW: Generate use cases enhanced with Opal agent data
+  private generateOpalEnhancedUseCases(input: OSAWorkflowInput, opalInsights: any): PersonalizationUseCase[] {
+    const useCases: PersonalizationUseCase[] = [];
+
+    // Content-based use cases from Content Review agent
+    if (opalInsights.contentInsights) {
+      useCases.push({
+        title: 'Content Optimization Strategy',
+        description: 'Implement content improvements based on Opal analysis and recommendations',
+        complexity: 'medium',
+        technologies: ['Optimizely Web', 'Content Management System', 'ODP'],
+        businessImpact: 'high',
+        implementationTime: '2-4 weeks',
+        kpis: ['User Engagement', 'Conversion Rate', 'Content Performance'],
+        example: 'Based on Opal content analysis: optimize content structure and personalization opportunities'
+      });
+    }
+
+    // GEO-based use cases from GEO Audit agent
+    if (opalInsights.geoInsights) {
+      useCases.push({
+        title: 'AI Citation Readiness Optimization',
+        description: 'Improve search visibility and AI citation readiness based on GEO audit findings',
+        complexity: 'medium',
+        technologies: ['Schema Markup', 'Structured Data', 'Optimizely Web'],
+        businessImpact: 'high',
+        implementationTime: '3-6 weeks',
+        kpis: ['Search Visibility', 'AI Citation Rate', 'Organic Traffic'],
+        example: 'Schema implementation and technical SEO improvements based on Opal GEO audit'
+      });
+
+      useCases.push({
+        title: 'Technical SEO Quick Wins',
+        description: 'Implement immediate technical improvements identified by Opal GEO analysis',
+        complexity: 'low',
+        technologies: ['Technical SEO', 'Schema Markup'],
+        businessImpact: 'medium',
+        implementationTime: '1-2 weeks',
+        kpis: ['Search Rankings', 'Technical Performance'],
+        example: 'Quick technical fixes identified by Opal for immediate SEO impact'
+      });
+    }
+
+    // Audience-based use cases from Audience Suggester agent
+    if (opalInsights.audienceInsights) {
+      useCases.push({
+        title: 'Targeted Audience Personalization',
+        description: 'Implement personalization strategies for Opal-identified audience segments',
+        complexity: 'medium',
+        technologies: ['ODP', 'Optimizely Web', 'Audience Segmentation'],
+        businessImpact: 'high',
+        implementationTime: '3-5 weeks',
+        kpis: ['Segment Performance', 'Engagement Rate', 'Conversion Lift'],
+        example: 'Create personalized experiences for key audience segments identified by Opal analysis'
+      });
+    }
+
+    // Experiment-based use cases from Experiment Blueprinter agent
+    if (opalInsights.experimentInsights) {
+      useCases.push({
+        title: 'Strategic A/B Testing Program',
+        description: 'Execute experimentation roadmap based on Opal blueprint recommendations',
+        complexity: 'high',
+        technologies: ['Optimizely Web', 'Optimizely Statistics Engine', 'ODP'],
+        businessImpact: 'high',
+        implementationTime: '4-8 weeks',
+        kpis: ['Test Velocity', 'Statistical Confidence', 'Conversion Impact'],
+        example: 'Structured testing program with statistical rigor based on Opal experiment blueprints'
+      });
+    }
+
+    // Personalization ideas from Personalization Idea Generator agent
+    if (opalInsights.personalizationInsights) {
+      useCases.push({
+        title: 'Dynamic Content Personalization',
+        description: 'Deploy personalized content strategies across multiple touchpoints',
+        complexity: 'medium',
+        technologies: ['Optimizely Web', 'Content Personalization', 'ODP'],
+        businessImpact: 'high',
+        implementationTime: '4-6 weeks',
+        kpis: ['Personalization Impact', 'Content Engagement', 'Conversion Rate'],
+        example: 'Multi-placement personalization strategy based on Opal recommendations'
+      });
+    }
+
+    // If no Opal data, fall back to sample data
+    if (useCases.length === 0) {
+      const relevantTech = this.knowledgeBase.filter(tech =>
+        (input.additional_marketing_technology || []).some(inputTech =>
+          tech.technology.toLowerCase().includes(inputTech.toLowerCase()) ||
+          inputTech.toLowerCase().includes(tech.technology.toLowerCase())
+        )
+      );
+      return this.generateUseCases(relevantTech, input);
+    }
+
+    return useCases;
+  }
+
+  // NEW: Generate omnichannel strategies enhanced with Opal data
+  private generateOpalEnhancedOmnichannelStrategies(input: OSAWorkflowInput, opalInsights: any): OmnichannelRecommendation[] {
+    const strategies: OmnichannelRecommendation[] = [];
+
+    // Enhanced strategies based on Opal insights
+    if (opalInsights.audienceInsights) {
+      strategies.push({
+        channel: 'web',
+        strategy: 'Opal-Driven Web Personalization',
+        tactics: [
+          'Implement audience segments identified by Opal analysis',
+          'Deploy targeted content for high-value user groups',
+          'Optimize conversion paths based on user behavior patterns'
+        ],
+        technologies: ['ODP', 'Optimizely Web', 'Audience Segmentation'],
+        expectedLift: '20-40% improvement in segment engagement',
+        implementation: 'Deploy Opal-identified audience segments for targeted web personalization'
+      });
+    }
+
+    if (opalInsights.personalizationInsights) {
+      strategies.push({
+        channel: 'web',
+        strategy: 'Multi-Placement Personalization',
+        tactics: [
+          'Deploy personalized content across multiple placements',
+          'Implement dynamic messaging based on user context',
+          'Optimize call-to-action based on user intent'
+        ],
+        technologies: ['Content Management', 'ODP', 'Real-time Decisioning'],
+        expectedLift: '20-35% engagement improvement',
+        implementation: 'Deploy multi-placement personalization strategy based on Opal recommendations'
+      });
+    }
+
+    // If no Opal data, fall back to sample strategies
+    if (strategies.length === 0) {
+      const relevantTech = this.knowledgeBase.filter(tech =>
+        (input.additional_marketing_technology || []).some(inputTech =>
+          tech.technology.toLowerCase().includes(inputTech.toLowerCase()) ||
+          inputTech.toLowerCase().includes(tech.technology.toLowerCase())
+        )
+      );
+      return this.generateOmnichannelStrategies(relevantTech, input);
+    }
+
+    return strategies;
+  }
+
+  // NEW: Generate technology synergies enhanced with Opal data
+  private generateOpalEnhancedTechnologySynergies(input: OSAWorkflowInput, opalInsights: any): string[] {
+    const synergies: string[] = [];
+
+    // Add Opal-specific synergies based on available data
+    if (opalInsights.contentInsights) {
+      synergies.push('Opal Content Review analysis enables data-driven content optimization strategies with measurable performance improvements');
+    }
+
+    if (opalInsights.geoInsights) {
+      synergies.push('Opal GEO Audit provides comprehensive technical baseline with AI citation readiness assessment for targeted SEO improvements');
+    }
+
+    if (opalInsights.audienceInsights) {
+      synergies.push('Opal Audience Intelligence identifies high-value segments and behavioral patterns for precision targeting and personalization');
+    }
+
+    if (opalInsights.experimentInsights) {
+      synergies.push('Opal Experiment Blueprints provide ready-to-deploy test strategies with statistical power calculations and success metrics');
+    }
+
+    if (opalInsights.personalizationInsights) {
+      synergies.push('Opal Personalization Engine generates placement-specific strategies with targeted messaging and conversion optimization');
+    }
+
+    // Always include core Optimizely synergies
+    synergies.push('Optimizely Data Platform (ODP) integrates all Opal agent insights for unified customer profiling and real-time decisioning');
+    synergies.push('Opal workflow automation enables continuous optimization cycles with measurable business impact tracking');
+
+    // Fallback to sample synergies if no Opal data
+    if (synergies.length <= 2) {
+      const relevantTech = this.knowledgeBase.filter(tech =>
+        (input.additional_marketing_technology || []).some(inputTech =>
+          tech.technology.toLowerCase().includes(inputTech.toLowerCase()) ||
+          inputTech.toLowerCase().includes(tech.technology.toLowerCase())
+        )
+      );
+      synergies.push(...this.generateTechnologySynergies(relevantTech));
+    }
+
+    return synergies;
+  }
+
+  private generateUseCases(relevantTech: MarketingTechCapability[], input: OSAWorkflowInput): PersonalizationUseCase[] {
     const allUseCases: PersonalizationUseCase[] = [];
 
     relevantTech.forEach(tech => {
@@ -324,7 +559,7 @@ class PersonalizationRAG {
     };
   }
 
-  private generateCrossTechnologyUseCases(relevantTech: MarketingTechCapability[], input: PMGWorkflowInput): PersonalizationUseCase[] {
+  private generateCrossTechnologyUseCases(relevantTech: MarketingTechCapability[], input: OSAWorkflowInput): PersonalizationUseCase[] {
     const crossTechUseCases: PersonalizationUseCase[] = [];
 
     // Generate synergistic use cases when multiple technologies are present
@@ -361,7 +596,7 @@ class PersonalizationRAG {
     return crossTechUseCases;
   }
 
-  private generateOmnichannelStrategies(relevantTech: MarketingTechCapability[], input: PMGWorkflowInput): OmnichannelRecommendation[] {
+  private generateOmnichannelStrategies(relevantTech: MarketingTechCapability[], input: OSAWorkflowInput): OmnichannelRecommendation[] {
     const strategies: OmnichannelRecommendation[] = [];
     const techNames = relevantTech.map(t => t.technology);
 
@@ -478,7 +713,7 @@ class PersonalizationRAG {
   }
 
   // Generate Optimizely-specific use cases based on current capabilities
-  private generateOptimizelyUseCases(input: PMGWorkflowInput): PersonalizationUseCase[] {
+  private generateOptimizelyUseCases(input: OSAWorkflowInput): PersonalizationUseCase[] {
     const optimizelyUseCases: PersonalizationUseCase[] = [
       {
         title: 'Real-time Behavioral Targeting with ODP',

@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import PMGWorkflowForm from '@/components/PMGWorkflowForm';
+import OSAWorkflowForm from '@/components/OSAWorkflowForm';
 import ModernMaturityPlanDisplay from '@/components/ModernMaturityPlanDisplay';
 import MaturityAnalyticsDashboard from '@/components/MaturityAnalyticsDashboard';
 import LoadingResultsPage from '@/components/LoadingResultsPage';
 import PasswordProtection from '@/components/PasswordProtection';
-import { PMGWorkflowOutput } from '@/lib/types/maturity';
+import ForceSyncButton from '@/components/ForceSyncButton';
+import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import {
   Sparkles,
   CheckCircle,
@@ -20,15 +21,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function EnginePage() {
-  const [workflowResult, setWorkflowResult] = useState<PMGWorkflowOutput | null>(null);
+  const [workflowResult, setWorkflowResult] = useState<OSAWorkflowOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
-  const handleWorkflowComplete = (result: PMGWorkflowOutput) => {
+  const handleWorkflowComplete = (result: OSAWorkflowOutput) => {
     // Save result to sessionStorage for the results page
-    sessionStorage.setItem('pmg_latest_result', JSON.stringify(result));
+    sessionStorage.setItem('osa_latest_result', JSON.stringify(result));
 
     // Redirect to results page
     router.push('/engine/results');
@@ -96,14 +97,16 @@ export default function EnginePage() {
                   <p className="text-muted-foreground text-sm">AI Personalization Strategy</p>
                 </div>
               </div>
-              <Button
-                variant="outline"
-                onClick={() => setWorkflowResult(null)}
-                className="gap-2"
-              >
-                <ArrowRight className="h-4 w-4" />
-                Generate New Strategy
-              </Button>
+              <div className="flex items-center space-x-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setWorkflowResult(null)}
+                  className="gap-2"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                  Generate New Strategy
+                </Button>
+              </div>
             </div>
           </div>
         </header>
@@ -191,6 +194,7 @@ export default function EnginePage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <ForceSyncButton variant="button" size="sm" />
               <span className="text-sm text-muted-foreground">BETA v1.0</span>
             </div>
           </div>
@@ -218,7 +222,7 @@ export default function EnginePage() {
             <CardTitle className="text-2xl">Complete Your Strategy Assessment</CardTitle>
           </CardHeader>
           <CardContent>
-            <PMGWorkflowForm
+            <OSAWorkflowForm
               onWorkflowStart={handleWorkflowStart}
               onWorkflowComplete={handleWorkflowComplete}
               isLoading={isLoading}
@@ -242,7 +246,7 @@ export default function EnginePage() {
                 <a href="/api/mcp">MCP API</a>
               </Button>
               <Button variant="link" size="sm" asChild>
-                <a href="https://github.com/alex-prft/opal-2025">GitHub</a>
+                <a href="https://github.com/alex-prft/ifpa-strategy">GitHub</a>
               </Button>
             </div>
           </div>

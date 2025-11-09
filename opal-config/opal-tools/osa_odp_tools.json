@@ -1,0 +1,259 @@
+{
+  "name": "OSA - ODP Integration Tools",
+  "description": "Optimizely Data Platform integration tools for audience segmentation, behavioral analysis, and member profile management in OSA workflows",
+  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/odp/discovery",
+  "registry_id": "osa_odp",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "fetch_audience_segments",
+      "description": "Retrieve existing audience segments from ODP for analysis and personalization strategy development",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "segment_criteria": {
+            "type": "object",
+            "properties": {
+              "member_tiers": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "IFPA member tier filters (premium, commercial, standard)"
+              },
+              "behavioral_patterns": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Behavioral segment types to retrieve"
+              },
+              "engagement_levels": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Engagement level filters (high, medium, low)"
+              },
+              "geographic_regions": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Geographic region filters"
+              }
+            }
+          },
+          "include_size_estimates": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include estimated segment sizes for statistical analysis"
+          },
+          "include_attributes": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include detailed segment attribute data"
+          }
+        }
+      }
+    },
+    {
+      "name": "analyze_member_behavior",
+      "description": "Analyze IFPA member behavioral patterns for personalization opportunity identification",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "analysis_timeframe": {
+            "type": "string",
+            "enum": ["30_days", "90_days", "6_months", "12_months"],
+            "default": "90_days",
+            "description": "Time period for behavioral analysis"
+          },
+          "behavior_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["content_engagement", "event_attendance", "purchase_patterns", "communication_preferences", "seasonal_activity"]
+            },
+            "description": "Types of behavior to analyze"
+          },
+          "segment_breakdown": {
+            "type": "boolean",
+            "default": true,
+            "description": "Break down analysis by existing segments"
+          },
+          "include_trends": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include trend analysis and seasonal patterns"
+          }
+        },
+        "required": ["behavior_types"]
+      }
+    },
+    {
+      "name": "create_dynamic_segments",
+      "description": "Create new audience segments based on personalization strategy requirements",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "segment_definition": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Human-readable segment name"
+              },
+              "description": {
+                "type": "string",
+                "description": "Segment purpose and characteristics"
+              },
+              "targeting_criteria": {
+                "type": "object",
+                "description": "Boolean logic and criteria for segment membership"
+              },
+              "estimated_size_range": {
+                "type": "object",
+                "properties": {
+                  "minimum": {"type": "number"},
+                  "maximum": {"type": "number"}
+                },
+                "description": "Expected segment size for validation"
+              }
+            },
+            "required": ["name", "targeting_criteria"]
+          },
+          "validation_mode": {
+            "type": "string",
+            "enum": ["preview", "create", "test"],
+            "default": "preview",
+            "description": "Segment creation mode"
+          },
+          "personalization_mapping": {
+            "type": "object",
+            "description": "Map segment to specific personalization opportunities"
+          }
+        },
+        "required": ["segment_definition"]
+      }
+    },
+    {
+      "name": "get_member_journey_data",
+      "description": "Retrieve member journey and lifecycle data for personalization insights",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "journey_stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["awareness", "onboarding", "engagement", "advocacy", "renewal", "churn_risk"]
+            },
+            "description": "Member lifecycle stages to analyze"
+          },
+          "touchpoint_analysis": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include touchpoint and interaction analysis"
+          },
+          "conversion_funnel_data": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include conversion funnel performance data"
+          },
+          "seasonal_patterns": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include seasonal journey pattern analysis"
+          }
+        },
+        "required": ["journey_stages"]
+      }
+    },
+    {
+      "name": "calculate_segment_statistical_power",
+      "description": "Calculate statistical power and sample size requirements for audience segments in experimentation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "segment_ids": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "ODP segment identifiers for analysis"
+          },
+          "experiment_parameters": {
+            "type": "object",
+            "properties": {
+              "confidence_level": {
+                "type": "number",
+                "default": 0.95,
+                "description": "Statistical confidence level (0.80-0.99)"
+              },
+              "minimum_detectable_effect": {
+                "type": "number",
+                "default": 0.1,
+                "description": "Minimum effect size to detect (0.05-0.5)"
+              },
+              "statistical_power": {
+                "type": "number",
+                "default": 0.8,
+                "description": "Desired statistical power (0.70-0.95)"
+              }
+            }
+          },
+          "baseline_metrics": {
+            "type": "object",
+            "description": "Historical baseline performance metrics for each segment"
+          }
+        },
+        "required": ["segment_ids"]
+      }
+    },
+    {
+      "name": "export_segment_targeting_logic",
+      "description": "Export segment definitions as targeting logic for CMP and personalization platforms",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "segment_ids": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "ODP segments to export"
+          },
+          "export_format": {
+            "type": "string",
+            "enum": ["boolean_logic", "json_criteria", "sql_where", "cmp_native"],
+            "default": "cmp_native",
+            "description": "Format for exported targeting logic"
+          },
+          "include_audience_estimates": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include current audience size estimates"
+          },
+          "platform_compatibility": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["optimizely_web", "optimizely_feature", "cmp", "email_platforms"]
+            },
+            "description": "Target platforms for compatibility"
+          }
+        },
+        "required": ["segment_ids"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${ODP_API_KEY}"
+  },
+  "integration_endpoints": {
+    "odp_segments": "https://function.zaius.com/twilio_segment/api/segments",
+    "odp_profiles": "https://function.zaius.com/twilio_segment/api/profiles",
+    "odp_events": "https://function.zaius.com/twilio_segment/api/events",
+    "statistical_analysis": "https://ifpa-strategy.vercel.app/api/tools/odp/statistics"
+  },
+  "configuration": {
+    "project_id": "${ODP_PROJECT_ID}",
+    "rate_limits": {
+      "requests_per_minute": 100,
+      "burst_limit": 20
+    },
+    "data_retention": "90_days",
+    "privacy_compliance": "gdpr_ccpa_compliant"
+  }
+}

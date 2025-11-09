@@ -23,7 +23,7 @@ import {
   Info
 } from 'lucide-react';
 import Link from 'next/link';
-import { PMGWorkflowInput } from '@/lib/types/maturity';
+import { OSAWorkflowInput } from '@/lib/types/maturity';
 import { checkBusinessCapabilities, getCapabilitySummary, CapabilityCheck } from '@/lib/utils/capability-checker';
 
 const useCaseData = {
@@ -383,16 +383,16 @@ const useCaseData = {
 export default function UseCaseDetailPage({ params }: { params: { id: string } }) {
   const [capabilities, setCapabilities] = useState<CapabilityCheck | null>(null);
   const [capabilitySummary, setCapabilitySummary] = useState<any>(null);
-  const [inputData, setInputData] = useState<PMGWorkflowInput | null>(null);
+  const [inputData, setInputData] = useState<OSAWorkflowInput | null>(null);
 
   const useCase = useCaseData[params.id as keyof typeof useCaseData];
 
   useEffect(() => {
-    // Get PMG input data from sessionStorage to check capabilities
-    const savedInputData = sessionStorage.getItem('pmg_input_data');
+    // Get OSA input data from sessionStorage to check capabilities
+    const savedInputData = sessionStorage.getItem('osa_input_data');
     if (savedInputData) {
       try {
-        const parsedInputData: PMGWorkflowInput = JSON.parse(savedInputData);
+        const parsedInputData: OSAWorkflowInput = JSON.parse(savedInputData);
         setInputData(parsedInputData);
 
         // Check business capabilities based on the input

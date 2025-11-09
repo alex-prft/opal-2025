@@ -1,4 +1,4 @@
-// PMG Maturity Plan Types - 4 Phase Framework
+// OSA Maturity Plan Types - 4 Phase Framework
 // Crawl → Walk → Run → Fly
 
 export type MaturityPhase = 'crawl' | 'walk' | 'run' | 'fly';
@@ -188,8 +188,8 @@ export interface VendorRecommendation {
   estimated_cost: string;
 }
 
-// PMG Workflow Input/Output Types
-export interface PMGWorkflowInput {
+// OSA Workflow Input/Output Types
+export interface OSAWorkflowInput {
   client_name: string;
   industry: string;
   company_size: 'Marketing Team' | 'Content Creator' | 'UX Designer or Developer' | 'Executive Team';
@@ -201,10 +201,32 @@ export interface PMGWorkflowInput {
   recipients: string[];
 }
 
-export interface PMGWorkflowOutput {
-  maturity_plan: MaturityPlan;
-  executive_summary: string;
-  next_steps: string[];
+export interface OSAWorkflowOutput {
+  // Legacy fields for backwards compatibility
+  maturity_plan?: MaturityPlan;
+  executive_summary?: string;
+  next_steps?: string[];
   cmp_campaign_id?: string;
-  notification_status: 'success' | 'failed';
+  notification_status?: 'success' | 'failed';
+
+  // NEW: Opal workflow fields
+  workflow_id?: string;
+  session_id?: string;
+  status?: 'triggered' | 'running' | 'completed' | 'failed';
+  message?: string;
+  estimated_completion?: string;
+
+  // Polling-based integration fields
+  polling_url?: string;
+  execution_id?: string;
+
+  // Legacy webhook field (maintained for backwards compatibility)
+  webhook_url?: string;
+
+  loading_state?: {
+    current_step: string;
+    progress_percentage: number;
+    expected_agents: string[];
+    completed_agents: string[];
+  };
 }

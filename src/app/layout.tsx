@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/lib/contexts/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Accelerate Results with Optimizely Opal",
-  description: "Get data-driven insights and a customized plan to your business using your Optimizely Data and Martech Tools. Created by Perficient.",
+  title: "Optimizely Strategy Assistant",
+  description: "AI-powered strategy assistant for Optimizely DXP customers. Get data-driven insights and personalized recommendations. Created by Perficient.",
   icons: {
     icon: { url: '/favicon.svg', type: 'image/svg+xml' },
     apple: { url: '/apple-icon.svg', type: 'image/svg+xml' },
@@ -32,7 +33,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

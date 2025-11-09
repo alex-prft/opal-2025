@@ -44,7 +44,7 @@ export class OpalMCPServer {
   private initializeTools() {
     this.tools = [
       {
-        name: "pmg_personalization_maturity_assessment",
+        name: "osa_personalization_maturity_assessment",
         description: "Complete personalization maturity assessment and strategic planning workflow with 4-phase framework",
         inputSchema: {
           type: "object",
@@ -365,14 +365,14 @@ export class OpalMCPServer {
 
     // Route to appropriate API endpoint
     const baseUrl = process.env.NODE_ENV === 'production'
-      ? 'https://opal-2025.vercel.app'
+      ? 'https://ifpa-strategy.vercel.app'
       : 'http://localhost:3000';
 
     let endpoint: string;
 
     switch (name) {
-      case 'pmg_personalization_maturity_assessment':
-        endpoint = '/api/pmg/workflow';
+      case 'osa_personalization_maturity_assessment':
+        endpoint = '/api/osa/workflow';
         break;
       case 'odp_audience_profile_lookup':
         endpoint = '/api/tools/audience';
@@ -397,7 +397,7 @@ export class OpalMCPServer {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer opal-personalization-secret-2025'
+        'Authorization': `Bearer ${process.env.API_SECRET_KEY || 'opal-personalization-secret-2025'}`
       },
       body: JSON.stringify(args)
     });

@@ -1,6 +1,6 @@
-# Opal Personalization Maturity Generator (PMG)
+# OSA - Optimizely Strategy Assistant
 
-**PMG** is an advanced AI-powered personalization maturity assessment and strategy generation system built with [Next.js](https://nextjs.org), featuring comprehensive integration with the Optimizely ecosystem and designed for seamless Opal workflow automation.
+**OSA** is an advanced AI-powered strategy assistant for Optimizely DXP customers, built with [Next.js](https://nextjs.org). It provides personalized recommendations, strategy insights, and implementation roadmaps tailored to your Optimizely setup, featuring comprehensive integration with the Optimizely ecosystem and designed for seamless Opal workflow automation.
 
 ## System Features
 
@@ -136,7 +136,7 @@ CMP_BASE_URL=https://api.optimizely.com/v2  # Optional, defaults shown
 ```bash
 SENDGRID_API_KEY=your_sendgrid_api_key
 SENDGRID_SENDER_EMAIL=noreply@yourdomain.com
-SENDGRID_SENDER_NAME="PMG - Personalization Maturity Generator"  # Optional, defaults shown
+SENDGRID_SENDER_NAME="OSA - Optimizely Strategy Assistant"  # Optional, defaults shown
 ```
 
 #### Application Configuration

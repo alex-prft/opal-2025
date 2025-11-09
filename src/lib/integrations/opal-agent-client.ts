@@ -1,7 +1,7 @@
 import { getBaseURL, getAPISecretKey } from '../utils/config';
 
 /**
- * OPAL Agent Client - Orchestrates PMG workflow steps
+ * OPAL Agent Client - Orchestrates OSA workflow steps
  * Calls internal API endpoints to execute the complete workflow
  */
 
@@ -62,7 +62,7 @@ export class OPALAgentClient {
         body: JSON.stringify({
           title: campaignData.campaign_name,
           plan_markdown: campaignData.content,
-          project_key: 'pmg-workflow',
+          project_key: 'osa-workflow',
           tasks: []
         })
       });

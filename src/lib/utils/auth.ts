@@ -5,6 +5,7 @@ export interface AuthValidationResult {
   isValid: boolean;
   error?: string;
   source?: string;
+  userId?: string;
 }
 
 /**
@@ -51,7 +52,8 @@ export function validateBearerToken(request: NextRequest): AuthValidationResult 
 
     return {
       isValid: true,
-      source: 'api_secret'
+      source: 'api_secret',
+      userId: 'authenticated'
     };
 
   } catch (error) {

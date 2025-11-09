@@ -297,7 +297,7 @@ export default function HowItWorksPage() {
                 <a href="/api/mcp">MCP API</a>
               </Button>
               <Button variant="link" size="sm" asChild>
-                <a href="https://github.com/alex-prft/opal-2025">GitHub</a>
+                <a href="https://github.com/alex-prft/ifpa-strategy">GitHub</a>
               </Button>
             </div>
           </div>

@@ -1,0 +1,158 @@
+{
+  "name": "OSA Workflow Data Sharing",
+  "description": "Core workflow data sharing and communication tools for OSA personalization strategy agents",
+  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/workflow/discovery",
+  "registry_id": "osa_workflow_data",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "store_workflow_data",
+      "description": "Store agent results in shared workflow context for use by subsequent agents",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent storing data (content_review, geo_audit, etc.)"
+          },
+          "agent_results": {
+            "type": "object",
+            "description": "Complete structured results from the agent execution"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow execution"
+          },
+          "execution_order": {
+            "type": "number",
+            "description": "Sequential order of agent execution (1-6)"
+          },
+          "data_quality_score": {
+            "type": "number",
+            "description": "Quality score of the data (0.0-1.0)"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO timestamp of data storage"
+          }
+        },
+        "required": ["agent_id", "agent_results", "workflow_id", "execution_order"]
+      }
+    },
+    {
+      "name": "retrieve_workflow_context",
+      "description": "Retrieve accumulated workflow context data for current agent execution",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow execution"
+          },
+          "requesting_agent": {
+            "type": "string",
+            "description": "ID of agent requesting context data"
+          },
+          "include_agents": {
+            "type": "array",
+            "description": "Specific agent IDs to include in context (empty = all previous)"
+          }
+        },
+        "required": ["workflow_id", "requesting_agent"]
+      }
+    },
+    {
+      "name": "send_data_to_osa_webhook",
+      "description": "Send agent data and results to OSA application via webhook for real-time updates",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent sending data"
+          },
+          "agent_data": {
+            "type": "object",
+            "description": "Agent execution results and insights"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "execution_status": {
+            "type": "string",
+            "description": "Current execution status (in_progress, completed, failed, or partial)"
+          },
+          "progress_percentage": {
+            "type": "number",
+            "description": "Workflow completion percentage (0-100)"
+          },
+          "webhook_endpoint": {
+            "type": "string",
+            "description": "OSA webhook endpoint (agent-data or workflow-results)"
+          }
+        },
+        "required": ["agent_id", "agent_data", "workflow_id", "execution_status"]
+      }
+    },
+    {
+      "name": "validate_workflow_data",
+      "description": "Validate workflow data quality and completeness before agent execution",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Workflow execution identifier"
+          },
+          "validation_criteria": {
+            "type": "object",
+            "description": "Criteria for data quality validation"
+          },
+          "minimum_quality_score": {
+            "type": "number",
+            "description": "Minimum acceptable quality score"
+          }
+        },
+        "required": ["workflow_id"]
+      }
+    },
+    {
+      "name": "compile_final_results",
+      "description": "Compile all workflow agent results into comprehensive strategy brief for final delivery",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Workflow execution identifier"
+          },
+          "compilation_format": {
+            "type": "string",
+            "description": "Output format for compiled results (executive_summary, detailed_brief, or comprehensive)"
+          },
+          "include_quality_metrics": {
+            "type": "boolean",
+            "description": "Include data quality and validation metrics"
+          },
+          "delivery_endpoints": {
+            "type": "array",
+            "description": "OSA endpoints for result delivery"
+          }
+        },
+        "required": ["workflow_id"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${OPAL_WORKFLOW_TOKEN}"
+  },
+  "integration_endpoints": {
+    "data_storage": "https://ifpa-strategy.vercel.app/api/opal/workflow-data",
+    "osa_webhook_agent": "https://ifpa-strategy.vercel.app/api/opal/agent-data",
+    "osa_webhook_results": "https://ifpa-strategy.vercel.app/api/opal/workflow-results",
+    "validation_service": "https://ifpa-strategy.vercel.app/api/opal/validate"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "workflow_data_sharing": {
+    "name": "Workflow Data Sharing Tool",
+    "description": "Central data orchestration tool for sharing insights between OPAL agents and consolidating analysis results",
+    "dxp_integration": ["Content Recs", "CMS", "ODP", "WEBX", "CMP"],
+    "data_sources": ["User form inputs", "Strategic objectives", "Historical analysis results"],
+    "output_format": "Structured JSON with cross-agent insights"
+  },
+  "osa_contentrecs_tools": {
+    "name": "Content Recommendations Integration Tool",
+    "description": "Interface for Content Recs visitor behavior analytics, topic analysis, and personalization effectiveness metrics",
+    "dxp_integration": ["Content Recs"],
+    "data_sources": [
+      "Visitor behavior tracking",
+      "Content engagement metrics",
+      "NLP topic analysis",
+      "Personalization effectiveness data",
+      "Click-through rates and conversions"
+    ],
+    "output_format": "Content performance analytics and recommendations"
+  },
+  "osa_cmspaas_tools": {
+    "name": "CMS Platform Integration Tool",
+    "description": "Interface for CMS content performance data, workflow analytics, and template optimization insights",
+    "dxp_integration": ["CMS"],
+    "data_sources": [
+      "Page view analytics",
+      "Content model performance",
+      "Editor workflow efficiency",
+      "Template usage statistics",
+      "Campaign content ROI"
+    ],
+    "output_format": "CMS performance insights and optimization recommendations"
+  },
+  "osa_odp_tools": {
+    "name": "Optimizely Data Platform Integration Tool",
+    "description": "Interface for ODP unified customer profiles, audience intelligence, and predictive analytics",
+    "dxp_integration": ["ODP"],
+    "data_sources": [
+      "Unified customer profiles",
+      "Cross-channel behavioral data",
+      "Audience segmentation quality",
+      "Predictive analytics (order likelihood, LTV)",
+      "Real-time behavioral streams"
+    ],
+    "output_format": "Customer intelligence and audience insights"
+  },
+  "osa_webx_tools": {
+    "name": "Web Experimentation Integration Tool",
+    "description": "Interface for WEBX experiment results, statistical analysis, and testing program management",
+    "dxp_integration": ["WEBX"],
+    "data_sources": [
+      "A/B test results and statistical data",
+      "Conversion impact measurements",
+      "Test velocity and win rates",
+      "Statistical significance metrics",
+      "Experiment program performance"
+    ],
+    "output_format": "Experimentation insights and test blueprints"
+  },
+  "osa_cmp_tools": {
+    "name": "Campaign Management Platform Integration Tool",
+    "description": "Interface for CMP email performance data, send time optimization, and cross-channel campaign analytics",
+    "dxp_integration": ["CMP"],
+    "data_sources": [
+      "Email engagement metrics (open rates, CTR)",
+      "Send time optimization data",
+      "Cross-channel campaign attribution",
+      "Customer journey analytics",
+      "Campaign ROI and lifetime value"
+    ],
+    "output_format": "Campaign performance insights and optimization recommendations"
+  }
+}

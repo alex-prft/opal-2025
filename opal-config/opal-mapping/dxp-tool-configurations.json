@@ -1,0 +1,97 @@
+{
+  "Content Recs": {
+    "name": "Optimizely Content Recommendations",
+    "description": "AI-powered content recommendation engine with visitor behavior analytics and NLP topic analysis",
+    "api_endpoints": [
+      "/api/contentrecs/visitor-behavior",
+      "/api/contentrecs/topic-analysis",
+      "/api/contentrecs/personalization-effectiveness",
+      "/api/contentrecs/engagement-metrics"
+    ],
+    "data_types": [
+      "visitor_behavior_tracking",
+      "content_engagement_metrics",
+      "nlp_topic_analysis",
+      "personalization_effectiveness",
+      "click_through_rates",
+      "conversion_attribution"
+    ],
+    "integration_status": "simulated"
+  },
+  "CMS": {
+    "name": "Optimizely Content Management System",
+    "description": "Headless CMS with content performance analytics and workflow optimization",
+    "api_endpoints": [
+      "/api/cms/content-analytics",
+      "/api/cms/workflow-efficiency",
+      "/api/cms/template-performance",
+      "/api/cms/campaign-content-roi"
+    ],
+    "data_types": [
+      "page_view_analytics",
+      "content_model_performance",
+      "editor_workflow_metrics",
+      "template_usage_statistics",
+      "campaign_content_roi",
+      "content_lifecycle_data"
+    ],
+    "integration_status": "simulated"
+  },
+  "ODP": {
+    "name": "Optimizely Data Platform",
+    "description": "Unified customer data platform with audience intelligence and predictive analytics",
+    "api_endpoints": [
+      "/api/odp/unified-profiles",
+      "/api/odp/audience-intelligence",
+      "/api/odp/predictive-analytics",
+      "/api/odp/behavioral-streams"
+    ],
+    "data_types": [
+      "unified_customer_profiles",
+      "cross_channel_behavioral_data",
+      "audience_segmentation_quality",
+      "predictive_order_likelihood",
+      "customer_lifetime_value",
+      "real_time_behavioral_streams"
+    ],
+    "integration_status": "simulated"
+  },
+  "WEBX": {
+    "name": "Optimizely Web Experimentation",
+    "description": "A/B testing platform with statistical analysis and experiment program management",
+    "api_endpoints": [
+      "/api/webx/experiment-results",
+      "/api/webx/statistical-analysis",
+      "/api/webx/program-management",
+      "/api/webx/conversion-impact"
+    ],
+    "data_types": [
+      "ab_test_results",
+      "statistical_significance_data",
+      "conversion_impact_measurements",
+      "test_velocity_metrics",
+      "experiment_win_rates",
+      "program_performance_data"
+    ],
+    "integration_status": "simulated"
+  },
+  "CMP": {
+    "name": "Campaign Management Platform",
+    "description": "Email marketing and multi-channel campaign orchestration with performance analytics",
+    "api_endpoints": [
+      "/api/cmp/email-performance",
+      "/api/cmp/send-optimization",
+      "/api/cmp/campaign-attribution",
+      "/api/cmp/customer-journey"
+    ],
+    "data_types": [
+      "email_engagement_metrics",
+      "send_time_optimization_data",
+      "cross_channel_campaign_attribution",
+      "customer_journey_analytics",
+      "campaign_roi_measurements",
+      "email_personalization_effectiveness"
+    ],
+    "integration_status": "simulated"
+  }
+}

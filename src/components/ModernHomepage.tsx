@@ -46,7 +46,7 @@ export default function ModernHomepage() {
                 <Sparkles className="h-8 w-8" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold">Opal AI Strategy Assistant</h1>
+                <h1 className="text-2xl font-bold">Optimizely Strategy Assistant</h1>
                 <p className="text-sm text-muted-foreground">Created by Perficient</p>
               </div>
             </div>
@@ -68,10 +68,10 @@ export default function ModernHomepage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight">
-              Easiest Way To Understand Your Optimizely Data
+              AI-Powered Strategy Assistant for Optimizely DXP
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Get data-driven insights and a customized plan to your business using your Optimizely Data and Martech Tools. Created by Perficient.
+              Get personalized recommendations, strategy insights, and implementation roadmaps tailored to your Optimizely DXP setup. Built by Perficient.
             </p>
           </div>
 
