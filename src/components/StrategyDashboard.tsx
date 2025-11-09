@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Speech Recognition API declarations
 declare global {
@@ -23,6 +24,7 @@ import TimelineRoadmap from './TimelineRoadmap';
 import AnalyticsContentDashboard from './AnalyticsContentDashboard';
 import { useAnalytics } from '@/lib/hooks/useAnalytics';
 import { RecommendationEngine, UserContext, EnhancedRecommendation } from '@/lib/utils/recommendationEngine';
+import { agentStatusTracker, AgentStatus as MonitoringAgentStatus, AgentStatusInfo } from '@/lib/monitoring/agent-status-tracker';
 import {
   Target,
   Settings,
@@ -211,6 +213,7 @@ function AgentStatusBubble({ agentId, agentName, status }: AgentStatusBubbleProp
 }
 
 export default function StrategyDashboard({ workflowResult }: StrategyDashboardProps) {
+  const router = useRouter();
   const [activeArea, setActiveArea] = useState('strategy-plans');
   const [activeTab, setActiveTab] = useState('osa');
   const [activeActionTab, setActiveActionTab] = useState('content');
@@ -293,6 +296,7 @@ export default function StrategyDashboard({ workflowResult }: StrategyDashboardP
   const handleAreaChange = (areaId: string) => {
     const previousArea = activeArea;
     setActiveArea(areaId);
+    setShowTTYD(false); // Hide TTYD to show the selected dashboard area
     const area = navigationAreas.find(a => a.id === areaId);
     if (area && area.tabs.length > 0) {
       setActiveTab(area.tabs[0].id);
@@ -625,23 +629,48 @@ export default function StrategyDashboard({ workflowResult }: StrategyDashboardP
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="space-y-2">
-                    <Button variant="ghost" size="sm" className="w-full justify-between text-xs">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-between text-xs hover:bg-blue-50 cursor-pointer"
+                      onClick={() => router.push('/engine/results#dxp-tool-readiness')}
+                    >
                       <span>DXP Tool Readiness →</span>
                       <Badge variant="outline" className="text-xs">Tools</Badge>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-between text-xs">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-between text-xs hover:bg-blue-50 cursor-pointer"
+                      onClick={() => router.push('/engine/results#analytics-setup')}
+                    >
                       <span>Analytics Setup →</span>
                       <Badge variant="outline" className="text-xs">Analytics</Badge>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-between text-xs">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-between text-xs hover:bg-blue-50 cursor-pointer"
+                      onClick={() => router.push('/engine/results#optimization-plan')}
+                    >
                       <span>Optimization Plan →</span>
                       <Badge variant="outline" className="text-xs">Experience</Badge>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-between text-xs">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-between text-xs hover:bg-blue-50 cursor-pointer"
+                      onClick={() => router.push('/engine/results#content-performance')}
+                    >
                       <span>Content Performance →</span>
                       <Badge variant="outline" className="text-xs">Analytics</Badge>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-between text-xs">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-between text-xs hover:bg-blue-50 cursor-pointer"
+                      onClick={() => router.push('/engine/results#audience-insights')}
+                    >
                       <span>Audience Insights →</span>
                       <Badge variant="outline" className="text-xs">Analytics</Badge>
                     </Button>

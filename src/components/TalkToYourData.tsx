@@ -117,6 +117,9 @@ export default function TalkToYourData({ workflowResult }: TTYDProps) {
           <CardTitle className="flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-purple-600" />
             <span>Ask Your Question</span>
+            <Badge variant="secondary" className="bg-orange-100 text-orange-800 text-xs font-medium">
+              ALPHA
+            </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

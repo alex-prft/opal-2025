@@ -1,0 +1,14 @@
+{
+  "tool_name": "send_data_to_osa_enhanced",
+  "parameters": {
+    "agent_id": "test_agent",
+    "agent_data": {
+      "test_results": "Enhanced webhook delivery test",
+      "quality_score": 0.95,
+      "recommendations": ["Test successful"]
+    },
+    "workflow_id": "test_workflow_123",
+    "execution_status": "completed",
+    "target_environment": "development"
+  }
+}

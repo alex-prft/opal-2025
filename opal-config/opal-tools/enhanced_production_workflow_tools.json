@@ -1,0 +1,466 @@
+{
+  "name": "OSA Enhanced Production Workflow Tools (SDK-Powered)",
+  "description": "Production-ready OPAL tools with comprehensive error handling, environment awareness, and workflow coordination",
+  "discovery_url": "http://localhost:3001/discovery",
+  "registry_id": "osa_enhanced_production_tools",
+  "version": "2.0.0-production",
+  "sdk_version": "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
+  "environment_aware": true,
+  "tools": [
+    {
+      "name": "store_workflow_data_enhanced",
+      "description": "Store agent results with enhanced error handling and coordination",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent storing data (content_review, geo_audit, etc.)"
+          },
+          "agent_results": {
+            "type": "object",
+            "description": "Complete structured results from the agent execution"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow execution"
+          },
+          "execution_order": {
+            "type": "number",
+            "description": "Sequential order of agent execution (1-6)"
+          },
+          "data_quality_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Quality score of the data (0.0-1.0)"
+          },
+          "completion_status": {
+            "type": "string",
+            "enum": ["in_progress", "completed", "failed", "partial"],
+            "description": "Agent execution completion status"
+          }
+        },
+        "required": ["agent_id", "agent_results", "workflow_id", "execution_order", "completion_status"]
+      },
+      "error_handling": {
+        "retry_attempts": 3,
+        "retry_delay_ms": 1000,
+        "timeout_ms": 30000,
+        "fallback_behavior": "log_and_continue"
+      }
+    },
+    {
+      "name": "retrieve_workflow_context_enhanced",
+      "description": "Retrieve workflow context with intelligent caching and error recovery",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow execution"
+          },
+          "requesting_agent": {
+            "type": "string",
+            "description": "ID of agent requesting context data"
+          },
+          "include_agents": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Specific agent IDs to include in context (empty = all previous)"
+          },
+          "max_age_minutes": {
+            "type": "number",
+            "default": 60,
+            "description": "Maximum age of cached data to accept"
+          }
+        },
+        "required": ["workflow_id", "requesting_agent"]
+      },
+      "caching": {
+        "enabled": true,
+        "ttl_minutes": 30,
+        "cache_key_strategy": "workflow_agent_combination"
+      }
+    },
+    {
+      "name": "send_data_to_osa_enhanced",
+      "description": "Production-ready OSA webhook delivery with intelligent routing and comprehensive error handling",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent sending data"
+          },
+          "agent_data": {
+            "type": "object",
+            "description": "Agent execution results and insights"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "execution_status": {
+            "type": "string",
+            "enum": ["in_progress", "completed", "failed", "partial"],
+            "description": "Current execution status"
+          },
+          "target_environment": {
+            "type": "string",
+            "enum": ["development", "staging", "production"],
+            "description": "Target environment for webhook delivery"
+          },
+          "delivery_options": {
+            "type": "object",
+            "properties": {
+              "max_retries": {
+                "type": "integer",
+                "default": 3,
+                "minimum": 1,
+                "maximum": 10,
+                "description": "Maximum retry attempts"
+              },
+              "retry_delay_ms": {
+                "type": "integer",
+                "default": 1000,
+                "minimum": 100,
+                "maximum": 10000,
+                "description": "Base retry delay in milliseconds"
+              },
+              "timeout_ms": {
+                "type": "integer",
+                "default": 30000,
+                "minimum": 5000,
+                "maximum": 120000,
+                "description": "Request timeout in milliseconds"
+              },
+              "confirm_delivery": {
+                "type": "boolean",
+                "default": true,
+                "description": "Require delivery confirmation"
+              }
+            }
+          }
+        },
+        "required": ["agent_id", "agent_data", "workflow_id", "execution_status"]
+      },
+      "environment_routing": {
+        "development": {
+          "webhook_url": "http://localhost:3000/api/webhooks/opal-workflow",
+          "api_base": "http://localhost:3000/api",
+          "timeout_ms": 30000,
+          "retries": 3
+        },
+        "staging": {
+          "webhook_url": "https://ifpa-strategy-staging.vercel.app/api/webhooks/opal-workflow",
+          "api_base": "https://ifpa-strategy-staging.vercel.app/api",
+          "timeout_ms": 45000,
+          "retries": 5
+        },
+        "production": {
+          "webhook_url": "https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow",
+          "api_base": "https://ifpa-strategy.vercel.app/api",
+          "timeout_ms": 60000,
+          "retries": 5
+        }
+      },
+      "features": [
+        "Intelligent environment routing",
+        "Exponential backoff retry logic",
+        "Delivery confirmation tracking",
+        "Error recovery mechanisms",
+        "Performance monitoring",
+        "Webhook validation",
+        "Timeout protection",
+        "Circuit breaker pattern"
+      ]
+    },
+    {
+      "name": "validate_workflow_data_enhanced",
+      "description": "Comprehensive workflow data validation with quality scoring and error detection",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Workflow execution identifier"
+          },
+          "validation_criteria": {
+            "type": "object",
+            "properties": {
+              "required_agents": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "List of agents that must have completed"
+              },
+              "minimum_quality_scores": {
+                "type": "object",
+                "description": "Minimum quality scores by agent type"
+              },
+              "data_completeness_threshold": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.8,
+                "description": "Required data completeness ratio"
+              }
+            }
+          },
+          "validation_mode": {
+            "type": "string",
+            "enum": ["strict", "moderate", "lenient"],
+            "default": "moderate",
+            "description": "Validation strictness level"
+          }
+        },
+        "required": ["workflow_id"]
+      },
+      "quality_checks": [
+        "Data completeness validation",
+        "Schema compliance verification",
+        "Quality score thresholds",
+        "Dependency requirement checks",
+        "Temporal consistency validation",
+        "Cross-agent data correlation"
+      ]
+    },
+    {
+      "name": "compile_final_results_enhanced",
+      "description": "Intelligent workflow compilation with adaptive formatting and delivery coordination",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Workflow execution identifier"
+          },
+          "compilation_config": {
+            "type": "object",
+            "properties": {
+              "output_format": {
+                "type": "string",
+                "enum": ["executive_summary", "detailed_brief", "comprehensive_report", "api_response"],
+                "default": "detailed_brief",
+                "description": "Output format for compiled results"
+              },
+              "include_quality_metrics": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include data quality and validation metrics"
+              },
+              "personalization_focus": {
+                "type": "boolean",
+                "default": true,
+                "description": "Emphasize personalization opportunities and recommendations"
+              },
+              "technical_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include technical implementation details"
+              }
+            }
+          },
+          "delivery_config": {
+            "type": "object",
+            "properties": {
+              "delivery_endpoints": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "OSA endpoints for result delivery"
+              },
+              "notification_channels": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Notification channels for completion alerts"
+              },
+              "archive_results": {
+                "type": "boolean",
+                "default": true,
+                "description": "Archive compiled results for future reference"
+              }
+            }
+          }
+        },
+        "required": ["workflow_id"]
+      },
+      "compilation_intelligence": {
+        "adaptive_formatting": true,
+        "stakeholder_targeting": true,
+        "priority_scoring": true,
+        "action_item_extraction": true,
+        "roi_calculation": true
+      }
+    },
+    {
+      "name": "monitor_workflow_health_enhanced",
+      "description": "Real-time workflow health monitoring with predictive issue detection",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Workflow execution identifier"
+          },
+          "monitoring_config": {
+            "type": "object",
+            "properties": {
+              "health_check_interval_ms": {
+                "type": "integer",
+                "default": 30000,
+                "minimum": 5000,
+                "maximum": 300000,
+                "description": "Health check frequency"
+              },
+              "performance_thresholds": {
+                "type": "object",
+                "properties": {
+                  "max_execution_time_minutes": {
+                    "type": "integer",
+                    "default": 30,
+                    "description": "Maximum allowed execution time per agent"
+                  },
+                  "min_quality_score": {
+                    "type": "number",
+                    "default": 0.7,
+                    "description": "Minimum acceptable quality score"
+                  }
+                }
+              },
+              "alert_thresholds": {
+                "type": "object",
+                "properties": {
+                  "error_rate_percentage": {
+                    "type": "number",
+                    "default": 10,
+                    "description": "Error rate threshold for alerts"
+                  },
+                  "response_time_ms": {
+                    "type": "integer",
+                    "default": 60000,
+                    "description": "Response time threshold for alerts"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["workflow_id"]
+      },
+      "monitoring_features": [
+        "Real-time performance tracking",
+        "Predictive failure detection",
+        "Resource utilization monitoring",
+        "Quality degradation alerts",
+        "Dependency health checks",
+        "Automatic recovery suggestions"
+      ]
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${OPAL_ENHANCED_TOKEN}",
+    "description": "Enhanced authentication with environment-specific tokens"
+  },
+  "environment_configuration": {
+    "development": {
+      "base_url": "http://localhost:3001",
+      "discovery_url": "http://localhost:3001/discovery",
+      "webhook_target": "http://localhost:3000/api/webhooks/opal-workflow",
+      "performance_mode": "debug",
+      "logging_level": "verbose"
+    },
+    "staging": {
+      "base_url": "https://ifpa-strategy-staging-tools.vercel.app",
+      "discovery_url": "https://ifpa-strategy-staging-tools.vercel.app/discovery",
+      "webhook_target": "https://ifpa-strategy-staging.vercel.app/api/webhooks/opal-workflow",
+      "performance_mode": "optimized",
+      "logging_level": "info"
+    },
+    "production": {
+      "base_url": "https://ifpa-strategy-tools.vercel.app",
+      "discovery_url": "https://ifpa-strategy-tools.vercel.app/discovery",
+      "webhook_target": "https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow",
+      "performance_mode": "high_performance",
+      "logging_level": "error"
+    }
+  },
+  "sdk_integration": {
+    "benefits": [
+      "Type-safe tool development with decorator patterns",
+      "Interactive UI components (Islands) for configuration",
+      "Automatic parameter validation and sanitization",
+      "Built-in error handling with recovery strategies",
+      "Standardized response formats across all tools",
+      "Real-time progress updates and status tracking",
+      "Enhanced debugging capabilities and logging",
+      "Environment-aware configuration management",
+      "Performance monitoring and optimization",
+      "Comprehensive testing and validation framework"
+    ],
+    "enhanced_features": [
+      "Intelligent error recovery and retry mechanisms",
+      "Dynamic environment routing and failover",
+      "Workflow coordination and data sharing",
+      "Quality scoring and validation systems",
+      "Performance monitoring and alerting",
+      "Predictive failure detection and prevention",
+      "Adaptive configuration management",
+      "Comprehensive audit logging and tracing"
+    ]
+  },
+  "deployment_readiness": {
+    "error_handling": {
+      "comprehensive_try_catch": true,
+      "retry_mechanisms": true,
+      "fallback_strategies": true,
+      "error_classification": true,
+      "recovery_procedures": true
+    },
+    "testing": {
+      "unit_tests": true,
+      "integration_tests": true,
+      "load_tests": true,
+      "failure_scenario_tests": true,
+      "end_to_end_tests": true
+    },
+    "monitoring": {
+      "performance_metrics": true,
+      "error_tracking": true,
+      "usage_analytics": true,
+      "health_checks": true,
+      "alerting": true
+    },
+    "maintenance": {
+      "clear_documentation": true,
+      "modular_architecture": true,
+      "configuration_management": true,
+      "version_control": true,
+      "rollback_procedures": true
+    }
+  },
+  "quality_assurance": {
+    "code_standards": {
+      "typescript_strict_mode": true,
+      "eslint_compliance": true,
+      "naming_conventions": true,
+      "documentation_coverage": true,
+      "type_safety": true
+    },
+    "performance": {
+      "response_time_optimization": true,
+      "memory_usage_optimization": true,
+      "concurrent_request_handling": true,
+      "resource_cleanup": true,
+      "caching_strategies": true
+    },
+    "security": {
+      "input_validation": true,
+      "authentication_required": true,
+      "authorization_checks": true,
+      "secure_communication": true,
+      "audit_logging": true
+    }
+  }
+}
