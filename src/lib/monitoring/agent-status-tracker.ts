@@ -48,7 +48,7 @@ class AgentStatusTracker {
   private listeners: Array<(status: AgentStatusInfo) => void> = [];
   private workflowListeners: Array<(progress: WorkflowProgress) => void> = [];
 
-  // Standard OPAL agents with human-readable names
+  // Standard OPAL agents with human-readable names - All 9 Agents for Opal Connector
   public static readonly OPAL_AGENTS = {
     'content_review': {
       name: 'Content Review Agent',
@@ -57,8 +57,8 @@ class AgentStatusTracker {
       timeout_threshold_ms: 120000 // 2 minutes
     },
     'geo_audit': {
-      name: 'Geographic Audit Agent',
-      description: 'Evaluates geographic performance distribution',
+      name: 'GEO Audit Agent',
+      description: 'Generative Engine Optimization audit to optimize content for AI search engines',
       estimated_runtime_ms: 60000, // 1 minute
       timeout_threshold_ms: 180000 // 3 minutes
     },
@@ -79,6 +79,31 @@ class AgentStatusTracker {
       description: 'Generates personalization strategies',
       estimated_runtime_ms: 55000, // 55 seconds
       timeout_threshold_ms: 180000 // 3 minutes
+    },
+    // ✅ NEW AGENTS ADDED FOR OPAL CONNECTOR - AGENTS SERVICE
+    'roadmap_generator': {
+      name: 'Roadmap Generator Agent',
+      description: 'Generates implementation roadmaps and project timelines',
+      estimated_runtime_ms: 65000, // 65 seconds
+      timeout_threshold_ms: 180000 // 3 minutes
+    },
+    'integration_health': {
+      name: 'Integration Health Agent',
+      description: 'Monitors DXP integration status and health metrics',
+      estimated_runtime_ms: 40000, // 40 seconds
+      timeout_threshold_ms: 120000 // 2 minutes
+    },
+    'cmp_organizer': {
+      name: 'CMP Organizer Agent',
+      description: 'Organizes campaign management platform workflows',
+      estimated_runtime_ms: 50000, // 50 seconds
+      timeout_threshold_ms: 150000 // 2.5 minutes
+    },
+    'customer_journey': {
+      name: 'Customer Journey Agent',
+      description: 'Maps customer journey touchpoints and optimization opportunities',
+      estimated_runtime_ms: 70000, // 70 seconds
+      timeout_threshold_ms: 200000 // 3.33 minutes
     }
   };
 

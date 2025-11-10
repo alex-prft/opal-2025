@@ -62,7 +62,7 @@ export default function ExperienceOptimizationPage() {
 
           {/* Experience Optimization Tabs */}
           <Tabs id="optimization-tabs-container" defaultValue="content" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList id="results-tabs-main" className="grid w-full grid-cols-5 sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b shadow-sm">
               <TabsTrigger value="content">Content</TabsTrigger>
               <TabsTrigger value="experimentation">Experimentation</TabsTrigger>
               <TabsTrigger value="personalization">Personalization</TabsTrigger>

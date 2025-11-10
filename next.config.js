@@ -43,7 +43,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: isDevelopment
               ? "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' http://localhost:* ws://localhost:* wss://localhost:*;"
-              : "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https:; font-src 'self';"
+              : "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; style-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; img-src 'self' data: blob: https://vercel.live https://*.vercel.app; connect-src 'self' https: wss://vercel.live; font-src 'self' https://vercel.live https://*.vercel.app;"
           },
         ]
       }

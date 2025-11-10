@@ -4,16 +4,27 @@
 
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
 
-// Validate JWT_SECRET is properly configured
+// Cached JWT secret - lazy initialization to prevent build-time errors
+let JWT_SECRET_CACHE: Uint8Array | null = null;
+
+// Validate JWT_SECRET is properly configured (lazy loading)
 function getJWTSecret(): Uint8Array {
+  // Return cached value if available
+  if (JWT_SECRET_CACHE) {
+    return JWT_SECRET_CACHE;
+  }
+
   const secret = process.env.JWT_SECRET;
 
   if (!secret) {
-    throw new Error('JWT_SECRET environment variable is required');
+    // For build-time compatibility, provide more specific error context
+    const context = process.env.NODE_ENV === 'development' ? 'development' :
+                   process.env.VERCEL ? 'Vercel deployment' : 'production';
+    throw new Error(`JWT_SECRET environment variable is required for ${context}. Please configure it in your environment settings.`);
   }
 
   if (secret.length < 32) {
-    throw new Error('JWT_SECRET must be at least 32 characters long');
+    throw new Error(`JWT_SECRET must be at least 32 characters long. Current length: ${secret.length}`);
   }
 
   // Warn about potentially weak secrets
@@ -27,15 +38,15 @@ function getJWTSecret(): Uint8Array {
 
   if (weakSecrets.includes(secret.toLowerCase())) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('Weak JWT_SECRET detected in production environment');
+      throw new Error('Weak JWT_SECRET detected in production environment. Please use a cryptographically secure secret.');
     }
     console.warn('⚠️  Warning: Using weak JWT_SECRET. Generate a strong secret for production.');
   }
 
-  return new TextEncoder().encode(secret);
+  // Cache the secret for subsequent calls
+  JWT_SECRET_CACHE = new TextEncoder().encode(secret);
+  return JWT_SECRET_CACHE;
 }
-
-const JWT_SECRET = getJWTSecret();
 
 const JWT_ISSUER = 'osa-api-gateway';
 const JWT_AUDIENCE = 'osa-services';
@@ -91,12 +102,12 @@ export async function generateJWT(
     .setIssuer(JWT_ISSUER)
     .setAudience(JWT_AUDIENCE)
     .setSubject(userId)
-    .sign(JWT_SECRET);
+    .sign(getJWTSecret());
 }
 
 export async function verifyJWT(token: string): Promise<OSAJWTPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET, {
+    const { payload } = await jwtVerify(token, getJWTSecret(), {
       issuer: JWT_ISSUER,
       audience: JWT_AUDIENCE
     });

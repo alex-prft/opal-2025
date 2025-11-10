@@ -381,7 +381,7 @@ export default function DXPToolsPage() {
 
           {/* DXP Tools Tabs */}
           <Tabs id="dxptools-tabs-container" defaultValue="content-recs" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList id="results-tabs-main" className="grid w-full grid-cols-5 sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b shadow-sm">
               <TabsTrigger value="content-recs">Content Recs</TabsTrigger>
               <TabsTrigger value="cms">CMS</TabsTrigger>
               <TabsTrigger value="odp">ODP</TabsTrigger>

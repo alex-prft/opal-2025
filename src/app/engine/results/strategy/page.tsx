@@ -451,7 +451,7 @@ export default function StrategyPlansPage() {
 
           {/* Strategy Plans Tabs */}
           <Tabs id="strategy-tabs-container" defaultValue="osa" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList id="results-tabs-main" className="grid w-full grid-cols-5 sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b shadow-sm">
               <TabsTrigger value="osa">OSA</TabsTrigger>
               <TabsTrigger value="quick-wins">Quick Wins</TabsTrigger>
               <TabsTrigger value="maturity">Maturity</TabsTrigger>

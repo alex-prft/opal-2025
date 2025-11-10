@@ -111,7 +111,7 @@ async function startBasicSDKService() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': \`Bearer \${authKey}\`,
+            'Authorization': `Bearer ${authKey}`,
             'X-OPAL-SDK-Mode': 'basic-fallback'
           },
           body: JSON.stringify(webhookPayload)
@@ -127,7 +127,7 @@ async function startBasicSDKService() {
             osa_response: result
           });
         } else {
-          throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
       } catch (error) {
@@ -140,10 +140,10 @@ async function startBasicSDKService() {
     });
 
     app.listen(PORT, () => {
-      console.log(\`✅ Basic SDK Tools Service started on port \${PORT}\`);
-      console.log(\`📡 Discovery: http://localhost:\${PORT}/discovery\`);
-      console.log(\`🔧 Enhanced Webhook: http://localhost:\${PORT}/tools/send_data_to_osa_enhanced\`);
-      console.log(\`🌍 Environment: \${JSON.stringify(envConfig, null, 2)}\`);
+      console.log(`✅ Basic SDK Tools Service started on port ${PORT}`);
+      console.log(`📡 Discovery: http://localhost:${PORT}/discovery`);
+      console.log(`🔧 Enhanced Webhook: http://localhost:${PORT}/tools/send_data_to_osa_enhanced`);
+      console.log(`🌍 Environment: ${JSON.stringify(envConfig, null, 2)}`);
     });
 
   } catch (error) {
@@ -216,11 +216,11 @@ async function startProductionSDKTools() {
         execSync(strategy.command, { stdio: 'inherit' });
       }
 
-      console.log(\`✅ [Success] Started using \${strategy.name}\`);
+      console.log(`✅ [Success] Started using ${strategy.name}`);
       return;
 
     } catch (error) {
-      console.warn(\`⚠️ [Strategy Failed] \${strategy.name}: \${error instanceof Error ? error.message : 'Unknown error'}\`);
+      console.warn(`⚠️ [Strategy Failed] ${strategy.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
       continue;
     }
   }

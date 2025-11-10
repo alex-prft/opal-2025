@@ -28,6 +28,7 @@ import {
   validateAgentData,
   OPAL_AGENT_CONFIGS
 } from '@/lib/validation/opal-validation';
+import { agentStatusTracker } from '@/lib/monitoring/agent-status-tracker';
 
 class OpalConnectorService {
   private static instance: OpalConnectorService;
@@ -106,7 +107,14 @@ class OpalConnectorService {
 
       console.log('✅ OSA workflow validation passed successfully');
 
-      // Step 2: Log detailed agent data reception
+      // Step 2: Initialize workflow monitoring if first agents are received
+      const isNewWorkflow = !await this.isWorkflowInitialized(data.workflow_id);
+      if (isNewWorkflow) {
+        console.log('🔄 Initializing new workflow monitoring:', data.workflow_id);
+        await agentStatusTracker.initializeWorkflow(data.workflow_id, 'Strategy Assistant Workflow');
+      }
+
+      // Step 3: Log detailed agent data reception and update status
       for (const agentData of data.agent_data) {
         const agentConfig = OPAL_AGENT_CONFIGS[agentData.agent_id as OPALAgentId];
         console.log(`📊 Agent ${agentData.agent_name} (${agentData.agent_id}) data received:`, {
@@ -117,6 +125,19 @@ class OpalConnectorService {
           confidence: agentData.execution_results?.confidence_score || 'N/A',
           data_points: agentData.execution_results?.data_points_analyzed || 'N/A'
         });
+
+        // Update agent status in real-time monitoring system
+        await agentStatusTracker.updateAgentStatus(
+          data.workflow_id,
+          agentData.agent_id,
+          agentData.metadata.success ? 'completed' : 'failed',
+          {
+            execution_time_ms: agentData.metadata.execution_time_ms,
+            error_message: agentData.metadata.success ? undefined : 'Agent execution failed',
+            progress_percentage: 100,
+            agent_output: agentData.execution_results
+          }
+        );
       }
 
       // Step 3: Process agent data with validation
@@ -317,6 +338,19 @@ class OpalConnectorService {
 
       // Continue execution - don't let webhook forwarding failures stop agent processing
       throw error;
+    }
+  }
+
+  /**
+   * Check if a workflow has been initialized in the monitoring system
+   */
+  private async isWorkflowInitialized(workflowId: string): Promise<boolean> {
+    try {
+      const progress = agentStatusTracker.getWorkflowProgress(workflowId);
+      return progress !== null;
+    } catch (error) {
+      console.warn('❌ Error checking workflow initialization:', error);
+      return false;
     }
   }
 

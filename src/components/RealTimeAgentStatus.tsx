@@ -138,16 +138,20 @@ export default function RealTimeAgentStatus({ className }: RealTimeAgentStatusPr
     };
   }, []);
 
-  // Get OPAL agents in correct order
+  // Get all 9 OPAL agents in correct order
   const opalAgents = [
     'content_review',
     'geo_audit',
     'audience_suggester',
     'experiment_blueprinter',
-    'personalization_idea_generator'
+    'personalization_idea_generator',
+    'roadmap_generator',
+    'integration_health',
+    'cmp_organizer',
+    'customer_journey'
   ];
 
-  // Local agent configuration to avoid accessing static property through instance
+  // Local agent configuration to avoid accessing static property through instance - All 9 Agents
   const OPAL_AGENTS = {
     'content_review': {
       name: 'Content Review Agent',
@@ -178,6 +182,31 @@ export default function RealTimeAgentStatus({ className }: RealTimeAgentStatusPr
       description: 'Generates personalization strategies',
       estimated_runtime_ms: 55000,
       timeout_threshold_ms: 180000
+    },
+    // ✅ NEW AGENTS ADDED FOR OPAL CONNECTOR - AGENTS SERVICE
+    'roadmap_generator': {
+      name: 'Roadmap Generator Agent',
+      description: 'Generates implementation roadmaps and project timelines',
+      estimated_runtime_ms: 65000,
+      timeout_threshold_ms: 180000
+    },
+    'integration_health': {
+      name: 'Integration Health Agent',
+      description: 'Monitors DXP integration status and health metrics',
+      estimated_runtime_ms: 40000,
+      timeout_threshold_ms: 120000
+    },
+    'cmp_organizer': {
+      name: 'CMP Organizer Agent',
+      description: 'Organizes campaign management platform workflows',
+      estimated_runtime_ms: 50000,
+      timeout_threshold_ms: 150000
+    },
+    'customer_journey': {
+      name: 'Customer Journey Agent',
+      description: 'Maps customer journey touchpoints and optimization opportunities',
+      estimated_runtime_ms: 70000,
+      timeout_threshold_ms: 200000
     }
   };
 

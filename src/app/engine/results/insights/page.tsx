@@ -62,7 +62,7 @@ export default function AnalyticsInsightsPage() {
 
           {/* Analytics Tabs */}
           <Tabs id="insights-tabs-container" defaultValue="osa" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList id="results-tabs-main" className="grid w-full grid-cols-5 sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b shadow-sm">
               <TabsTrigger value="osa">OSA</TabsTrigger>
               <TabsTrigger value="content">Content</TabsTrigger>
               <TabsTrigger value="audiences">Audiences</TabsTrigger>
@@ -73,7 +73,7 @@ export default function AnalyticsInsightsPage() {
             <TabsContent id="insights-osa-content" value="osa">
               {/* Sub-navigation for OSA */}
               <Tabs defaultValue="engagement" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList id="results-tabs-sub" className="grid w-full grid-cols-7 sticky top-14 z-9 bg-white/95 backdrop-blur-sm border-b shadow-sm">
                   <TabsTrigger value="engagement">Engagement</TabsTrigger>
                   <TabsTrigger value="topics">Topics</TabsTrigger>
                   <TabsTrigger value="popular">Popular</TabsTrigger>
@@ -571,7 +571,7 @@ export default function AnalyticsInsightsPage() {
             <TabsContent id="insights-content-content" value="content">
               {/* Sub-navigation for Content */}
               <Tabs defaultValue="engagement" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList id="results-tabs-sub" className="grid w-full grid-cols-7 sticky top-14 z-9 bg-white/95 backdrop-blur-sm border-b shadow-sm">
                   <TabsTrigger value="engagement">Engagement</TabsTrigger>
                   <TabsTrigger value="topics">Topics</TabsTrigger>
                   <TabsTrigger value="popular">Popular</TabsTrigger>
@@ -846,7 +846,7 @@ export default function AnalyticsInsightsPage() {
             <TabsContent id="insights-audiences-content" value="audiences">
               {/* Sub-navigation for Audiences */}
               <Tabs defaultValue="engagement" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList id="results-tabs-sub" className="grid w-full grid-cols-7 sticky top-14 z-9 bg-white/95 backdrop-blur-sm border-b shadow-sm">
                   <TabsTrigger value="engagement">Engagement</TabsTrigger>
                   <TabsTrigger value="topics">Topics</TabsTrigger>
                   <TabsTrigger value="popular">Popular</TabsTrigger>
@@ -1126,7 +1126,7 @@ export default function AnalyticsInsightsPage() {
             <TabsContent id="insights-cx-content" value="cx">
               {/* Sub-navigation for CX */}
               <Tabs defaultValue="engagement" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList id="results-tabs-sub" className="grid w-full grid-cols-7 sticky top-14 z-9 bg-white/95 backdrop-blur-sm border-b shadow-sm">
                   <TabsTrigger value="engagement">Engagement</TabsTrigger>
                   <TabsTrigger value="topics">Topics</TabsTrigger>
                   <TabsTrigger value="popular">Popular</TabsTrigger>
@@ -1681,7 +1681,7 @@ export default function AnalyticsInsightsPage() {
             <TabsContent id="insights-other-content" value="other">
               {/* Sub-navigation for Other */}
               <Tabs defaultValue="engagement" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
+                <TabsList id="results-tabs-sub" className="grid w-full grid-cols-7 sticky top-14 z-9 bg-white/95 backdrop-blur-sm border-b shadow-sm">
                   <TabsTrigger value="engagement">Engagement</TabsTrigger>
                   <TabsTrigger value="topics">Topics</TabsTrigger>
                   <TabsTrigger value="popular">Popular</TabsTrigger>

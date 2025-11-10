@@ -1,14 +1,21 @@
 /**
- * Webhook Agent Integration for Ingestion & Orchestration Service
- * Connects OPAL webhook events to real-time agent status tracking
+ * Enhanced Webhook Agent Integration for OPAL Connector - Agents Service
+ * Connects OPAL webhook events to real-time agent status tracking with comprehensive data processing
  */
 
 import { agentStatusTracker, AgentStatus } from '@/lib/monitoring/agent-status-tracker';
 import { webhookEventOperations } from '@/lib/database/webhook-events';
 import { monitoringErrorHandler } from '@/lib/monitoring/error-handler';
+import {
+  OPALAgentId,
+  OSAAgentData,
+  BaseAgentExecutionResult
+} from '@/lib/types/opal-types';
+import { validateAgentData, OPAL_AGENT_CONFIGS } from '@/lib/validation/opal-validation';
 
+// Enhanced webhook event interface with OSA workflow data support
 export interface OpalWebhookEvent {
-  event_type: 'workflow.completed' | 'workflow.failed' | 'workflow.triggered' | 'agent.completed' | 'agent.started';
+  event_type: 'workflow.completed' | 'workflow.failed' | 'workflow.triggered' | 'agent.completed' | 'agent.started' | 'osa_workflow_data.received';
   workflow_id: string;
   workflow_name: string;
   timestamp: string;
@@ -18,13 +25,35 @@ export interface OpalWebhookEvent {
   agent_success?: boolean;
   agent_error?: string;
   execution_time_ms?: number;
-  trigger_source?: 'schedule' | 'api' | 'event' | 'manual';
+  trigger_source?: 'schedule' | 'api' | 'event' | 'manual' | 'opal_connector';
+
+  // Enhanced metadata with OSA-specific fields
   metadata?: {
     client_id?: string;
     project_id?: string;
     environment?: string;
     user_id?: string;
     session_id?: string;
+    client_name?: string;
+    business_objectives?: string[];
+  };
+
+  // ✅ NEW: Enhanced fields for OSA workflow data processing
+  execution_results?: BaseAgentExecutionResult | Record<string, any>;
+  confidence_score?: number;
+  data_points_analyzed?: number;
+  agent_category?: 'analysis' | 'strategy' | 'optimization' | 'monitoring';
+  validation_warnings?: string[];
+}
+
+// OSA-specific webhook event for structured agent data
+export interface OSAWorkflowDataEvent extends OpalWebhookEvent {
+  event_type: 'osa_workflow_data.received';
+  agent_data: OSAAgentData;
+  validation_result: {
+    is_valid: boolean;
+    errors: string[];
+    warnings: string[];
   };
 }
 
@@ -40,9 +69,14 @@ class WebhookAgentIntegration {
 
   /**
    * Process incoming OPAL webhook event and update agent status with comprehensive error handling
+   * Enhanced to support OSA workflow data processing
    */
-  async processWebhookEvent(event: OpalWebhookEvent): Promise<void> {
-    console.log(`🔄 [WebhookAgentIntegration] Processing ${event.event_type} for workflow ${event.workflow_id}`);
+  async processWebhookEvent(event: OpalWebhookEvent | OSAWorkflowDataEvent): Promise<void> {
+    console.log(`🔄 [WebhookAgentIntegration] Processing ${event.event_type} for workflow ${event.workflow_id}`, {
+      agent_id: event.agent_id,
+      trigger_source: event.trigger_source,
+      timestamp: event.timestamp
+    });
 
     await monitoringErrorHandler.executeWebhookOperation(
       async () => {
@@ -65,6 +99,11 @@ class WebhookAgentIntegration {
 
           case 'workflow.failed':
             await this.handleWorkflowFailed(event);
+            break;
+
+          // ✅ NEW: Handle OSA workflow data events
+          case 'osa_workflow_data.received':
+            await this.handleOSAWorkflowDataReceived(event as OSAWorkflowDataEvent);
             break;
 
           default:
@@ -248,6 +287,156 @@ class WebhookAgentIntegration {
         }
       }
     }
+  }
+
+  /**
+   * ✅ NEW: Handle OSA workflow data received event from OPAL Connector
+   * Process structured agent data with comprehensive validation and enhanced tracking
+   */
+  private async handleOSAWorkflowDataReceived(event: OSAWorkflowDataEvent): Promise<void> {
+    console.log(`📊 [WebhookAgentIntegration] OSA workflow data received for agent ${event.agent_data.agent_name} (${event.agent_data.agent_id})`);
+
+    const agentData = event.agent_data;
+    const agentConfig = OPAL_AGENT_CONFIGS[agentData.agent_id as OPALAgentId];
+
+    // Log validation results
+    if (!event.validation_result.is_valid) {
+      console.error(`❌ [WebhookAgentIntegration] OSA agent data validation failed:`, event.validation_result.errors);
+
+      // Update agent status to failed due to validation
+      await agentStatusTracker.updateAgentStatus(
+        agentData.workflow_id,
+        agentData.agent_id,
+        'failed',
+        {
+          execution_time_ms: agentData.metadata.execution_time_ms,
+          error_message: `Validation failed: ${event.validation_result.errors.join(', ')}`,
+          progress_percentage: 0
+        }
+      );
+      return;
+    }
+
+    if (event.validation_result.warnings.length > 0) {
+      console.warn(`⚠️ [WebhookAgentIntegration] OSA agent data validation warnings:`, event.validation_result.warnings);
+    }
+
+    // Process successful agent execution with comprehensive metadata
+    const success = agentData.metadata.success;
+    const status: AgentStatus = success ? 'completed' : 'failed';
+
+    console.log(`${success ? '✅' : '❌'} [WebhookAgentIntegration] OSA Agent ${status}: ${agentData.agent_name} (${agentData.agent_id})`, {
+      execution_time: agentData.metadata.execution_time_ms,
+      estimated_time: agentConfig?.estimated_runtime_ms,
+      confidence_score: agentData.execution_results?.confidence_score,
+      data_points: agentData.execution_results?.data_points_analyzed,
+      category: agentConfig?.category
+    });
+
+    // Update agent status with enhanced OSA data
+    await agentStatusTracker.updateAgentStatus(
+      agentData.workflow_id,
+      agentData.agent_id,
+      status,
+      {
+        execution_time_ms: agentData.metadata.execution_time_ms,
+        error_message: agentData.metadata.error_message,
+        progress_percentage: success ? 100 : undefined,
+        agent_output: agentData.output_data || {}
+      }
+    );
+
+    // Store enhanced webhook event with OSA-specific data
+    await webhookEventOperations.storeWebhookEvent({
+      event_type: 'osa_agent_data.processed',
+      workflow_id: agentData.workflow_id,
+      workflow_name: event.workflow_name,
+      agent_id: agentData.agent_id,
+      agent_name: agentData.agent_name,
+      received_at: event.timestamp,
+      payload: {
+        execution_results: agentData.execution_results,
+        confidence_score: agentData.execution_results?.confidence_score,
+        data_points_analyzed: agentData.execution_results?.data_points_analyzed,
+        agent_category: agentConfig?.category,
+        validation_warnings: event.validation_result.warnings,
+        client_name: event.metadata?.client_name,
+        business_objectives: event.metadata?.business_objectives,
+        processing_timestamp: new Date().toISOString()
+      },
+      success: success,
+      error_message: agentData.metadata.error_message
+    });
+
+    // Enhanced workflow progress tracking
+    const workflowProgress = agentStatusTracker.getWorkflowProgress(agentData.workflow_id);
+    if (workflowProgress) {
+      const totalAgents = workflowProgress.agents_total;
+      const completedAgents = workflowProgress.agents_completed;
+      const failedAgents = workflowProgress.agents_failed;
+
+      console.log(`📊 [WebhookAgentIntegration] OSA Workflow progress: ${completedAgents + failedAgents}/${totalAgents} agents finished`, {
+        workflow_id: agentData.workflow_id,
+        completed: completedAgents,
+        failed: failedAgents,
+        remaining: totalAgents - (completedAgents + failedAgents)
+      });
+
+      // Check for workflow completion with category breakdown
+      if (completedAgents + failedAgents === totalAgents) {
+        const workflowSuccess = failedAgents === 0;
+        console.log(`🏁 [WebhookAgentIntegration] OSA Workflow ${agentData.workflow_id} ${workflowSuccess ? 'completed successfully' : 'completed with failures'}`, {
+          total_agents: totalAgents,
+          successful_agents: completedAgents,
+          failed_agents: failedAgents,
+          success_rate: `${Math.round((completedAgents / totalAgents) * 100)}%`
+        });
+      }
+    }
+
+    console.log(`✅ [WebhookAgentIntegration] OSA agent data processing completed for ${agentData.agent_name}`);
+  }
+
+  /**
+   * Create OSA workflow data event from webhook payload (utility method)
+   * Used by the OPAL Connector to forward processed agent data
+   */
+  async createOSAWorkflowDataEvent(
+    agentData: OSAAgentData,
+    workflowName: string,
+    validationResult: { is_valid: boolean; errors: string[]; warnings: string[] }
+  ): Promise<OSAWorkflowDataEvent> {
+    const agentConfig = OPAL_AGENT_CONFIGS[agentData.agent_id as OPALAgentId];
+
+    return {
+      event_type: 'osa_workflow_data.received',
+      workflow_id: agentData.workflow_id,
+      workflow_name: workflowName,
+      timestamp: agentData.metadata.timestamp,
+      agent_id: agentData.agent_id,
+      agent_name: agentData.agent_name,
+      agent_output: agentData.output_data,
+      agent_success: agentData.metadata.success,
+      agent_error: agentData.metadata.error_message,
+      execution_time_ms: agentData.metadata.execution_time_ms,
+      trigger_source: 'opal_connector',
+
+      // Enhanced OSA-specific fields
+      execution_results: agentData.execution_results,
+      confidence_score: agentData.execution_results?.confidence_score,
+      data_points_analyzed: agentData.execution_results?.data_points_analyzed,
+      agent_category: agentConfig?.category,
+      validation_warnings: validationResult.warnings,
+
+      // OSA-specific payload
+      agent_data: agentData,
+      validation_result: validationResult,
+
+      metadata: {
+        client_name: 'OPAL Connector',
+        environment: process.env.NODE_ENV || 'development'
+      }
+    };
   }
 
   /**
