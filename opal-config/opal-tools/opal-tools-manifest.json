@@ -1,0 +1,228 @@
+{
+  "opal_tools_manifest": {
+    "version": "1.0.0",
+    "created": "2024-12-09",
+    "description": "OPAL Connector - Agents service custom tools for Optimizely Opal integration",
+    "service_name": "OSA - Opal Connector Agents",
+
+    "tools": [
+      {
+        "name": "osa_workflow_data",
+        "version": "1.0.0",
+        "description": "Receives and processes workflow data from Opal agents for OSA (Optimizely Strategy Assistant)",
+        "type": "webhook_receiver",
+        "implementation_file": "opal-tools-service.ts",
+        "discovery_endpoint": "/api/opal/discovery",
+        "execution_endpoint": "/api/opal/osa-workflow",
+        "authentication_required": true,
+        "supported_agents": [
+          "content_review",
+          "geo_audit",
+          "audience_suggester",
+          "experiment_blueprinter",
+          "personalization_idea_generator",
+          "roadmap_generator",
+          "integration_health",
+          "cmp_organizer",
+          "customer_journey"
+        ],
+        "parameters_schema": {
+          "type": "object",
+          "properties": {
+            "workflow_id": {
+              "type": "string",
+              "required": true,
+              "description": "Unique identifier for the Opal workflow execution"
+            },
+            "agent_data": {
+              "type": "array",
+              "required": true,
+              "description": "Array of agent execution results and output data"
+            },
+            "client_name": {
+              "type": "string",
+              "required": false,
+              "description": "Name of the client organization for context"
+            },
+            "business_objectives": {
+              "type": "array",
+              "required": false,
+              "description": "List of business objectives to guide analysis"
+            }
+          }
+        },
+        "response_schema": {
+          "type": "object",
+          "properties": {
+            "workflow_id": {
+              "type": "string",
+              "description": "Workflow identifier confirmation"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["received", "processing", "completed", "failed"],
+              "description": "Processing status"
+            },
+            "agents_received": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "List of agent IDs successfully received"
+            },
+            "total_agents": {
+              "type": "number",
+              "description": "Total number of agents processed"
+            },
+            "message": {
+              "type": "string",
+              "description": "Human-readable status message"
+            },
+            "timestamp": {
+              "type": "string",
+              "description": "ISO timestamp of processing completion"
+            }
+          }
+        }
+      }
+    ],
+
+    "endpoints": {
+      "discovery": {
+        "path": "/api/opal/discovery",
+        "method": "GET",
+        "description": "Tool discovery and registration endpoint for Optimizely Opal",
+        "implementation_file": "opal-discovery-endpoint.ts",
+        "response": "Tool manifest with complete specification"
+      },
+      "osa_workflow": {
+        "path": "/api/opal/osa-workflow",
+        "method": "POST",
+        "description": "Receives OSA workflow data from Opal agents",
+        "implementation_file": "osa-workflow-endpoint.ts",
+        "authentication": "Bearer token required",
+        "content_type": "application/json"
+      }
+    },
+
+    "agent_configurations": {
+      "content_review": {
+        "name": "Content Review Agent",
+        "description": "Analyzes experiment content and variations",
+        "estimated_runtime_ms": 45000,
+        "timeout_threshold_ms": 120000,
+        "category": "analysis"
+      },
+      "geo_audit": {
+        "name": "Geographic Audit Agent",
+        "description": "Evaluates geographic performance distribution",
+        "estimated_runtime_ms": 60000,
+        "timeout_threshold_ms": 180000,
+        "category": "analysis"
+      },
+      "audience_suggester": {
+        "name": "Audience Suggester Agent",
+        "description": "Analyzes audience segment performance",
+        "estimated_runtime_ms": 50000,
+        "timeout_threshold_ms": 150000,
+        "category": "strategy"
+      },
+      "experiment_blueprinter": {
+        "name": "Experiment Blueprinter Agent",
+        "description": "Creates detailed experiment plans",
+        "estimated_runtime_ms": 70000,
+        "timeout_threshold_ms": 200000,
+        "category": "strategy"
+      },
+      "personalization_idea_generator": {
+        "name": "Personalization Idea Generator",
+        "description": "Generates personalization strategies",
+        "estimated_runtime_ms": 55000,
+        "timeout_threshold_ms": 180000,
+        "category": "strategy"
+      },
+      "roadmap_generator": {
+        "name": "Roadmap Generator Agent",
+        "description": "Generates implementation roadmaps and project timelines",
+        "estimated_runtime_ms": 65000,
+        "timeout_threshold_ms": 180000,
+        "category": "strategy"
+      },
+      "integration_health": {
+        "name": "Integration Health Agent",
+        "description": "Monitors DXP integration status and health metrics",
+        "estimated_runtime_ms": 40000,
+        "timeout_threshold_ms": 120000,
+        "category": "monitoring"
+      },
+      "cmp_organizer": {
+        "name": "CMP Organizer Agent",
+        "description": "Organizes campaign management platform workflows",
+        "estimated_runtime_ms": 50000,
+        "timeout_threshold_ms": 150000,
+        "category": "optimization"
+      },
+      "customer_journey": {
+        "name": "Customer Journey Agent",
+        "description": "Maps customer journey touchpoints and optimization opportunities",
+        "estimated_runtime_ms": 70000,
+        "timeout_threshold_ms": 200000,
+        "category": "optimization"
+      }
+    },
+
+    "testing_tools": {
+      "simulator": {
+        "file": "opal-webhook-simulator.ts",
+        "description": "Comprehensive testing simulator for OPAL webhooks",
+        "capabilities": [
+          "Realistic mock data generation for all 9 agents",
+          "Performance testing with concurrent workflows",
+          "Failure scenario simulation",
+          "Individual agent testing"
+        ]
+      },
+      "cli_tool": {
+        "file": "test-opal-simulator.ts",
+        "description": "Command-line interface for running OPAL simulations",
+        "usage": "npx tsx test-opal-simulator.ts [command] [options]",
+        "commands": [
+          "workflow - Simulate single workflow",
+          "multiple [count] - Simulate multiple workflows",
+          "agent [agent_id] - Test specific agent",
+          "failures - Test failure scenarios",
+          "performance [count] - Performance testing",
+          "demo - Comprehensive demo scenario"
+        ]
+      }
+    },
+
+    "monitoring": {
+      "admin_dashboard": "/admin/opal-monitoring",
+      "features": [
+        "Real-time agent status monitoring",
+        "Webhook event tracking",
+        "Performance metrics",
+        "System health status",
+        "Testing tools integration",
+        "Log management"
+      ]
+    },
+
+    "environment_variables": {
+      "required": [
+        "OPAL_WEBHOOK_AUTH_KEY - Authentication token for webhook security"
+      ],
+      "optional": [
+        "NODE_ENV - Environment (development bypasses auth)",
+        "SUPABASE_URL - Database connection for persistence",
+        "SUPABASE_ANON_KEY - Database authentication"
+      ]
+    },
+
+    "deployment": {
+      "production_url": "https://ifpa-strategy.vercel.app",
+      "development_url": "http://localhost:3000",
+      "discovery_registration": "Automatic via /api/opal/discovery endpoint",
+      "status": "Production Ready ✅"
+    }
+  }
+}
