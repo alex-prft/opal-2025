@@ -367,6 +367,135 @@ export class WorkflowDatabaseOperations {
   }
 
   // =====================================================
+  // FORCE SYNC TELEMETRY OPERATIONS
+  // =====================================================
+
+  /**
+   * Creates a new Force Sync attempt record
+   */
+  async createForceSyncAttempt(attempt: {
+    span_id: string;
+    correlation_id: string;
+    started_at: Date;
+    sync_scope: string;
+    triggered_by: string;
+    client_name?: string;
+    request_data: any;
+    status: string;
+    request_size_bytes: number;
+  }): Promise<void> {
+    const startTime = Date.now();
+
+    try {
+      const { error } = await supabase
+        .from('force_sync_attempts')
+        .insert({
+          span_id: attempt.span_id,
+          correlation_id: attempt.correlation_id,
+          started_at: attempt.started_at.toISOString(),
+          sync_scope: attempt.sync_scope,
+          triggered_by: attempt.triggered_by,
+          client_name: attempt.client_name,
+          request_data: attempt.request_data,
+          status: attempt.status,
+          request_size_bytes: attempt.request_size_bytes,
+          include_rag_update: attempt.request_data?.include_rag_update || false,
+          industry: attempt.request_data?.client_context?.industry,
+          recipients_count: attempt.request_data?.client_context?.recipients?.length || 0
+        });
+
+      if (error) {
+        console.error('❌ [DB] Force Sync attempt creation failed:', error);
+        // Don't throw - telemetry should not break the main operation
+      } else {
+        console.log(`✅ [DB] Force Sync attempt created: ${attempt.span_id} (${Date.now() - startTime}ms)`);
+      }
+    } catch (error) {
+      console.error('❌ [DB] Force Sync attempt creation exception:', error);
+      // Don't throw - telemetry should not break the main operation
+    }
+  }
+
+  /**
+   * Updates a Force Sync attempt with completion or failure data
+   */
+  async updateForceSyncAttempt(spanId: string, updates: {
+    completed_at?: Date;
+    status?: string;
+    success?: boolean;
+    response_data?: any;
+    duration_ms?: number;
+    response_size_bytes?: number;
+    internal_workflow_time_ms?: number;
+    external_webhook_time_ms?: number;
+    external_opal_triggered?: boolean;
+    platforms_synced?: number;
+    error_message?: string;
+  }): Promise<void> {
+    const startTime = Date.now();
+
+    try {
+      const updateData: any = {};
+
+      if (updates.completed_at) updateData.completed_at = updates.completed_at.toISOString();
+      if (updates.status !== undefined) updateData.status = updates.status;
+      if (updates.success !== undefined) updateData.success = updates.success;
+      if (updates.response_data !== undefined) updateData.response_data = updates.response_data;
+      if (updates.duration_ms !== undefined) updateData.duration_ms = updates.duration_ms;
+      if (updates.response_size_bytes !== undefined) updateData.response_size_bytes = updates.response_size_bytes;
+      if (updates.internal_workflow_time_ms !== undefined) updateData.internal_workflow_time_ms = updates.internal_workflow_time_ms;
+      if (updates.external_webhook_time_ms !== undefined) updateData.external_webhook_time_ms = updates.external_webhook_time_ms;
+      if (updates.external_opal_triggered !== undefined) updateData.external_opal_triggered = updates.external_opal_triggered;
+      if (updates.platforms_synced !== undefined) updateData.platforms_synced = updates.platforms_synced;
+      if (updates.error_message !== undefined) updateData.error_message = updates.error_message;
+
+      // Always update the updated_at timestamp
+      updateData.updated_at = new Date().toISOString();
+
+      const { error } = await supabase
+        .from('force_sync_attempts')
+        .update(updateData)
+        .eq('span_id', spanId);
+
+      if (error) {
+        console.error('❌ [DB] Force Sync attempt update failed:', error);
+        // Don't throw - telemetry should not break the main operation
+      } else {
+        console.log(`📝 [DB] Force Sync attempt ${spanId} updated (${Date.now() - startTime}ms)`);
+      }
+    } catch (error) {
+      console.error('❌ [DB] Force Sync attempt update exception:', error);
+      // Don't throw - telemetry should not break the main operation
+    }
+  }
+
+  /**
+   * Retrieves recent Force Sync attempts for monitoring
+   */
+  async getRecentForceSyncAttempts(limit: number = 50): Promise<any[]> {
+    const startTime = Date.now();
+
+    try {
+      const { data, error } = await supabase
+        .from('force_sync_attempts')
+        .select('*')
+        .order('started_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.error('❌ [DB] Force Sync attempts retrieval failed:', error);
+        return [];
+      }
+
+      console.log(`📊 [DB] Retrieved ${data.length} Force Sync attempts (${Date.now() - startTime}ms)`);
+      return data;
+    } catch (error) {
+      console.error('❌ [DB] Force Sync attempts retrieval exception:', error);
+      return [];
+    }
+  }
+
+  // =====================================================
   // PERFORMANCE MONITORING
   // =====================================================
 

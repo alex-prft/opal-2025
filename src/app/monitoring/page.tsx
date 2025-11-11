@@ -2,7 +2,7 @@ import EnhancedOpalMonitoringDashboard from '@/components/EnhancedOpalMonitoring
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'OPAL Monitoring Dashboard - IFPA Strategy Platform',
+  title: 'OPAL Monitoring Dashboard - Strategy Platform',
   description: 'Real-time monitoring and analytics for OPAL agents and workflows',
 };
 

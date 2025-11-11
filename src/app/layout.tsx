@@ -16,10 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Optimizely Strategy Assistant",
   description: "AI-powered strategy assistant for Optimizely DXP customers. Get data-driven insights and personalized recommendations. Created by Perficient.",
-  icons: {
-    icon: { url: '/favicon.svg', type: 'image/svg+xml' },
-    apple: { url: '/apple-icon.svg', type: 'image/svg+xml' },
-  },
+  icons: [
+    { url: '/images/gradient-orb.png', type: 'image/png' },
+    { url: '/images/gradient-orb.png', type: 'image/png', sizes: '32x32' },
+    { url: '/images/gradient-orb.png', type: 'image/png', sizes: '180x180', rel: 'apple-touch-icon' },
+  ],
 };
 
 export default function RootLayout({

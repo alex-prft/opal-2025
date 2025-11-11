@@ -1,0 +1,212 @@
+{
+  "timestamp": "2025-11-11T18:14:11.837Z",
+  "summary": {
+    "total": 39,
+    "passed": 13,
+    "warnings": 6,
+    "errors": 20
+  },
+  "results": {
+    "passed": [
+      {
+        "check": "Environment",
+        "message": "NEXT_PUBLIC_BASE_URL is configured",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "OPAL Webhook",
+        "message": "OPAL webhook endpoint is reachable",
+        "timestamp": "2025-11-11T18:13:41.844Z"
+      },
+      {
+        "check": "Database Schema",
+        "message": "opal_workflow_executions type definition found",
+        "timestamp": "2025-11-11T18:13:41.847Z"
+      },
+      {
+        "check": "Database Schema",
+        "message": "opal_agent_executions type definition found",
+        "timestamp": "2025-11-11T18:13:41.847Z"
+      },
+      {
+        "check": "Database Schema",
+        "message": "opal_webhook_events type definition found",
+        "timestamp": "2025-11-11T18:13:41.847Z"
+      },
+      {
+        "check": "Database Schema",
+        "message": "opal_odp_insights type definition found",
+        "timestamp": "2025-11-11T18:13:41.847Z"
+      },
+      {
+        "check": "Database Schema",
+        "message": "opal_content_insights type definition found",
+        "timestamp": "2025-11-11T18:13:41.847Z"
+      },
+      {
+        "check": "Security",
+        "message": "HTTPS configuration verified",
+        "timestamp": "2025-11-11T18:13:42.004Z"
+      },
+      {
+        "check": "Build",
+        "message": "Application builds successfully",
+        "timestamp": "2025-11-11T18:14:11.831Z"
+      },
+      {
+        "check": "Build Size",
+        "message": "Build size acceptable: 0.00MB",
+        "timestamp": "2025-11-11T18:14:11.831Z"
+      },
+      {
+        "check": "Dependencies",
+        "message": "next dependency found",
+        "timestamp": "2025-11-11T18:14:11.836Z"
+      },
+      {
+        "check": "Dependencies",
+        "message": "react dependency found",
+        "timestamp": "2025-11-11T18:14:11.837Z"
+      },
+      {
+        "check": "Dependencies",
+        "message": "@supabase/supabase-js dependency found",
+        "timestamp": "2025-11-11T18:14:11.837Z"
+      }
+    ],
+    "warnings": [
+      {
+        "check": "Linting",
+        "message": "ESLint warnings/errors found: Command failed: npx eslint . --ext .ts,.tsx --max-warnings 0\n[BABEL] Note: The code generator has deoptimised the styling of /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/StrategyDashboard.tsx as it exceeds the max of 500KB.\n",
+        "timestamp": "2025-11-11T18:13:41.159Z"
+      },
+      {
+        "check": "OPAL Config",
+        "message": "content_review configuration missing",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      },
+      {
+        "check": "OPAL Config",
+        "message": "geo_audit configuration missing",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      },
+      {
+        "check": "OPAL Config",
+        "message": "audience_suggester configuration missing",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      },
+      {
+        "check": "OPAL Config",
+        "message": "experiment_blueprinter configuration missing",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      },
+      {
+        "check": "OPAL Config",
+        "message": "personalization_idea_generator configuration missing",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      }
+    ],
+    "errors": [
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: OPAL_WEBHOOK_AUTH_KEY",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: OPAL_API_URL",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: OPAL_API_TOKEN",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: SUPABASE_URL",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: SUPABASE_ANON_KEY",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "Environment",
+        "message": "Missing required environment variable: SUPABASE_SERVICE_ROLE_KEY",
+        "timestamp": "2025-11-11T18:13:01.261Z"
+      },
+      {
+        "check": "TypeScript",
+        "message": "TypeScript compilation failed: Command failed: npx tsc --noEmit --skipLibCheck",
+        "timestamp": "2025-11-11T18:13:07.295Z"
+      },
+      {
+        "check": "Database",
+        "message": "Supabase configuration incomplete",
+        "timestamp": "2025-11-11T18:13:41.846Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/app/api/discovery/route.ts",
+        "timestamp": "2025-11-11T18:13:41.900Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/app/api/tools/cmp/route.ts",
+        "timestamp": "2025-11-11T18:13:41.921Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/AnalyticsContentDashboard.tsx",
+        "timestamp": "2025-11-11T18:13:41.955Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/ContentPerformanceScoring.tsx",
+        "timestamp": "2025-11-11T18:13:41.956Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/EnhancedAnalyticsDashboard.tsx",
+        "timestamp": "2025-11-11T18:13:41.959Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/MaturityAnalyticsDashboard.tsx",
+        "timestamp": "2025-11-11T18:13:41.963Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
+        "timestamp": "2025-11-11T18:13:41.967Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
+        "timestamp": "2025-11-11T18:13:41.967Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/ui/chart.tsx",
+        "timestamp": "2025-11-11T18:13:41.982Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/cmp-client.ts",
+        "timestamp": "2025-11-11T18:13:41.991Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/opal-agent-client.ts",
+        "timestamp": "2025-11-11T18:13:41.992Z"
+      },
+      {
+        "check": "Security",
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/sendgrid-client.ts",
+        "timestamp": "2025-11-11T18:13:41.992Z"
+      }
+    ]
+  }
+}

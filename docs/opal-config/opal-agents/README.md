@@ -16,43 +16,132 @@ All agents have been upgraded to Schema Version 2.0 with the following improveme
 - **Error Resilience**: Graceful degradation and partial result handling
 - **Performance Optimization**: Caching strategies and parallel execution opportunities
 
+## Enhanced Admin Monitoring System
+
+### Agent Data Monitoring Dashboard
+
+The OSA system now provides comprehensive admin monitoring through a dynamic agent data dashboard system accessible at `/engine/admin/opal-monitoring/agent-data`.
+
+#### Key Features:
+
+**Dynamic Routing Architecture**:
+- **Base Route**: `/agent-data` → Auto-redirects to `/agent-data/content`
+- **Individual Agent Pages**: `/agent-data/{agent}` supporting 8 active agents
+- **Integration Health**: Displayed on main dashboard (`/engine/admin/opal-monitoring`)
+
+**Enhanced Data Structure**:
+Each agent provides comprehensive monitoring data including:
+- **Data Sent to OSA**: Core operational metrics and performance indicators
+- **Optimizely DXP Tools Used**: Platform tool utilization and integration status
+- **Strategy Assistance**: Strategic recommendations with admin editing capabilities
+- **OPAL Custom Tools**: Specialized tools developed for each specific agent
+- **OSA Integration Suggestions**: Enhancement recommendations for OSA services (admin editable)
+  - Recommendation Service enhancements
+  - Knowledge Retrieval Service improvements
+  - Preferences Policy Service updates
+- **Use Case Scenarios**: Real-world application examples (admin editable)
+- **Next Best Actions**: Immediate implementation steps (admin editable)
+- **Metadata**: Execution timestamps, agent IDs, and performance metrics
+
+**Admin Override System**:
+- **Real-time Editing**: Inline edit controls for strategic content sections
+- **Persistent Storage**: File-based JSON storage in `/data/agent-overrides.json`
+- **API Integration**: PUT endpoint for saving admin changes with validation
+- **Change Tracking**: Audit trail with modification timestamps and user attribution
+
+**Export and Integration**:
+- **JSON Export**: Complete agent data export functionality
+- **Raw Data Access**: Direct API endpoint access for technical analysis
+- **Performance Metrics**: Real-time execution tracking and success rate monitoring
+
 ## Agent Portfolio
 
-### 1. Content Review Agent (`content_review.json`)
-**Execution Order**: 1st | **Dependencies**: None
+### 0. Integration Health Monitor (`integration_health`)
+**Execution Order**: Continuous | **Dependencies**: None | **Admin Route**: Main Dashboard Display
 
-**Purpose**: Foundational content analysis to identify personalization opportunities, content gaps, and optimization priorities.
+**Purpose**: Monitors DXP integration status and comprehensive system health metrics for real-time operational oversight.
 
-**Key Capabilities**:
-- Content quality scoring (0-100)
-- SEO readiness assessment
-- Personalization potential identification
-- Content gap analysis
-- Brand compliance evaluation
+**Enhanced Capabilities**:
+- Integration status monitoring with 99.8% uptime tracking
+- API response time analysis across all services (avg 120ms)
+- Error rate monitoring and health scoring (0-100 scale)
+- Service availability and synchronization status tracking
+- Performance baseline establishment and trending
 
-**Data Outputs**:
-- `content_quality_metrics`
-- `personalization_opportunities`
-- `content_optimization_priorities`
-- `seo_foundation_status`
+**Enhanced Data Outputs**:
+- `integration_status`: Health status indicator (healthy/warning/critical)
+- `uptime_percentage`: System availability metrics
+- `api_response_times`: Service-specific performance data
+- `error_rates`: Error monitoring across all integrations
+- `health_score`: Comprehensive system health (0-100)
 
-### 2. GEO Audit Agent (`geo_audit.json`)
-**Execution Order**: 2nd | **Dependencies**: Content Review
+**OSA Integration Suggestions**:
+- **Recommendation Service**: Include API health scores in strategy recommendations, add automated alerts for threshold breaches
+- **Knowledge Retrieval Service**: Pull real-time integration metrics, include historical performance trends
+- **Preferences Policy Service**: Allow custom health score thresholds, enable notification preferences
 
-**Purpose**: Technical SEO and Generative Engine Optimization audit to ensure personalization implementations perform effectively.
+**OPAL Custom Tools**:
+- `integration_health_monitor`: Continuous DXP integration status monitoring
+- `api_performance_analyzer`: Response time analysis and bottleneck identification
+- `error_pattern_detector`: Error pattern detection with fix suggestions
 
-**Key Capabilities**:
-- AI citation readiness assessment
-- Schema markup validation
-- Core Web Vitals analysis
-- Performance baseline establishment
-- Technical constraint identification
+### 1. Content Review Agent (`content_review`)
+**Execution Order**: 1st | **Dependencies**: None | **Admin Route**: `/agent-data/content`
 
-**Data Outputs**:
-- `technical_seo_status`
-- `performance_baseline`
-- `implementation_constraints`
-- `optimization_opportunities`
+**Purpose**: Foundational content analysis to identify personalization opportunities, content gaps, and optimization priorities with enhanced quality metrics.
+
+**Enhanced Capabilities**:
+- Content quality scoring (87/100) with detailed variation analysis
+- SEO optimization assessment (92%) and accessibility compliance (95%)
+- Brand consistency evaluation (89%) across all content variations
+- Content variation management (156 total, 142 approved, 14 flagged)
+- Experiment content analysis with performance correlation
+
+**Enhanced Data Outputs**:
+- `content_quality_score`: Comprehensive content quality metrics (0-100)
+- `variation_analysis`: Total/approved/flagged content variations
+- `seo_optimization_level`: Search engine optimization readiness percentage
+- `accessibility_compliance`: WCAG compliance scoring
+- `brand_consistency_score`: Brand guideline adherence assessment
+
+**OSA Integration Suggestions**:
+- **Recommendation Service**: Add semantic scoring to recommendations, include content freshness metrics
+- **Knowledge Retrieval Service**: Include CMS metadata for better context, pull content performance history
+- **Preferences Policy Service**: Allow user content type prioritization, enable quality threshold settings
+
+**OPAL Custom Tools**:
+- `content_insight_generator`: Content performance and freshness analysis
+- `content_quality_analyzer`: Quality assessment across variations and experiments
+- `brand_compliance_checker`: Brand consistency validation and enforcement
+
+### 2. Geographic Audit Agent (`geo_audit`)
+**Execution Order**: 2nd | **Dependencies**: Content Review | **Admin Route**: `/agent-data/aeo`
+
+**Purpose**: Generative Engine Optimization (GEO) for AI search engines and regional performance analysis with comprehensive technical SEO assessment.
+
+**Enhanced Capabilities**:
+- GEO score assessment (92/100) with AI readiness evaluation
+- Search engine optimization across platforms (Google AI: 85, Bing Chat: 78, Claude: 92)
+- Regional content gap identification (12 gaps across 15 regions analyzed)
+- AI search recommendation generation (8 recommendations)
+- Voice search optimization and structured data validation
+
+**Enhanced Data Outputs**:
+- `geo_score`: Generative Engine Optimization effectiveness (0-100)
+- `ai_readiness`: Boolean assessment for AI search engine compatibility
+- `search_engine_optimization`: Platform-specific optimization scores
+- `content_gaps_identified`: Regional content opportunities
+- `ai_search_recommendations`: Actionable optimization suggestions
+
+**OSA Integration Suggestions**:
+- **Recommendation Service**: Include voice search metrics, add AI readiness scoring to strategy recommendations
+- **Knowledge Retrieval Service**: Pull structured data from CMS, include regional performance metrics
+- **Preferences Policy Service**: Enable AI-readiness toggle, allow search engine prioritization
+
+**OPAL Custom Tools**:
+- `geo_optimizer`: AI search engine visibility improvement
+- `ai_search_optimizer`: Content optimization for AI-powered search engines
+- `regional_content_advisor`: Region-specific content recommendations and strategies
 
 ### 3. Audience Suggester Agent (`audience_suggester.json`)
 **Execution Order**: 3rd | **Dependencies**: Content Review, GEO Audit

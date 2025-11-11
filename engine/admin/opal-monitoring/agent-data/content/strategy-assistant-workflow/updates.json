@@ -1,0 +1,93 @@
+{
+  "agent": "strategy_assistant_workflow",
+  "category": "content",
+  "last_updated": "2025-11-11",
+  "monitoring_config": {
+    "status": "active",
+    "performance_tracking": true,
+    "error_logging": true,
+    "output_validation": true
+  },
+  "required_updates": [
+    {
+      "component": "attribution_tracker",
+      "update_type": "new_tool",
+      "description": "Advanced multi-touch attribution system for content impact measurement",
+      "priority": "high",
+      "estimated_effort": "4 weeks",
+      "affects_outputs": [
+        "content_attribution_data",
+        "recommended_content_topics"
+      ],
+      "validation_required": true,
+      "implementation_status": "planned",
+      "dependencies": [
+        "multi_touch_attribution_models",
+        "customer_journey_tracking",
+        "conversion_event_processing"
+      ]
+    },
+    {
+      "component": "content_strategy_orchestrator",
+      "update_type": "capability_enhancement",
+      "description": "Enhanced strategic content planning with predictive analytics",
+      "priority": "medium",
+      "estimated_effort": "3 weeks",
+      "affects_outputs": [
+        "content_attribution_data",
+        "recommended_content_topics"
+      ],
+      "validation_required": true,
+      "implementation_status": "planned",
+      "dependencies": [
+        "predictive_analytics_models",
+        "strategic_planning_algorithms"
+      ]
+    }
+  ],
+  "new_instructions_needed": [
+    {
+      "instruction": "content_attribution_methodology",
+      "purpose": "Framework for measuring and attributing content impact across customer journeys",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_outputs": [
+        "content_attribution_data",
+        "recommended_content_topics"
+      ]
+    },
+    {
+      "instruction": "strategic_content_planning_framework",
+      "purpose": "Guidelines for aligning content strategy with business objectives",
+      "priority": "medium",
+      "implementation_timeline": "Q2 2025",
+      "affects_outputs": [
+        "content_attribution_data",
+        "recommended_content_topics"
+      ]
+    }
+  ],
+  "performance_metrics": {
+    "attribution_accuracy": {
+      "target": "> 0.80",
+      "current": "0.83",
+      "trend": "stable"
+    },
+    "workflow_completion_rate": {
+      "target": "> 0.95",
+      "current": "0.97",
+      "trend": "stable"
+    },
+    "strategic_alignment_score": {
+      "target": "> 0.85",
+      "current": "0.87",
+      "trend": "improving"
+    }
+  },
+  "health_checks": {
+    "data_freshness": "excellent",
+    "model_performance": "good",
+    "integration_status": "healthy",
+    "resource_utilization": "optimal"
+  }
+}

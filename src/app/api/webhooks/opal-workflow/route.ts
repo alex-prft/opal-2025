@@ -673,7 +673,7 @@ async function triggerOpalWorkflow(
     const opalApiUrl = process.env.OPAL_API_URL || process.env.NEXT_PUBLIC_OPAL_API_URL;
     const opalApiToken = process.env.OPAL_API_TOKEN;
     const opalWorkflowId = process.env.OPAL_WORKFLOW_ID || '3a620654-64e6-4e90-8c78-326dd4c81fac';
-    const opalWebhookUrl = 'https://webhook.opal.optimizely.com/webhooks/89019f3c31de4caca435e995d9089813/825e1edf-fd07-460e-a123-aab99ed78c2b';
+    const opalWebhookUrl = 'https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/60b3897e-70bf-4602-9d50-85b703fdfce9';
 
     if (!opalApiUrl || !opalApiToken) {
       console.log('Opal API credentials not found, running in simulation mode');
@@ -789,22 +789,29 @@ async function triggerOpalWorkflow(
 
 // Simulate Opal agent responses for demo/fallback mode
 async function simulateOpalAgentResponses(workflowId: string, inputData: any) {
-  console.log('Simulating Opal agent responses for workflow:', workflowId);
+  console.log('🤖 [SIMULATION] Starting agent simulation for workflow:', workflowId);
+  console.log('🤖 [SIMULATION] Input data keys:', Object.keys(inputData));
 
   const agents = [
+    'integration_health',
     'content_review',
     'geo_audit',
     'audience_suggester',
     'experiment_blueprinter',
-    'personalization_idea_generator'
+    'personalization_idea_generator',
+    'customer_journey',
+    'roadmap_generator',
+    'cmp_organizer'
   ];
 
   // Simulate each agent completing with a delay
   for (let i = 0; i < agents.length; i++) {
     const agentId = agents[i];
-    const delay = (i + 1) * 3000; // 3s, 6s, 9s, 12s, 15s
+    const delay = (i + 1) * 2000; // 2s, 4s, 6s, 8s, 10s, 12s, 14s, 16s, 18s
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      console.log(`🤖 [SIMULATION] Agent ${agentId} starting execution (delay: ${delay}ms)`);
+
       const agentResult: OpalAgentResult = {
         agent_id: agentId,
         agent_name: agentId,
@@ -814,22 +821,105 @@ async function simulateOpalAgentResponses(workflowId: string, inputData: any) {
         timestamp: new Date().toISOString()
       };
 
-      // Add agent result to workflow
-      opalDataStore.addAgentResult(workflowId, agentId, agentResult);
-
-      console.log(`Simulated agent completed: ${agentId} for workflow ${workflowId}`);
-
-      // Check if all agents are complete
-      const workflow = opalDataStore.getWorkflow(workflowId);
-      if (workflow) {
-        const completedAgents = Object.keys(workflow.results).filter(key =>
-          workflow.results[key]?.success
-        );
-
-        if (completedAgents.length === agents.length) {
-          opalDataStore.updateWorkflowStatus(workflowId, 'completed');
-          console.log('All simulated agents completed! Workflow is now complete.');
+      try {
+        // Try to add agent result to workflow (gracefully handle database failures)
+        try {
+          await opalDataStore.addAgentResult(workflowId, agentId, agentResult);
+          console.log(`🤖 [SIMULATION] Agent ${agentId} result stored in database for workflow ${workflowId}`);
+        } catch (dbError) {
+          console.warn(`🤖 [SIMULATION] Database storage failed for agent ${agentId}, continuing with webhook events (resilience mode):`, dbError instanceof Error ? dbError.message : dbError);
+          // Continue with webhook event storage even if database fails
         }
+
+        // Always store webhook event (this uses file storage fallback)
+        const agentWebhookPayload = {
+          event_type: 'agent.completed' as const,
+          workflow_id: workflowId,
+          workflow_name: 'strategy_assistant_workflow',
+          timestamp: new Date().toISOString(),
+          agent_id: agentId,
+          agent_name: agentId,
+          agent_output: agentResult.output,
+          agent_success: true,
+          execution_time_ms: agentResult.execution_time_ms,
+          metadata: {
+            simulation_mode: true,
+            client_id: inputData.client_name,
+            database_fallback: true
+          }
+        };
+
+        // Store simulated agent completion event (this should work with file fallback)
+        await webhookEventOperations.storeWebhookEvent({
+          event_type: 'agent.completed',
+          workflow_id: workflowId,
+          workflow_name: 'strategy_assistant_workflow',
+          agent_id: agentId,
+          agent_name: agentId,
+          received_at: new Date().toISOString(),
+          payload: agentWebhookPayload,
+          success: true,
+          processing_time_ms: agentResult.execution_time_ms,
+          source_ip: 'simulation',
+          user_agent: 'Simulation-Agent/1.0'
+        });
+
+        console.log(`🤖 [SIMULATION] Agent ${agentId} completion event stored successfully`);
+
+        // Track completion progress (use simple counter since database may not be available)
+        const completionKey = `simulation_${workflowId}_completed_count`;
+
+        // Use a simple in-memory tracking for simulation progress
+        if (!global.simulationProgress) {
+          global.simulationProgress = {};
+        }
+
+        if (!global.simulationProgress[workflowId]) {
+          global.simulationProgress[workflowId] = { completed: [], total: agents.length };
+        }
+
+        if (!global.simulationProgress[workflowId].completed.includes(agentId)) {
+          global.simulationProgress[workflowId].completed.push(agentId);
+        }
+
+        const completedCount = global.simulationProgress[workflowId].completed.length;
+        console.log(`🤖 [SIMULATION] Progress: ${completedCount}/${agents.length} agents completed`);
+
+        // Check if all agents are complete
+        if (completedCount === agents.length) {
+          console.log('🤖 [SIMULATION] All agents completed! Workflow is now complete.');
+
+          // Try to update workflow status if database is available
+          try {
+            await opalDataStore.updateWorkflowStatus(workflowId, 'completed');
+            console.log(`🤖 [SIMULATION] Workflow ${workflowId} marked as completed in database`);
+          } catch (statusError) {
+            console.warn(`🤖 [SIMULATION] Could not update workflow status in database (non-critical):`, statusError instanceof Error ? statusError.message : statusError);
+          }
+
+          // Store final workflow completion event
+          await webhookEventOperations.storeWebhookEvent({
+            event_type: 'workflow.completed',
+            workflow_id: workflowId,
+            workflow_name: 'strategy_assistant_workflow',
+            received_at: new Date().toISOString(),
+            payload: {
+              event_type: 'workflow.completed',
+              workflow_id: workflowId,
+              workflow_name: 'strategy_assistant_workflow',
+              timestamp: new Date().toISOString(),
+              data: { completed_agents: completedCount },
+              metadata: { simulation_mode: true, database_fallback: true }
+            },
+            success: true,
+            source_ip: 'simulation',
+            user_agent: 'Simulation-Agent/1.0'
+          });
+
+          console.log(`🤖 [SIMULATION] Final workflow completion event stored for ${workflowId}`);
+        }
+      } catch (error) {
+        console.error(`🤖 [SIMULATION] Critical error processing agent ${agentId}:`, error);
       }
     }, delay);
   }
@@ -840,6 +930,57 @@ function generateSimulatedAgentOutput(agentId: string, inputData: any): string {
   const businessObjectives = inputData.business_objectives || 'Improve personalization and member engagement';
 
   switch (agentId) {
+    case 'integration_health':
+      return `# Integration Health Monitor Report for ${clientName}
+
+## Executive Summary
+Comprehensive health check reveals strong DXP integration performance with minor optimization opportunities.
+
+## System Health Overview
+- **Overall Health Score**: 87/100
+- **System Uptime**: 99.7%
+- **Integration Points**: 12 active connections
+- **Data Sync Status**: All systems operational
+
+## Integration Status by Platform
+### Salesforce CRM
+- Status: 🟢 Healthy
+- Last Sync: 2 minutes ago
+- Performance: 98% success rate
+- Latency: 145ms average
+
+### Google Analytics 4
+- Status: 🟢 Healthy
+- Last Sync: 30 seconds ago
+- Data Accuracy: 99.2%
+- Real-time Events: Processing
+
+### Content Management System
+- Status: 🟡 Warning
+- Last Sync: 5 minutes ago
+- Issue: Minor API rate limiting
+- Recommendation: Implement request throttling
+
+### Marketing Automation
+- Status: 🟢 Healthy
+- Campaign Sync: Real-time
+- Email Deliverability: 97.8%
+
+## Performance Metrics
+- **API Response Time**: 180ms average
+- **Error Rate**: 0.3%
+- **Data Throughput**: 1.2TB/day
+- **Concurrent Connections**: 45 active
+
+## Recommendations
+1. Optimize CMS API calls to reduce rate limiting
+2. Implement connection pooling for Salesforce
+3. Add redundancy for critical data pipelines
+4. Schedule maintenance window for updates
+
+## Next Health Check
+Scheduled for: Next Tuesday at 3:00 AM EST`;
+
     case 'content_review':
       return `# Content Review Analysis for ${clientName}
 
@@ -1056,6 +1197,301 @@ Comprehensive testing program designed to optimize personalization effectiveness
 **Week 5-6**: Email personalization pilot
 **Week 7-8**: Search enhancement deployment
 **Week 9-12**: Performance optimization and expansion`;
+
+    case 'customer_journey':
+      return `# Customer Journey Analysis for ${clientName}
+
+## Journey Mapping Overview
+Comprehensive analysis of member touchpoints and optimization opportunities across the customer lifecycle.
+
+## Journey Stage Analysis
+
+### Stage 1: Discovery & Awareness
+- **Primary Channels**: Organic search (45%), referrals (25%), paid ads (20%)
+- **Key Touchpoints**: Website, social media, trade publications
+- **Conversion Rate**: 3.2% (industry average: 2.8%)
+- **Optimization Opportunity**: Improve SEO for produce-related keywords
+
+### Stage 2: Research & Consideration
+- **Behavior Patterns**: 4.5 sessions average before membership sign-up
+- **Content Consumption**: Product guides, pricing info, member testimonials
+- **Drop-off Points**: Complex registration process (40% abandon)
+- **Friction Areas**: Too many form fields, unclear value proposition
+
+### Stage 3: Membership & Onboarding
+- **Completion Rate**: 78% of started registrations
+- **Time to First Purchase**: 12 days average
+- **Onboarding Engagement**: Email sequence 65% open rate
+- **Success Factors**: Personal welcome call increases retention by 35%
+
+### Stage 4: Active Membership
+- **Purchase Frequency**: 2.3 orders per month average
+- **Category Preferences**: Organic (45%), seasonal (30%), bulk (25%)
+- **Loyalty Indicators**: Mobile app usage correlates with 40% higher LTV
+- **Engagement Channels**: Email (primary), SMS (secondary), app notifications
+
+### Stage 5: Retention & Growth
+- **Renewal Rate**: 87% annual renewal
+- **Upsell Success**: 32% upgrade to premium membership
+- **Referral Rate**: 1.8 referrals per member annually
+- **Churn Predictors**: Decreased order frequency, low email engagement
+
+## Cross-Channel Experience Analysis
+- **Mobile Experience**: 68% of traffic, needs optimization
+- **Email Integration**: Strong performance, opportunity for personalization
+- **Social Media**: Underutilized for member engagement
+- **Customer Service**: High satisfaction but reactive approach
+
+## Key Recommendations
+1. **Simplify Registration**: Reduce form fields by 50%
+2. **Mobile Optimization**: Improve mobile checkout experience
+3. **Personalized Onboarding**: Tailor based on member type and preferences
+4. **Proactive Retention**: Implement early warning system for churn risk
+5. **Cross-sell Opportunities**: Leverage purchase history for recommendations
+
+## Implementation Roadmap
+**Phase 1 (0-3 months)**: Registration optimization and mobile improvements
+**Phase 2 (3-6 months)**: Personalized onboarding and retention automation
+**Phase 3 (6-12 months)**: Advanced analytics and predictive modeling`;
+
+    case 'roadmap_generator':
+      return `# Implementation Roadmap for ${clientName}
+
+## Strategic Implementation Timeline
+Comprehensive 12-month roadmap for personalization and member engagement optimization.
+
+## Phase 1: Foundation (Months 1-3)
+### Month 1: Infrastructure & Data Foundation
+**Week 1-2: Data Architecture**
+- ✅ Audit current data collection and storage
+- ✅ Implement unified customer data platform
+- ✅ Establish data governance framework
+- ✅ Set up analytics tracking and measurement
+
+**Week 3-4: Technical Infrastructure**
+- ✅ API integrations and webhook setup
+- ✅ A/B testing framework implementation
+- ✅ Personalization engine configuration
+- ✅ Security and compliance validation
+
+### Month 2: Basic Personalization
+**Week 1-2: Member Segmentation**
+- 🔄 Implement behavioral segmentation
+- 🔄 Create member journey mapping
+- 🔄 Develop persona-based content strategy
+- 🔄 Launch basic email personalization
+
+**Week 3-4: Website Optimization**
+- 🔄 Dynamic homepage content by member type
+- 🔄 Personalized product recommendations
+- 🔄 Category-specific landing pages
+- 🔄 Mobile experience optimization
+
+### Month 3: Campaign Management
+**Week 1-2: Automated Campaigns**
+- ⏳ Welcome series automation
+- ⏳ Abandoned cart recovery
+- ⏳ Re-engagement campaigns
+- ⏳ Seasonal promotion targeting
+
+**Week 3-4: Testing & Optimization**
+- ⏳ A/B testing implementation
+- ⏳ Performance measurement setup
+- ⏳ Feedback collection system
+- ⏳ Initial optimization cycles
+
+## Phase 2: Advanced Personalization (Months 4-6)
+### Advanced Features Implementation
+- **AI-Powered Recommendations**: Machine learning product suggestions
+- **Dynamic Content**: Real-time content adaptation
+- **Cross-Channel Integration**: Unified experience across touchpoints
+- **Predictive Analytics**: Member behavior prediction and intervention
+
+### Key Milestones
+- 📊 50% increase in email engagement rates
+- 🛒 25% improvement in conversion rates
+- 📱 Enhanced mobile experience (4.5+ app store rating)
+- 🎯 Member satisfaction score >90%
+
+## Phase 3: Optimization & Scale (Months 7-12)
+### Advanced Analytics & AI
+- **Predictive Modeling**: Churn prevention and lifetime value optimization
+- **Real-time Personalization**: Dynamic website and app experiences
+- **Cross-sell Optimization**: Intelligent product bundling
+- **Voice of Customer**: Sentiment analysis and feedback loops
+
+### Success Metrics
+- **Revenue Impact**: 35% increase in member lifetime value
+- **Engagement**: 60% improvement in app usage
+- **Retention**: 15% reduction in churn rate
+- **Operational Efficiency**: 40% reduction in manual campaign management
+
+## Resource Requirements
+### Team Structure
+- **Project Manager**: Full-time coordination
+- **Data Analyst**: Analytics and insights
+- **Developer**: Technical implementation
+- **Marketing Specialist**: Campaign management
+- **UX Designer**: Experience optimization
+
+### Technology Stack
+- **Personalization Platform**: Optimizely, Adobe Target, or similar
+- **Analytics**: Google Analytics 4, Mixpanel
+- **Email Marketing**: Advanced automation platform
+- **Customer Data**: CDP or data warehouse solution
+
+### Budget Allocation
+- **Technology**: 40% of budget
+- **Personnel**: 35% of budget
+- **Testing & Optimization**: 15% of budget
+- **Training & Development**: 10% of budget
+
+## Risk Mitigation
+- **Technical Risks**: Phased rollout and thorough testing
+- **Data Privacy**: Compliance with GDPR/CCPA requirements
+- **Change Management**: Gradual implementation with team training
+- **Performance Impact**: Load testing and monitoring
+
+## Success Measurement
+### KPIs and Metrics
+- **Engagement Metrics**: Email open rates, website time on site, app usage
+- **Conversion Metrics**: Registration rates, purchase conversion, upsell success
+- **Retention Metrics**: Member renewal rates, churn prediction accuracy
+- **Revenue Metrics**: Average order value, lifetime value, revenue per member
+
+### Reporting Schedule
+- **Weekly**: Campaign performance and optimization
+- **Monthly**: Overall progress and metric trends
+- **Quarterly**: ROI analysis and strategic adjustments
+- **Annual**: Comprehensive review and next-year planning`;
+
+    case 'cmp_organizer':
+      return `# Campaign Management Platform Optimization for ${clientName}
+
+## CMP Workflow Analysis
+Strategic organization and optimization of campaign management workflows for enhanced efficiency and performance.
+
+## Current Campaign Architecture
+### Active Campaigns Overview
+- **Email Campaigns**: 45 active sequences
+- **SMS Campaigns**: 12 automated flows
+- **Push Notifications**: 8 engagement series
+- **Social Media**: 6 content calendar workflows
+- **Display Advertising**: 15 retargeting campaigns
+
+### Performance Summary
+- **Overall Engagement Rate**: 23.4%
+- **Conversion Rate**: 4.7%
+- **Campaign ROI**: 285%
+- **Automation Coverage**: 78% of communications
+
+## Workflow Optimization Recommendations
+
+### 1. Email Marketing Automation
+**Current State**: Multiple disconnected campaigns
+**Optimized Structure**:
+- **Welcome Series**: 7-email sequence over 21 days
+- **Product Education**: Category-specific drip campaigns
+- **Seasonal Promotions**: Automated based on inventory and weather
+- **Re-engagement**: Behavior-triggered win-back campaigns
+
+**Efficiency Gains**:
+- 60% reduction in manual campaign setup
+- 35% improvement in email relevance scores
+- 25% increase in automation-driven revenue
+
+### 2. Cross-Channel Orchestration
+**Unified Customer Journey**:
+- **Touchpoint Coordination**: Consistent messaging across channels
+- **Frequency Capping**: Prevent message fatigue
+- **Channel Preference**: Adaptive delivery based on member behavior
+- **Attribution Tracking**: Multi-touch attribution modeling
+
+### 3. Dynamic Content Management
+**Content Organization**:
+- **Template Library**: Standardized, customizable templates
+- **Asset Management**: Centralized image and copy repository
+- **Dynamic Insertion**: Real-time content based on member data
+- **A/B Testing Integration**: Automated testing workflows
+
+### 4. Campaign Performance Optimization
+**Analytics Integration**:
+- **Real-time Dashboards**: Campaign performance monitoring
+- **Automated Reporting**: Weekly performance summaries
+- **Predictive Analytics**: Campaign success probability scoring
+- **ROI Optimization**: Automated budget allocation
+
+## Implementation Strategy
+
+### Phase 1: Consolidation (Weeks 1-4)
+- **Campaign Audit**: Review and categorize existing campaigns
+- **Workflow Mapping**: Document current processes and pain points
+- **Platform Integration**: Connect disparate marketing tools
+- **Data Synchronization**: Ensure consistent customer data across platforms
+
+### Phase 2: Automation (Weeks 5-8)
+- **Trigger Setup**: Behavioral and demographic triggers
+- **Content Creation**: Dynamic content templates and variations
+- **Testing Framework**: A/B testing protocols and automation
+- **Performance Monitoring**: Real-time alerts and optimization rules
+
+### Phase 3: Optimization (Weeks 9-12)
+- **Machine Learning**: Predictive send time optimization
+- **Personalization Engine**: AI-driven content selection
+- **Cross-channel Analytics**: Unified performance measurement
+- **Continuous Improvement**: Automated optimization loops
+
+## Technology Stack Recommendations
+### Core Platforms
+- **Marketing Automation**: HubSpot, Marketo, or Pardot
+- **Email Service**: SendGrid, Mailchimp, or Constant Contact
+- **SMS Platform**: Twilio, SimpleTexting, or EZ Texting
+- **Social Management**: Hootsuite, Buffer, or Sprout Social
+
+### Integration Tools
+- **API Management**: Zapier or Microsoft Flow for workflow automation
+- **Data Warehouse**: Snowflake or BigQuery for unified data
+- **Analytics**: Google Analytics 4 and platform-specific analytics
+- **Reporting**: Tableau, Power BI, or custom dashboards
+
+## Success Metrics
+### Efficiency Metrics
+- **Campaign Setup Time**: Target 75% reduction
+- **Manual Tasks**: Target 80% automation coverage
+- **Error Reduction**: Target 90% fewer campaign errors
+- **Team Productivity**: Target 50% increase in campaigns managed per person
+
+### Performance Metrics
+- **Engagement Rates**: Target 40% improvement across channels
+- **Conversion Rates**: Target 30% increase in campaign-driven conversions
+- **Customer Lifetime Value**: Target 25% improvement through better targeting
+- **ROI**: Target 45% improvement in campaign return on investment
+
+## Risk Management
+### Technical Risks
+- **Platform Integration**: Thorough testing of API connections
+- **Data Migration**: Careful planning and validation of data transfers
+- **Downtime Prevention**: Staged rollouts and backup systems
+
+### Operational Risks
+- **Team Training**: Comprehensive training on new workflows
+- **Change Management**: Gradual transition with support systems
+- **Quality Control**: Automated checks and human oversight
+
+## Training and Support Plan
+### Team Development
+- **Platform Training**: 40 hours of hands-on training per team member
+- **Best Practices**: Workshop series on campaign optimization
+- **Certification Programs**: Platform-specific certifications
+- **Ongoing Support**: Monthly optimization reviews and troubleshooting
+
+### Documentation
+- **Workflow Guides**: Step-by-step process documentation
+- **Template Library**: Pre-built campaign templates and examples
+- **Troubleshooting Guides**: Common issues and solutions
+- **Performance Benchmarks**: Industry standards and internal KPIs
+
+This comprehensive CMP organization will result in more efficient workflows, higher campaign performance, and improved member engagement across all touchpoints.`;
 
     default:
       return `# Agent Output for ${agentId}

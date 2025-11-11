@@ -1,0 +1,240 @@
+{
+  "section": "Strategy Plans → Content Strategy",
+  "version": "2.0.0",
+  "last_updated": "2025-11-11",
+  "schema_version": "1.0.0",
+  "opal_mapping": {
+    "source_mapping": "content-mapping-v2.json",
+    "outputs": [
+      {
+        "field": "content_gap_analysis",
+        "agent": "content_review_agent",
+        "priority": "medium",
+        "confidence": 0.85,
+        "type": "AI-generated",
+        "type_tooltip": "AI identification of content opportunities and missing content types",
+        "tool": "gap_identifier",
+        "tool_tooltip": "OPAL Gap Analysis Tool identifies content opportunities using market and performance data",
+        "report": "Content Strategy Gap Report",
+        "report_tooltip": "Highlights content opportunities and competitive gaps",
+        "instructions": ["marketing_strategy", "personas", "content_guidelines"],
+        "instructions_tooltip": "Analyzes gaps against marketing strategy and audience needs",
+        "dxp_sources": ["CMS", "Content Recs", "ODP"],
+        "strategy_link": "Strategic Roadmap",
+        "decision_layer_impact": true,
+        "personal_configurator": false,
+        "brain_learning": true,
+        "ui_component": "GapAnalysisMatrix",
+        "refresh_interval": "weekly",
+        "data_validation": {
+          "required": true,
+          "format": "gap_analysis",
+          "fallback": "historical_gaps"
+        }
+      },
+      {
+        "field": "content_optimization_recommendations",
+        "agent": "content_review_agent",
+        "priority": "high",
+        "confidence": 0.90,
+        "type": "AI-generated",
+        "type_tooltip": "AI-generated actionable recommendations for content improvement",
+        "tool": "content_optimizer",
+        "tool_tooltip": "OPAL Content Optimization Engine provides specific improvement recommendations",
+        "report": "Content Optimization Action Plan",
+        "report_tooltip": "Provides prioritized list of content improvements with expected impact",
+        "instructions": ["content_guidelines", "brand_tone_guidelines", "kpi_definitions"],
+        "instructions_tooltip": "Ensures recommendations align with brand standards and business objectives",
+        "dxp_sources": ["CMS", "WEBX", "Content Recs"],
+        "strategy_link": "Quick Wins",
+        "decision_layer_impact": true,
+        "personal_configurator": true,
+        "brain_learning": true,
+        "ui_component": "RecommendationsList",
+        "refresh_interval": "daily",
+        "data_validation": {
+          "required": true,
+          "format": "recommendations_list",
+          "fallback": "generic_recommendations"
+        }
+      }
+    ]
+  },
+  "strategic_components": {
+    "content_suggestions": [
+      {
+        "title": "Interactive Content Performance Calculator",
+        "description": "Tool to predict content performance based on topic, format, and audience",
+        "priority": "high",
+        "estimated_effort": "2 weeks",
+        "depends_on_outputs": ["engagement_metrics", "content_effectiveness_score"],
+        "target_users": ["Content Managers", "Marketing Directors"],
+        "implementation_status": "planned"
+      },
+      {
+        "title": "Content ROI Attribution Model",
+        "description": "Framework for calculating content return on investment across channels",
+        "priority": "high",
+        "estimated_effort": "3 weeks",
+        "depends_on_outputs": ["content_attribution_data", "content_effectiveness_score"],
+        "target_users": ["Marketing Analysts", "Finance Teams"],
+        "implementation_status": "planned"
+      },
+      {
+        "title": "Brand Voice Consistency Checker",
+        "description": "AI tool to ensure content aligns with brand tone guidelines",
+        "priority": "medium",
+        "estimated_effort": "2 weeks",
+        "depends_on_outputs": ["engagement_metrics"],
+        "target_users": ["Content Writers", "Brand Managers"],
+        "implementation_status": "planned"
+      },
+      {
+        "title": "Content Repurposing Optimizer",
+        "description": "System to identify content that can be adapted for different channels",
+        "priority": "medium",
+        "estimated_effort": "2 weeks",
+        "depends_on_outputs": ["audience_resonance_data", "topic_performance_trends"],
+        "target_users": ["Content Strategists", "Digital Marketing Teams"],
+        "implementation_status": "planned"
+      }
+    ],
+    "report_recommendations": [
+      {
+        "report": "Content Velocity vs Quality Analysis",
+        "description": "Balance content production speed with quality metrics",
+        "audience": ["Content Managers", "Marketing Directors"],
+        "frequency": "Weekly",
+        "priority": "high",
+        "data_sources": ["engagement_metrics", "content_effectiveness_score"],
+        "complexity": "medium"
+      },
+      {
+        "report": "Cross-Channel Content Performance",
+        "description": "How content performs across different marketing channels",
+        "audience": ["Digital Marketing Teams", "Content Strategists"],
+        "frequency": "Monthly",
+        "priority": "high",
+        "data_sources": ["audience_resonance_data", "content_attribution_data"],
+        "complexity": "high"
+      },
+      {
+        "report": "Content Engagement Lifecycle Report",
+        "description": "Track content engagement from publication through retirement",
+        "audience": ["Content Teams", "Marketing Analysts"],
+        "frequency": "Quarterly",
+        "priority": "medium",
+        "data_sources": ["engagement_metrics", "topic_performance_trends"],
+        "complexity": "medium"
+      },
+      {
+        "report": "Competitive Content Intelligence",
+        "description": "Analysis of competitor content strategies and performance",
+        "audience": ["Marketing Directors", "Strategic Planners"],
+        "frequency": "Monthly",
+        "priority": "medium",
+        "data_sources": ["content_gap_analysis", "topic_performance_trends"],
+        "complexity": "high"
+      }
+    ],
+    "strategic_insights": [
+      {
+        "insight": "Content Velocity Impact on Quality",
+        "description": "Analyze correlation between content production speed and engagement quality",
+        "business_impact": "Optimize content production workflows for maximum ROI",
+        "implementation": "Monitor content performance vs production timelines",
+        "confidence": 0.85,
+        "data_requirements": ["engagement_metrics", "content_effectiveness_score"],
+        "update_frequency": "Weekly"
+      },
+      {
+        "insight": "Seasonal Content Performance Patterns",
+        "description": "Identify content types that perform better during specific seasons or events",
+        "business_impact": "Improve content calendar planning and resource allocation",
+        "implementation": "Track performance patterns across annual cycles",
+        "confidence": 0.78,
+        "data_requirements": ["topic_performance_trends", "engagement_metrics"],
+        "update_frequency": "Monthly"
+      },
+      {
+        "insight": "Content Format Effectiveness by Audience Segment",
+        "description": "Match optimal content formats to audience preferences",
+        "business_impact": "Increase engagement through format optimization",
+        "implementation": "Cross-reference format performance with audience segmentation data",
+        "confidence": 0.82,
+        "data_requirements": ["audience_resonance_data", "engagement_metrics"],
+        "update_frequency": "Bi-weekly"
+      }
+    ],
+    "improvement_recommendations": [
+      {
+        "area": "Content Performance Prediction",
+        "recommendation": "Implement predictive modeling to forecast content performance before publication",
+        "expected_impact": "30% improvement in content ROI through better topic and format selection",
+        "implementation_complexity": "high",
+        "timeline": "Q2 2025",
+        "depends_on": ["engagement_metrics", "content_effectiveness_score", "audience_resonance_data"],
+        "resource_requirements": "3 engineers, 2 data scientists",
+        "success_metrics": ["prediction_accuracy > 0.75", "roi_improvement > 0.25"]
+      },
+      {
+        "area": "Real-time Content Optimization",
+        "recommendation": "Develop real-time content adjustment capabilities based on early performance indicators",
+        "expected_impact": "25% increase in content engagement through rapid optimization",
+        "implementation_complexity": "medium",
+        "timeline": "Q1 2025",
+        "depends_on": ["engagement_metrics", "content_optimization_recommendations"],
+        "resource_requirements": "2 engineers, 1 UX designer",
+        "success_metrics": ["engagement_lift > 0.20", "optimization_speed < 2_hours"]
+      }
+    ]
+  },
+  "ui_configuration": {
+    "layout": "strategy_planning",
+    "responsive": true,
+    "filters": [
+      "strategy_type",
+      "timeline",
+      "priority_level",
+      "implementation_status"
+    ],
+    "export_options": ["pdf", "xlsx", "json"],
+    "collaborative_features": {
+      "comments": true,
+      "approvals": true,
+      "version_control": true
+    }
+  },
+  "personal_configurator_integration": {
+    "user_preferences": {
+      "strategy_focus_areas": "configurable",
+      "planning_horizon": "user_defined",
+      "risk_tolerance": "personalized",
+      "implementation_preferences": "customizable"
+    },
+    "preference_keys": [
+      "content.strategy.focus_areas",
+      "content.strategy.planning_timeline",
+      "content.strategy.risk_level"
+    ]
+  },
+  "decision_layer_integration": {
+    "impact_scoring": true,
+    "confidence_weighting": true,
+    "recommendation_engine": {
+      "enabled": true,
+      "threshold": 0.8,
+      "strategic_alignment_check": true
+    }
+  },
+  "brain_learning_integration": {
+    "knowledge_updates": true,
+    "pattern_recognition": true,
+    "feedback_loop": "strategic_outcomes",
+    "learning_categories": [
+      "content_strategy_effectiveness",
+      "strategic_pattern_recognition",
+      "competitive_intelligence"
+    ]
+  }
+}

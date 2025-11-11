@@ -335,6 +335,146 @@ OPAL Instructions provide specialized context that guides agent behavior and dec
 
 ---
 
+## Enhanced Admin Monitoring & Management System
+
+### Agent Data Monitoring Dashboard
+
+OSA now provides comprehensive real-time monitoring and administration capabilities through an enhanced agent data monitoring dashboard system accessible at `/engine/admin/opal-monitoring`.
+
+#### Key Administrative Features
+
+**Dynamic Agent Data Management**:
+- **Individual Agent Pages**: Dynamic routing to `/agent-data/{agent}` for detailed agent analysis
+- **Real-time Data Loading**: Live data fetching with loading states and error handling
+- **Export Capabilities**: JSON export and raw data access for technical analysis
+- **Performance Tracking**: Live execution metrics and success rate monitoring
+
+**Enhanced Data Structure per Agent**:
+Each agent now provides comprehensive monitoring data:
+
+**Core Data Categories**:
+1. **Data Sent to OSA**: Operational metrics and performance indicators
+2. **Optimizely DXP Tools Used**: Platform tool utilization and integration status
+3. **Strategy Assistance**: Strategic recommendations (Admin Editable)
+4. **OPAL Custom Tools**: Specialized tools developed for each agent
+5. **OSA Integration Suggestions**: Service enhancement recommendations (Admin Editable)
+6. **Use Case Scenarios**: Real-world application examples (Admin Editable)
+7. **Next Best Actions**: Implementation steps (Admin Editable)
+8. **Metadata**: Execution timestamps and performance data
+
+**Admin Override System**:
+- **Real-time Editing**: Inline edit controls for strategy content sections
+- **Persistent Storage**: File-based JSON storage with admin overrides
+- **API Integration**: PUT endpoint `/api/opal/agent-data?agent={id}` for saving changes
+- **Validation System**: Content validation and error handling
+- **Change Tracking**: Audit trail with modification timestamps
+
+#### Integration Health Monitoring
+
+**System-wide Health Dashboard**:
+- **Integration Status**: Live health monitoring from `integration_health` agent
+- **API Performance**: Response times across all Optimizely DXP services
+- **Uptime Tracking**: 99.8% availability monitoring with trend analysis
+- **Error Rate Monitoring**: Real-time error detection and alerting
+
+**Performance Metrics Display**:
+```typescript
+interface IntegrationHealthMetrics {
+  integration_status: "healthy" | "warning" | "error";
+  uptime_percentage: number; // 99.8%
+  api_response_times: {
+    experimentation: "120ms";
+    personalization: "85ms";
+    cms: "95ms";
+  };
+  error_rates: {
+    experimentation: 0.01;
+    personalization: 0.005;
+    cms: 0.02;
+  };
+  health_score: number; // 0-100 scale
+}
+```
+
+#### Agent-Specific Administrative Capabilities
+
+**Content Review Agent** (`/agent-data/content`):
+- **Enhanced Metrics**: Content quality (87/100), variations (156 total, 142 approved, 14 flagged)
+- **SEO Optimization**: 92% optimization level with accessibility compliance (95%)
+- **Admin Editable**: Strategic recommendations and content optimization priorities
+- **Custom Tools**: `content_quality_analyzer`, `brand_compliance_checker`, `content_insight_generator`
+
+**Geographic Audit Agent** (`/agent-data/aeo`):
+- **GEO Scoring**: 92/100 AI search optimization score
+- **Platform Analysis**: Google AI (85), Bing Chat (78), Claude (92) optimization scores
+- **Regional Insights**: 12 content gaps identified across 15 regions
+- **Custom Tools**: `geo_optimizer`, `ai_search_optimizer`, `regional_content_advisor`
+
+**Audience Suggester Agent** (`/agent-data/audiences`):
+- **Segment Analysis**: 42 segments analyzed with high-value identification
+- **Performance Metrics**: 8.5% conversion rate, 12.3% engagement, $2,340 LTV
+- **Discovery Engine**: 7 new segments identified with targeting recommendations
+- **Custom Tools**: `segment_analyzer`, `audience_performance_tracker`, `segment_discovery_engine`
+
+**Experiment Blueprinter Agent** (`/agent-data/exp`):
+- **Design Capacity**: 18 experiments designed with 34 hypotheses generated
+- **Confidence Scoring**: High (12), Medium (15), Low (7) confidence distributions
+- **Impact Projections**: 12-18% conversion lift, $125K-$180K revenue impact
+- **Custom Tools**: `experiment_hypothesis_generator`, `impact_estimation_engine`, `experiment_prioritizer`
+
+#### OSA Service Integration Enhancements
+
+**Enhanced OSA Suggestions per Agent**:
+Each agent provides targeted enhancement recommendations for OSA services:
+
+**Recommendation Service Enhancements**:
+- API health score integration for recommendations
+- Semantic scoring integration for content analysis
+- Success probability integration for experiments
+- ROI projection integration for personalization strategies
+
+**Knowledge Retrieval Service Improvements**:
+- Real-time integration metrics for context
+- CMS metadata enhancement for better content analysis
+- Historical experiment data for prediction accuracy
+- User behavior data for personalization context
+
+**Preferences Policy Service Updates**:
+- Custom health score threshold configuration
+- Content type prioritization settings
+- Risk tolerance configuration for experiments
+- Personalization complexity preferences
+
+#### Administrative Workflow Integration
+
+**Real-time Monitoring**:
+- **Server-Sent Events (SSE)**: Live dashboard updates for workflow progress
+- **Agent Status Tracking**: 7-state lifecycle monitoring (idle → starting → running → completed/failed/timeout)
+- **Performance Analytics**: Execution time tracking and success rate analysis
+- **Error Handling**: Comprehensive error logging and recovery mechanisms
+
+**Export and Reporting**:
+- **JSON Export**: Complete agent data export for external analysis
+- **Performance Reports**: Historical trend analysis and benchmarking
+- **Admin Reports**: Override history and change audit trails
+- **Integration Reports**: DXP tool utilization and performance summaries
+
+#### Configuration Management Interface
+
+**Agent Configuration**:
+- **Route Mapping**: Dynamic agent route configuration and management
+- **Tool Assignment**: Custom tool assignment and capability management
+- **Override Management**: Admin override configuration and validation
+- **Performance Tuning**: Agent execution optimization and resource allocation
+
+**System Configuration**:
+- **Integration Settings**: DXP tool connection and authentication management
+- **Notification Settings**: Alert configuration and delivery preferences
+- **Performance Thresholds**: Custom performance benchmark configuration
+- **Backup and Recovery**: System state backup and restoration capabilities
+
+---
+
 ## Configuration Management
 
 ### Mapping System

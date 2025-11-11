@@ -1,0 +1,302 @@
+{
+  "category": "Audiences",
+  "version": "2.0.0",
+  "last_updated": "2025-11-11",
+  "validation_rules": {
+    "required_fields": ["field", "type", "tool", "report", "agent", "osa_section"],
+    "field_formats": {
+      "priority": ["high", "medium", "low"],
+      "confidence": "number_0_to_1",
+      "type": ["AI-generated", "static", "hybrid"]
+    },
+    "agent_validation": {
+      "valid_agents": ["audience_suggester", "personalization_idea_generator", "customer_journey"],
+      "tool_agent_mapping": true
+    }
+  },
+  "agent_outputs": [
+    {
+      "field": "audience_segmentation_analysis",
+      "agent": "audience_suggester",
+      "priority": "high",
+      "confidence": 0.94,
+      "type": "AI-generated",
+      "type_tooltip": "AI-driven audience segmentation based on behavioral, demographic, and engagement data",
+      "tool": "audience_analyzer",
+      "tool_tooltip": "OPAL Audience Analyzer processes customer data to identify distinct audience segments",
+      "report": "Audience Insights Dashboard",
+      "report_tooltip": "Comprehensive audience segmentation and performance analytics",
+      "instructions": ["personas", "marketing_strategy", "data_governance"],
+      "instructions_tooltip": "Uses persona definitions and marketing strategy to refine audience segments",
+      "dxp_sources": ["ODP", "CMP", "WEBX"],
+      "osa_section": "Analytics Insights → Audiences",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "behavioral_pattern_insights",
+      "agent": "audience_suggester",
+      "priority": "high",
+      "confidence": 0.91,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of customer behavioral patterns and engagement preferences",
+      "tool": "behavior_pattern_analyzer",
+      "tool_tooltip": "OPAL Behavior Pattern Analyzer identifies customer engagement and interaction patterns",
+      "report": "Behavioral Insights Report",
+      "report_tooltip": "Deep dive into customer behavior patterns and preferences",
+      "instructions": ["personas", "customer_journey_guidelines", "data_governance"],
+      "instructions_tooltip": "Analyzes behavior patterns against defined personas and journey stages",
+      "dxp_sources": ["ODP", "WEBX", "CMP"],
+      "osa_section": "Analytics Insights → Audiences",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "audience_lifecycle_mapping",
+      "agent": "customer_journey",
+      "priority": "high",
+      "confidence": 0.88,
+      "type": "AI-generated",
+      "type_tooltip": "AI mapping of audience progression through lifecycle stages and conversion paths",
+      "tool": "lifecycle_mapper",
+      "tool_tooltip": "OPAL Lifecycle Mapper tracks audience progression and identifies optimization opportunities",
+      "report": "Audience Lifecycle Dashboard",
+      "report_tooltip": "Audience lifecycle progression analysis with stage-specific recommendations",
+      "instructions": ["personas", "customer_journey_guidelines", "kpi_definitions"],
+      "instructions_tooltip": "Maps lifecycle progression against defined personas and journey KPIs",
+      "dxp_sources": ["ODP", "CMP", "WEBX"],
+      "osa_section": "Analytics Insights → Audiences",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "personalization_opportunities",
+      "agent": "personalization_idea_generator",
+      "priority": "high",
+      "confidence": 0.85,
+      "type": "AI-generated",
+      "type_tooltip": "AI identification of personalization opportunities for different audience segments",
+      "tool": "personalization_opportunity_finder",
+      "tool_tooltip": "OPAL Personalization Opportunity Finder identifies segment-specific personalization strategies",
+      "report": "Personalization Strategy Report",
+      "report_tooltip": "Audience-specific personalization opportunities and implementation roadmap",
+      "instructions": ["personas", "personalization_maturity_rubric", "marketing_strategy"],
+      "instructions_tooltip": "Uses personalization maturity framework and personas for strategy development",
+      "dxp_sources": ["ODP", "Content Recs", "WEBX"],
+      "osa_section": "Strategy Plans → Audience Strategy",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "cross_channel_audience_behavior",
+      "agent": "audience_suggester",
+      "priority": "medium",
+      "confidence": 0.87,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of audience behavior patterns across different marketing channels",
+      "tool": "cross_channel_analyzer",
+      "tool_tooltip": "OPAL Cross-Channel Analyzer tracks audience engagement across multiple touchpoints",
+      "report": "Cross-Channel Audience Report",
+      "report_tooltip": "Multi-channel audience engagement analysis with optimization recommendations",
+      "instructions": ["personas", "marketing_strategy", "channel_optimization_guidelines"],
+      "instructions_tooltip": "Analyzes cross-channel behavior against marketing strategy and channel guidelines",
+      "dxp_sources": ["ODP", "CMP", "WEBX", "Content Recs"],
+      "osa_section": "Analytics Insights → Audiences",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    },
+    {
+      "field": "audience_value_scoring",
+      "agent": "audience_suggester",
+      "priority": "high",
+      "confidence": 0.90,
+      "type": "AI-generated",
+      "type_tooltip": "AI-calculated audience value scores based on engagement, conversion, and lifetime value potential",
+      "tool": "audience_value_calculator",
+      "tool_tooltip": "OPAL Audience Value Calculator determines segment value and prioritization",
+      "report": "Audience Value Analysis Report",
+      "report_tooltip": "Audience segment value scoring with investment priority recommendations",
+      "instructions": ["kpi_definitions", "marketing_strategy", "personas"],
+      "instructions_tooltip": "Calculates audience value using defined KPIs and strategic priorities",
+      "dxp_sources": ["ODP", "CMP"],
+      "osa_section": "Analytics Insights → Audiences",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "audience_content_preferences",
+      "agent": "audience_suggester",
+      "priority": "medium",
+      "confidence": 0.83,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of content preferences and consumption patterns by audience segment",
+      "tool": "content_preference_analyzer",
+      "tool_tooltip": "OPAL Content Preference Analyzer identifies optimal content types for each audience",
+      "report": "Audience Content Affinity Report",
+      "report_tooltip": "Content preference analysis with segment-specific content recommendations",
+      "instructions": ["personas", "content_guidelines", "marketing_strategy"],
+      "instructions_tooltip": "Matches content preferences to personas and marketing objectives",
+      "dxp_sources": ["Content Recs", "ODP", "CMS"],
+      "osa_section": "Strategy Plans → Audience Strategy",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    }
+  ],
+  "additional_instructions_needed": [
+    {
+      "instruction": "advanced_audience_segmentation_framework",
+      "purpose": "Comprehensive framework for AI-driven audience segmentation and analysis",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["audience_suggester"],
+      "validation_impact": "high"
+    },
+    {
+      "instruction": "cross_channel_behavior_analysis_protocols",
+      "purpose": "Guidelines for analyzing and optimizing cross-channel audience behavior",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["audience_suggester", "customer_journey"],
+      "validation_impact": "medium"
+    },
+    {
+      "instruction": "audience_privacy_compliance_framework",
+      "purpose": "Ensure audience analysis complies with privacy regulations while maximizing insights",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["audience_suggester", "personalization_idea_generator"],
+      "validation_impact": "high"
+    }
+  ],
+  "content_suggestions": [
+    {
+      "title": "Audience Intelligence Platform",
+      "description": "Unified platform for comprehensive audience analysis, segmentation, and optimization",
+      "priority": "high",
+      "estimated_effort": "6 weeks",
+      "depends_on_outputs": ["audience_segmentation_analysis", "behavioral_pattern_insights", "audience_value_scoring"],
+      "target_users": ["Marketing Teams", "Data Analysts"]
+    },
+    {
+      "title": "Real-time Audience Behavior Tracker",
+      "description": "Live tracking system for audience behavior changes and segment evolution",
+      "priority": "high",
+      "estimated_effort": "4 weeks",
+      "depends_on_outputs": ["behavioral_pattern_insights", "cross_channel_audience_behavior"],
+      "target_users": ["Digital Marketing Teams", "Customer Experience Teams"]
+    },
+    {
+      "title": "Audience Personalization Engine",
+      "description": "AI system to automatically personalize experiences based on audience insights",
+      "priority": "medium",
+      "estimated_effort": "5 weeks",
+      "depends_on_outputs": ["personalization_opportunities", "audience_content_preferences"],
+      "target_users": ["Personalization Teams", "Marketing Automation Specialists"]
+    }
+  ],
+  "report_recommendations": [
+    {
+      "report": "Audience Performance Scorecard",
+      "description": "Comprehensive audience segment performance tracking and optimization recommendations",
+      "audience": ["Marketing Directors", "Customer Analytics Teams"],
+      "frequency": "Weekly",
+      "priority": "high",
+      "data_sources": ["audience_segmentation_analysis", "audience_value_scoring"],
+      "complexity": "medium"
+    },
+    {
+      "report": "Cross-Channel Audience Journey Analysis",
+      "description": "Multi-touchpoint audience behavior analysis with journey optimization insights",
+      "audience": ["Customer Experience Teams", "Digital Marketing Directors"],
+      "frequency": "Monthly",
+      "priority": "high",
+      "data_sources": ["cross_channel_audience_behavior", "audience_lifecycle_mapping"],
+      "complexity": "high"
+    },
+    {
+      "report": "Audience Engagement Trends Report",
+      "description": "Trending audience behaviors and emerging segment opportunities",
+      "audience": ["Strategic Planners", "Marketing Analysts"],
+      "frequency": "Quarterly",
+      "priority": "medium",
+      "data_sources": ["behavioral_pattern_insights", "audience_content_preferences"],
+      "complexity": "medium"
+    }
+  ],
+  "strategic_insights": [
+    {
+      "insight": "Audience Segmentation Impact on Campaign Performance",
+      "description": "Correlation between audience segmentation granularity and campaign effectiveness",
+      "business_impact": "Improve campaign ROI through better audience targeting and personalization",
+      "implementation": "Track campaign performance against audience segmentation strategies",
+      "confidence": 0.91,
+      "data_requirements": ["audience_segmentation_analysis", "audience_value_scoring"],
+      "update_frequency": "Weekly"
+    },
+    {
+      "insight": "Cross-Channel Audience Consistency Patterns",
+      "description": "Analysis of audience behavior consistency across different marketing channels",
+      "business_impact": "Optimize channel strategy and budget allocation based on audience preferences",
+      "implementation": "Monitor audience engagement patterns across all marketing touchpoints",
+      "confidence": 0.86,
+      "data_requirements": ["cross_channel_audience_behavior", "behavioral_pattern_insights"],
+      "update_frequency": "Monthly"
+    }
+  ],
+  "improvement_recommendations": [
+    {
+      "area": "Real-time Audience Intelligence",
+      "recommendation": "Implement real-time audience behavior tracking and dynamic segmentation",
+      "expected_impact": "35% improvement in audience targeting accuracy and campaign performance",
+      "implementation_complexity": "high",
+      "timeline": "Q2 2025",
+      "depends_on": ["audience_segmentation_analysis", "behavioral_pattern_insights", "cross_channel_audience_behavior"],
+      "resource_requirements": "2 data scientists, 3 engineers, 1 UX designer",
+      "success_metrics": ["targeting_accuracy > 0.30", "campaign_performance_lift > 0.25"]
+    }
+  ],
+  "opal_monitoring_updates": [
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/audiences/audience-suggester/",
+      "required_updates": [
+        {
+          "component": "audience_suggester",
+          "update_type": "capability_enhancement",
+          "description": "Add advanced behavioral pattern analysis and real-time segmentation capabilities",
+          "priority": "high",
+          "estimated_effort": "4 weeks",
+          "affects_outputs": ["audience_segmentation_analysis", "behavioral_pattern_insights", "audience_value_scoring"],
+          "validation_required": true
+        }
+      ]
+    },
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/audiences/personalization/",
+      "required_updates": [
+        {
+          "component": "personalization_opportunity_finder",
+          "update_type": "new_tool",
+          "description": "AI-powered personalization opportunity identification based on audience insights",
+          "priority": "medium",
+          "estimated_effort": "3 weeks",
+          "affects_outputs": ["personalization_opportunities"],
+          "validation_required": false
+        }
+      ]
+    }
+  ]
+}

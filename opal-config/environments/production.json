@@ -4,43 +4,43 @@
   "version": "2.0.0-production",
 
   "discovery_endpoints": {
-    "primary": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
-    "fallback": "https://ifpa-strategy-1mcqcjxkk-alex-harris-projects-f468cccf.vercel.app/api/opal/enhanced-tools"
+    "primary": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+    "fallback": "https://opal-2025.vercel.app/api/opal/enhanced-tools"
   },
 
   "integration_endpoints": {
-    "osa_webhook_agent": "https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow",
-    "data_storage": "https://ifpa-strategy.vercel.app/api/opal/workflow-data",
-    "osa_webhook_results": "https://ifpa-strategy.vercel.app/api/opal/workflow-results",
-    "validation_service": "https://ifpa-strategy.vercel.app/api/opal/validate",
-    "monitoring_endpoint": "https://ifpa-strategy.vercel.app/api/opal/status"
+    "osa_webhook_agent": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+    "data_storage": "https://opal-2025.vercel.app/api/opal/workflow-data",
+    "osa_webhook_results": "https://opal-2025.vercel.app/api/opal/workflow-results",
+    "validation_service": "https://opal-2025.vercel.app/api/opal/validate",
+    "monitoring_endpoint": "https://opal-2025.vercel.app/api/opal/status"
   },
 
   "enhanced_tools": [
     {
       "name": "send_data_to_osa_enhanced",
-      "endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "method": "POST",
       "priority": "critical",
       "description": "Production-ready webhook delivery with intelligent routing and comprehensive error handling"
     },
     {
       "name": "analyze_website_content_enhanced",
-      "endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "method": "POST",
       "priority": "high",
       "description": "Enhanced content analysis with quality scoring and personalization opportunities"
     },
     {
       "name": "generate_audience_segments_enhanced",
-      "endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "method": "POST",
       "priority": "high",
       "description": "ML-powered audience segmentation with statistical validation"
     },
     {
       "name": "create_experiment_blueprint_enhanced",
-      "endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "method": "POST",
       "priority": "high",
       "description": "Interactive experiment design with statistical power analysis"
@@ -104,7 +104,7 @@
   "security": {
     "cors_enabled": true,
     "allowed_origins": [
-      "https://ifpa-strategy.vercel.app",
+      "https://opal-2025.vercel.app",
       "https://*.vercel.app"
     ],
     "csrf_protection": true,
@@ -115,7 +115,7 @@
 
   "agent_configurations": {
     "content_review": {
-      "discovery_endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_analyze_website_content_enhanced",
         "enhanced_tools_store_workflow_data_enhanced",
@@ -123,7 +123,7 @@
       ]
     },
     "audience_suggester": {
-      "discovery_endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_generate_audience_segments_enhanced",
         "enhanced_tools_retrieve_workflow_context_enhanced",
@@ -131,7 +131,7 @@
       ]
     },
     "experiment_blueprinter": {
-      "discovery_endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_create_experiment_blueprint_enhanced",
         "enhanced_tools_retrieve_workflow_context_enhanced",

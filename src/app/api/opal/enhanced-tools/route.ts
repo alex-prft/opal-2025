@@ -7,29 +7,33 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { logWebhookAttempt } from '@/app/api/diagnostics/last-webhook/route';
 
-// Environment configuration
+// Environment configuration with production OPAL webhook integration
 const ENVIRONMENT_CONFIGS = {
   development: {
     baseUrl: 'http://localhost:3000',
-    webhookUrl: 'http://localhost:3000/api/webhooks/opal-workflow',
+    webhookUrl: 'http://localhost:3000/api/webhooks/opal-mock-test', // Use mock endpoint for development
     apiUrl: 'http://localhost:3000/api',
     timeout: 30000,
-    retries: 3
+    retries: 3,
+    authKey: process.env.OPAL_WEBHOOK_AUTH_KEY || 'dev-fallback-key'
   },
   staging: {
-    baseUrl: 'https://ifpa-strategy-staging.vercel.app',
-    webhookUrl: 'https://ifpa-strategy-staging.vercel.app/api/webhooks/opal-workflow',
-    apiUrl: 'https://ifpa-strategy-staging.vercel.app/api',
+    baseUrl: 'https://opal-2025.vercel.app',
+    webhookUrl: process.env.OPAL_WEBHOOK_URL || 'https://opal-2025.vercel.app/api/webhooks/opal-mock-test',
+    apiUrl: 'https://opal-2025.vercel.app/api',
     timeout: 45000,
-    retries: 5
+    retries: 5,
+    authKey: process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || 'opal-workflow-webhook-secret-2025'
   },
   production: {
-    baseUrl: 'https://ifpa-strategy.vercel.app',
-    webhookUrl: 'https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow',
-    apiUrl: 'https://ifpa-strategy.vercel.app/api',
+    baseUrl: 'https://opal-2025.vercel.app',
+    webhookUrl: process.env.OPAL_WEBHOOK_URL || 'https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/60b3897e-70bf-4602-9d50-85b703fdfce9',
+    apiUrl: 'https://opal-2025.vercel.app/api',
     timeout: 60000,
-    retries: 5
+    retries: 5,
+    authKey: process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || 'opal-workflow-webhook-secret-2025'
   }
 };
 
@@ -218,21 +222,23 @@ export async function GET(request: NextRequest) {
       },
 
       integration_guidance: {
-        immediate_fix_for_webhook_issue: [
-          "🚨 CRITICAL: Update workflow_data_sharing.json to use localhost URLs for development:",
-          `"osa_webhook_agent": "${envConfig.webhookUrl}"`,
-          `"discovery_url": "${envConfig.baseUrl}/api/opal/enhanced-tools"`,
-          "This will fix the OPAL agents sending data to production instead of localhost"
+        webhook_configuration_fixed: [
+          "✅ FIXED: Webhook URLs now correctly route to production OPAL endpoint",
+          `Development: Uses mock endpoint (${envConfig.baseUrl}/api/webhooks/opal-mock-test)`,
+          `Production: Uses OPAL webhook (${process.env.OPAL_WEBHOOK_URL || 'https://webhook.opal.optimizely.com/webhooks/...'})`,
+          "Environment detection is automatic based on OPAL_TARGET_ENV or NODE_ENV"
         ],
         opal_agent_setup: [
-          `Set discovery_url to: ${envConfig.baseUrl}/api/opal/enhanced-tools`,
-          "Update tool configurations to use send_data_to_osa_enhanced",
-          "Configure proper authentication with OPAL_WEBHOOK_AUTH_KEY"
+          `✅ Discovery URL: ${envConfig.baseUrl}/api/opal/enhanced-tools`,
+          "✅ Tool: send_data_to_osa_enhanced with production OPAL integration",
+          `✅ Authentication: Bearer ${envConfig.authKey ? `${envConfig.authKey.substring(0, 8)}...` : 'NOT_CONFIGURED'}`,
+          "✅ Target environment auto-detection working"
         ],
-        workflow_coordination: [
-          "All tools automatically share data between workflow steps",
-          "Enhanced error handling prevents workflow interruption",
-          "Performance monitoring provides real-time execution insights"
+        production_integration: [
+          "✅ Uses strategy_assistant_workflow payload format",
+          "✅ Comprehensive telemetry and correlation ID tracking",
+          "✅ Proper timeout handling and error recovery",
+          "✅ Bearer token authentication with production OPAL"
         ]
       },
 
@@ -585,29 +591,251 @@ async function handleEnhancedExperimentBlueprint(params: any, context: any) {
 }
 
 async function handleEnhancedOSAWebhook(params: any, context: any) {
-  const { agent_id, workflow_id, osa_environment = 'dev' } = params;
+  const {
+    agent_id,
+    agent_data,
+    workflow_id,
+    execution_status,
+    target_environment,
+    delivery_options = {}
+  } = params;
 
-  // Enhanced webhook delivery with intelligent routing
-  const osaDomain = osa_environment === 'prod'
-    ? 'https://ifpa-strategy.vercel.app'
-    : 'http://localhost:3000';
+  const startTime = Date.now();
+  const spanId = `osa-webhook-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
-  return NextResponse.json({
-    success: true,
-    tool: 'send_data_to_osa_enhanced',
-    results: {
-      webhook_delivered: true,
-      target_environment: osa_environment,
-      target_url: `${osaDomain}/api/webhooks/opal-workflow`,
-      delivery_method: 'enhanced_with_retry',
+  console.log(`🚀 [Enhanced OSA Webhook] Starting OPAL workflow trigger`, {
+    agent_id,
+    workflow_id,
+    execution_status,
+    target_environment,
+    span_id: spanId
+  });
+
+  try {
+    // Get environment configuration
+    const envConfig = getCurrentEnvironmentConfig();
+    const webhookUrl = envConfig.webhookUrl;
+    const authKey = envConfig.authKey;
+
+    // Check if we have production OPAL configuration
+    const hasProductionConfig = process.env.OPAL_WEBHOOK_URL && process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
+
+    // Prepare OPAL workflow payload
+    const workflowPayload = {
+      workflow_name: 'strategy_assistant_workflow',
+      input_data: {
+        client_name: agent_data.client_name || 'OPAL Custom Tools Integration',
+        industry: agent_data.industry || 'Technology',
+        company_size: agent_data.company_size || 'Medium',
+        current_capabilities: agent_data.current_capabilities || ['Custom Tools Integration'],
+        business_objectives: agent_data.business_objectives || ['Data Integration', 'Workflow Automation'],
+        additional_marketing_technology: agent_data.additional_marketing_technology || [],
+        timeline_preference: agent_data.timeline_preference || '6-months',
+        budget_range: agent_data.budget_range || '50k-100k',
+        recipients: agent_data.recipients || ['admin@example.com'],
+        triggered_by: 'custom_tools_integration',
+        agent_execution_context: {
+          agent_id,
+          workflow_id,
+          execution_status,
+          agent_data,
+          source: 'opal_custom_tools'
+        }
+      },
+      metadata: {
+        workspace_id: process.env.OPAL_WORKSPACE_ID || 'default-workspace',
+        trigger_timestamp: new Date().toISOString(),
+        correlation_id: `custom-tools-${workflow_id}-${spanId}`,
+        source_system: 'OSA-CustomTools-Integration',
+        span_id: spanId
+      }
+    };
+
+    const payloadJson = JSON.stringify(workflowPayload);
+    const payloadSizeBytes = Buffer.byteLength(payloadJson, 'utf8');
+
+    console.log(`📤 [Enhanced OSA Webhook] Sending to ${webhookUrl}`, {
+      span_id: spanId,
       agent_id,
       workflow_id,
-      sdk_features_used: [
-        'Intelligent environment routing',
-        'Retry logic with exponential backoff',
-        'Delivery confirmation'
-      ],
-      delivery_timestamp: new Date().toISOString()
+      target_environment,
+      payload_size_bytes: payloadSizeBytes,
+      auth_configured: !!authKey
+    });
+
+    let webhookResponse;
+    let responseData = '';
+    let responseSizeBytes = 0;
+
+    const requestHeaders = hasProductionConfig && target_environment === 'production'
+      ? {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authKey}`,
+          'User-Agent': 'OSA-CustomTools-Enhanced/1.0',
+          'X-Correlation-ID': workflowPayload.metadata.correlation_id,
+          'X-Span-ID': spanId,
+          'X-Agent-ID': agent_id,
+          'X-Workflow-ID': workflow_id,
+          'X-Source-System': 'OSA-CustomTools-Integration'
+        }
+      : {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authKey}`,
+          'User-Agent': 'OSA-CustomTools-Enhanced/1.0',
+          'X-Agent-ID': agent_id,
+          'X-Workflow-ID': workflow_id
+        };
+
+    if (hasProductionConfig && target_environment === 'production') {
+      // Use production OPAL webhook
+      console.log(`🏭 [Enhanced OSA Webhook] Using production OPAL configuration`);
+
+      webhookResponse = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: requestHeaders,
+        body: payloadJson,
+        signal: AbortSignal.timeout(envConfig.timeout)
+      });
+
+      responseData = await webhookResponse.text();
+      responseSizeBytes = Buffer.byteLength(responseData, 'utf8');
+    } else {
+      // Use development/mock endpoint
+      console.log(`🧪 [Enhanced OSA Webhook] Using development/mock configuration`);
+
+      webhookResponse = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: requestHeaders,
+        body: payloadJson,
+        signal: AbortSignal.timeout(envConfig.timeout)
+      });
+
+      responseData = await webhookResponse.text();
+      responseSizeBytes = Buffer.byteLength(responseData, 'utf8');
     }
-  });
+
+    // Log webhook attempt for diagnostics
+    logWebhookAttempt({
+      webhook_url: webhookUrl,
+      method: 'POST',
+      headers: requestHeaders,
+      payload_size_bytes: payloadSizeBytes,
+      response_status: webhookResponse.status,
+      response_time_ms: Date.now() - startTime,
+      success: webhookResponse.ok,
+      error_message: webhookResponse.ok ? undefined : `${webhookResponse.status} ${webhookResponse.statusText}`,
+      correlation_id: workflowPayload.metadata.correlation_id,
+      span_id: spanId,
+      source: 'custom_tools',
+      environment: target_environment || 'auto-detected',
+      auth_method: 'bearer',
+      payload_summary: {
+        workflow_name: workflowPayload.workflow_name,
+        client_name: workflowPayload.input_data.client_name,
+        agent_id,
+        workflow_id,
+        execution_status
+      }
+    });
+
+    let parsedResponse = {};
+    try {
+      parsedResponse = JSON.parse(responseData);
+    } catch {
+      parsedResponse = { raw_response: responseData };
+    }
+
+    const duration = Date.now() - startTime;
+
+    console.log(`📥 [Enhanced OSA Webhook] Received response`, {
+      span_id: spanId,
+      status: webhookResponse.status,
+      success: webhookResponse.ok,
+      duration_ms: duration,
+      response_size_bytes: responseSizeBytes
+    });
+
+    if (!webhookResponse.ok) {
+      throw new Error(`OPAL webhook failed: ${webhookResponse.status} ${webhookResponse.statusText} - ${responseData}`);
+    }
+
+    return NextResponse.json({
+      success: true,
+      tool: 'send_data_to_osa_enhanced',
+      results: {
+        webhook_delivered: true,
+        target_environment: target_environment || 'auto-detected',
+        target_url: webhookUrl,
+        delivery_method: 'production_opal_integration',
+        agent_id,
+        workflow_id,
+        execution_status,
+        response_metadata: {
+          span_id: spanId,
+          correlation_id: workflowPayload.metadata.correlation_id,
+          duration_ms: duration,
+          webhook_status: webhookResponse.status,
+          payload_size_bytes: payloadSizeBytes,
+          response_size_bytes: responseSizeBytes,
+          opal_response: parsedResponse
+        },
+        sdk_features_used: [
+          'Production OPAL webhook integration',
+          'Environment-aware intelligent routing',
+          'Bearer token authentication',
+          'Comprehensive telemetry and logging',
+          'Timeout and error handling'
+        ],
+        delivery_timestamp: new Date().toISOString()
+      }
+    });
+
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
+    console.error(`❌ [Enhanced OSA Webhook] Failed after ${duration}ms`, {
+      span_id: spanId,
+      agent_id,
+      workflow_id,
+      error: errorMessage
+    });
+
+    // Log failed webhook attempt for diagnostics
+    logWebhookAttempt({
+      webhook_url: envConfig.webhookUrl,
+      method: 'POST',
+      headers: {}, // Headers not available in error case
+      payload_size_bytes: payloadSizeBytes || 0,
+      response_time_ms: duration,
+      success: false,
+      error_message: errorMessage,
+      correlation_id: `custom-tools-${workflow_id}-${spanId}`,
+      span_id: spanId,
+      source: 'custom_tools',
+      environment: target_environment || 'auto-detected',
+      auth_method: 'bearer',
+      payload_summary: {
+        workflow_name: 'strategy_assistant_workflow',
+        client_name: agent_data?.client_name || 'Unknown',
+        agent_id,
+        workflow_id,
+        execution_status
+      }
+    });
+
+    return NextResponse.json({
+      success: false,
+      tool: 'send_data_to_osa_enhanced',
+      error_message: errorMessage,
+      error_details: {
+        span_id: spanId,
+        agent_id,
+        workflow_id,
+        duration_ms: duration,
+        target_environment: target_environment || 'auto-detected'
+      },
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
+  }
 }

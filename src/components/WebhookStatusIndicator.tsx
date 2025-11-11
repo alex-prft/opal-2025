@@ -15,6 +15,7 @@ import {
   Zap
 } from 'lucide-react';
 import { useWebhookStream, WebhookEvent } from '@/lib/hooks/useWebhookStream';
+import { SafeDate } from '@/lib/utils/date-formatter';
 
 interface WebhookStatusIndicatorProps {
   sessionId?: string;
@@ -90,9 +91,11 @@ export function WebhookStatusIndicator({
           {getConnectionStatus().label}
         </Badge>
         {webhookStream.lastEvent && (
-          <span className="text-xs text-gray-500">
-            {new Date(webhookStream.lastEvent.received_at).toLocaleTimeString()}
-          </span>
+          <SafeDate
+            date={webhookStream.lastEvent.received_at}
+            format="time"
+            className="text-xs text-gray-500"
+          />
         )}
       </div>
     );
@@ -115,9 +118,11 @@ export function WebhookStatusIndicator({
                 {webhookStream.lastEvent && (
                   <div className="flex items-center space-x-2 mt-1">
                     {getLastEventBadge()}
-                    <span className="text-xs text-gray-500">
-                      {new Date(webhookStream.lastEvent.received_at).toLocaleTimeString()}
-                    </span>
+                    <SafeDate
+                      date={webhookStream.lastEvent.received_at}
+                      format="time"
+                      className="text-xs text-gray-500"
+                    />
                   </div>
                 )}
               </div>
@@ -206,9 +211,11 @@ export function WebhookStatusIndicator({
             <div className="border-t pt-3">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">Last Event</span>
-                <span className="text-xs text-gray-500">
-                  {new Date(webhookStream.lastEvent.received_at).toLocaleString()}
-                </span>
+                <SafeDate
+                  date={webhookStream.lastEvent.received_at}
+                  format="datetime"
+                  className="text-xs text-gray-500"
+                />
               </div>
               <div className="flex items-center space-x-2">
                 {getLastEventBadge()}
@@ -254,9 +261,11 @@ export function WebhookStatusIndicator({
                         <span className="text-gray-500">{event.agent_name}</span>
                       )}
                     </div>
-                    <span className="text-gray-400">
-                      {new Date(event.received_at).toLocaleTimeString()}
-                    </span>
+                    <SafeDate
+                      date={event.received_at}
+                      format="time"
+                      className="text-gray-400"
+                    />
                   </div>
                 ))}
               </div>

@@ -104,7 +104,7 @@ export interface ValidationCompletedEvent extends BaseEvent {
 // ===============================
 
 export interface WorkflowTriggeredEvent extends BaseEvent {
-  event_type: "orchestration.workflow.triggered@1";
+  event_type: "orchestration.workflow_triggered@1";
   workflow_id: string;
   trigger_source: "force_sync" | "scheduled" | "api" | "webhook";
   agents_scheduled: string[];
@@ -113,6 +113,22 @@ export interface WorkflowTriggeredEvent extends BaseEvent {
   metadata: EventMetadata & {
     estimated_duration_ms: number;
     retry_count: number;
+  };
+}
+
+export interface WorkflowStartedEvent extends BaseEvent {
+  event_type: "orchestration.workflow_started@1";
+  workflow_id: string;
+  trigger_source: "force_sync" | "scheduled" | "api" | "webhook";
+  sync_scope?: string;
+  client_context?: {
+    client_name?: string;
+    industry?: string;
+    recipients?: string[];
+  };
+  metadata: EventMetadata & {
+    estimated_duration_ms: number;
+    platforms_count: number;
   };
 }
 
@@ -144,7 +160,7 @@ export interface AgentCompletedEvent extends BaseEvent {
 }
 
 export interface WorkflowCompletedEvent extends BaseEvent {
-  event_type: "orchestration.workflow.completed@1";
+  event_type: "orchestration.workflow_completed@1";
   workflow_id: string;
   success: boolean;
   agent_results: AgentResult[];
@@ -157,7 +173,7 @@ export interface WorkflowCompletedEvent extends BaseEvent {
 }
 
 export interface WorkflowFailedEvent extends BaseEvent {
-  event_type: "orchestration.workflow.failed@1";
+  event_type: "orchestration.workflow_failed@1";
   workflow_id: string;
   failure_reason: string;
   failed_at_stage: string;
@@ -390,6 +406,59 @@ export interface AnalyticsQueryEvent extends BaseEvent {
 }
 
 // ===============================
+// 9. FORCE SYNC TELEMETRY EVENTS
+// ===============================
+
+export interface ForceSyncStartedEvent extends BaseEvent {
+  event_type: "force_sync.started@1";
+  span_id: string;
+  sync_scope: "all_platforms" | "priority_platforms" | "specific_platform";
+  triggered_by: "manual_user_request" | "api_call" | "scheduled_sync";
+  client_context: {
+    client_name?: string;
+    industry?: string;
+    recipients_count: number;
+  };
+  message: string;
+  details: {
+    sync_scope: string;
+    platforms_included: string[];
+    rag_update_enabled: boolean;
+    estimated_duration: string;
+    triggered_by: string;
+  };
+  metadata: EventMetadata;
+}
+
+export interface ForceSyncCompletedEvent extends BaseEvent {
+  event_type: "force_sync.completed@1";
+  span_id: string;
+  sync_scope: "all_platforms" | "priority_platforms" | "specific_platform";
+  success: boolean;
+  message: string;
+  details: {
+    duration_ms: number;
+    external_opal_triggered: boolean;
+    platforms: number;
+  };
+  metadata: EventMetadata;
+}
+
+export interface ForceSyncFailedEvent extends BaseEvent {
+  event_type: "force_sync.failed@1";
+  span_id: string;
+  sync_scope: "all_platforms" | "priority_platforms" | "specific_platform";
+  error_message: string;
+  message: string;
+  details: {
+    duration_ms: number;
+    error: string;
+    stack?: string;
+  };
+  metadata: EventMetadata;
+}
+
+// ===============================
 // HELPER TYPES
 // ===============================
 
@@ -425,7 +494,11 @@ export interface Recommendation {
 export type OSAEvent =
   | IntakeSubmittedEvent
   | IntakeValidatedEvent
+  | FormSubmittedEvent
+  | ClientContextEnrichedEvent
+  | ValidationCompletedEvent
   | WorkflowTriggeredEvent
+  | WorkflowStartedEvent
   | AgentStartedEvent
   | AgentCompletedEvent
   | WorkflowCompletedEvent
@@ -443,7 +516,10 @@ export type OSAEvent =
   | AccessibilityAuditCompletedEvent
   | ServiceHealthEvent
   | CircuitBreakerEvent
-  | AnalyticsQueryEvent;
+  | AnalyticsQueryEvent
+  | ForceSyncStartedEvent
+  | ForceSyncCompletedEvent
+  | ForceSyncFailedEvent;
 
 // ===============================
 // EVENT VALIDATION

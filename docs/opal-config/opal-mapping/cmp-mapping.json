@@ -1,0 +1,322 @@
+{
+  "category": "CMP",
+  "version": "2.0.0",
+  "last_updated": "2025-11-11",
+  "validation_rules": {
+    "required_fields": ["field", "type", "tool", "report", "agent", "osa_section"],
+    "field_formats": {
+      "priority": ["high", "medium", "low"],
+      "confidence": "number_0_to_1",
+      "type": ["AI-generated", "static", "hybrid"]
+    },
+    "agent_validation": {
+      "valid_agents": ["cmp_organizer", "audience_suggester", "personalization_idea_generator"],
+      "tool_agent_mapping": true
+    }
+  },
+  "agent_outputs": [
+    {
+      "field": "campaign_performance_optimization",
+      "agent": "cmp_organizer",
+      "priority": "high",
+      "confidence": 0.94,
+      "type": "AI-generated",
+      "type_tooltip": "AI-powered campaign performance analysis with optimization recommendations for email and marketing automation",
+      "tool": "campaign_optimizer",
+      "tool_tooltip": "OPAL Campaign Optimizer analyzes campaign performance and provides specific optimization strategies",
+      "report": "Campaign Performance Dashboard",
+      "report_tooltip": "Comprehensive campaign analytics with performance metrics and optimization priorities",
+      "instructions": ["email_marketing_best_practices", "campaign_optimization_guidelines", "performance_measurement_standards"],
+      "instructions_tooltip": "Uses email marketing best practices and optimization guidelines for campaign improvement",
+      "dxp_sources": ["CMP", "ODP", "Content Recs"],
+      "osa_section": "Analytics Insights → Campaign Performance",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "email_automation_strategy",
+      "agent": "cmp_organizer",
+      "priority": "high",
+      "confidence": 0.91,
+      "type": "AI-generated",
+      "type_tooltip": "AI-generated email automation workflows with trigger optimization and personalization strategies",
+      "tool": "automation_strategist",
+      "tool_tooltip": "OPAL Automation Strategist creates intelligent email automation workflows with behavioral triggers",
+      "report": "Email Automation Strategy Report",
+      "report_tooltip": "Comprehensive automation strategy with workflow design and performance optimization",
+      "instructions": ["email_automation_frameworks", "behavioral_trigger_guidelines", "personalization_standards"],
+      "instructions_tooltip": "Develops automation strategies using behavioral triggers and personalization frameworks",
+      "dxp_sources": ["CMP", "ODP"],
+      "osa_section": "Strategy Plans → Email Marketing Strategy",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "audience_segmentation_for_campaigns",
+      "agent": "audience_suggester",
+      "priority": "high",
+      "confidence": 0.88,
+      "type": "AI-generated",
+      "type_tooltip": "AI-driven audience segmentation specifically optimized for email and campaign marketing effectiveness",
+      "tool": "campaign_segmenter",
+      "tool_tooltip": "OPAL Campaign Segmenter creates audience segments optimized for email marketing performance",
+      "report": "Campaign Audience Analysis Report",
+      "report_tooltip": "Audience segmentation analysis with campaign-specific targeting recommendations",
+      "instructions": ["audience_segmentation_standards", "email_targeting_best_practices", "campaign_personalization_guidelines"],
+      "instructions_tooltip": "Segments audiences using email targeting and campaign personalization best practices",
+      "dxp_sources": ["CMP", "ODP", "WEBX"],
+      "osa_section": "Analytics Insights → Campaign Performance",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "deliverability_optimization",
+      "agent": "cmp_organizer",
+      "priority": "high",
+      "confidence": 0.89,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis and optimization of email deliverability with reputation management and technical recommendations",
+      "tool": "deliverability_optimizer",
+      "tool_tooltip": "OPAL Deliverability Optimizer ensures maximum inbox placement through technical and content optimization",
+      "report": "Email Deliverability Health Report",
+      "report_tooltip": "Comprehensive deliverability analysis with technical fixes and reputation management strategies",
+      "instructions": ["email_deliverability_standards", "reputation_management_protocols", "technical_optimization_guidelines"],
+      "instructions_tooltip": "Optimizes deliverability using technical standards and reputation management protocols",
+      "dxp_sources": ["CMP"],
+      "osa_section": "Analytics Insights → Campaign Performance",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    },
+    {
+      "field": "personalized_campaign_content",
+      "agent": "personalization_idea_generator",
+      "priority": "high",
+      "confidence": 0.86,
+      "type": "AI-generated",
+      "type_tooltip": "AI-generated personalized campaign content recommendations based on individual subscriber preferences and behavior",
+      "tool": "campaign_personalizer",
+      "tool_tooltip": "OPAL Campaign Personalizer creates individualized content strategies for maximum engagement",
+      "report": "Campaign Personalization Report",
+      "report_tooltip": "Personalized content strategies with implementation guidance and expected engagement lift",
+      "instructions": ["personalization_standards", "content_personalization_guidelines", "email_content_best_practices"],
+      "instructions_tooltip": "Personalizes campaign content using engagement optimization and content best practices",
+      "dxp_sources": ["CMP", "Content Recs", "ODP"],
+      "osa_section": "Strategy Plans → Email Marketing Strategy",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "campaign_lifecycle_optimization",
+      "agent": "cmp_organizer",
+      "priority": "medium",
+      "confidence": 0.83,
+      "type": "AI-generated",
+      "type_tooltip": "AI optimization of campaign lifecycles with timing, frequency, and content evolution strategies",
+      "tool": "lifecycle_optimizer",
+      "tool_tooltip": "OPAL Lifecycle Optimizer manages campaign timing and evolution for sustained engagement",
+      "report": "Campaign Lifecycle Analysis Report",
+      "report_tooltip": "Campaign lifecycle optimization with timing strategies and content evolution recommendations",
+      "instructions": ["campaign_lifecycle_management", "engagement_optimization_protocols", "frequency_optimization_guidelines"],
+      "instructions_tooltip": "Optimizes campaign lifecycles using engagement and frequency optimization methodologies",
+      "dxp_sources": ["CMP", "ODP"],
+      "osa_section": "Strategy Plans → Email Marketing Strategy",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "cross_channel_campaign_coordination",
+      "agent": "cmp_organizer",
+      "priority": "medium",
+      "confidence": 0.81,
+      "type": "AI-generated",
+      "type_tooltip": "AI coordination of email campaigns with other marketing channels for unified customer experience",
+      "tool": "cross_channel_coordinator",
+      "tool_tooltip": "OPAL Cross-Channel Coordinator synchronizes email campaigns with multi-channel marketing efforts",
+      "report": "Cross-Channel Campaign Report",
+      "report_tooltip": "Multi-channel campaign coordination analysis with synchronization strategies and performance impact",
+      "instructions": ["cross_channel_marketing_standards", "campaign_coordination_protocols", "unified_messaging_guidelines"],
+      "instructions_tooltip": "Coordinates campaigns using cross-channel standards and unified messaging protocols",
+      "dxp_sources": ["CMP", "ODP", "WEBX", "Content Recs"],
+      "osa_section": "Strategy Plans → Email Marketing Strategy",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    },
+    {
+      "field": "campaign_roi_analysis",
+      "agent": "cmp_organizer",
+      "priority": "medium",
+      "confidence": 0.87,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of campaign return on investment with attribution modeling and optimization recommendations",
+      "tool": "campaign_roi_analyzer",
+      "tool_tooltip": "OPAL Campaign ROI Analyzer provides comprehensive campaign performance and investment analysis",
+      "report": "Campaign ROI Dashboard",
+      "report_tooltip": "Campaign return on investment analysis with attribution modeling and optimization priorities",
+      "instructions": ["roi_measurement_standards", "attribution_modeling_guidelines", "campaign_investment_optimization"],
+      "instructions_tooltip": "Analyzes campaign ROI using attribution modeling and investment optimization frameworks",
+      "dxp_sources": ["CMP", "ODP"],
+      "osa_section": "Analytics Insights → Campaign Performance",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    }
+  ],
+  "additional_instructions_needed": [
+    {
+      "instruction": "advanced_email_deliverability_protocols",
+      "purpose": "Comprehensive framework for maintaining high email deliverability and sender reputation",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["cmp_organizer"],
+      "validation_impact": "high"
+    },
+    {
+      "instruction": "cross_channel_campaign_orchestration_framework",
+      "purpose": "Standards for coordinating email campaigns with other marketing channels for unified experiences",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["cmp_organizer"],
+      "validation_impact": "medium"
+    },
+    {
+      "instruction": "campaign_attribution_modeling_standards",
+      "purpose": "Advanced attribution models for measuring campaign impact across customer journeys",
+      "priority": "medium",
+      "implementation_timeline": "Q2 2025",
+      "affects_agents": ["cmp_organizer"],
+      "validation_impact": "medium"
+    }
+  ],
+  "content_suggestions": [
+    {
+      "title": "Campaign Intelligence Platform",
+      "description": "Comprehensive email marketing platform with AI-driven optimization, automation, and performance analysis",
+      "priority": "high",
+      "estimated_effort": "8 weeks",
+      "depends_on_outputs": ["campaign_performance_optimization", "email_automation_strategy", "deliverability_optimization"],
+      "target_users": ["Email Marketing Teams", "Campaign Managers", "Marketing Automation Specialists"]
+    },
+    {
+      "title": "Real-time Campaign Optimizer",
+      "description": "AI system for real-time campaign optimization with automated A/B testing and personalization",
+      "priority": "high",
+      "estimated_effort": "6 weeks",
+      "depends_on_outputs": ["personalized_campaign_content", "audience_segmentation_for_campaigns"],
+      "target_users": ["Campaign Managers", "Marketing Technologists"]
+    },
+    {
+      "title": "Cross-Channel Campaign Orchestrator",
+      "description": "Platform for coordinating email campaigns with other marketing channels for unified customer experiences",
+      "priority": "medium",
+      "estimated_effort": "5 weeks",
+      "depends_on_outputs": ["cross_channel_campaign_coordination"],
+      "target_users": ["Marketing Directors", "Campaign Coordinators"]
+    }
+  ],
+  "report_recommendations": [
+    {
+      "report": "Email Marketing Performance Scorecard",
+      "description": "Comprehensive email marketing performance tracking with optimization recommendations and trend analysis",
+      "audience": ["Email Marketing Teams", "Marketing Directors"],
+      "frequency": "Weekly",
+      "priority": "high",
+      "data_sources": ["campaign_performance_optimization", "deliverability_optimization"],
+      "complexity": "medium"
+    },
+    {
+      "report": "Campaign ROI and Attribution Analysis",
+      "description": "Detailed campaign return on investment analysis with multi-touch attribution and optimization insights",
+      "audience": ["Marketing Directors", "Executive Teams"],
+      "frequency": "Monthly",
+      "priority": "high",
+      "data_sources": ["campaign_roi_analysis", "campaign_performance_optimization"],
+      "complexity": "high"
+    },
+    {
+      "report": "Email Automation Effectiveness Report",
+      "description": "Analysis of email automation performance with workflow optimization and engagement insights",
+      "audience": ["Marketing Automation Teams", "Campaign Managers"],
+      "frequency": "Monthly",
+      "priority": "medium",
+      "data_sources": ["email_automation_strategy", "campaign_lifecycle_optimization"],
+      "complexity": "medium"
+    }
+  ],
+  "strategic_insights": [
+    {
+      "insight": "Campaign Automation Impact on Customer Lifetime Value",
+      "description": "Analysis of how email automation sophistication correlates with long-term customer value",
+      "business_impact": "Optimize email automation strategies for maximum customer lifetime value generation",
+      "implementation": "Track automation complexity and personalization against customer value metrics",
+      "confidence": 0.88,
+      "data_requirements": ["email_automation_strategy", "campaign_roi_analysis"],
+      "update_frequency": "Monthly"
+    },
+    {
+      "insight": "Cross-Channel Campaign Coordination Effect on Engagement",
+      "description": "Impact of coordinated cross-channel campaigns on overall customer engagement and conversion",
+      "business_impact": "Improve campaign effectiveness through strategic cross-channel coordination",
+      "implementation": "Monitor cross-channel campaign coordination against engagement and conversion metrics",
+      "confidence": 0.82,
+      "data_requirements": ["cross_channel_campaign_coordination", "campaign_performance_optimization"],
+      "update_frequency": "Monthly"
+    }
+  ],
+  "improvement_recommendations": [
+    {
+      "area": "AI-Powered Campaign Automation",
+      "recommendation": "Implement comprehensive AI-driven campaign automation with real-time personalization and optimization",
+      "expected_impact": "50% improvement in email engagement and 30% increase in campaign ROI",
+      "implementation_complexity": "high",
+      "timeline": "Q3 2025",
+      "depends_on": ["email_automation_strategy", "personalized_campaign_content", "campaign_performance_optimization"],
+      "resource_requirements": "3 email specialists, 4 engineers, 1 data scientist",
+      "success_metrics": ["email_engagement > 0.45", "campaign_roi > 0.25"]
+    }
+  ],
+  "opal_monitoring_updates": [
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/cmp/cmp-organizer/",
+      "required_updates": [
+        {
+          "component": "cmp_organizer",
+          "update_type": "capability_enhancement",
+          "description": "Add advanced campaign optimization with AI-driven automation and cross-channel coordination",
+          "priority": "high",
+          "estimated_effort": "5 weeks",
+          "affects_outputs": ["campaign_performance_optimization", "email_automation_strategy", "deliverability_optimization"],
+          "validation_required": true
+        }
+      ]
+    },
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/cmp/personalization/",
+      "required_updates": [
+        {
+          "component": "campaign_personalizer",
+          "update_type": "new_tool",
+          "description": "Advanced campaign personalization engine with real-time content optimization",
+          "priority": "medium",
+          "estimated_effort": "3 weeks",
+          "affects_outputs": ["personalized_campaign_content"],
+          "validation_required": false
+        }
+      ]
+    }
+  ]
+}

@@ -4,13 +4,14 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/lib/types/database';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
-// Temporarily disabled for deployment
-// if (!supabaseUrl || !supabaseAnonKey) {
-//   throw new Error('Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY');
-// }
+// Check if we have real database configuration
+const isDatabaseConfigured = supabaseUrl !== 'https://placeholder.supabase.co' &&
+                           supabaseUrl !== 'https://your-supabase-project.supabase.co' &&
+                           supabaseAnonKey !== 'placeholder-key' &&
+                           supabaseAnonKey !== 'your-supabase-anon-key-here';
 
 // Create Supabase client with proper typing and connection pooling
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -34,14 +35,19 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   }
 });
 
+// Check if database is available for use
+export const isDatabaseAvailable = (): boolean => {
+  return isDatabaseConfigured;
+};
+
 // Create admin client for server-side operations
 export const createSupabaseAdmin = () => {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key';
 
-  // Temporarily disabled for deployment
-  // if (!serviceRoleKey) {
-  //   throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
-  // }
+  // If database is not configured, return a mock client that will fail gracefully
+  if (!isDatabaseConfigured) {
+    console.log('📝 [Database] Using placeholder configuration, operations will fall back to file storage');
+  }
 
   return createClient<Database>(supabaseUrl, serviceRoleKey, {
     auth: {

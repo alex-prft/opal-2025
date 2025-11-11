@@ -4,20 +4,15 @@ import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import RecentDataComponent from '@/components/RecentDataComponent';
 import {
   Target,
   Settings,
   BarChart3,
   TrendingUp,
   ArrowRight,
-  Clock,
-  AlertCircle,
-  CheckCircle2,
   MessageSquare,
   ExternalLink,
-  Activity,
-  X,
   PanelLeftClose,
   PanelLeftOpen
 } from 'lucide-react';
@@ -54,73 +49,7 @@ const navigationAreas = [
   }
 ];
 
-// Agent status type
-type AgentStatus = 'default' | 'active' | 'error';
-
-// Mock agent status function - in production this would connect to real agent monitoring
-function getAgentStatus(agentId: string): AgentStatus {
-  // Realistic states - most agents are not connected/sending data yet
-  const statusMap: Record<string, AgentStatus> = {
-    'roadmap_generator': 'default',
-    'integration_health': 'default',
-    'personalization_idea_generator': 'default',
-    'cmp_organizer': 'default',
-    'experiment_blueprinter': 'default',
-    'customer_journey': 'default',
-    'audience_suggester': 'default',
-    'geo_audit': 'default',
-    'content_review': 'default'
-  };
-
-  return statusMap[agentId] || 'default';
-}
-
-// Agent Status Bubble Component
-interface AgentStatusBubbleProps {
-  agentId: string;
-  agentName: string;
-  status: AgentStatus;
-}
-
-function AgentStatusBubble({ agentId, agentName, status }: AgentStatusBubbleProps) {
-  const getStatusColor = (status: AgentStatus) => {
-    switch (status) {
-      case 'active':
-        return 'bg-green-500';
-      case 'error':
-        return 'bg-red-500';
-      default:
-        return 'bg-gray-400';
-    }
-  };
-
-  return (
-    <div
-      className={`w-3 h-3 rounded-full ${getStatusColor(status)} cursor-pointer hover:scale-110 transition-transform`}
-      title={agentName}
-    />
-  );
-}
-
-// Helper functions
-const calculateDataFreshness = (lastReceived: Date | null): 'fresh' | 'stale' | 'old' => {
-  if (!lastReceived) return 'old';
-  const now = new Date();
-  const timeDiff = now.getTime() - lastReceived.getTime();
-  const hoursDiff = timeDiff / (1000 * 3600);
-
-  if (hoursDiff < 1) return 'fresh';
-  if (hoursDiff < 24) return 'stale';
-  return 'old';
-};
-
-const getDataFreshnessColor = (freshness: 'fresh' | 'stale' | 'old') => {
-  switch (freshness) {
-    case 'fresh': return 'text-green-600';
-    case 'stale': return 'text-yellow-600';
-    case 'old': return 'text-red-600';
-  }
-};
+// (Cleaned up - agent status and data freshness logic moved to RecentDataComponent)
 
 interface ResultsSidebarProps {
   currentPage?: 'strategy' | 'dxptools' | 'insights' | 'optimization';
@@ -132,11 +61,6 @@ export default function ResultsSidebar({ currentPage }: ResultsSidebarProps) {
 
   // Sidebar collapse state
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-  // Webhook status tracking states
-  const [lastWebhookReceived, setLastWebhookReceived] = useState<Date | null>(null);
-  const [webhookStatus, setWebhookStatus] = useState<'connected' | 'disconnected' | 'error'>('connected');
-  const [workflowStatus, setWorkflowStatus] = useState<'success' | 'failed' | 'pending' | null>('success');
 
   // Determine active area based on current path
   const getActiveAreaFromPath = (path: string) => {
@@ -269,106 +193,10 @@ export default function ResultsSidebar({ currentPage }: ResultsSidebarProps) {
         </nav>
       </div>
 
-      {/* Recent Data Accordion - Only show when not collapsed */}
+      {/* Recent Data Component - Only show when not collapsed */}
       {!isCollapsed && (
         <div className="p-4">
-        <Accordion id="recent-data" type="single" collapsible defaultValue="recent-data" className="bg-slate-50 rounded-lg">
-          <AccordionItem value="recent-data" className="border-none">
-            <AccordionTrigger className="p-3 pb-2 hover:no-underline">
-              <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-2">
-                  <Activity className={`h-4 w-4 ${
-                    webhookStatus === 'connected' ? 'text-green-600' :
-                    webhookStatus === 'error' ? 'text-red-600' : 'text-yellow-600'
-                  }`} />
-                  <span className="text-sm font-medium text-gray-800">Recent Data</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mr-4">
-                  <span className={getDataFreshnessColor(calculateDataFreshness(lastWebhookReceived))}>
-                    {calculateDataFreshness(lastWebhookReceived) === 'fresh' ? '●' :
-                     calculateDataFreshness(lastWebhookReceived) === 'stale' ? '◐' : '○'}
-                  </span>
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-3 pb-3">
-              <div className="space-y-3">
-                {/* OPAL Workflow Status */}
-                <div className="flex items-center gap-2 text-xs">
-                  <span>Opal Workflow:</span>
-                  {/* Workflow time - show current time or last webhook time */}
-                  <span className="text-muted-foreground">
-                    {lastWebhookReceived
-                      ? `${lastWebhookReceived.toLocaleDateString()} ${lastWebhookReceived.toLocaleTimeString()}`
-                      : `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
-                    }
-                  </span>
-                  {workflowStatus === 'success' ? (
-                    <CheckCircle2 className="h-3 w-3 text-green-600" />
-                  ) : workflowStatus === 'failed' ? (
-                    <X className="h-3 w-3 text-red-600" />
-                  ) : workflowStatus === 'pending' ? (
-                    <Clock className="h-3 w-3 text-yellow-600 animate-pulse" />
-                  ) : (
-                    <AlertCircle className="h-3 w-3 text-gray-400" />
-                  )}
-                </div>
-
-                {/* Agent Status Bubbles */}
-                <div>
-                  <div className="text-xs text-muted-foreground mb-1">OPAL Agents:</div>
-                  <div className="flex items-center gap-1.5">
-                    <AgentStatusBubble
-                      agentId="roadmap_generator"
-                      agentName="Roadmap Generator"
-                      status={getAgentStatus('roadmap_generator')}
-                    />
-                    <AgentStatusBubble
-                      agentId="integration_health"
-                      agentName="Integration Health"
-                      status={getAgentStatus('integration_health')}
-                    />
-                    <AgentStatusBubble
-                      agentId="personalization_idea_generator"
-                      agentName="Personalization Idea Generator"
-                      status={getAgentStatus('personalization_idea_generator')}
-                    />
-                    <AgentStatusBubble
-                      agentId="cmp_organizer"
-                      agentName="CMP Organizer"
-                      status={getAgentStatus('cmp_organizer')}
-                    />
-                    <AgentStatusBubble
-                      agentId="experiment_blueprinter"
-                      agentName="Experiment Blueprinter"
-                      status={getAgentStatus('experiment_blueprinter')}
-                    />
-                    <AgentStatusBubble
-                      agentId="customer_journey"
-                      agentName="Customer Journey"
-                      status={getAgentStatus('customer_journey')}
-                    />
-                    <AgentStatusBubble
-                      agentId="audience_suggester"
-                      agentName="Audience Suggester"
-                      status={getAgentStatus('audience_suggester')}
-                    />
-                    <AgentStatusBubble
-                      agentId="geo_audit"
-                      agentName="Geo Audit"
-                      status={getAgentStatus('geo_audit')}
-                    />
-                    <AgentStatusBubble
-                      agentId="content_review"
-                      agentName="Content Review"
-                      status={getAgentStatus('content_review')}
-                    />
-                  </div>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+          <RecentDataComponent compact={true} />
         </div>
       )}
     </div>

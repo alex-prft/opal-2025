@@ -416,8 +416,10 @@ When Opal agents complete analysis, the RAG system:
 ## Integration Points & APIs
 
 ### Opal Integration
-- **Workflow Trigger**: `/api/opal/status` - Initiates agent workflows
-- **Status Polling**: `/api/opal/status/{session_id}` - Real-time status checks
+- **Force Sync Trigger**: `/api/opal/sync` - Initiates DXP data sync + strategy_assistant_workflow
+- **General Workflow Trigger**: `/api/opal/trigger` - Initiates workflows from form submissions
+- **Status Polling**: `/api/opal/status/{session_id}` - Real-time workflow status checks
+- **General Status**: `/api/opal/status` - General workflow polling endpoint
 - **Discovery**: `/api/osa/workflow/discovery` - Opal-compatible function definitions
 
 ### Internal APIs

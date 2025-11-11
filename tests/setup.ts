@@ -1,8 +1,6 @@
 /**
- * Vitest test setup configuration
+ * Jest test setup configuration
  */
-
-import { vi } from 'vitest';
 
 // Set test environment variables
 // Note: Tests directory is excluded from Next.js build via tsconfig.json
@@ -14,23 +12,23 @@ process.env.API_SECRET_KEY = 'test-secret-key';
 global.console = {
   ...console,
   // Keep log and warn for debugging
-  log: vi.fn(),
-  warn: vi.fn(),
-  error: vi.fn(),
-  info: vi.fn(),
-  debug: vi.fn()
+  log: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn(),
+  debug: jest.fn()
 };
 
 // Mock fetch for tests that don't actually hit the API
-global.fetch = vi.fn();
+global.fetch = jest.fn();
 
 // Setup global beforeEach and afterEach
 beforeEach(() => {
   // Reset all mocks before each test
-  vi.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 afterEach(() => {
   // Clean up after each test
-  vi.restoreAllMocks();
+  jest.restoreAllMocks();
 });

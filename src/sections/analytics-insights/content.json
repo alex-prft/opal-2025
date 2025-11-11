@@ -1,0 +1,224 @@
+{
+  "section": "Analytics Insights → Content",
+  "version": "2.0.0",
+  "last_updated": "2025-11-11",
+  "schema_version": "1.0.0",
+  "opal_mapping": {
+    "source_mapping": "content-mapping-v2.json",
+    "outputs": [
+      {
+        "field": "engagement_metrics",
+        "agent": "content_review_agent",
+        "priority": "high",
+        "confidence": 0.95,
+        "type": "AI-generated",
+        "type_tooltip": "Real-time AI analysis of content engagement across all channels",
+        "tool": "content_analyzer",
+        "tool_tooltip": "OPAL Content Analyzer processes engagement data from multiple touchpoints",
+        "report": "Content Performance Dashboard",
+        "report_tooltip": "Powers real-time content performance metrics in Analytics Insights",
+        "instructions": ["content_guidelines", "brand_tone_guidelines", "kpi_definitions"],
+        "instructions_tooltip": "Uses content standards and brand voice to evaluate engagement quality",
+        "dxp_sources": ["CMS", "ODP", "WEBX"],
+        "strategy_link": "Quick Wins",
+        "decision_layer_impact": true,
+        "personal_configurator": true,
+        "brain_learning": true,
+        "ui_component": "MetricsCard",
+        "refresh_interval": "real-time",
+        "data_validation": {
+          "required": true,
+          "format": "numeric_metrics",
+          "fallback": "previous_period_data"
+        }
+      },
+      {
+        "field": "content_effectiveness_score",
+        "agent": "content_review_agent",
+        "priority": "high",
+        "confidence": 0.92,
+        "type": "AI-generated",
+        "type_tooltip": "AI-calculated composite score based on performance, engagement, and conversion metrics",
+        "tool": "content_scorer",
+        "tool_tooltip": "OPAL Content Scoring Engine weighs multiple performance indicators",
+        "report": "Content ROI Analysis Report",
+        "report_tooltip": "Feeds into comprehensive content return on investment calculations",
+        "instructions": ["kpi_definitions", "marketing_strategy", "content_guidelines"],
+        "instructions_tooltip": "Aligns scoring with business KPIs and marketing objectives",
+        "dxp_sources": ["CMS", "ODP", "Content Recs"],
+        "strategy_link": "Strategic Roadmap",
+        "decision_layer_impact": true,
+        "personal_configurator": true,
+        "brain_learning": true,
+        "ui_component": "ScoreCard",
+        "refresh_interval": "hourly",
+        "data_validation": {
+          "required": true,
+          "format": "score_0_to_100",
+          "fallback": "baseline_score"
+        }
+      },
+      {
+        "field": "audience_resonance_data",
+        "agent": "audience_suggester",
+        "priority": "high",
+        "confidence": 0.88,
+        "type": "AI-generated",
+        "type_tooltip": "AI analysis of how content performs with different audience segments",
+        "tool": "audience_content_matcher",
+        "tool_tooltip": "OPAL Audience-Content Matching Engine analyzes segment-specific performance",
+        "report": "Audience Content Affinity Report",
+        "report_tooltip": "Shows which content types resonate best with each audience segment",
+        "instructions": ["personas", "content_guidelines", "marketing_strategy"],
+        "instructions_tooltip": "Uses defined personas to evaluate content-audience fit",
+        "dxp_sources": ["ODP", "Content Recs", "WEBX"],
+        "strategy_link": "Quick Wins",
+        "decision_layer_impact": true,
+        "personal_configurator": true,
+        "brain_learning": true,
+        "ui_component": "ResonanceChart",
+        "refresh_interval": "daily",
+        "data_validation": {
+          "required": true,
+          "format": "segmented_metrics",
+          "fallback": "aggregated_data"
+        }
+      },
+      {
+        "field": "topic_performance_trends",
+        "agent": "content_review_agent",
+        "priority": "medium",
+        "confidence": 0.87,
+        "type": "AI-generated",
+        "type_tooltip": "AI analysis of content topic performance over time with trend predictions",
+        "tool": "trend_analyzer",
+        "tool_tooltip": "OPAL Trend Analysis Tool identifies rising and declining content topics",
+        "report": "Content Trend Intelligence Report",
+        "report_tooltip": "Shows trending topics and predicts future content opportunities",
+        "instructions": ["marketing_strategy", "content_guidelines"],
+        "instructions_tooltip": "Aligns trend analysis with marketing strategy and content standards",
+        "dxp_sources": ["CMS", "ODP", "WEBX"],
+        "strategy_link": "Strategic Roadmap",
+        "decision_layer_impact": true,
+        "personal_configurator": false,
+        "brain_learning": true,
+        "ui_component": "TrendChart",
+        "refresh_interval": "daily",
+        "data_validation": {
+          "required": false,
+          "format": "time_series",
+          "fallback": "historical_trends"
+        }
+      },
+      {
+        "field": "content_attribution_data",
+        "agent": "strategy_assistant_workflow",
+        "priority": "high",
+        "confidence": 0.83,
+        "type": "AI-generated",
+        "type_tooltip": "AI-powered attribution analysis showing content's role in customer journeys",
+        "tool": "attribution_tracker",
+        "tool_tooltip": "OPAL Attribution Tracker maps content touchpoints to conversion events",
+        "report": "Content Attribution Dashboard",
+        "report_tooltip": "Shows how content contributes to conversions across the customer journey",
+        "instructions": ["kpi_definitions", "personas", "marketing_strategy"],
+        "instructions_tooltip": "Maps content attribution to defined KPIs and customer personas",
+        "dxp_sources": ["ODP", "WEBX", "CMP"],
+        "strategy_link": "Strategic Roadmap",
+        "decision_layer_impact": true,
+        "personal_configurator": true,
+        "brain_learning": true,
+        "ui_component": "AttributionFlow",
+        "refresh_interval": "hourly",
+        "data_validation": {
+          "required": true,
+          "format": "attribution_data",
+          "fallback": "last_known_attribution"
+        }
+      }
+    ]
+  },
+  "ui_configuration": {
+    "layout": "dashboard_grid",
+    "responsive": true,
+    "filters": [
+      "date_range",
+      "content_type",
+      "audience_segment",
+      "channel"
+    ],
+    "export_options": ["pdf", "csv", "json"],
+    "real_time_updates": true
+  },
+  "personal_configurator_integration": {
+    "user_preferences": {
+      "content_type_prioritization": "configurable",
+      "metric_visibility": "user_defined",
+      "dashboard_layout": "customizable",
+      "alert_thresholds": "personalized"
+    },
+    "preference_keys": [
+      "content.analytics.primary_metrics",
+      "content.analytics.refresh_frequency",
+      "content.analytics.chart_types"
+    ]
+  },
+  "decision_layer_integration": {
+    "impact_scoring": true,
+    "confidence_weighting": true,
+    "recommendation_engine": {
+      "enabled": true,
+      "threshold": 0.8,
+      "auto_suggestions": true
+    }
+  },
+  "brain_learning_integration": {
+    "knowledge_updates": true,
+    "pattern_recognition": true,
+    "feedback_loop": "continuous",
+    "learning_categories": [
+      "content_performance_patterns",
+      "audience_behavior_insights",
+      "trend_predictions"
+    ]
+  },
+  "validation_schema": {
+    "required_fields": [
+      "field",
+      "agent",
+      "type",
+      "tool",
+      "report",
+      "dxp_sources"
+    ],
+    "field_formats": {
+      "confidence": {
+        "type": "number",
+        "min": 0,
+        "max": 1
+      },
+      "priority": {
+        "type": "enum",
+        "values": ["high", "medium", "low"]
+      },
+      "type": {
+        "type": "enum",
+        "values": ["AI-generated", "static", "hybrid"]
+      }
+    }
+  },
+  "error_handling": {
+    "fallback_data": true,
+    "graceful_degradation": true,
+    "retry_policy": {
+      "max_retries": 3,
+      "backoff_strategy": "exponential"
+    }
+  },
+  "monitoring": {
+    "performance_tracking": true,
+    "error_logging": true,
+    "usage_analytics": true,
+    "health_checks": "enabled"
+  }
+}

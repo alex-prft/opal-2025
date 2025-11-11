@@ -1,0 +1,90 @@
+{
+  "agent": "audience_suggester",
+  "category": "content",
+  "last_updated": "2025-11-11",
+  "monitoring_config": {
+    "status": "active",
+    "performance_tracking": true,
+    "error_logging": true,
+    "output_validation": true
+  },
+  "required_updates": [
+    {
+      "component": "audience_content_matcher",
+      "update_type": "performance_optimization",
+      "description": "Improve audience-content matching accuracy for content optimization",
+      "priority": "medium",
+      "estimated_effort": "1 week",
+      "affects_outputs": [
+        "audience_resonance_data",
+        "geo_content_performance"
+      ],
+      "validation_required": false,
+      "implementation_status": "planned",
+      "dependencies": [
+        "enhanced_algorithm_models",
+        "expanded_training_data"
+      ]
+    },
+    {
+      "component": "resonance_analyzer",
+      "update_type": "new_feature",
+      "description": "Real-time audience resonance analysis for content optimization",
+      "priority": "high",
+      "estimated_effort": "3 weeks",
+      "affects_outputs": [
+        "audience_resonance_data",
+        "geo_content_performance"
+      ],
+      "validation_required": true,
+      "implementation_status": "planned",
+      "dependencies": [
+        "real_time_analytics_infrastructure",
+        "streaming_data_processing"
+      ]
+    }
+  ],
+  "new_instructions_needed": [
+    {
+      "instruction": "audience_content_preferences_framework",
+      "purpose": "Framework for analyzing and optimizing content based on audience preferences",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_outputs": [
+        "audience_resonance_data"
+      ]
+    },
+    {
+      "instruction": "cross_channel_audience_behavior_analysis",
+      "purpose": "Guidelines for analyzing audience behavior across multiple content channels",
+      "priority": "medium",
+      "implementation_timeline": "Q2 2025",
+      "affects_outputs": [
+        "audience_resonance_data"
+      ]
+    }
+  ],
+  "performance_metrics": {
+    "matching_accuracy": {
+      "target": "> 0.85",
+      "current": "0.88",
+      "trend": "improving"
+    },
+    "response_time": {
+      "target": "< 15s",
+      "current": "12s",
+      "trend": "stable"
+    },
+    "data_coverage": {
+      "target": "> 0.95",
+      "current": "0.93",
+      "trend": "stable"
+    }
+  },
+  "health_checks": {
+    "data_freshness": "good",
+    "model_performance": "good",
+    "integration_status": "healthy",
+    "resource_utilization": "optimal"
+  }
+}

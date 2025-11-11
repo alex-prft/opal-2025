@@ -4,6 +4,90 @@
 
 This guide ensures all future OPAL custom tools are developed correctly to prevent the **"Discovery URL does not return valid functions data"** error and maintain compatibility with Optimizely OPAL Tools Management Service.
 
+## Enhanced Agent Data Monitoring System
+
+### Agent-Specific Custom Tools
+
+The OSA system now features 9 specialized agents, each with dedicated custom tools that provide enhanced functionality and monitoring capabilities. These tools are integrated into the agent data monitoring dashboard accessible at `/engine/admin/opal-monitoring/agent-data`.
+
+#### Current Agent Custom Tools Portfolio:
+
+**Integration Health Monitor**:
+- `integration_health_monitor`: Continuous DXP integration status and performance monitoring
+- `api_performance_analyzer`: Response time analysis and bottleneck identification across all services
+- `error_pattern_detector`: Pattern detection in integration errors with automated fix suggestions
+
+**Content Review Agent**:
+- `content_insight_generator`: Content performance and freshness analysis with scoring algorithms
+- `content_quality_analyzer`: Quality assessment across variations and experiments with brand compliance
+- `brand_compliance_checker`: Brand consistency validation and enforcement across content variations
+
+**Geographic Audit Agent**:
+- `geo_optimizer`: AI search engine visibility improvement with regional optimization
+- `ai_search_optimizer`: Content optimization for AI-powered search engines (Google AI, Bing Chat, Claude)
+- `regional_content_advisor`: Region-specific content recommendations and gap analysis
+
+**Audience Suggester Agent**:
+- `segment_analyzer`: Audience performance analysis with statistical validation
+- `audience_performance_tracker`: Performance metrics tracking across audience segments
+- `segment_discovery_engine`: New high-potential audience segment identification with targeting recommendations
+
+**Experiment Blueprinter Agent**:
+- `experiment_hypothesis_generator`: Data-driven experiment hypothesis generation with statistical frameworks
+- `impact_estimation_engine`: Potential impact estimation and statistical requirement analysis
+- `experiment_prioritizer`: Experiment prioritization based on impact feasibility and resource requirements
+
+**Personalization Idea Generator Agent**:
+- `personalization_strategy_generator`: Targeted personalization strategy generation with complexity analysis
+- `dynamic_content_optimizer`: Content optimization for personalized experiences across touchpoints
+- `engagement_prediction_model`: Engagement outcome prediction for personalization strategies with ROI modeling
+
+**Customer Journey Agent**:
+- `journey_mapping_analyzer`: Customer journey touchpoint mapping and analysis with optimization identification
+- `bottleneck_identifier`: Conversion bottleneck identification in customer journeys with resolution recommendations
+- `lifecycle_optimizer`: Strategy optimization for each customer lifecycle stage with performance tracking
+
+**Roadmap Generator Agent**:
+- `strategic_roadmap_builder`: Comprehensive strategic implementation roadmap creation with timeline management
+- `resource_estimation_engine`: Resource requirement estimation for roadmap items with capacity planning
+- `priority_matrix_generator`: Priority matrix generation for roadmap planning with dependency mapping
+
+**CMP Organizer Agent**:
+- `campaign_workflow_optimizer`: Campaign management workflow and process optimization with automation identification
+- `automation_opportunity_finder`: Campaign automation opportunity identification with implementation guidance
+- `performance_benchmarker`: Campaign performance benchmarking against industry standards with improvement recommendations
+
+### Custom Tool Integration Requirements
+
+When developing new OPAL custom tools for agent integration, ensure the following requirements are met for proper integration with the enhanced monitoring system:
+
+**Agent Data Structure Compliance**:
+```typescript
+interface AgentCustomTool {
+  toolName: string;           // Unique tool identifier
+  description: string;        // Clear tool capability description
+  category?: string;          // Tool category for organization
+  version?: string;          // Tool version for compatibility tracking
+  dependencies?: string[];    // Required dependencies or prerequisites
+  performance_metrics?: {     // Optional performance tracking
+    execution_time_ms?: number;
+    success_rate?: number;
+    last_execution?: string;
+  };
+}
+```
+
+**OSA Integration Suggestions Structure**:
+```typescript
+interface OSAIntegrationSuggestions {
+  recommendationService: string[];      // Enhancement suggestions for recommendation algorithms
+  knowledgeRetrievalService: string[];  // Improvements for knowledge base and retrieval systems
+  preferencesPolicyService: string[];   // User preference and policy management enhancements
+}
+```
+
+This guide ensures all future OPAL custom tools are developed correctly to prevent technical errors and maintain compatibility with the enhanced agent monitoring system.
+
 ## ⚠️ Critical Requirements
 
 ### 1. Discovery Endpoint Format

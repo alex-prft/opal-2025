@@ -23,7 +23,8 @@ import {
   TrendingUp,
   BarChart3,
   PieChart,
-  Award
+  Award,
+  Mic
 } from 'lucide-react';
 import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import Link from 'next/link';
@@ -119,7 +120,7 @@ export default function TalkToYourData({ workflowResult }: TTYDProps) {
       </div>
 
       {/* Main Question Input */}
-      <Card className="max-w-4xl mx-auto">
+      <Card id="ttyd-home" className="max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-purple-600" />
@@ -136,7 +137,15 @@ export default function TalkToYourData({ workflowResult }: TTYDProps) {
             onChange={(e) => setQuestion(e.target.value)}
             className="min-h-[120px] text-lg"
           />
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
+            <Button
+              onClick={handleTTYDQuestionSubmit}
+              variant="outline"
+              className="text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+            >
+              <Mic className="mr-2 h-4 w-4" />
+              Talk Now
+            </Button>
             <Button
               onClick={handleTTYDQuestionSubmit}
               disabled={!question.trim() || isLoading}

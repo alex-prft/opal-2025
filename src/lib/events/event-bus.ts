@@ -5,7 +5,7 @@
  * Built on Supabase Realtime with custom routing and schema validation
  */
 
-import { supabase } from '@/lib/supabase';
+import { supabase, isDatabaseAvailable } from '@/lib/database/supabase-client';
 import {
   OSAEvent,
   validateEvent,
@@ -70,6 +70,13 @@ export class OSAEventBus {
     if (this.isInitialized) return;
 
     try {
+      // Check if database is available
+      if (!isDatabaseAvailable()) {
+        console.log('📝 [EventBus] Database unavailable, initializing in offline mode');
+        this.isInitialized = true;
+        return;
+      }
+
       // Subscribe to event_stream table for real-time events
       const channel = supabase
         .channel('osa-events')
@@ -99,6 +106,12 @@ export class OSAEventBus {
    * Publish an event to the event bus
    */
   async publish<T extends OSAEvent>(event: T): Promise<void> {
+    // If database is unavailable, handle gracefully
+    if (!isDatabaseAvailable()) {
+      console.log(`📝 [EventBus] Database unavailable, event logged locally: ${event.event_type}`);
+      return;
+    }
+
     try {
       // Validate event schema
       const validation = validateEvent(event);
@@ -390,6 +403,11 @@ export class OSAEventBus {
    */
   private startRetryProcessor(): void {
     setInterval(async () => {
+      // Skip retry processing if database is unavailable
+      if (!isDatabaseAvailable()) {
+        return;
+      }
+
       try {
         // Query for events that need retry
         const { data: events, error } = await supabase
@@ -422,6 +440,17 @@ export class OSAEventBus {
     dead_letter_events: number;
     active_subscriptions: number;
   }> {
+    // If database is unavailable, return mock stats
+    if (!isDatabaseAvailable()) {
+      return {
+        total_events: 0,
+        processed_events: 0,
+        failed_events: 0,
+        dead_letter_events: 0,
+        active_subscriptions: Array.from(this.subscriptions.values()).reduce((sum, callbacks) => sum + callbacks.length, 0)
+      };
+    }
+
     try {
       const { data, error } = await supabase
         .from('osa_event_stream')

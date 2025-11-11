@@ -1,7 +1,7 @@
 // Webhook Events Database Operations
 // Handles all CRUD operations for webhook event tracking and status monitoring
 
-import { createSupabaseAdmin, handleDatabaseError } from './supabase-client';
+import { createSupabaseAdmin, handleDatabaseError, isDatabaseAvailable } from './supabase-client';
 import type { Database } from '@/lib/types/database';
 import { fileBasedStorage } from './file-storage';
 
@@ -40,6 +40,12 @@ export class WebhookEventOperations {
    * Store a new webhook event
    */
   async storeWebhookEvent(event: WebhookEvent): Promise<string> {
+    // Check if database is available before attempting connection
+    if (!isDatabaseAvailable()) {
+      console.log('⚠️ [DB] Database unavailable, returning mock webhook for resilience');
+      return await fileBasedStorage.storeWebhookEvent(event);
+    }
+
     try {
       const eventData: Database['public']['Tables']['opal_webhook_events']['Insert'] = {
         event_type: event.event_type,
@@ -81,6 +87,12 @@ export class WebhookEventOperations {
    * Get webhook events with filtering
    */
   async getWebhookEvents(query: WebhookEventQuery = {}): Promise<WebhookEvent[]> {
+    // Check if database is available before attempting connection
+    if (!isDatabaseAvailable()) {
+      console.log('⚠️ [DB] Database unavailable, returning mock events for resilience');
+      return await fileBasedStorage.getWebhookEvents(query);
+    }
+
     try {
       let queryBuilder = supabase
         .from('opal_webhook_events')
@@ -174,6 +186,12 @@ export class WebhookEventOperations {
     avg_processing_time: number;
     event_types: Record<string, number>;
   }> {
+    // Check if database is available before attempting connection
+    if (!isDatabaseAvailable()) {
+      console.log('⚠️ [DB] Database unavailable, returning mock stats for resilience');
+      return await fileBasedStorage.getWebhookStats(hours);
+    }
+
     try {
       const since = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
 

@@ -258,7 +258,7 @@ export async function PUT(request: NextRequest) {
 
           // Publish workflow completed event
           await publishEvent({
-            event_type: 'orchestration.workflow.completed@1',
+            event_type: 'orchestration.workflow_completed@1',
             event_id: generateEventId(),
             correlation_id: correlationId,
             timestamp: new Date().toISOString(),

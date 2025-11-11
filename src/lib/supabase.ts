@@ -10,7 +10,8 @@ export {
   supabase,
   createSupabaseAdmin,
   handleDatabaseError,
-  checkDatabaseConnection
+  checkDatabaseConnection,
+  isDatabaseAvailable
 } from '@/lib/database/supabase-client';
 
 // Additional exports for microservices architecture

@@ -1,0 +1,494 @@
+{
+  "category": "Content",
+  "version": "2.1.0",
+  "last_updated": "2025-11-11",
+  "validation_rules": {
+    "required_fields": ["field", "type", "tool", "report", "agent", "osa_section"],
+    "field_formats": {
+      "priority": ["high", "medium", "low"],
+      "confidence": "number_0_to_1",
+      "type": ["AI-generated", "static", "hybrid"]
+    },
+    "agent_validation": {
+      "valid_agents": ["content_review_agent", "strategy_assistant_workflow", "audience_suggester"],
+      "tool_agent_mapping": true
+    }
+  },
+  "agent_outputs": [
+    {
+      "field": "engagement_metrics",
+      "agent": "content_review_agent",
+      "priority": "high",
+      "confidence": 0.95,
+      "type": "AI-generated",
+      "type_tooltip": "Real-time AI analysis of content engagement across all channels",
+      "tool": "content_analyzer",
+      "tool_tooltip": "OPAL Content Analyzer processes engagement data from multiple touchpoints",
+      "report": "Content Performance Dashboard",
+      "report_tooltip": "Powers real-time content performance metrics in Analytics Insights",
+      "instructions": ["content_guidelines", "brand_tone_guidelines", "kpi_definitions"],
+      "instructions_tooltip": "Uses content standards and brand voice to evaluate engagement quality",
+      "dxp_sources": ["CMS", "ODP", "WEBX"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "content_effectiveness_score",
+      "agent": "content_review_agent", 
+      "priority": "high",
+      "confidence": 0.92,
+      "type": "AI-generated",
+      "type_tooltip": "AI-calculated composite score based on performance, engagement, and conversion metrics",
+      "tool": "content_scorer",
+      "tool_tooltip": "OPAL Content Scoring Engine weighs multiple performance indicators",
+      "report": "Content ROI Analysis Report",
+      "report_tooltip": "Feeds into comprehensive content return on investment calculations",
+      "instructions": ["kpi_definitions", "marketing_strategy", "content_guidelines"],
+      "instructions_tooltip": "Aligns scoring with business KPIs and marketing objectives",
+      "dxp_sources": ["CMS", "ODP", "Content Recs"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "audience_resonance_data",
+      "agent": "audience_suggester",
+      "priority": "high",
+      "confidence": 0.88,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of how content performs with different audience segments",
+      "tool": "audience_content_matcher",
+      "tool_tooltip": "OPAL Audience-Content Matching Engine analyzes segment-specific performance",
+      "report": "Audience Content Affinity Report",
+      "report_tooltip": "Shows which content types resonate best with each audience segment",
+      "instructions": ["personas", "content_guidelines", "marketing_strategy"],
+      "instructions_tooltip": "Uses defined personas to evaluate content-audience fit",
+      "dxp_sources": ["ODP", "Content Recs", "WEBX"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "content_gap_analysis",
+      "agent": "content_review_agent",
+      "priority": "medium",
+      "confidence": 0.85,
+      "type": "AI-generated",
+      "type_tooltip": "AI identification of content opportunities and missing content types",
+      "tool": "gap_identifier",
+      "tool_tooltip": "OPAL Gap Analysis Tool identifies content opportunities using market and performance data",
+      "report": "Content Strategy Gap Report",
+      "report_tooltip": "Highlights content opportunities and competitive gaps",
+      "instructions": ["marketing_strategy", "personas", "content_guidelines"],
+      "instructions_tooltip": "Analyzes gaps against marketing strategy and audience needs",
+      "dxp_sources": ["CMS", "Content Recs", "ODP"],
+      "osa_section": "Strategy Plans → Content Strategy",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    },
+    {
+      "field": "content_optimization_recommendations",
+      "agent": "content_review_agent",
+      "priority": "high",
+      "confidence": 0.90,
+      "type": "AI-generated",
+      "type_tooltip": "AI-generated actionable recommendations for content improvement",
+      "tool": "content_optimizer",
+      "tool_tooltip": "OPAL Content Optimization Engine provides specific improvement recommendations",
+      "report": "Content Optimization Action Plan",
+      "report_tooltip": "Provides prioritized list of content improvements with expected impact",
+      "instructions": ["content_guidelines", "brand_tone_guidelines", "kpi_definitions"],
+      "instructions_tooltip": "Ensures recommendations align with brand standards and business objectives",
+      "dxp_sources": ["CMS", "WEBX", "Content Recs"],
+      "osa_section": "Strategy Plans → Content Strategy",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "topic_performance_trends",
+      "agent": "content_review_agent",
+      "priority": "medium",
+      "confidence": 0.87,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of content topic performance over time with trend predictions",
+      "tool": "trend_analyzer",
+      "tool_tooltip": "OPAL Trend Analysis Tool identifies rising and declining content topics",
+      "report": "Content Trend Intelligence Report",
+      "report_tooltip": "Shows trending topics and predicts future content opportunities",
+      "instructions": ["marketing_strategy", "content_guidelines"],
+      "instructions_tooltip": "Aligns trend analysis with marketing strategy and content standards",
+      "dxp_sources": ["CMS", "ODP", "WEBX"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true
+    },
+    {
+      "field": "content_attribution_data",
+      "agent": "strategy_assistant_workflow",
+      "priority": "high",
+      "confidence": 0.83,
+      "type": "AI-generated",
+      "type_tooltip": "AI-powered attribution analysis showing content's role in customer journeys",
+      "tool": "attribution_tracker",
+      "tool_tooltip": "OPAL Attribution Tracker maps content touchpoints to conversion events",
+      "report": "Content Attribution Dashboard",
+      "report_tooltip": "Shows how content contributes to conversions across the customer journey",
+      "instructions": ["kpi_definitions", "personas", "marketing_strategy"],
+      "instructions_tooltip": "Maps content attribution to defined KPIs and customer personas",
+      "dxp_sources": ["ODP", "WEBX", "CMP"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true
+    },
+    {
+      "field": "semantic_visibility_score",
+      "agent": "content_review_agent",
+      "priority": "high",
+      "confidence": 0.89,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of content's semantic visibility and discoverability across platforms",
+      "tool": "semantic_analyzer",
+      "tool_tooltip": "OPAL Semantic Analysis Engine evaluates content visibility using NLP and search algorithms",
+      "report": "Content Semantic Visibility Report",
+      "report_tooltip": "Shows how well content is positioned for discovery and semantic search",
+      "instructions": ["seo_content_optimization", "content_guidelines", "marketing_strategy"],
+      "instructions_tooltip": "Uses SEO guidelines and semantic analysis to optimize content discoverability",
+      "dxp_sources": ["CMS", "WEBX", "ODP"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true,
+      "validation_rules": {
+        "required": true,
+        "format": "decimal_0_to_1",
+        "fallback": "0.5"
+      }
+    },
+    {
+      "field": "semantic_alignment_score",
+      "agent": "content_review_agent",
+      "priority": "medium",
+      "confidence": 0.86,
+      "type": "AI-generated",
+      "type_tooltip": "AI assessment of content alignment with brand messaging and semantic consistency",
+      "tool": "semantic_alignment_checker",
+      "tool_tooltip": "OPAL Semantic Alignment Tool ensures content consistency with brand voice and messaging",
+      "report": "Brand Semantic Alignment Report",
+      "report_tooltip": "Measures how well content aligns with established brand semantic patterns",
+      "instructions": ["brand_tone_guidelines", "content_guidelines", "marketing_strategy"],
+      "instructions_tooltip": "Evaluates content alignment using brand voice guidelines and messaging frameworks",
+      "dxp_sources": ["CMS", "Content Recs", "WEBX"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true,
+      "validation_rules": {
+        "required": true,
+        "format": "decimal_0_to_1",
+        "fallback": "0.6"
+      }
+    },
+    {
+      "field": "geo_content_performance",
+      "agent": "audience_suggester",
+      "priority": "medium",
+      "confidence": 0.84,
+      "type": "AI-generated",
+      "type_tooltip": "AI analysis of content performance across different geographic regions and markets",
+      "tool": "geo_performance_analyzer",
+      "tool_tooltip": "OPAL Geographic Performance Engine analyzes content effectiveness by region and locale",
+      "report": "Geographic Content Performance Report",
+      "report_tooltip": "Shows content performance variations across different geographic markets",
+      "instructions": ["personas", "marketing_strategy", "content_guidelines"],
+      "instructions_tooltip": "Analyzes geographic performance using regional personas and localized strategies",
+      "dxp_sources": ["ODP", "WEBX", "CMP"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": false,
+      "brain_learning": true,
+      "validation_rules": {
+        "required": false,
+        "format": "geographic_performance_object",
+        "fallback": "{}"
+      }
+    },
+    {
+      "field": "content_freshness_index",
+      "agent": "content_review_agent",
+      "priority": "medium",
+      "confidence": 0.91,
+      "type": "AI-generated",
+      "type_tooltip": "AI-calculated index measuring content recency, relevance, and update frequency",
+      "tool": "freshness_calculator",
+      "tool_tooltip": "OPAL Content Freshness Calculator tracks content age, updates, and relevance decay",
+      "report": "Content Freshness & Lifecycle Report",
+      "report_tooltip": "Monitors content aging and recommends refresh or retirement schedules",
+      "instructions": ["content_lifecycle_management", "content_guidelines", "kpi_definitions"],
+      "instructions_tooltip": "Uses lifecycle management rules to evaluate content freshness and update needs",
+      "dxp_sources": ["CMS", "Content Recs", "ODP"],
+      "osa_section": "Analytics Insights → Content",
+      "strategy_link": "Quick Wins",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true,
+      "validation_rules": {
+        "required": true,
+        "format": "decimal_0_to_1",
+        "fallback": "0.7"
+      }
+    },
+    {
+      "field": "recommended_content_topics",
+      "agent": "strategy_assistant_workflow",
+      "priority": "high",
+      "confidence": 0.88,
+      "type": "AI-generated",
+      "type_tooltip": "AI-generated content topic recommendations based on performance data and trends",
+      "tool": "topic_recommender",
+      "tool_tooltip": "OPAL Topic Recommendation Engine suggests optimal content topics using trend and performance analysis",
+      "report": "Content Topic Opportunity Report",
+      "report_tooltip": "Provides data-driven content topic suggestions for Experience Optimization workflows",
+      "instructions": ["marketing_strategy", "content_guidelines", "personas"],
+      "instructions_tooltip": "Generates topic recommendations aligned with marketing strategy and audience preferences",
+      "dxp_sources": ["Content Recs", "ODP", "WEBX"],
+      "osa_section": "Experience Optimization → Content",
+      "strategy_link": "Strategic Roadmap",
+      "decision_layer_impact": true,
+      "personal_configurator": true,
+      "brain_learning": true,
+      "validation_rules": {
+        "required": true,
+        "format": "topic_recommendation_array",
+        "fallback": "[]"
+      }
+    }
+  ],
+  "additional_instructions_needed": [
+    {
+      "instruction": "content_lifecycle_management",
+      "purpose": "Define content creation, optimization, and retirement processes",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["content_review_agent"],
+      "validation_impact": "medium"
+    },
+    {
+      "instruction": "seo_content_optimization",
+      "purpose": "Guidelines for SEO-optimized content creation and optimization",
+      "priority": "high",
+      "implementation_timeline": "Q1 2025",
+      "affects_agents": ["content_review_agent"],
+      "validation_impact": "high"
+    },
+    {
+      "instruction": "multimedia_content_standards",
+      "purpose": "Standards for video, audio, and interactive content creation",
+      "priority": "medium",
+      "implementation_timeline": "Q2 2025",
+      "affects_agents": ["content_review_agent"],
+      "validation_impact": "medium"
+    },
+    {
+      "instruction": "content_governance_framework",
+      "purpose": "Approval workflows and content quality control processes",
+      "priority": "medium",
+      "implementation_timeline": "Q2 2025",
+      "affects_agents": ["content_review_agent", "strategy_assistant_workflow"],
+      "validation_impact": "high"
+    }
+  ],
+  "content_suggestions": [
+    {
+      "title": "Interactive Content Performance Calculator",
+      "description": "Tool to predict content performance based on topic, format, and audience",
+      "priority": "high",
+      "estimated_effort": "2 weeks",
+      "depends_on_outputs": ["engagement_metrics", "content_effectiveness_score"],
+      "target_users": ["Content Managers", "Marketing Directors"]
+    },
+    {
+      "title": "Content ROI Attribution Model",
+      "description": "Framework for calculating content return on investment across channels",
+      "priority": "high",
+      "estimated_effort": "3 weeks",
+      "depends_on_outputs": ["content_attribution_data", "content_effectiveness_score"],
+      "target_users": ["Marketing Analysts", "Finance Teams"]
+    },
+    {
+      "title": "Brand Voice Consistency Checker",
+      "description": "AI tool to ensure content aligns with brand tone guidelines",
+      "priority": "medium",
+      "estimated_effort": "2 weeks",
+      "depends_on_outputs": ["engagement_metrics"],
+      "target_users": ["Content Writers", "Brand Managers"]
+    },
+    {
+      "title": "Content Repurposing Optimizer",
+      "description": "System to identify content that can be adapted for different channels",
+      "priority": "medium",
+      "estimated_effort": "2 weeks",
+      "depends_on_outputs": ["audience_resonance_data", "topic_performance_trends"],
+      "target_users": ["Content Strategists", "Digital Marketing Teams"]
+    }
+  ],
+  "report_recommendations": [
+    {
+      "report": "Content Velocity vs Quality Analysis",
+      "description": "Balance content production speed with quality metrics",
+      "audience": ["Content Managers", "Marketing Directors"],
+      "frequency": "Weekly",
+      "priority": "high",
+      "data_sources": ["engagement_metrics", "content_effectiveness_score"],
+      "complexity": "medium"
+    },
+    {
+      "report": "Cross-Channel Content Performance",
+      "description": "How content performs across different marketing channels",
+      "audience": ["Digital Marketing Teams", "Content Strategists"],
+      "frequency": "Monthly",
+      "priority": "high",
+      "data_sources": ["audience_resonance_data", "content_attribution_data"],
+      "complexity": "high"
+    },
+    {
+      "report": "Content Engagement Lifecycle Report",
+      "description": "Track content engagement from publication through retirement",
+      "audience": ["Content Teams", "Marketing Analysts"],
+      "frequency": "Quarterly",
+      "priority": "medium",
+      "data_sources": ["engagement_metrics", "topic_performance_trends"],
+      "complexity": "medium"
+    },
+    {
+      "report": "Competitive Content Intelligence",
+      "description": "Analysis of competitor content strategies and performance",
+      "audience": ["Marketing Directors", "Strategic Planners"],
+      "frequency": "Monthly",
+      "priority": "medium",
+      "data_sources": ["content_gap_analysis", "topic_performance_trends"],
+      "complexity": "high"
+    }
+  ],
+  "strategic_insights": [
+    {
+      "insight": "Content Velocity Impact on Quality",
+      "description": "Analyze correlation between content production speed and engagement quality",
+      "business_impact": "Optimize content production workflows for maximum ROI",
+      "implementation": "Monitor content performance vs production timelines",
+      "confidence": 0.85,
+      "data_requirements": ["engagement_metrics", "content_effectiveness_score"],
+      "update_frequency": "Weekly"
+    },
+    {
+      "insight": "Seasonal Content Performance Patterns",
+      "description": "Identify content types that perform better during specific seasons or events",
+      "business_impact": "Improve content calendar planning and resource allocation",
+      "implementation": "Track performance patterns across annual cycles",
+      "confidence": 0.78,
+      "data_requirements": ["topic_performance_trends", "engagement_metrics"],
+      "update_frequency": "Monthly"
+    },
+    {
+      "insight": "Content Format Effectiveness by Audience Segment",
+      "description": "Match optimal content formats to audience preferences",
+      "business_impact": "Increase engagement through format optimization",
+      "implementation": "Cross-reference format performance with audience segmentation data",
+      "confidence": 0.82,
+      "data_requirements": ["audience_resonance_data", "engagement_metrics"],
+      "update_frequency": "Bi-weekly"
+    }
+  ],
+  "improvement_recommendations": [
+    {
+      "area": "Content Performance Prediction",
+      "recommendation": "Implement predictive modeling to forecast content performance before publication",
+      "expected_impact": "30% improvement in content ROI through better topic and format selection",
+      "implementation_complexity": "high",
+      "timeline": "Q2 2025",
+      "depends_on": ["engagement_metrics", "content_effectiveness_score", "audience_resonance_data"],
+      "resource_requirements": "3 engineers, 2 data scientists",
+      "success_metrics": ["prediction_accuracy > 0.75", "roi_improvement > 0.25"]
+    },
+    {
+      "area": "Real-time Content Optimization",
+      "recommendation": "Develop real-time content adjustment capabilities based on early performance indicators",
+      "expected_impact": "25% increase in content engagement through rapid optimization",
+      "implementation_complexity": "medium",
+      "timeline": "Q1 2025",
+      "depends_on": ["engagement_metrics", "content_optimization_recommendations"],
+      "resource_requirements": "2 engineers, 1 UX designer",
+      "success_metrics": ["engagement_lift > 0.20", "optimization_speed < 2_hours"]
+    }
+  ],
+  "opal_monitoring_updates": [
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/content/content-review-agent/",
+      "required_updates": [
+        {
+          "component": "content_review_agent",
+          "update_type": "capability_enhancement",
+          "description": "Add predictive content performance modeling",
+          "priority": "high",
+          "estimated_effort": "3 weeks",
+          "affects_outputs": ["engagement_metrics", "content_effectiveness_score"],
+          "validation_required": true
+        },
+        {
+          "component": "content_analyzer_tool",
+          "update_type": "new_feature", 
+          "description": "Real-time content optimization recommendations",
+          "priority": "high",
+          "estimated_effort": "2 weeks",
+          "affects_outputs": ["content_optimization_recommendations"],
+          "validation_required": true
+        }
+      ]
+    },
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/content/audience-suggester/",
+      "required_updates": [
+        {
+          "component": "audience_content_matcher",
+          "update_type": "performance_optimization",
+          "description": "Improve audience-content matching accuracy",
+          "priority": "medium",
+          "estimated_effort": "1 week",
+          "affects_outputs": ["audience_resonance_data"],
+          "validation_required": false
+        }
+      ]
+    },
+    {
+      "location": "/engine/admin/opal-monitoring/agent-data/content/personal-configurator/",
+      "required_updates": [
+        {
+          "component": "personal_configurator",
+          "update_type": "preference_expansion",
+          "description": "Add content format preference learning and weighting",
+          "priority": "medium",
+          "estimated_effort": "1 week",
+          "affects_outputs": ["engagement_metrics", "audience_resonance_data"],
+          "validation_required": false
+        }
+      ]
+    }
+  ]
+}
