@@ -1,211 +1,206 @@
 {
-  "timestamp": "2025-11-11T18:14:11.837Z",
+  "timestamp": "2025-11-11T21:07:31.395Z",
   "summary": {
-    "total": 39,
-    "passed": 13,
+    "total": 38,
+    "passed": 16,
     "warnings": 6,
-    "errors": 20
+    "errors": 16
   },
   "results": {
     "passed": [
       {
         "check": "Environment",
         "message": "NEXT_PUBLIC_BASE_URL is configured",
-        "timestamp": "2025-11-11T18:13:01.261Z"
+        "timestamp": "2025-11-11T21:05:01.662Z"
+      },
+      {
+        "check": "Environment",
+        "message": "OPAL_WEBHOOK_AUTH_KEY is configured",
+        "timestamp": "2025-11-11T21:05:01.662Z"
+      },
+      {
+        "check": "Environment",
+        "message": "SUPABASE_URL is configured",
+        "timestamp": "2025-11-11T21:05:01.662Z"
+      },
+      {
+        "check": "Environment",
+        "message": "SUPABASE_ANON_KEY is configured",
+        "timestamp": "2025-11-11T21:05:01.662Z"
+      },
+      {
+        "check": "Environment",
+        "message": "SUPABASE_SERVICE_ROLE_KEY is configured",
+        "timestamp": "2025-11-11T21:05:01.662Z"
       },
       {
         "check": "OPAL Webhook",
         "message": "OPAL webhook endpoint is reachable",
-        "timestamp": "2025-11-11T18:13:41.844Z"
+        "timestamp": "2025-11-11T21:06:58.067Z"
+      },
+      {
+        "check": "Database",
+        "message": "Supabase configuration appears valid",
+        "timestamp": "2025-11-11T21:06:58.069Z"
       },
       {
         "check": "Database Schema",
         "message": "opal_workflow_executions type definition found",
-        "timestamp": "2025-11-11T18:13:41.847Z"
+        "timestamp": "2025-11-11T21:06:58.071Z"
       },
       {
         "check": "Database Schema",
         "message": "opal_agent_executions type definition found",
-        "timestamp": "2025-11-11T18:13:41.847Z"
+        "timestamp": "2025-11-11T21:06:58.071Z"
       },
       {
         "check": "Database Schema",
         "message": "opal_webhook_events type definition found",
-        "timestamp": "2025-11-11T18:13:41.847Z"
+        "timestamp": "2025-11-11T21:06:58.071Z"
       },
       {
         "check": "Database Schema",
         "message": "opal_odp_insights type definition found",
-        "timestamp": "2025-11-11T18:13:41.847Z"
+        "timestamp": "2025-11-11T21:06:58.071Z"
       },
       {
         "check": "Database Schema",
         "message": "opal_content_insights type definition found",
-        "timestamp": "2025-11-11T18:13:41.847Z"
+        "timestamp": "2025-11-11T21:06:58.071Z"
       },
       {
         "check": "Security",
         "message": "HTTPS configuration verified",
-        "timestamp": "2025-11-11T18:13:42.004Z"
-      },
-      {
-        "check": "Build",
-        "message": "Application builds successfully",
-        "timestamp": "2025-11-11T18:14:11.831Z"
-      },
-      {
-        "check": "Build Size",
-        "message": "Build size acceptable: 0.00MB",
-        "timestamp": "2025-11-11T18:14:11.831Z"
+        "timestamp": "2025-11-11T21:06:58.308Z"
       },
       {
         "check": "Dependencies",
         "message": "next dependency found",
-        "timestamp": "2025-11-11T18:14:11.836Z"
+        "timestamp": "2025-11-11T21:07:31.394Z"
       },
       {
         "check": "Dependencies",
         "message": "react dependency found",
-        "timestamp": "2025-11-11T18:14:11.837Z"
+        "timestamp": "2025-11-11T21:07:31.395Z"
       },
       {
         "check": "Dependencies",
         "message": "@supabase/supabase-js dependency found",
-        "timestamp": "2025-11-11T18:14:11.837Z"
+        "timestamp": "2025-11-11T21:07:31.395Z"
       }
     ],
     "warnings": [
       {
         "check": "Linting",
-        "message": "ESLint warnings/errors found: Command failed: npx eslint . --ext .ts,.tsx --max-warnings 0\n[BABEL] Note: The code generator has deoptimised the styling of /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/StrategyDashboard.tsx as it exceeds the max of 500KB.\n",
-        "timestamp": "2025-11-11T18:13:41.159Z"
+        "message": "ESLint warnings/errors found: spawnSync /bin/sh ENOBUFS",
+        "timestamp": "2025-11-11T21:06:57.702Z"
       },
       {
         "check": "OPAL Config",
         "message": "content_review configuration missing",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:06:58.068Z"
       },
       {
         "check": "OPAL Config",
         "message": "geo_audit configuration missing",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:06:58.068Z"
       },
       {
         "check": "OPAL Config",
         "message": "audience_suggester configuration missing",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:06:58.068Z"
       },
       {
         "check": "OPAL Config",
         "message": "experiment_blueprinter configuration missing",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:06:58.068Z"
       },
       {
         "check": "OPAL Config",
         "message": "personalization_idea_generator configuration missing",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:06:58.069Z"
       }
     ],
     "errors": [
       {
         "check": "Environment",
-        "message": "Missing required environment variable: OPAL_WEBHOOK_AUTH_KEY",
-        "timestamp": "2025-11-11T18:13:01.261Z"
-      },
-      {
-        "check": "Environment",
         "message": "Missing required environment variable: OPAL_API_URL",
-        "timestamp": "2025-11-11T18:13:01.261Z"
+        "timestamp": "2025-11-11T21:05:01.662Z"
       },
       {
         "check": "Environment",
         "message": "Missing required environment variable: OPAL_API_TOKEN",
-        "timestamp": "2025-11-11T18:13:01.261Z"
-      },
-      {
-        "check": "Environment",
-        "message": "Missing required environment variable: SUPABASE_URL",
-        "timestamp": "2025-11-11T18:13:01.261Z"
-      },
-      {
-        "check": "Environment",
-        "message": "Missing required environment variable: SUPABASE_ANON_KEY",
-        "timestamp": "2025-11-11T18:13:01.261Z"
-      },
-      {
-        "check": "Environment",
-        "message": "Missing required environment variable: SUPABASE_SERVICE_ROLE_KEY",
-        "timestamp": "2025-11-11T18:13:01.261Z"
+        "timestamp": "2025-11-11T21:05:01.662Z"
       },
       {
         "check": "TypeScript",
         "message": "TypeScript compilation failed: Command failed: npx tsc --noEmit --skipLibCheck",
-        "timestamp": "2025-11-11T18:13:07.295Z"
-      },
-      {
-        "check": "Database",
-        "message": "Supabase configuration incomplete",
-        "timestamp": "2025-11-11T18:13:41.846Z"
+        "timestamp": "2025-11-11T21:05:11.298Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/app/api/discovery/route.ts",
-        "timestamp": "2025-11-11T18:13:41.900Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/app/api/discovery/route.ts",
+        "timestamp": "2025-11-11T21:06:58.169Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/app/api/tools/cmp/route.ts",
-        "timestamp": "2025-11-11T18:13:41.921Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/app/api/tools/cmp/route.ts",
+        "timestamp": "2025-11-11T21:06:58.196Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/AnalyticsContentDashboard.tsx",
-        "timestamp": "2025-11-11T18:13:41.955Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/AnalyticsContentDashboard.tsx",
+        "timestamp": "2025-11-11T21:06:58.253Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/ContentPerformanceScoring.tsx",
-        "timestamp": "2025-11-11T18:13:41.956Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/ContentPerformanceScoring.tsx",
+        "timestamp": "2025-11-11T21:06:58.254Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/EnhancedAnalyticsDashboard.tsx",
-        "timestamp": "2025-11-11T18:13:41.959Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/EnhancedAnalyticsDashboard.tsx",
+        "timestamp": "2025-11-11T21:06:58.256Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/MaturityAnalyticsDashboard.tsx",
-        "timestamp": "2025-11-11T18:13:41.963Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/MaturityAnalyticsDashboard.tsx",
+        "timestamp": "2025-11-11T21:06:58.259Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
-        "timestamp": "2025-11-11T18:13:41.967Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
+        "timestamp": "2025-11-11T21:06:58.261Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
-        "timestamp": "2025-11-11T18:13:41.967Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/PasswordProtection.tsx",
+        "timestamp": "2025-11-11T21:06:58.261Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/components/ui/chart.tsx",
-        "timestamp": "2025-11-11T18:13:41.982Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/components/ui/chart.tsx",
+        "timestamp": "2025-11-11T21:06:58.271Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/cmp-client.ts",
-        "timestamp": "2025-11-11T18:13:41.991Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/lib/integrations/cmp-client.ts",
+        "timestamp": "2025-11-11T21:06:58.294Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/opal-agent-client.ts",
-        "timestamp": "2025-11-11T18:13:41.992Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/lib/integrations/opal-agent-client.ts",
+        "timestamp": "2025-11-11T21:06:58.296Z"
       },
       {
         "check": "Security",
-        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/IFPA/ifpa-strategy/dev-opal-ai/my-nextjs-app/src/lib/integrations/sendgrid-client.ts",
-        "timestamp": "2025-11-11T18:13:41.992Z"
+        "message": "Potential hardcoded secret in /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/src/lib/integrations/sendgrid-client.ts",
+        "timestamp": "2025-11-11T21:06:58.296Z"
+      },
+      {
+        "check": "Build",
+        "message": "Build failed: Command failed: npm run build\n ⚠ You are using a non-standard \"NODE_ENV\" value in your environment. This creates inconsistencies in the project and is strongly advised against. Read more: https://nextjs.org/docs/messages/non-standard-node-env\nGA4 not configured, will use mock data\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nGA4 not configured, will use mock data\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.\nError occurred prerendering page \"/engine/admin/recommendation-engine/audience-recommendations\". Read more: https://nextjs.org/docs/messages/prerender-error\nTypeError: Cannot read properties of null (reading 'useState')\n    at f (.next/server/chunks/ssr/[root-of-the-server]__15b0613f._.js:1:1052) {\n  digest: '2852508494'\n}\nExport encountered an error on /engine/admin/recommendation-engine/audience-recommendations/page: /engine/admin/recommendation-engine/audience-recommendations, exiting the build.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.\nEach child in a list should have a unique \"key\" prop.\n\nCheck the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.\n ⨯ Next.js build worker exited with code: 1 and signal: null\n",
+        "timestamp": "2025-11-11T21:07:31.385Z"
       }
     ]
   }
