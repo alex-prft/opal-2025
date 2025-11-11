@@ -137,18 +137,9 @@ export async function GET() {
   try {
     console.log('📋 [CMP Tools] Discovery endpoint called');
 
+    // Return OPAL-compatible format with functions at root level
     return NextResponse.json({
-      ...CMP_TOOLS_CONFIG,
-      timestamp: new Date().toISOString(),
-      status: "ready",
-      authentication: {
-        type: "bearer",
-        required: true
-      },
-      endpoints: {
-        discovery: "https://opal-2025.vercel.app/api/tools/cmp/discovery",
-        execution: "https://opal-2025.vercel.app/api/tools/cmp/execute"
-      }
+      functions: CMP_TOOLS_CONFIG.functions
     });
   } catch (error) {
     console.error('❌ [CMP Tools] Discovery failed:', error);

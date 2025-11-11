@@ -100,18 +100,9 @@ export async function GET() {
   try {
     console.log('📋 [CMS PaaS Tools] Discovery endpoint called');
 
+    // Return OPAL-compatible format with functions at root level
     return NextResponse.json({
-      ...CMSPAAS_TOOLS_CONFIG,
-      timestamp: new Date().toISOString(),
-      status: "ready",
-      authentication: {
-        type: "bearer",
-        required: true
-      },
-      endpoints: {
-        discovery: "https://opal-2025.vercel.app/api/tools/cmspaas/discovery",
-        execution: "https://opal-2025.vercel.app/api/tools/cmspaas/execute"
-      }
+      functions: CMSPAAS_TOOLS_CONFIG.functions
     });
   } catch (error) {
     console.error('❌ [CMS PaaS Tools] Discovery failed:', error);

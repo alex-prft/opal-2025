@@ -132,18 +132,9 @@ export async function GET() {
   try {
     console.log('📋 [ODP Tools] Discovery endpoint called');
 
+    // Return OPAL-compatible format with functions at root level
     return NextResponse.json({
-      ...ODP_TOOLS_CONFIG,
-      timestamp: new Date().toISOString(),
-      status: "ready",
-      authentication: {
-        type: "bearer",
-        required: true
-      },
-      endpoints: {
-        discovery: "https://opal-2025.vercel.app/api/tools/odp/discovery",
-        execution: "https://opal-2025.vercel.app/api/tools/odp/execute"
-      }
+      functions: ODP_TOOLS_CONFIG.functions
     });
   } catch (error) {
     console.error('❌ [ODP Tools] Discovery failed:', error);

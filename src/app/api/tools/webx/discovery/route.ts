@@ -146,18 +146,9 @@ export async function GET() {
   try {
     console.log('📋 [WebX Tools] Discovery endpoint called');
 
+    // Return OPAL-compatible format with functions at root level
     return NextResponse.json({
-      ...WEBX_TOOLS_CONFIG,
-      timestamp: new Date().toISOString(),
-      status: "ready",
-      authentication: {
-        type: "bearer",
-        required: true
-      },
-      endpoints: {
-        discovery: "https://opal-2025.vercel.app/api/tools/webx/discovery",
-        execution: "https://opal-2025.vercel.app/api/tools/webx/execute"
-      }
+      functions: WEBX_TOOLS_CONFIG.functions
     });
   } catch (error) {
     console.error('❌ [WebX Tools] Discovery failed:', error);

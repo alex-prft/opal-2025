@@ -156,18 +156,9 @@ export async function GET() {
   try {
     console.log('📋 [Workflow Data Tools] Discovery endpoint called');
 
+    // Return OPAL-compatible format with functions at root level
     return NextResponse.json({
-      ...WORKFLOW_DATA_TOOLS_CONFIG,
-      timestamp: new Date().toISOString(),
-      status: "ready",
-      authentication: {
-        type: "bearer",
-        required: true
-      },
-      endpoints: {
-        discovery: "https://opal-2025.vercel.app/api/tools/workflow-data/discovery",
-        execution: "https://opal-2025.vercel.app/api/tools/workflow-data/execute"
-      }
+      functions: WORKFLOW_DATA_TOOLS_CONFIG.functions
     });
   } catch (error) {
     console.error('❌ [Workflow Data Tools] Discovery failed:', error);
