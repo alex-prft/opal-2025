@@ -17,137 +17,156 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
     {
       name: "store_workflow_data",
       description: "Store agent results in shared workflow context for use by subsequent agents",
-      parameters: {
-        type: "object",
-        properties: {
-          agent_id: {
-            type: "string",
-            description: "ID of the agent storing data (content_review, geo_audit, etc.)"
-          },
-          agent_results: {
-            type: "object",
-            description: "Complete structured results from the agent execution"
-          },
-          workflow_id: {
-            type: "string",
-            description: "Unique identifier for the workflow execution"
-          },
-          execution_order: {
-            type: "number",
-            description: "Sequential order of agent execution (1-6)"
-          },
-          data_quality_score: {
-            type: "number",
-            description: "Quality score of the data (0.0-1.0)"
-          }
+      parameters: [
+        {
+          name: "agent_id",
+          type: "string",
+          description: "ID of the agent storing data (content_review, geo_audit, etc.)",
+          required: true
         },
-        required: ["agent_id", "agent_results", "workflow_id", "execution_order"]
-      }
+        {
+          name: "agent_results",
+          type: "object",
+          description: "Complete structured results from the agent execution",
+          required: true
+        },
+        {
+          name: "workflow_id",
+          type: "string",
+          description: "Unique identifier for the workflow execution",
+          required: true
+        },
+        {
+          name: "execution_order",
+          type: "number",
+          description: "Sequential order of agent execution (1-6)",
+          required: true
+        },
+        {
+          name: "data_quality_score",
+          type: "number",
+          description: "Quality score of the data (0.0-1.0)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/store_workflow_data",
+      http_method: "POST"
     },
     {
       name: "retrieve_workflow_context",
       description: "Retrieve accumulated workflow context data for current agent execution",
-      parameters: {
-        type: "object",
-        properties: {
-          workflow_id: {
-            type: "string",
-            description: "Unique identifier for the workflow execution"
-          },
-          requesting_agent: {
-            type: "string",
-            description: "ID of agent requesting context data"
-          },
-          include_agents: {
-            type: "array",
-            items: { type: "string" },
-            description: "Specific agent IDs to include in context (empty = all previous)"
-          }
+      parameters: [
+        {
+          name: "workflow_id",
+          type: "string",
+          description: "Unique identifier for the workflow execution",
+          required: true
         },
-        required: ["workflow_id", "requesting_agent"]
-      }
+        {
+          name: "requesting_agent",
+          type: "string",
+          description: "ID of agent requesting context data",
+          required: true
+        },
+        {
+          name: "include_agents",
+          type: "array",
+          description: "Specific agent IDs to include in context (empty = all previous)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/retrieve_workflow_context",
+      http_method: "POST"
     },
     {
       name: "send_data_to_osa_webhook",
       description: "Send agent data and results to OSA application via webhook for real-time updates",
-      parameters: {
-        type: "object",
-        properties: {
-          agent_id: {
-            type: "string",
-            description: "ID of the agent sending data"
-          },
-          agent_data: {
-            type: "object",
-            description: "Agent execution results and insights"
-          },
-          workflow_id: {
-            type: "string",
-            description: "Unique workflow execution identifier"
-          },
-          execution_status: {
-            type: "string",
-            enum: ["in_progress", "completed", "failed", "partial"],
-            description: "Current execution status"
-          },
-          progress_percentage: {
-            type: "number",
-            minimum: 0,
-            maximum: 100,
-            description: "Workflow completion percentage"
-          }
+      parameters: [
+        {
+          name: "agent_id",
+          type: "string",
+          description: "ID of the agent sending data",
+          required: true
         },
-        required: ["agent_id", "agent_data", "workflow_id", "execution_status"]
-      }
+        {
+          name: "agent_data",
+          type: "object",
+          description: "Agent execution results and insights",
+          required: true
+        },
+        {
+          name: "workflow_id",
+          type: "string",
+          description: "Unique workflow execution identifier",
+          required: true
+        },
+        {
+          name: "execution_status",
+          type: "string",
+          description: "Current execution status (in_progress, completed, failed, partial)",
+          required: true
+        },
+        {
+          name: "progress_percentage",
+          type: "number",
+          description: "Workflow completion percentage (0-100)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/send_data_to_osa_webhook",
+      http_method: "POST"
     },
     {
       name: "validate_workflow_data",
       description: "Validate workflow data quality and completeness before agent execution",
-      parameters: {
-        type: "object",
-        properties: {
-          workflow_id: {
-            type: "string",
-            description: "Workflow execution identifier"
-          },
-          validation_criteria: {
-            type: "object",
-            description: "Criteria for data quality validation"
-          },
-          minimum_quality_score: {
-            type: "number",
-            minimum: 0.0,
-            maximum: 1.0,
-            description: "Minimum acceptable quality score"
-          }
+      parameters: [
+        {
+          name: "workflow_id",
+          type: "string",
+          description: "Workflow execution identifier",
+          required: true
         },
-        required: ["workflow_id"]
-      }
+        {
+          name: "validation_criteria",
+          type: "object",
+          description: "Criteria for data quality validation",
+          required: false
+        },
+        {
+          name: "minimum_quality_score",
+          type: "number",
+          description: "Minimum acceptable quality score (0.0-1.0)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/validate_workflow_data",
+      http_method: "POST"
     },
     {
       name: "compile_final_results",
       description: "Compile all workflow agent results into comprehensive strategy brief for final delivery",
-      parameters: {
-        type: "object",
-        properties: {
-          workflow_id: {
-            type: "string",
-            description: "Workflow execution identifier"
-          },
-          compilation_format: {
-            type: "string",
-            enum: ["executive_summary", "detailed_brief", "comprehensive"],
-            default: "comprehensive",
-            description: "Output format for compiled results"
-          },
-          include_quality_metrics: {
-            type: "boolean",
-            default: true,
-            description: "Include data quality and validation metrics"
-          }
+      parameters: [
+        {
+          name: "workflow_id",
+          type: "string",
+          description: "Workflow execution identifier",
+          required: true
         },
-        required: ["workflow_id"]
-      }
+        {
+          name: "compilation_format",
+          type: "string",
+          description: "Output format for compiled results (executive_summary, detailed_brief, comprehensive)",
+          required: false
+        },
+        {
+          name: "include_quality_metrics",
+          type: "boolean",
+          description: "Include data quality and validation metrics",
+          required: false
+        }
+      ],
+      endpoint: "/tools/compile_final_results",
+      http_method: "POST"
     }
   ]
 };

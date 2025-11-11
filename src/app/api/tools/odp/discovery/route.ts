@@ -17,113 +17,88 @@ const ODP_TOOLS_CONFIG = {
     {
       name: "fetch_audience_segments",
       description: "Retrieve existing audience segments from ODP for analysis and personalization strategy development",
-      parameters: {
-        type: "object",
-        properties: {
-          segment_criteria: {
-            type: "object",
-            properties: {
-              member_tiers: {
-                type: "array",
-                items: { type: "string" },
-                description: "IFPA member tier filters (premium, commercial, standard)"
-              },
-              behavioral_patterns: {
-                type: "array",
-                items: { type: "string" },
-                description: "Behavioral segment types to retrieve"
-              },
-              engagement_levels: {
-                type: "array",
-                items: { type: "string" },
-                description: "Engagement level filters (high, medium, low)"
-              }
-            }
-          },
-          include_size_estimates: {
-            type: "boolean",
-            default: true,
-            description: "Include estimated segment sizes for statistical analysis"
-          }
+      parameters: [
+        {
+          name: "segment_criteria",
+          type: "object",
+          description: "Segment criteria including member tiers, behavioral patterns, and engagement levels",
+          required: false
+        },
+        {
+          name: "include_size_estimates",
+          type: "boolean",
+          description: "Include estimated segment sizes for statistical analysis",
+          required: false
         }
-      }
+      ],
+      endpoint: "/tools/fetch_audience_segments",
+      http_method: "POST"
     },
     {
       name: "analyze_member_behavior",
       description: "Analyze IFPA member behavioral patterns for personalization opportunity identification",
-      parameters: {
-        type: "object",
-        properties: {
-          analysis_timeframe: {
-            type: "string",
-            enum: ["30_days", "90_days", "6_months", "12_months"],
-            default: "90_days",
-            description: "Time period for behavioral analysis"
-          },
-          behavior_types: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["content_engagement", "event_attendance", "purchase_patterns", "communication_preferences", "seasonal_activity"]
-            },
-            description: "Types of behavior to analyze"
-          },
-          segment_breakdown: {
-            type: "boolean",
-            default: true,
-            description: "Break down analysis by existing segments"
-          }
+      parameters: [
+        {
+          name: "analysis_timeframe",
+          type: "string",
+          description: "Time period for behavioral analysis (30_days, 90_days, 6_months, 12_months)",
+          required: false
         },
-        required: ["behavior_types"]
-      }
+        {
+          name: "behavior_types",
+          type: "array",
+          description: "Types of behavior to analyze (content_engagement, event_attendance, purchase_patterns, communication_preferences, seasonal_activity)",
+          required: true
+        },
+        {
+          name: "segment_breakdown",
+          type: "boolean",
+          description: "Break down analysis by existing segments",
+          required: false
+        }
+      ],
+      endpoint: "/tools/analyze_member_behavior",
+      http_method: "POST"
     },
     {
       name: "create_dynamic_segments",
       description: "Create new audience segments based on personalization strategy requirements",
-      parameters: {
-        type: "object",
-        properties: {
-          segment_definition: {
-            type: "object",
-            properties: {
-              name: { type: "string", description: "Human-readable segment name" },
-              description: { type: "string", description: "Segment purpose and characteristics" },
-              targeting_criteria: { type: "object", description: "Boolean logic and criteria for segment membership" }
-            },
-            required: ["name", "targeting_criteria"]
-          },
-          validation_mode: {
-            type: "string",
-            enum: ["preview", "create", "test"],
-            default: "preview",
-            description: "Segment creation mode"
-          }
+      parameters: [
+        {
+          name: "segment_definition",
+          type: "object",
+          description: "Segment definition including name, description, and targeting criteria",
+          required: true
         },
-        required: ["segment_definition"]
-      }
+        {
+          name: "validation_mode",
+          type: "string",
+          description: "Segment creation mode (preview, create, test)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/create_dynamic_segments",
+      http_method: "POST"
     },
     {
       name: "calculate_segment_statistical_power",
       description: "Calculate statistical power and sample size requirements for audience segments in experimentation",
-      parameters: {
-        type: "object",
-        properties: {
-          segment_ids: {
-            type: "array",
-            items: { type: "string" },
-            description: "ODP segment identifiers for analysis"
-          },
-          experiment_parameters: {
-            type: "object",
-            properties: {
-              confidence_level: { type: "number", default: 0.95 },
-              minimum_detectable_effect: { type: "number", default: 0.1 },
-              statistical_power: { type: "number", default: 0.8 }
-            }
-          }
+      parameters: [
+        {
+          name: "segment_ids",
+          type: "array",
+          description: "ODP segment identifiers for analysis",
+          required: true
         },
-        required: ["segment_ids"]
-      }
+        {
+          name: "experiment_parameters",
+          type: "object",
+          description: "Experiment parameters including confidence level, minimum detectable effect, and statistical power",
+          required: false
+        }
+      ],
+      endpoint: "/tools/calculate_segment_statistical_power",
+      http_method: "POST"
     }
   ]
 };

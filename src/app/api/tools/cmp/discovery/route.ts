@@ -17,118 +17,106 @@ const CMP_TOOLS_CONFIG = {
     {
       name: "compile_strategy_brief",
       description: "Compile comprehensive personalization strategy brief from all workflow agent results",
-      parameters: {
-        type: "object",
-        properties: {
-          workflow_results: {
-            type: "object",
-            properties: {
-              content_analysis: { type: "object", description: "Content review agent results" },
-              geo_analysis: { type: "object", description: "GEO audit agent results" },
-              audience_analysis: { type: "object", description: "Audience suggester agent results" },
-              personalization_strategy: { type: "object", description: "Personalization idea generator results" },
-              experiment_portfolio: { type: "object", description: "Experiment blueprinter results" }
-            },
-            description: "Complete workflow results from all agents"
-          },
-          compilation_format: {
-            type: "string",
-            enum: ["executive_summary", "detailed_brief", "comprehensive"],
-            default: "comprehensive",
-            description: "Level of detail for strategy brief"
-          },
-          target_audience: {
-            type: "string",
-            enum: ["technical_team", "business_stakeholders", "executive_leadership"],
-            default: "business_stakeholders",
-            description: "Target audience for the brief formatting"
-          }
+      parameters: [
+        {
+          name: "workflow_results",
+          type: "object",
+          description: "Complete workflow results from all agents",
+          required: true
         },
-        required: ["workflow_results"]
-      }
+        {
+          name: "compilation_format",
+          type: "string",
+          description: "Level of detail for strategy brief (executive_summary, detailed_brief, comprehensive)",
+          required: false
+        },
+        {
+          name: "target_audience",
+          type: "string",
+          description: "Target audience for the brief formatting (technical_team, business_stakeholders, executive_leadership)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/compile_strategy_brief",
+      http_method: "POST"
     },
     {
       name: "generate_executive_summary",
       description: "Create executive-ready summary with key recommendations and business impact projections",
-      parameters: {
-        type: "object",
-        properties: {
-          strategy_insights: {
-            type: "object",
-            description: "Key insights from complete strategy analysis"
-          },
-          business_impact_projections: {
-            type: "object",
-            description: "Business impact projections and ROI estimates"
-          },
-          priority_recommendations: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                recommendation: { type: "string" },
-                business_value: { type: "string" },
-                implementation_effort: { type: "string" },
-                timeline: { type: "string" }
-              }
-            },
-            description: "Top priority recommendations for executive attention"
-          }
+      parameters: [
+        {
+          name: "strategy_insights",
+          type: "object",
+          description: "Key insights from complete strategy analysis",
+          required: true
         },
-        required: ["strategy_insights", "priority_recommendations"]
-      }
+        {
+          name: "business_impact_projections",
+          type: "object",
+          description: "Business impact projections and ROI estimates",
+          required: false
+        },
+        {
+          name: "priority_recommendations",
+          type: "array",
+          description: "Top priority recommendations for executive attention",
+          required: true
+        }
+      ],
+      endpoint: "/tools/generate_executive_summary",
+      http_method: "POST"
     },
     {
       name: "create_campaign_specifications",
       description: "Generate detailed campaign specifications ready for CMP platform implementation",
-      parameters: {
-        type: "object",
-        properties: {
-          personalization_ideas: {
-            type: "array",
-            description: "Personalization ideas to convert into campaigns"
-          },
-          audience_segments: {
-            type: "array",
-            description: "Audience segments for campaign targeting"
-          },
-          campaign_objectives: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["awareness", "engagement", "conversion", "retention", "cross_sell", "upsell"]
-            },
-            description: "Primary campaign objectives"
-          }
+      parameters: [
+        {
+          name: "personalization_ideas",
+          type: "array",
+          description: "Personalization ideas to convert into campaigns",
+          required: true
         },
-        required: ["personalization_ideas", "audience_segments", "campaign_objectives"]
-      }
+        {
+          name: "audience_segments",
+          type: "array",
+          description: "Audience segments for campaign targeting",
+          required: true
+        },
+        {
+          name: "campaign_objectives",
+          type: "array",
+          description: "Primary campaign objectives (awareness, engagement, conversion, retention, cross_sell, upsell)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/create_campaign_specifications",
+      http_method: "POST"
     },
     {
       name: "format_cmp_deliverables",
       description: "Format campaign specifications for direct import into CMP platforms",
-      parameters: {
-        type: "object",
-        properties: {
-          campaign_specifications: {
-            type: "array",
-            description: "Campaign specifications to format"
-          },
-          cmp_platform_type: {
-            type: "string",
-            enum: ["optimizely_web", "optimizely_feature", "adobe_target", "google_optimize", "generic_json"],
-            default: "optimizely_web",
-            description: "Target CMP platform for formatting"
-          },
-          export_format: {
-            type: "string",
-            enum: ["api_payload", "csv_import", "json_config", "xml_export"],
-            default: "json_config",
-            description: "Export format for CMP platform"
-          }
+      parameters: [
+        {
+          name: "campaign_specifications",
+          type: "array",
+          description: "Campaign specifications to format",
+          required: true
         },
-        required: ["campaign_specifications", "cmp_platform_type"]
-      }
+        {
+          name: "cmp_platform_type",
+          type: "string",
+          description: "Target CMP platform for formatting (optimizely_web, optimizely_feature, adobe_target, google_optimize, generic_json)",
+          required: true
+        },
+        {
+          name: "export_format",
+          type: "string",
+          description: "Export format for CMP platform (api_payload, csv_import, json_config, xml_export)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/format_cmp_deliverables",
+      http_method: "POST"
     }
   ]
 };

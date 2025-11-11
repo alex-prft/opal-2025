@@ -17,127 +17,94 @@ const WEBX_TOOLS_CONFIG = {
     {
       name: "perform_geo_audit",
       description: "Comprehensive Generative Engine Optimization audit for AI citation readiness and search engine visibility",
-      parameters: {
-        type: "object",
-        properties: {
-          website_url: {
-            type: "string",
-            format: "uri",
-            description: "Target website URL for GEO audit"
-          },
-          audit_scope: {
-            type: "object",
-            properties: {
-              page_depth: { type: "number", default: 3, description: "Maximum crawl depth for audit" },
-              include_subdomains: { type: "boolean", default: false, description: "Include subdomain analysis" },
-              focus_areas: {
-                type: "array",
-                items: {
-                  type: "string",
-                  enum: ["structured_data", "ai_citation_readiness", "schema_markup", "content_optimization", "technical_seo"]
-                },
-                description: "Specific GEO focus areas for audit"
-              }
-            }
-          },
-          ai_engine_compatibility: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["google_ai", "bing_copilot", "claude", "chatgpt", "perplexity"]
-            },
-            description: "AI engines to optimize for citation readiness"
-          }
+      parameters: [
+        {
+          name: "website_url",
+          type: "string",
+          description: "Target website URL for GEO audit",
+          required: true
         },
-        required: ["website_url"]
-      }
+        {
+          name: "audit_scope",
+          type: "object",
+          description: "Audit scope including page depth, subdomains, and focus areas",
+          required: false
+        },
+        {
+          name: "ai_engine_compatibility",
+          type: "array",
+          description: "AI engines to optimize for citation readiness (google_ai, bing_copilot, claude, chatgpt, perplexity)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/perform_geo_audit",
+      http_method: "POST"
     },
     {
       name: "analyze_core_web_vitals",
       description: "Assess Core Web Vitals and performance metrics for personalization implementation impact",
-      parameters: {
-        type: "object",
-        properties: {
-          target_pages: {
-            type: "array",
-            items: { type: "string", format: "uri" },
-            description: "Specific pages to analyze for Core Web Vitals"
-          },
-          performance_metrics: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["lcp", "fid", "cls", "fcp", "ttfb", "speed_index"]
-            },
-            default: ["lcp", "fid", "cls"],
-            description: "Performance metrics to evaluate"
-          },
-          testing_conditions: {
-            type: "object",
-            properties: {
-              device_types: {
-                type: "array",
-                items: { type: "string" },
-                default: ["desktop", "mobile"],
-                description: "Device types for testing"
-              },
-              network_conditions: {
-                type: "array",
-                items: { type: "string" },
-                default: ["fast_3g", "slow_3g", "4g"],
-                description: "Network conditions to simulate"
-              }
-            }
-          }
+      parameters: [
+        {
+          name: "target_pages",
+          type: "array",
+          description: "Specific pages to analyze for Core Web Vitals",
+          required: true
         },
-        required: ["target_pages"]
-      }
+        {
+          name: "performance_metrics",
+          type: "array",
+          description: "Performance metrics to evaluate (lcp, fid, cls, fcp, ttfb, speed_index)",
+          required: false
+        },
+        {
+          name: "testing_conditions",
+          type: "object",
+          description: "Testing conditions including device types and network conditions",
+          required: false
+        }
+      ],
+      endpoint: "/tools/analyze_core_web_vitals",
+      http_method: "POST"
     },
     {
       name: "evaluate_technical_constraints",
       description: "Identify technical constraints and requirements for personalization implementation",
-      parameters: {
-        type: "object",
-        properties: {
-          website_technology: {
-            type: "object",
-            properties: {
-              cms_platform: { type: "string", description: "Content management system in use" },
-              frontend_framework: { type: "string", description: "Frontend framework or technology stack" },
-              cdn_provider: { type: "string", description: "Content delivery network provider" }
-            }
-          },
-          personalization_requirements: {
-            type: "array",
-            description: "Planned personalization implementations to evaluate"
-          }
+      parameters: [
+        {
+          name: "website_technology",
+          type: "object",
+          description: "Website technology stack including CMS platform, frontend framework, and CDN provider",
+          required: false
         },
-        required: ["personalization_requirements"]
-      }
+        {
+          name: "personalization_requirements",
+          type: "array",
+          description: "Planned personalization implementations to evaluate",
+          required: true
+        }
+      ],
+      endpoint: "/tools/evaluate_technical_constraints",
+      http_method: "POST"
     },
     {
       name: "generate_performance_baseline",
       description: "Establish comprehensive performance baseline for personalization impact measurement",
-      parameters: {
-        type: "object",
-        properties: {
-          baseline_metrics: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["page_load_speed", "time_to_interactive", "bounce_rate", "conversion_rate", "user_engagement", "search_visibility"]
-            },
-            description: "Metrics to include in performance baseline"
-          },
-          measurement_period: {
-            type: "string",
-            enum: ["1_week", "2_weeks", "1_month", "3_months"],
-            default: "1_month",
-            description: "Period for baseline measurement"
-          }
+      parameters: [
+        {
+          name: "baseline_metrics",
+          type: "array",
+          description: "Metrics to include in performance baseline (page_load_speed, time_to_interactive, bounce_rate, conversion_rate, user_engagement, search_visibility)",
+          required: true
         },
-        required: ["baseline_metrics"]
-      }
+        {
+          name: "measurement_period",
+          type: "string",
+          description: "Period for baseline measurement (1_week, 2_weeks, 1_month, 3_months)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/generate_performance_baseline",
+      http_method: "POST"
     }
   ]
 };

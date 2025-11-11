@@ -17,91 +17,74 @@ const CONTENTRECS_TOOLS_CONFIG = {
     {
       name: "analyze_website_content",
       description: "Comprehensive content analysis including quality scoring, SEO assessment, and personalization potential identification",
-      parameters: {
-        type: "object",
-        properties: {
-          website_url: {
-            type: "string",
-            format: "uri",
-            description: "Target website URL for content analysis"
-          },
-          analysis_scope: {
-            type: "object",
-            properties: {
-              page_types: {
-                type: "array",
-                items: {
-                  type: "string",
-                  enum: ["homepage", "product_pages", "category_pages", "blog_articles", "resource_pages", "member_portal"]
-                },
-                description: "Types of pages to analyze"
-              },
-              content_depth: {
-                type: "string",
-                enum: ["surface", "comprehensive", "deep_analysis"],
-                default: "comprehensive",
-                description: "Depth of content analysis"
-              }
-            }
-          },
-          quality_criteria: {
-            type: "object",
-            properties: {
-              seo_factors: { type: "boolean", default: true },
-              brand_consistency: { type: "boolean", default: true }
-            }
-          }
+      parameters: [
+        {
+          name: "website_url",
+          type: "string",
+          description: "Target website URL for content analysis",
+          required: true
         },
-        required: ["website_url"]
-      }
+        {
+          name: "analysis_scope",
+          type: "object",
+          description: "Scope of analysis including page types and content depth",
+          required: false
+        },
+        {
+          name: "quality_criteria",
+          type: "object",
+          description: "Quality criteria for SEO factors and brand consistency",
+          required: false
+        }
+      ],
+      endpoint: "/tools/analyze_website_content",
+      http_method: "POST"
     },
     {
       name: "identify_personalization_opportunities",
       description: "Analyze content to identify specific personalization opportunities based on audience segments and member behavior",
-      parameters: {
-        type: "object",
-        properties: {
-          content_inventory: {
-            type: "object",
-            description: "Content inventory from website analysis"
-          },
-          audience_segments: {
-            type: "array",
-            description: "Target audience segments for personalization"
-          },
-          personalization_types: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["messaging", "imagery", "product_focus", "content_depth", "navigation", "calls_to_action"]
-            },
-            description: "Types of personalization to identify"
-          }
+      parameters: [
+        {
+          name: "content_inventory",
+          type: "object",
+          description: "Content inventory from website analysis",
+          required: false
         },
-        required: ["audience_segments"]
-      }
+        {
+          name: "audience_segments",
+          type: "array",
+          description: "Target audience segments for personalization",
+          required: true
+        },
+        {
+          name: "personalization_types",
+          type: "array",
+          description: "Types of personalization to identify (messaging, imagery, product_focus, content_depth, navigation, calls_to_action)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/identify_personalization_opportunities",
+      http_method: "POST"
     },
     {
       name: "generate_content_recommendations",
       description: "Generate specific content recommendations for optimization and personalization implementation",
-      parameters: {
-        type: "object",
-        properties: {
-          personalization_opportunities: {
-            type: "array",
-            description: "Identified personalization opportunities from analysis"
-          },
-          recommendation_types: {
-            type: "array",
-            items: {
-              type: "string",
-              enum: ["optimization", "new_content", "restructuring", "personalization_variants", "seo_enhancement"]
-            },
-            description: "Types of recommendations to generate"
-          }
+      parameters: [
+        {
+          name: "personalization_opportunities",
+          type: "array",
+          description: "Identified personalization opportunities from analysis",
+          required: true
         },
-        required: ["personalization_opportunities"]
-      }
+        {
+          name: "recommendation_types",
+          type: "array",
+          description: "Types of recommendations to generate (optimization, new_content, restructuring, personalization_variants, seo_enhancement)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/generate_content_recommendations",
+      http_method: "POST"
     }
   ]
 };
