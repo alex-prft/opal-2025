@@ -9,6 +9,7 @@ const nextConfig = {
     const allowedOrigins = isDevelopment
       ? ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000']
       : [
+          'https://opal-2025.vercel.app',
           'https://ifpa-strategy.vercel.app',
           'https://ifpa-strategy-git-main-alex-harris-projects-f468cccf.vercel.app',
           ...(process.env.ALLOWED_ORIGINS?.split(',').map(origin => origin.trim()) || [])
@@ -20,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: isDevelopment ? 'http://localhost:3000' : 'https://ifpa-strategy.vercel.app'
+            value: isDevelopment ? 'http://localhost:3000' : 'https://opal-2025.vercel.app'
           },
           { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS,POST,PUT,DELETE' },
           {
@@ -42,8 +43,8 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: isDevelopment
-              ? "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' http://localhost:* ws://localhost:* wss://localhost:*;"
-              : "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; style-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; img-src 'self' data: blob: https://vercel.live https://*.vercel.app; connect-src 'self' https: wss://vercel.live; font-src 'self' https://vercel.live https://*.vercel.app;"
+              ? "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' http://localhost:* ws://localhost:* wss://localhost:*; frame-src 'self' http://localhost:*;"
+              : "default-src 'self'; script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; style-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app; img-src 'self' data: blob: https://vercel.live https://*.vercel.app; connect-src 'self' https: wss://vercel.live; font-src 'self' https://vercel.live https://*.vercel.app; frame-src 'self' https://vercel.live https://*.vercel.app;"
           },
         ]
       }
