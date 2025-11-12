@@ -8,6 +8,12 @@
       "main": true
     }
   },
+  "functions": {
+    "app/api/**/*.ts": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "regions": ["iad1"],
   "headers": [
     {
       "source": "/api/(.*)",

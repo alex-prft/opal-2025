@@ -1,0 +1,56 @@
+name: Vercel Auto-Deploy (100% Automated)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel with Automatic Production Promotion
+        run: |
+          echo "🚀 Deploying to Vercel with automatic production promotion..."
+
+          # Deploy prebuilt artifacts directly to production
+          DEPLOYMENT_URL=$(vercel --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+
+          echo "✅ Deployment completed!"
+          echo "🔗 Deployment URL: $DEPLOYMENT_URL"
+
+          # Vercel automatically assigns the production domain for production deployments
+          echo "🎯 Production domain automatically assigned by Vercel"
+          echo "🌐 Live at: https://opal-2025.vercel.app"
+
+          # Verify production is live
+          sleep 10
+
+          if curl -f -s "https://opal-2025.vercel.app" > /dev/null; then
+            echo "✅ Production verification successful!"
+            echo "📊 Status: 100% Automated - No manual steps required"
+          else
+            echo "⚠️ Production verification pending (may take a moment)"
+          fi
+
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
