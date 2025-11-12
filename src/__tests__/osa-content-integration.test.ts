@@ -59,7 +59,7 @@ describe('OSA Content Integration Tests', () => {
 
       if (fs.existsSync(filePath)) {
         const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const validAgents = ["content_review_agent", "audience_suggester", "strategy_assistant_workflow"];
+        const validAgents = ["content_review_agent", "audience_suggester", "strategy_workflow"];
 
         content.opal_mapping.outputs.forEach((output: any) => {
           expect(validAgents).toContain(output.agent);
@@ -142,7 +142,7 @@ describe('OSA Content Integration Tests', () => {
   });
 
   describe('Agent Monitoring Validation', () => {
-    const agents = ['content-review-agent', 'audience-suggester', 'strategy-assistant-workflow'];
+    const agents = ['content-review-agent', 'audience-suggester', 'strategy-workflow'];
 
     agents.forEach(agent => {
       it(`should validate ${agent} monitoring configuration`, async () => {

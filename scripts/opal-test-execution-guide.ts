@@ -82,7 +82,7 @@ class OPALTestGuide {
     console.log('==================================');
     console.log('');
 
-    console.log('1️⃣ BEFORE running strategy_assistant_workflow.json:');
+    console.log('1️⃣ BEFORE running strategy_workflow.json:');
     console.log('   • Start monitoring scripts (see commands above)');
     console.log('   • Verify OPAL registration is complete');
     console.log('   • Confirm discovery endpoint returns functions array');
@@ -226,7 +226,7 @@ class OPALTestGuide {
     console.log('📋 Next Steps:');
     console.log('1. Register OSA Custom Tool in OPAL using discovery URL above');
     console.log('2. Start monitoring scripts in separate terminals');
-    console.log('3. Execute strategy_assistant_workflow.json');
+    console.log('3. Execute strategy_workflow.json');
     console.log('4. Monitor real-time data reception');
     console.log('5. Generate final validation report');
     console.log('');

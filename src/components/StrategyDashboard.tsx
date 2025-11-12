@@ -10989,7 +10989,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
       // Strategy Plans Area
       'strategy-plans-osa': {
         title: 'Strategy Plans → OSA Analysis',
-        opalAgents: ['strategy_assistant_workflow', 'personalization_idea_generator'],
+        opalAgents: ['strategy_workflow', 'personalization_idea_generator'],
         opalInstructions: ['1-company-overview.md', '2-marketing-strategy.md', '5-personalization-maturity-rubric.md'],
         opalTools: ['workflow_data_sharing', 'osa_contentrecs_tools'],
         ragActions: [
@@ -11011,7 +11011,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'strategy-plans-overview': {
         title: 'Strategy Plans → Overview Analysis',
-        opalAgents: ['strategy_assistant_workflow'],
+        opalAgents: ['strategy_workflow'],
         opalInstructions: ['5-personalization-maturity-rubric.md', '8-kpi-experimentation.md'],
         opalTools: ['workflow_data_sharing'],
         ragActions: [
@@ -11033,7 +11033,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'strategy-plans-personalization-maturity': {
         title: 'Strategy Plans → Maturity Analysis',
-        opalAgents: ['personalization_idea_generator', 'strategy_assistant_workflow'],
+        opalAgents: ['personalization_idea_generator', 'strategy_workflow'],
         opalInstructions: ['5-personalization-maturity-rubric.md', '4-personas.md'],
         opalTools: ['osa_contentrecs_tools', 'osa_odp_tools'],
         ragActions: [
@@ -11055,7 +11055,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'strategy-plans-phased-recommendations': {
         title: 'Strategy Plans → Phases Analysis',
-        opalAgents: ['strategy_assistant_workflow', 'experiment_blueprinter'],
+        opalAgents: ['strategy_workflow', 'experiment_blueprinter'],
         opalInstructions: ['2-marketing-strategy.md', '8-kpi-experimentation.md'],
         opalTools: ['osa_webx_tools', 'workflow_data_sharing'],
         ragActions: [
@@ -11077,7 +11077,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'strategy-plans-example-roadmap': {
         title: 'Strategy Plans → Roadmap Analysis',
-        opalAgents: ['strategy_assistant_workflow'],
+        opalAgents: ['strategy_workflow'],
         opalInstructions: ['9-technical-implementation-guidelines.md', '2-marketing-strategy.md'],
         opalTools: ['workflow_data_sharing'],
         ragActions: [
@@ -11344,7 +11344,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'experience-optimization-experimentation': {
         title: 'Experience Optimization → Experimentation Analysis',
-        opalAgents: ['experiment_blueprinter', 'strategy_assistant_workflow'],
+        opalAgents: ['experiment_blueprinter', 'strategy_workflow'],
         opalInstructions: ['8-kpi-experimentation.md', '9-technical-implementation-guidelines.md'],
         opalTools: ['osa_webx_tools'],
         ragActions: [
@@ -11410,7 +11410,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
 
       'experience-optimization-technology': {
         title: 'Experience Optimization → Technology Analysis',
-        opalAgents: ['strategy_assistant_workflow'],
+        opalAgents: ['strategy_workflow'],
         opalInstructions: ['9-technical-implementation-guidelines.md', '7-data-governance-privacy.md'],
         opalTools: ['workflow_data_sharing'],
         ragActions: [
@@ -11433,7 +11433,7 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
       // Default fallback for any missing area-tab combinations
       'default': {
         title: 'General Analysis',
-        opalAgents: ['strategy_assistant_workflow'],
+        opalAgents: ['strategy_workflow'],
         opalInstructions: ['1-company-overview.md', '2-marketing-strategy.md'],
         opalTools: ['workflow_data_sharing'],
         ragActions: [

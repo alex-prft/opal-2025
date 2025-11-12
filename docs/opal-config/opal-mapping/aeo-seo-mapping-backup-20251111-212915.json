@@ -10,7 +10,7 @@
       "type": ["AI-generated", "static", "hybrid"]
     },
     "agent_validation": {
-      "valid_agents": ["geo_audit", "content_review_agent", "strategy_assistant_workflow"],
+      "valid_agents": ["geo_audit", "content_review_agent", "strategy_workflow"],
       "tool_agent_mapping": true
     }
   },

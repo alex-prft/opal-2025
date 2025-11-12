@@ -63,7 +63,7 @@ class OPALTestMonitor {
     console.log('✅ Monitoring setup complete!');
     console.log('');
     console.log('🎮 READY FOR TEST EXECUTION');
-    console.log('   Now you can run strategy_assistant_workflow.json');
+    console.log('   Now you can run strategy_workflow.json');
     console.log('   I will monitor for incoming OPAL data...');
     console.log('');
     console.log('📊 Monitoring:');

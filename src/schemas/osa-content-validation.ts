@@ -6,7 +6,7 @@ export const OSAOutputSchema = z.object({
   agent: z.enum([
     "content_review_agent",
     "audience_suggester",
-    "strategy_assistant_workflow"
+    "strategy_workflow"
   ]),
   priority: z.enum(["high", "medium", "low"]),
   confidence: z.number().min(0).max(1),

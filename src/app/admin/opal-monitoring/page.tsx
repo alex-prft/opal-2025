@@ -13,7 +13,6 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AgentMonitoringDashboard from '@/components/AgentMonitoringDashboard';
 import RealTimeAgentStatus from '@/components/RealTimeAgentStatus';
-import StrategyAssistantWorkflowMonitor from '@/components/StrategyAssistantWorkflowMonitor';
 import {
   Activity,
   RefreshCw,
@@ -237,7 +236,7 @@ export default function OPALMonitoringPage() {
                   <CardHeader>
                     <CardTitle>OPAL Workflow & Agent Status</CardTitle>
                     <CardDescription>
-                      Strategy Assistant workflow execution with 9 OPAL agents monitoring
+                      Strategy workflow execution with 9 OPAL agents monitoring
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -249,7 +248,7 @@ export default function OPALMonitoringPage() {
                           WORKFLOW
                         </Badge>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-blue-900">strategy_assistant_workflow.json</h3>
+                          <h3 className="font-semibold text-blue-900">strategy_workflow.json</h3>
                           <p className="text-sm text-blue-700">Main workflow orchestrating all OPAL agents</p>
                         </div>
                         <Badge variant="outline" className="bg-green-50 text-green-700 border-green-300">

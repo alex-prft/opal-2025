@@ -10,7 +10,7 @@
       "type": ["AI-generated", "static", "hybrid"]
     },
     "agent_validation": {
-      "valid_agents": ["experiment_blueprinter", "strategy_assistant_workflow", "content_review_agent"],
+      "valid_agents": ["experiment_blueprinter", "strategy_workflow", "content_review_agent"],
       "tool_agent_mapping": true
     }
   },
@@ -137,7 +137,7 @@
     },
     {
       "field": "cross_platform_test_coordination",
-      "agent": "strategy_assistant_workflow",
+      "agent": "strategy_workflow",
       "priority": "medium",
       "confidence": 0.79,
       "type": "AI-generated",
@@ -178,7 +178,7 @@
       "purpose": "Ethical guidelines for user experimentation and data collection",
       "priority": "high",
       "implementation_timeline": "Q1 2025",
-      "affects_agents": ["experiment_blueprinter", "strategy_assistant_workflow"],
+      "affects_agents": ["experiment_blueprinter", "strategy_workflow"],
       "validation_impact": "high"
     },
     {
@@ -186,7 +186,7 @@
       "purpose": "Standards for coordinating experiments across multiple platforms and environments",
       "priority": "medium",
       "implementation_timeline": "Q2 2025",
-      "affects_agents": ["experiment_blueprinter", "strategy_assistant_workflow"],
+      "affects_agents": ["experiment_blueprinter", "strategy_workflow"],
       "validation_impact": "medium"
     }
   ],

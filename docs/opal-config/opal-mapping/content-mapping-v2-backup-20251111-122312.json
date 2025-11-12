@@ -10,7 +10,7 @@
       "type": ["AI-generated", "static", "hybrid"]
     },
     "agent_validation": {
-      "valid_agents": ["content_review_agent", "strategy_assistant_workflow", "audience_suggester"],
+      "valid_agents": ["content_review_agent", "strategy_workflow", "audience_suggester"],
       "tool_agent_mapping": true
     }
   },
@@ -137,7 +137,7 @@
     },
     {
       "field": "content_attribution_data",
-      "agent": "strategy_assistant_workflow",
+      "agent": "strategy_workflow",
       "priority": "high",
       "confidence": 0.83,
       "type": "AI-generated",
@@ -186,7 +186,7 @@
       "purpose": "Approval workflows and content quality control processes",
       "priority": "medium",
       "implementation_timeline": "Q2 2025",
-      "affects_agents": ["content_review_agent", "strategy_assistant_workflow"],
+      "affects_agents": ["content_review_agent", "strategy_workflow"],
       "validation_impact": "high"
     }
   ],

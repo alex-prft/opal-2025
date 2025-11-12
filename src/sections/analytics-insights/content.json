@@ -112,7 +112,7 @@
       },
       {
         "field": "content_attribution_data",
-        "agent": "strategy_assistant_workflow",
+        "agent": "strategy_workflow",
         "priority": "high",
         "confidence": 0.83,
         "type": "AI-generated",

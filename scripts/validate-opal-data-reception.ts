@@ -79,7 +79,7 @@ class OPALDataValidator {
     console.log('');
 
     console.log('👀 Ready to validate incoming OPAL data...');
-    console.log('   Run your strategy_assistant_workflow.json now!');
+    console.log('   Run your strategy_workflow.json now!');
     console.log('');
   }
 

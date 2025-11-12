@@ -1,0 +1,369 @@
+openapi: 3.0.3
+info:
+  title: OSA Force Sync API
+  description: Production-ready Force Sync integration with OPAL workflow orchestration
+  version: 1.0.0
+  contact:
+    name: OSA Engineering Team
+
+servers:
+  - url: https://opal-2025.vercel.app/api
+    description: Production
+  - url: http://localhost:3000/api
+    description: Development
+
+paths:
+  /orchestrations/trigger:
+    post:
+      summary: Trigger OPAL workflow execution
+      description: |
+        Triggers the strategy_assistant_workflow in OPAL. Creates execution tracking
+        and returns immediately. Results stream back via webhook.
+      operationId: triggerWorkflow
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_name
+                - workspace_id
+                - session_id
+              properties:
+                workflow_name:
+                  type: string
+                  enum: ["strategy_assistant_workflow"]
+                  description: Must be strategy_assistant_workflow
+                workspace_id:
+                  type: string
+                  description: OPAL workspace identifier
+                session_id:
+                  type: string
+                  description: Unique session identifier (UUID v4)
+                engine_form:
+                  type: object
+                  description: Optional form data for the workflow
+                  additionalProperties: true
+                preferences:
+                  type: object
+                  description: Optional user preferences
+                  additionalProperties: true
+                client_context:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                    organization_id:
+                      type: string
+                    correlation_id:
+                      type: string
+            example:
+              workflow_name: "strategy_assistant_workflow"
+              workspace_id: "ws_12345"
+              session_id: "550e8400-e29b-41d4-a716-446655440000"
+              engine_form:
+                industry: "retail"
+                company_size: "enterprise"
+              preferences:
+                output_format: "detailed"
+      responses:
+        '200':
+          description: Workflow triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  workflow_id:
+                    type: string
+                  session_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: ["triggered", "queued"]
+                  polling_url:
+                    type: string
+                  estimated_duration:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+              example:
+                success: true
+                workflow_id: "wf_789abc123"
+                session_id: "550e8400-e29b-41d4-a716-446655440000"
+                status: "triggered"
+                polling_url: "/api/orchestrations/status/wf_789abc123"
+                estimated_duration: "3-5 minutes"
+                created_at: "2025-11-11T23:45:30Z"
+        '400':
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid or missing bearer token
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+
+  /webhooks/opal-workflow:
+    post:
+      summary: Receive OPAL workflow events
+      description: |
+        Webhook endpoint for OPAL to send agent results and workflow completion events.
+        Implements signature verification, idempotency, and streaming ingestion.
+      operationId: receiveWorkflowWebhook
+      parameters:
+        - name: X-OSA-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+          description: HMAC-SHA256 signature of request body
+        - name: X-OSA-Timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Unix timestamp of request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+                - event_type
+                - timestamp
+              properties:
+                workflow_id:
+                  type: string
+                  description: Workflow execution identifier
+                event_type:
+                  type: string
+                  enum: ["agent.started", "agent.progress", "agent.completed", "workflow.completed", "workflow.failed"]
+                agent_id:
+                  type: string
+                  description: Agent identifier (required for agent events)
+                offset:
+                  type: integer
+                  description: Event sequence number for ordering
+                timestamp:
+                  type: string
+                  format: date-time
+                payload:
+                  type: object
+                  description: Event-specific data
+                  additionalProperties: true
+                metadata:
+                  type: object
+                  properties:
+                    correlation_id:
+                      type: string
+                    retry_count:
+                      type: integer
+                    source:
+                      type: string
+            example:
+              workflow_id: "wf_789abc123"
+              event_type: "agent.completed"
+              agent_id: "content_analyzer"
+              offset: 5
+              timestamp: "2025-11-11T23:47:15Z"
+              payload:
+                success: true
+                results:
+                  content_score: 0.85
+                  recommendations: ["Optimize headlines", "Add CTAs"]
+                execution_time_ms: 15000
+              metadata:
+                correlation_id: "corr_456def"
+                retry_count: 0
+                source: "opal_agent_executor"
+      responses:
+        '202':
+          description: Event accepted and queued for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  received:
+                    type: boolean
+                  event_id:
+                    type: string
+                  dedup_status:
+                    type: string
+                    enum: ["new", "duplicate"]
+        '400':
+          description: Invalid request format
+        '401':
+          description: Invalid signature
+        '409':
+          description: Duplicate event (idempotency conflict)
+
+  /diagnostics/last-webhook:
+    get:
+      summary: Get recent webhook events for troubleshooting
+      description: Returns last N webhook receipts with truncated payloads for diagnostics
+      operationId: getLastWebhooks
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: Number of events to return
+        - name: workflow_id
+          in: query
+          schema:
+            type: string
+          description: Filter by specific workflow ID
+      responses:
+        '200':
+          description: Recent webhook events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        workflow_id:
+                          type: string
+                        agent_id:
+                          type: string
+                        event_type:
+                          type: string
+                        received_at:
+                          type: string
+                          format: date-time
+                        signature_valid:
+                          type: boolean
+                        payload_preview:
+                          type: string
+                          description: Truncated payload for preview
+                        processing_status:
+                          type: string
+                          enum: ["pending", "processed", "failed"]
+                  total_count:
+                    type: integer
+                  has_more:
+                    type: boolean
+
+  /orchestrations/replay:
+    post:
+      summary: Replay stored webhook events
+      description: |
+        Reprocess stored webhook events for a workflow, optionally starting from a specific offset.
+        Used for debugging and recovery scenarios.
+      operationId: replayWorkflow
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+              properties:
+                workflow_id:
+                  type: string
+                  description: Workflow to replay events for
+                from_offset:
+                  type: integer
+                  minimum: 0
+                  description: Start replay from this offset (default: 0)
+                dry_run:
+                  type: boolean
+                  default: false
+                  description: Preview replay without executing
+            example:
+              workflow_id: "wf_789abc123"
+              from_offset: 3
+              dry_run: false
+      responses:
+        '200':
+          description: Replay completed or preview generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  replayed_count:
+                    type: integer
+                  skipped_count:
+                    type: integer
+                  failed_count:
+                    type: integer
+                  events_preview:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        offset:
+                          type: integer
+                        event_type:
+                          type: string
+                        agent_id:
+                          type: string
+                        status:
+                          type: string
+        '404':
+          description: Workflow not found
+        '400':
+          description: Invalid replay parameters
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+        timestamp:
+          type: string
+          format: date-time
+      example:
+        error: "validation_failed"
+        message: "Missing required field: workflow_name"
+        code: "MISSING_FIELD"
+        timestamp: "2025-11-11T23:45:30Z"

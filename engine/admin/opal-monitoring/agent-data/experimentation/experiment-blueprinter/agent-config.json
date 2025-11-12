@@ -1,0 +1,58 @@
+{
+  "agent": "experiment_blueprinter",
+  "category": "Experimentation",
+  "section": "Experience Optimization → Experimentation",
+  "version": "2.0.0",
+  "last_updated": "2025-11-11",
+  "monitoring_config": {
+    "performance_metrics": {
+      "response_time_threshold_ms": 10000,
+      "accuracy_threshold": 0.90,
+      "confidence_threshold": 0.85
+    },
+    "health_checks": {
+      "enabled": true,
+      "interval_seconds": 300,
+      "timeout_seconds": 45
+    },
+    "logging": {
+      "level": "debug",
+      "include_request_data": true,
+      "include_response_data": true,
+      "retention_days": 60
+    }
+  },
+  "capabilities": {
+    "experiment_design_blueprints": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 8000
+    },
+    "statistical_power_analysis": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 6000
+    },
+    "experiment_results_analysis": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 7500
+    },
+    "test_prioritization_recommendations": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 5000
+    }
+  },
+  "data_sources": {
+    "primary": ["WEBX", "ODP"],
+    "secondary": ["CMS", "CMP"],
+    "refresh_interval_minutes": 10
+  },
+  "validation_rules": {
+    "required_outputs": ["experiment_design_blueprints", "statistical_power_analysis"],
+    "confidence_validation": true,
+    "data_quality_checks": true,
+    "statistical_validation": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "agent": "geo_audit",
+  "category": "AEO/GEO",
+  "version": "2.1.0",
+  "last_updated": "2025-11-11",
+  "monitoring_config": {
+    "performance_metrics": {
+      "response_time_threshold_ms": 5000,
+      "accuracy_threshold": 0.85,
+      "confidence_threshold": 0.75
+    },
+    "health_checks": {
+      "enabled": true,
+      "interval_seconds": 300,
+      "timeout_seconds": 30
+    },
+    "logging": {
+      "level": "info",
+      "include_request_data": true,
+      "include_response_data": true,
+      "retention_days": 30
+    }
+  },
+  "capabilities": {
+    "seo_performance_analysis": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 3000
+    },
+    "keyword_opportunity_analysis": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 4000
+    },
+    "technical_seo_audit": {
+      "enabled": true,
+      "priority": "high",
+      "estimated_processing_time_ms": 6000
+    },
+    "local_search_optimization": {
+      "enabled": true,
+      "priority": "medium",
+      "estimated_processing_time_ms": 3500
+    }
+  },
+  "data_sources": {
+    "primary": ["CMS", "WEBX", "ODP"],
+    "secondary": ["Content Recs"],
+    "refresh_interval_minutes": 15
+  },
+  "validation_rules": {
+    "required_outputs": ["seo_performance_analysis", "keyword_opportunity_analysis"],
+    "confidence_validation": true,
+    "data_quality_checks": true
+  }
+}
