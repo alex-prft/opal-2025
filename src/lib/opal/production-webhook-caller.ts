@@ -27,7 +27,6 @@ export interface OpalProductionWebhookRequest {
     force_sync?: boolean;
   };
   metadata: {
-    workspace_id: string;
     trigger_timestamp?: string;
     correlation_id?: string;
     source_system?: string;
@@ -65,16 +64,34 @@ export async function callOpalProductionWebhook(
   const spanId = `opal-webhook-${Date.now()}-${Math.random().toString(36).substring(7)}`;
   const correlationId = request.metadata.correlation_id || `correlation-${Date.now()}`;
 
-  // Get production webhook URL and auth token from environment
-  const webhookUrl = process.env.OPAL_WEBHOOK_URL;
-  const authToken = process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
+  // Determine if we're in development mode
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+
+  // Get webhook URL and auth token with development fallbacks
+  let webhookUrl = process.env.OPAL_WEBHOOK_URL;
+  let authToken = process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
+
+  if (isDevelopment) {
+    // Development Mode: Use local mock endpoint if OPAL credentials not available
+    if (!webhookUrl || !authToken ||
+        authToken.includes('placeholder') ||
+        authToken.length < 32) {
+      console.log(`🛠️ [OPAL Production] Development mode detected - using local mock webhook`);
+      webhookUrl = `${baseUrl}/api/webhooks/opal-mock-test`;
+      authToken = 'dev-mock-auth-key-12345678901234567890123456789012';
+      console.log(`🔧 [OPAL Production] Mock webhook URL: ${webhookUrl}`);
+    } else {
+      console.log(`🛠️ [OPAL Production] Development mode with real OPAL credentials`);
+    }
+  }
 
   if (!webhookUrl) {
-    throw new Error('OPAL_WEBHOOK_URL environment variable not configured');
+    throw new Error('OPAL_WEBHOOK_URL environment variable not configured and not in development mode');
   }
 
   if (!authToken) {
-    throw new Error('OPAL_STRATEGY_WORKFLOW_AUTH_KEY environment variable not configured');
+    throw new Error('OPAL_STRATEGY_WORKFLOW_AUTH_KEY environment variable not configured and not in development mode');
   }
 
   console.log(`🚀 [OPAL Production] Starting webhook call to OPAL strategy_workflow`, {
@@ -103,11 +120,10 @@ export async function callOpalProductionWebhook(
     console.warn(`⚠️ [OPAL Production] Failed to emit workflow started event (non-blocking):`, eventError);
   }
 
-  // Prepare enhanced payload with metadata
+  // Prepare enhanced payload with metadata (NO WORKSPACE_ID REQUIRED)
   const enhancedPayload: OpalProductionWebhookRequest = {
     ...request,
     metadata: {
-      workspace_id: process.env.OPAL_WORKSPACE_ID || 'default-workspace',
       trigger_timestamp: new Date().toISOString(),
       correlation_id: correlationId,
       source_system: 'OSA-ForceSync-Production',
@@ -360,7 +376,6 @@ export async function triggerStrategyAssistantWorkflowProduction(
     sync_scope?: string;
     triggered_by?: string;
     force_sync?: boolean;
-    workspace_id?: string;
     correlation_id?: string;
     additional_metadata?: Record<string, any>;
   } = {}
@@ -383,7 +398,6 @@ export async function triggerStrategyAssistantWorkflowProduction(
       force_sync: options.force_sync ?? true
     },
     metadata: {
-      workspace_id: options.workspace_id || process.env.OPAL_WORKSPACE_ID || 'default-workspace',
       correlation_id: options.correlation_id,
       ...options.additional_metadata
     }
