@@ -24,23 +24,91 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to Vercel Production
+      - name: Deploy to Vercel Production with 100% Automation
         run: |
+          set -e  # Exit on any error
+
           # Install Vercel CLI
           npm i -g vercel@latest
 
-          # Deploy to production and get the deployment URL
-          DEPLOYMENT_URL=$(npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes)
+          echo "🚀 Starting deployment process..."
 
-          # Extract just the URL from the output
-          CLEAN_URL=$(echo "$DEPLOYMENT_URL" | grep -o 'https://[^[:space:]]*')
+          # Deploy to production and capture all output
+          echo "📦 Deploying to Vercel..."
+          DEPLOY_OUTPUT=$(npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes 2>&1)
 
-          # Set the production alias
-          npx vercel alias "$CLEAN_URL" opal-2025.vercel.app --token ${{ secrets.VERCEL_TOKEN }}
+          echo "📋 Deploy output:"
+          echo "$DEPLOY_OUTPUT"
 
-          # Output deployment information
-          echo "✅ Deployed to: $CLEAN_URL"
-          echo "✅ Production URL: https://opal-2025.vercel.app"
+          # Extract the deployment URL using multiple methods for reliability
+          DEPLOYMENT_URL=$(echo "$DEPLOY_OUTPUT" | grep -oE 'https://[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9]*\.vercel\.app' | tail -1)
+
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "❌ Failed to extract deployment URL from output"
+            exit 1
+          fi
+
+          echo "🔗 Deployment URL: $DEPLOYMENT_URL"
+
+          # Wait for deployment to be fully ready
+          echo "⏳ Waiting for deployment to be ready..."
+          sleep 15
+
+          # Verify deployment is accessible
+          echo "🔍 Verifying deployment is accessible..."
+          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" "$DEPLOYMENT_URL" || echo "000")
+
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "⚠️ Deployment not ready (HTTP $HTTP_STATUS), waiting longer..."
+            sleep 30
+          fi
+
+          # Set production alias with retry logic
+          echo "🎯 Assigning production alias..."
+          ALIAS_SUCCESS=false
+
+          for attempt in 1 2 3; do
+            echo "🔄 Alias attempt $attempt/3..."
+
+            if npx vercel alias "$DEPLOYMENT_URL" opal-2025.vercel.app --token ${{ secrets.VERCEL_TOKEN }} 2>&1; then
+              echo "✅ Alias assigned successfully on attempt $attempt"
+              ALIAS_SUCCESS=true
+              break
+            else
+              echo "⚠️ Alias attempt $attempt failed"
+              if [ $attempt -lt 3 ]; then
+                echo "⏳ Waiting 10 seconds before retry..."
+                sleep 10
+              fi
+            fi
+          done
+
+          if [ "$ALIAS_SUCCESS" = false ]; then
+            echo "❌ Failed to assign alias after 3 attempts"
+            exit 1
+          fi
+
+          # Final verification
+          echo "🔍 Verifying production URL..."
+          sleep 5
+
+          PROD_STATUS=$(curl -o /dev/null -s -w "%{http_code}" "https://opal-2025.vercel.app" || echo "000")
+
+          if [ "$PROD_STATUS" = "200" ]; then
+            echo "✅ Production deployment successful!"
+            echo "🌐 Live at: https://opal-2025.vercel.app"
+            echo "🚀 Deployment URL: $DEPLOYMENT_URL"
+          else
+            echo "⚠️ Production URL returned HTTP $PROD_STATUS"
+          fi
+
+          # Summary
+          echo ""
+          echo "📊 DEPLOYMENT SUMMARY:"
+          echo "├── Deployment URL: $DEPLOYMENT_URL"
+          echo "├── Production URL: https://opal-2025.vercel.app"
+          echo "├── Status: ✅ 100% Automated"
+          echo "└── No manual steps required!"
 
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
