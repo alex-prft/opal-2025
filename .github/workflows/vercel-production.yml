@@ -1,0 +1,47 @@
+name: Vercel Production Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel Production
+        run: |
+          # Install Vercel CLI
+          npm i -g vercel@latest
+
+          # Deploy to production and get the deployment URL
+          DEPLOYMENT_URL=$(npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes)
+
+          # Extract just the URL from the output
+          CLEAN_URL=$(echo "$DEPLOYMENT_URL" | grep -o 'https://[^[:space:]]*')
+
+          # Set the production alias
+          npx vercel alias "$CLEAN_URL" opal-2025.vercel.app --token ${{ secrets.VERCEL_TOKEN }}
+
+          # Output deployment information
+          echo "✅ Deployed to: $CLEAN_URL"
+          echo "✅ Production URL: https://opal-2025.vercel.app"
+
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
