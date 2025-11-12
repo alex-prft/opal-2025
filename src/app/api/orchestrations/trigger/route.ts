@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getConfig } from '@/lib/config';
 import { generateCorrelationId, generateSpanId } from '@/lib/signature';
 import { createRequestLogger } from '@/lib/logger';
-import { getWebhookEventDatabase } from '@/lib/database/webhook-events';
+import { webhookEventOperations } from '@/lib/database/webhook-events';
 
 // Types
 interface TriggerRequest {
@@ -298,21 +298,21 @@ export async function POST(request: NextRequest) {
     const opalPayload = buildOpalPayload(body, correlationId, spanId);
 
     // 4. Store workflow execution record
-    const db = getWebhookEventDatabase();
-    await db.storeWorkflowExecution({
+    await webhookEventOperations.createEvent({
+      event_type: 'workflow_triggered',
       workflow_id: `pending-${correlationId}`,
-      session_id: body.session_id,
       workflow_name: body.workflow_name,
-      status: 'triggered',
-      triggered_by: body.triggered_by || 'api_trigger',
-      client_name: body.client_name,
-      correlation_id: correlationId,
-      span_id: spanId,
-      webhook_url: config.webhook.url,
-      metadata: {
+      session_id: body.session_id,
+      received_at: new Date().toISOString(),
+      payload: {
         engine_form: body.engine_form,
         preferences: body.preferences,
-        request_payload: opalPayload
+        request_payload: opalPayload,
+        correlation_id: correlationId,
+        span_id: spanId,
+        triggered_by: body.triggered_by || 'api_trigger',
+        client_name: body.client_name,
+        webhook_url: config.webhook.url
       }
     });
 
