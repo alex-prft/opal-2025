@@ -75,7 +75,6 @@ export async function triggerOpalWorkflow(
         force_sync: request.trigger_source === 'force_sync'
       },
       metadata: {
-        workspace_id: process.env.OPAL_WORKSPACE_ID || 'default-workspace',
         trigger_timestamp: new Date().toISOString(),
         correlation_id: `opal-${Date.now()}-${Math.random().toString(36).substring(7)}`,
         source_system: 'OSA-ForceSync',

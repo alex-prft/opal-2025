@@ -643,7 +643,7 @@ async function handleEnhancedOSAWebhook(params: any, context: any) {
         }
       },
       metadata: {
-        workspace_id: process.env.OPAL_WORKSPACE_ID || 'default-workspace',
+        // workspace_id removed per user request
         trigger_timestamp: new Date().toISOString(),
         correlation_id: `custom-tools-${workflow_id}-${spanId}`,
         source_system: 'OSA-CustomTools-Integration',

@@ -23,7 +23,6 @@ export interface OpalWorkflowPayload {
     [key: string]: any;
   };
   metadata: {
-    workspace_id: string;
     trigger_timestamp: string;
     correlation_id: string;
     source_system: string;
@@ -62,14 +61,12 @@ export function validateOpalEnvironment(): {
   config: {
     webhookUrl: string;
     authKey: string;
-    workspaceId: string;
   };
 } {
   const errors: string[] = [];
 
   const webhookUrl = process.env.OPAL_WEBHOOK_URL;
   const authKey = process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
-  const workspaceId = process.env.OPAL_WORKSPACE_ID;
 
   // Validate webhook URL
   if (!webhookUrl) {
@@ -87,20 +84,14 @@ export function validateOpalEnvironment(): {
     errors.push('OPAL_STRATEGY_WORKFLOW_AUTH_KEY contains placeholder values');
   }
 
-  // Validate workspace ID
-  if (!workspaceId) {
-    errors.push('OPAL_WORKSPACE_ID not configured');
-  } else if (workspaceId.includes('your_') || workspaceId.includes('placeholder')) {
-    errors.push('OPAL_WORKSPACE_ID contains placeholder values');
-  }
+  // OPAL_WORKSPACE_ID removed per user request
 
   return {
     isValid: errors.length === 0,
     errors,
     config: {
       webhookUrl: webhookUrl || '',
-      authKey: authKey || '',
-      workspaceId: workspaceId || ''
+      authKey: authKey || ''
     }
   };
 }
@@ -165,8 +156,7 @@ export function buildOpalWorkflowPayload(options: PayloadBuilderOptions = {}): {
       force_sync: options.force_sync ?? true
     },
     metadata: {
-      // Required metadata
-      workspace_id: envValidation.config.workspaceId,
+      // Required metadata - workspace_id removed per user request
       trigger_timestamp: new Date().toISOString(),
       correlation_id: correlationId,
       source_system: 'OSA-ForceSync-Production',

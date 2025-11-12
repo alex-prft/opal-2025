@@ -38,6 +38,7 @@ interface OpalWorkflowPayload {
     force_sync: true; // ALWAYS TRUE
   };
   metadata: {
+    workspace_id: string; // REQUIRED for OPAL workflow execution
     trigger_timestamp: string;
     correlation_id: string;
     source_system: 'OSA-ForceSync-Production'; // LOCKED
@@ -250,6 +251,8 @@ function validateOpalEnvironment(): EnvironmentValidation {
     const maskedKey = `${authKey.substring(0, 8)}...${authKey.substring(authKey.length - 4)}`;
     console.log(`✅ OPAL_STRATEGY_WORKFLOW_AUTH_KEY: ${maskedKey}`);
   }
+
+  // OPAL_WORKSPACE_ID is no longer required - removed per user request
 
   // Optional debug mode
   const debugMode = process.env.OPAL_DEBUG_MODE;

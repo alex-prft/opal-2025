@@ -120,7 +120,7 @@ export async function callOpalProductionWebhook(
     console.warn(`⚠️ [OPAL Production] Failed to emit workflow started event (non-blocking):`, eventError);
   }
 
-  // Prepare enhanced payload with metadata (NO WORKSPACE_ID REQUIRED)
+  // Prepare enhanced payload with metadata (WORKSPACE_ID removed per user request)
   const enhancedPayload: OpalProductionWebhookRequest = {
     ...request,
     metadata: {

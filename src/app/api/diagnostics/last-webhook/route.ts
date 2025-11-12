@@ -101,8 +101,8 @@ export async function GET(request: NextRequest) {
       opal_target_env: process.env.OPAL_TARGET_ENV,
       opal_webhook_url: process.env.OPAL_WEBHOOK_URL ?
         `${process.env.OPAL_WEBHOOK_URL.substring(0, 30)}...` : 'NOT_CONFIGURED',
-      opal_auth_configured: !!(process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || process.env.OPAL_WEBHOOK_AUTH_KEY),
-      opal_workspace_id: process.env.OPAL_WORKSPACE_ID || 'default-workspace'
+      opal_auth_configured: !!(process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || process.env.OPAL_WEBHOOK_AUTH_KEY)
+      // opal_workspace_id removed per user request
     };
 
     const diagnosticsResponse = {
@@ -336,7 +336,7 @@ async function testWebhookConfiguration() {
   const config = {
     webhook_url: process.env.OPAL_WEBHOOK_URL,
     auth_key: process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || process.env.OPAL_WEBHOOK_AUTH_KEY,
-    workspace_id: process.env.OPAL_WORKSPACE_ID,
+    // workspace_id removed per user request
     environment: process.env.NODE_ENV
   };
 
