@@ -2,7 +2,7 @@
 
 ## 🎯 **OPAL Strategy Assistant Workflow Triggers**
 
-### **Force Sync (Recommended for strategy_assistant_workflow)**
+### **Force Sync (Recommended for strategy_workflow)**
 ```http
 POST /api/opal/sync
 Content-Type: application/json
@@ -31,7 +31,7 @@ Authorization: Bearer {token}
     "external_opal": {
       "triggered": true,
       "workflow_id": "opal-workflow-uuid",
-      "message": "External OPAL workflow 'strategy_assistant_workflow' triggered successfully"
+      "message": "External OPAL workflow 'strategy_workflow' triggered successfully"
     }
   }
 }

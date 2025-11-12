@@ -2,7 +2,7 @@
  * OPAL External Workflow Webhook Trigger
  *
  * Handles triggering external OPAL workflows via webhook calls.
- * Supports the strategy_assistant_workflow and other OPAL workflows.
+ * Supports the strategy_workflow and other OPAL workflows.
  */
 
 import { getEnvironmentConfig } from '@/lib/config/env-config';
@@ -205,8 +205,8 @@ async function getOpalAuthToken(workflowName: string, config: any): Promise<stri
     return config.opal.apiToken;
   }
 
-  // Priority 2: Workflow-specific auth key (from strategy_assistant_workflow.json)
-  if (workflowName === 'strategy_assistant_workflow') {
+  // Priority 2: Workflow-specific auth key (from strategy_workflow.json)
+  if (workflowName === 'strategy_workflow') {
     const strategyWorkflowKey = process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
     if (strategyWorkflowKey) {
       return strategyWorkflowKey;
@@ -228,7 +228,7 @@ async function getOpalAuthToken(workflowName: string, config: any): Promise<stri
 }
 
 /**
- * Triggers the strategy_assistant_workflow specifically
+ * Triggers the strategy_workflow specifically
  */
 export async function triggerStrategyAssistantWorkflow(
   clientData: OpalWebhookTriggerRequest['client_data'],
@@ -236,7 +236,7 @@ export async function triggerStrategyAssistantWorkflow(
   triggerSource: 'force_sync' | 'manual_request' = 'force_sync'
 ): Promise<OpalWebhookTriggerResponse> {
   return triggerOpalWorkflow({
-    workflow_name: 'strategy_assistant_workflow',
+    workflow_name: 'strategy_workflow',
     client_data: clientData,
     trigger_source: triggerSource,
     sync_scope: syncScope,
@@ -271,7 +271,7 @@ export async function getOpalWorkflowStatus(
     const response = await fetch(statusUrl, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${await getOpalAuthToken('strategy_assistant_workflow', config)}`,
+        'Authorization': `Bearer ${await getOpalAuthToken('strategy_workflow', config)}`,
         'Content-Type': 'application/json'
       },
       signal: AbortSignal.timeout(10000) // 10 second timeout

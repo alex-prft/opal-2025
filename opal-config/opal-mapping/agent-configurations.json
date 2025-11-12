@@ -1,5 +1,5 @@
 {
-  "strategy_assistant_workflow": {
+  "strategy_workflow": {
     "name": "Strategy Assistant Workflow",
     "description": "Primary agent for processing strategic planning inputs and generating comprehensive recommendations",
     "capabilities": [

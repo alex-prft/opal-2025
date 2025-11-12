@@ -61,7 +61,7 @@ export async function GET(
         external_opal: {
           success: true,
           workflow_id: `opal-${jobId}`,
-          message: 'OPAL production webhook strategy_assistant_workflow triggered successfully'
+          message: 'OPAL production webhook strategy_workflow triggered successfully'
         },
         platforms_synced: 4,
         agents_completed: [

@@ -25,7 +25,7 @@ graph TB
 
 ### 1. Strategy Assistant Workflow
 
-**Primary Workflow**: `strategy_assistant_workflow.json`
+**Primary Workflow**: `strategy_workflow.json`
 
 The main orchestration layer that coordinates all OPAL agents and manages the complete optimization lifecycle.
 

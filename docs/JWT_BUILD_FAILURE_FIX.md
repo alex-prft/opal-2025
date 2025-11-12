@@ -172,7 +172,7 @@ function getSecret() { /* lazy load */ }
 JWT_SECRET=production-jwt-secret-32-characters-minimum-secure-key-2024
 API_SECRET_KEY=production-api-secret-key-for-opal-integration
 OPAL_WEBHOOK_AUTH_KEY=production-opal-webhook-auth-key-32-characters-minimum
-NEXT_PUBLIC_BASE_URL=https://ifpa-strategy.vercel.app
+NEXT_PUBLIC_BASE_URL=https://opal-2025.vercel.app
 ```
 
 **Development (Local):**

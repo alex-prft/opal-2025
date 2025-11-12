@@ -6,7 +6,7 @@
         "marketing-strategy"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow"
+        "strategy_workflow"
       ],
       "opal_tools": [
         "workflow_data_sharing"
@@ -25,7 +25,7 @@
         "marketing-strategy"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow"
+        "strategy_workflow"
       ],
       "opal_tools": [
         "workflow_data_sharing"
@@ -44,7 +44,7 @@
         "personas"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow"
+        "strategy_workflow"
       ],
       "opal_tools": [
         "workflow_data_sharing"
@@ -63,7 +63,7 @@
         "technical-implementation-guidelines"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow",
+        "strategy_workflow",
         "personalization_idea_generator"
       ],
       "opal_tools": [
@@ -83,7 +83,7 @@
         "company-overview"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow"
+        "strategy_workflow"
       ],
       "opal_tools": [
         "workflow_data_sharing"
@@ -352,7 +352,7 @@
         "technical-implementation-guidelines"
       ],
       "opal_agents": [
-        "strategy_assistant_workflow"
+        "strategy_workflow"
       ],
       "opal_tools": [
         "osa_cmp_tools"

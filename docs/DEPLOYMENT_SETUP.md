@@ -70,7 +70,7 @@ Regression prevention tests in `tests/unit/`:
 #### Option B: GitHub Actions (Required for Automated Deployment)
 
 1. **Add Repository Secrets:**
-   - Go to https://github.com/alex-prft/ifpa-strategy/settings/secrets/actions
+   - Go to https://github.com/alex-prft/opal-2025/settings/secrets/actions
    - Add the following secrets:
 
    ```
@@ -102,8 +102,8 @@ Regression prevention tests in `tests/unit/`:
    ```bash
    # Edit .env.production with production-specific values
    NODE_ENV=production
-   NEXT_PUBLIC_BASE_URL=https://ifpa-strategy.vercel.app
-   NEXT_PUBLIC_APP_URL=https://ifpa-strategy.vercel.app
+   NEXT_PUBLIC_BASE_URL=https://opal-2025.vercel.app
+   NEXT_PUBLIC_APP_URL=https://opal-2025.vercel.app
 
    # Add all required production environment variables
    ```
@@ -133,7 +133,7 @@ Regression prevention tests in `tests/unit/`:
 git push origin main
 
 # Or use manual trigger
-# Go to: https://github.com/alex-prft/ifpa-strategy/actions/workflows/production-deployment.yml
+# Go to: https://github.com/alex-prft/opal-2025/actions/workflows/production-deployment.yml
 # Click "Run workflow"
 ```
 
@@ -191,11 +191,11 @@ The old deployment scripts (`deploy-prod.sh`, `deploy-production.sh`) are still 
 
 The following endpoints are automatically tested after deployment:
 
-- **Health Check**: `https://ifpa-strategy.vercel.app/api/health`
-- **OPAL Tools**: `https://ifpa-strategy.vercel.app/api/opal/enhanced-tools`
-- **Webhook Endpoint**: `https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow`
-- **Engine Dashboard**: `https://ifpa-strategy.vercel.app/engine`
-- **Results Page**: `https://ifpa-strategy.vercel.app/engine/results`
+- **Health Check**: `https://opal-2025.vercel.app/api/health`
+- **OPAL Tools**: `https://opal-2025.vercel.app/api/opal/enhanced-tools`
+- **Webhook Endpoint**: `https://opal-2025.vercel.app/api/webhooks/opal-workflow`
+- **Engine Dashboard**: `https://opal-2025.vercel.app/engine`
+- **Results Page**: `https://opal-2025.vercel.app/engine/results`
 
 ### Monitoring Commands
 
@@ -204,11 +204,11 @@ The following endpoints are automatically tested after deployment:
 npx vercel ls
 
 # View deployment logs
-npx vercel logs https://ifpa-strategy.vercel.app
+npx vercel logs https://opal-2025.vercel.app
 
 # Test production endpoints
-curl -I https://ifpa-strategy.vercel.app/api/health
-curl -I https://ifpa-strategy.vercel.app/api/opal/enhanced-tools
+curl -I https://opal-2025.vercel.app/api/health
+curl -I https://opal-2025.vercel.app/api/opal/enhanced-tools
 ```
 
 ## 🚨 Troubleshooting

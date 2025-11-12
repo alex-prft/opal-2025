@@ -1,6 +1,6 @@
 {
-  "category": "AEO/GEO",
-  "version": "2.1.0",
+  "category": "AEO/SEO",
+  "version": "2.0.0",
   "last_updated": "2025-11-11",
   "validation_rules": {
     "required_fields": ["field", "type", "tool", "report", "agent", "osa_section"],
@@ -10,7 +10,7 @@
       "type": ["AI-generated", "static", "hybrid"]
     },
     "agent_validation": {
-      "valid_agents": ["geo_audit", "content_review_agent", "strategy_workflow", "technical_optimization_agent"],
+      "valid_agents": ["geo_audit", "content_review_agent", "strategy_assistant_workflow"],
       "tool_agent_mapping": true
     }
   },
@@ -29,7 +29,7 @@
       "instructions": ["seo_optimization_guidelines", "content_guidelines", "kpi_definitions"],
       "instructions_tooltip": "Uses SEO best practices and content standards for optimization analysis",
       "dxp_sources": ["CMS", "WEBX", "ODP"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Analytics Insights → SEO Performance",
       "strategy_link": "Quick Wins",
       "decision_layer_impact": true,
       "personal_configurator": true,
@@ -49,7 +49,7 @@
       "instructions": ["seo_optimization_guidelines", "marketing_strategy", "personas"],
       "instructions_tooltip": "Aligns keyword opportunities with marketing strategy and target personas",
       "dxp_sources": ["CMS", "Content Recs", "WEBX"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Strategy Plans → SEO Strategy",
       "strategy_link": "Strategic Roadmap",
       "decision_layer_impact": true,
       "personal_configurator": true,
@@ -69,7 +69,7 @@
       "instructions": ["seo_optimization_guidelines", "technical_standards"],
       "instructions_tooltip": "Uses SEO technical standards for comprehensive site analysis",
       "dxp_sources": ["CMS", "WEBX"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Analytics Insights → SEO Performance",
       "strategy_link": "Quick Wins",
       "decision_layer_impact": true,
       "personal_configurator": false,
@@ -89,7 +89,7 @@
       "instructions": ["seo_optimization_guidelines", "content_guidelines", "brand_tone_guidelines"],
       "instructions_tooltip": "Balances SEO optimization with brand voice and content quality standards",
       "dxp_sources": ["CMS", "Content Recs", "WEBX"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Strategy Plans → SEO Strategy",
       "strategy_link": "Quick Wins",
       "decision_layer_impact": true,
       "personal_configurator": true,
@@ -109,7 +109,7 @@
       "instructions": ["seo_optimization_guidelines", "kpi_definitions"],
       "instructions_tooltip": "Aligns ranking predictions with SEO KPIs and business objectives",
       "dxp_sources": ["WEBX", "ODP"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Analytics Insights → SEO Performance",
       "strategy_link": "Strategic Roadmap",
       "decision_layer_impact": true,
       "personal_configurator": false,
@@ -129,7 +129,7 @@
       "instructions": ["seo_optimization_guidelines", "marketing_strategy"],
       "instructions_tooltip": "Analyzes competitive SEO landscape against marketing strategy",
       "dxp_sources": ["WEBX", "Content Recs"],
-      "osa_section": "Analytics Insights → AEO/GEO",
+      "osa_section": "Strategy Plans → SEO Strategy",
       "strategy_link": "Strategic Roadmap",
       "decision_layer_impact": true,
       "personal_configurator": false,
@@ -149,87 +149,7 @@
       "instructions": ["seo_optimization_guidelines", "local_market_guidelines"],
       "instructions_tooltip": "Combines SEO best practices with local market requirements",
       "dxp_sources": ["CMS", "WEBX", "ODP"],
-      "osa_section": "Analytics Insights → AEO/GEO",
-      "strategy_link": "Quick Wins",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
-    },
-    {
-      "field": "technology_stack_optimization",
-      "agent": "technical_optimization_agent",
-      "priority": "high",
-      "confidence": 0.92,
-      "type": "AI-generated",
-      "type_tooltip": "AI-powered analysis and optimization recommendations for technology stack performance",
-      "tool": "tech_stack_analyzer",
-      "tool_tooltip": "OPAL Technology Stack Analyzer evaluates performance and suggests optimizations",
-      "report": "Technology Stack Performance Report",
-      "report_tooltip": "Comprehensive technology performance analysis with optimization recommendations",
-      "instructions": ["technology_optimization_guidelines", "performance_standards", "scalability_requirements"],
-      "instructions_tooltip": "Uses technology best practices and performance standards for optimization analysis",
-      "dxp_sources": ["WEBX", "CMS", "ODP"],
-      "osa_section": "Experience Optimization → Technology",
-      "strategy_link": "Strategic Roadmap",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
-    },
-    {
-      "field": "api_performance_optimization",
-      "agent": "technical_optimization_agent",
-      "priority": "high",
-      "confidence": 0.89,
-      "type": "AI-generated",
-      "type_tooltip": "AI analysis of API performance with optimization recommendations for speed and reliability",
-      "tool": "api_performance_analyzer",
-      "tool_tooltip": "OPAL API Performance Analyzer monitors and optimizes API response times and reliability",
-      "report": "API Performance Dashboard",
-      "report_tooltip": "Real-time API performance metrics with optimization suggestions",
-      "instructions": ["api_optimization_guidelines", "performance_standards"],
-      "instructions_tooltip": "Applies API performance best practices for optimization recommendations",
-      "dxp_sources": ["ODP", "CMS", "WEBX"],
-      "osa_section": "Experience Optimization → Technology",
-      "strategy_link": "Quick Wins",
-      "decision_layer_impact": true,
-      "personal_configurator": false,
-      "brain_learning": true
-    },
-    {
-      "field": "infrastructure_scaling_recommendations",
-      "agent": "technical_optimization_agent",
-      "priority": "medium",
-      "confidence": 0.85,
-      "type": "AI-generated",
-      "type_tooltip": "AI-powered infrastructure scaling recommendations based on performance and usage patterns",
-      "tool": "infrastructure_analyzer",
-      "tool_tooltip": "OPAL Infrastructure Analyzer provides scaling recommendations based on usage patterns",
-      "report": "Infrastructure Scaling Report",
-      "report_tooltip": "Infrastructure performance analysis with scaling and optimization recommendations",
-      "instructions": ["scalability_requirements", "performance_standards", "cost_optimization_guidelines"],
-      "instructions_tooltip": "Balances performance requirements with cost optimization for scaling decisions",
-      "dxp_sources": ["WEBX", "ODP"],
-      "osa_section": "Experience Optimization → Technology",
-      "strategy_link": "Strategic Roadmap",
-      "decision_layer_impact": true,
-      "personal_configurator": false,
-      "brain_learning": true
-    },
-    {
-      "field": "integration_optimization_analysis",
-      "agent": "technical_optimization_agent",
-      "priority": "high",
-      "confidence": 0.87,
-      "type": "AI-generated",
-      "type_tooltip": "AI analysis of system integrations with optimization recommendations for performance and reliability",
-      "tool": "integration_optimizer",
-      "tool_tooltip": "OPAL Integration Optimizer analyzes and optimizes system integrations for better performance",
-      "report": "Integration Performance Report",
-      "report_tooltip": "System integration analysis with performance and reliability optimization suggestions",
-      "instructions": ["integration_standards", "performance_standards", "security_requirements"],
-      "instructions_tooltip": "Uses integration best practices and security standards for optimization analysis",
-      "dxp_sources": ["CMS", "ODP", "WEBX", "CMP"],
-      "osa_section": "Experience Optimization → Technology",
+      "osa_section": "Analytics Insights → SEO Performance",
       "strategy_link": "Quick Wins",
       "decision_layer_impact": true,
       "personal_configurator": true,
@@ -259,38 +179,6 @@
       "priority": "medium",
       "implementation_timeline": "Q2 2025",
       "affects_agents": ["content_review_agent", "geo_audit"],
-      "validation_impact": "high"
-    },
-    {
-      "instruction": "technology_optimization_guidelines",
-      "purpose": "Comprehensive technology stack optimization best practices and performance standards",
-      "priority": "high",
-      "implementation_timeline": "Q1 2025",
-      "affects_agents": ["technical_optimization_agent"],
-      "validation_impact": "high"
-    },
-    {
-      "instruction": "api_optimization_guidelines",
-      "purpose": "Best practices for API performance optimization and reliability improvements",
-      "priority": "high",
-      "implementation_timeline": "Q1 2025",
-      "affects_agents": ["technical_optimization_agent"],
-      "validation_impact": "medium"
-    },
-    {
-      "instruction": "scalability_requirements",
-      "purpose": "Infrastructure scalability requirements and performance benchmarks",
-      "priority": "medium",
-      "implementation_timeline": "Q2 2025",
-      "affects_agents": ["technical_optimization_agent"],
-      "validation_impact": "medium"
-    },
-    {
-      "instruction": "integration_standards",
-      "purpose": "System integration standards and optimization protocols for DXP platforms",
-      "priority": "medium",
-      "implementation_timeline": "Q2 2025",
-      "affects_agents": ["technical_optimization_agent"],
       "validation_impact": "high"
     }
   ],
@@ -383,21 +271,21 @@
   ],
   "opal_monitoring_updates": [
     {
-      "location": "/engine/admin/opal-monitoring/agent-data/aeo/geo-audit/",
+      "location": "/engine/admin/opal-monitoring/agent-data/aeo-seo/geo-audit/",
       "required_updates": [
         {
           "component": "geo_audit",
           "update_type": "capability_enhancement",
-          "description": "Add advanced AEO/GEO analysis capabilities with AI-powered recommendations",
+          "description": "Add advanced SEO analysis capabilities with AI-powered recommendations",
           "priority": "high",
           "estimated_effort": "4 weeks",
-          "affects_outputs": ["seo_performance_analysis", "keyword_opportunity_analysis", "technical_seo_audit", "local_search_optimization"],
+          "affects_outputs": ["seo_performance_analysis", "keyword_opportunity_analysis", "technical_seo_audit"],
           "validation_required": true
         }
       ]
     },
     {
-      "location": "/engine/admin/opal-monitoring/agent-data/aeo/content-review/",
+      "location": "/engine/admin/opal-monitoring/agent-data/aeo-seo/content-review/",
       "required_updates": [
         {
           "component": "content_seo_optimizer",
@@ -406,20 +294,6 @@
           "priority": "high",
           "estimated_effort": "3 weeks",
           "affects_outputs": ["content_seo_recommendations"],
-          "validation_required": true
-        }
-      ]
-    },
-    {
-      "location": "/engine/admin/opal-monitoring/agent-data/aeo/technical-optimization/",
-      "required_updates": [
-        {
-          "component": "technical_optimization_agent",
-          "update_type": "new_agent",
-          "description": "AI-powered technical optimization agent for Experience Optimization → Technology workflows",
-          "priority": "high",
-          "estimated_effort": "5 weeks",
-          "affects_outputs": ["technology_stack_optimization", "api_performance_optimization", "infrastructure_scaling_recommendations", "integration_optimization_analysis"],
           "validation_required": true
         }
       ]

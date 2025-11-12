@@ -16,7 +16,7 @@ opal-config/
 
 ### 🤖 opal-agents/
 Contains JSON configuration files for each OPAL agent:
-- `strategy_assistant_workflow.json` - Primary strategic planning agent
+- `strategy_workflow.json` - Primary strategic planning agent
 - `content_review.json` - Content performance analysis agent
 - `audience_suggester.json` - Audience segmentation and personalization agent
 - `experiment_blueprinter.json` - A/B testing and experimentation agent
@@ -129,7 +129,7 @@ When a user views "Analytics Insights → Content":
 cd opal-config/
 
 # Modify agent behavior
-edit opal-agents/strategy_assistant_workflow.json
+edit opal-agents/strategy_workflow.json
 
 # Update instructions
 edit opal-instructions/2-marketing-strategy.md

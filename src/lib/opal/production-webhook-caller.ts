@@ -1,7 +1,7 @@
 /**
  * Production OPAL Webhook Caller
  *
- * Dedicated TypeScript function for triggering OPAL strategy_assistant_workflow
+ * Dedicated TypeScript function for triggering OPAL strategy_workflow
  * with comprehensive logging, telemetry, and database persistence.
  *
  * Implements the exact OPAL payload structure and requirements provided.
@@ -77,7 +77,7 @@ export async function callOpalProductionWebhook(
     throw new Error('OPAL_STRATEGY_WORKFLOW_AUTH_KEY environment variable not configured');
   }
 
-  console.log(`🚀 [OPAL Production] Starting webhook call to OPAL strategy_assistant_workflow`, {
+  console.log(`🚀 [OPAL Production] Starting webhook call to OPAL strategy_workflow`, {
     span_id: spanId,
     correlation_id: correlationId,
     workflow_name: request.workflow_name,
@@ -342,7 +342,7 @@ export async function callOpalProductionWebhook(
 }
 
 /**
- * Convenience function to trigger strategy_assistant_workflow with standard parameters
+ * Convenience function to trigger strategy_workflow with standard parameters
  */
 export async function triggerStrategyAssistantWorkflowProduction(
   clientData: {
@@ -367,7 +367,7 @@ export async function triggerStrategyAssistantWorkflowProduction(
 ): Promise<OpalProductionWebhookResponse> {
 
   const request: OpalProductionWebhookRequest = {
-    workflow_name: 'strategy_assistant_workflow',
+    workflow_name: 'strategy_workflow',
     input_data: {
       client_name: clientData.client_name,
       industry: clientData.industry || 'Technology',

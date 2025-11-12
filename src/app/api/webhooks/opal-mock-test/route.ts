@@ -3,7 +3,7 @@
  *
  * Comprehensive webhook endpoint that:
  * 1. Validates HMAC signatures and Bearer tokens with detailed logging
- * 2. Simulates OPAL strategy_assistant_workflow responses for development
+ * 2. Simulates OPAL strategy_workflow responses for development
  * 3. Provides full telemetry and diagnostics integration
  * 4. Supports both development testing and production webhook validation
  */
@@ -206,7 +206,7 @@ export async function GET(request: NextRequest) {
     capabilities: [
       'HMAC signature validation with detailed failure logging',
       'Bearer token authentication',
-      'strategy_assistant_workflow simulation',
+      'strategy_workflow simulation',
       'Comprehensive telemetry and diagnostics integration',
       'Environment-aware configuration detection'
     ],
@@ -217,7 +217,7 @@ export async function GET(request: NextRequest) {
       timestamp_validation: 'Include X-Timestamp header for HMAC validation'
     },
     sample_payload: {
-      workflow_name: 'strategy_assistant_workflow',
+      workflow_name: 'strategy_workflow',
       input_data: {
         client_name: 'Test Client',
         industry: 'Technology',

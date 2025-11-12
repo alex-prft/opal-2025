@@ -54,7 +54,7 @@ Overall Status: SUCCESS
 #### 4. ✅ Production Environment Configuration Created
 - **Configuration File**: `opal-config/environments/production.json`
 - **Deployment Script**: `scripts/deploy-production.sh` (executable)
-- **Production URLs**: Configured for `https://ifpa-strategy.vercel.app`
+- **Production URLs**: Configured for `https://opal-2025.vercel.app`
 - **Security**: Authentication, CORS, rate limiting, and monitoring configured
 
 ## 🚀 Ready for Production Deployment
@@ -89,16 +89,16 @@ Once deployed, update these configurations:
 #### 1. OPAL Agent Discovery URLs
 ```json
 {
-  "discovery_endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools"
+  "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools"
 }
 ```
 
 #### 2. Workflow Data Sharing Configuration
 ```json
 {
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+  "discovery_url": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
   "integration_endpoints": {
-    "osa_webhook_agent": "https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow"
+    "osa_webhook_agent": "https://opal-2025.vercel.app/api/webhooks/opal-workflow"
   }
 }
 ```

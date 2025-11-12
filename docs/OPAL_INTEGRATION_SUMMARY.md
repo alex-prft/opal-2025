@@ -7,7 +7,7 @@ Successfully implemented comprehensive SDK-enhanced OPAL tools that ensure prope
 ## 🎯 Key Achievements
 
 ### ✅ Critical Issue Fixed
-- **Production URL in Development Issue**: Fixed the root cause where OPAL tools were routing to `https://ifpa-strategy.vercel.app` instead of `http://localhost:3000` in development
+- **Production URL in Development Issue**: Fixed the root cause where OPAL tools were routing to `https://opal-2025.vercel.app` instead of `http://localhost:3000` in development
 - **Enhanced Webhook Delivery**: Implemented intelligent environment-aware routing that automatically detects and uses correct URLs for each environment
 
 ### ✅ SDK-Enhanced Tools Implemented

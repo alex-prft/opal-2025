@@ -149,7 +149,7 @@ interface OPALParameter {
 ### 1. Automated Validation
 - **Script**: `npm run validate:opal:prod`
 - **Local**: `npx tsx scripts/validate-opal-discovery.ts --url=http://localhost:3000/api/opal/discovery`
-- **Production**: `npx tsx scripts/validate-opal-discovery.ts --url=https://ifpa-strategy.vercel.app/api/opal/discovery`
+- **Production**: `npx tsx scripts/validate-opal-discovery.ts --url=https://opal-2025.vercel.app/api/opal/discovery`
 
 ### 2. Unit Test Coverage
 - **File**: `tests/unit/opal-discovery-fix.test.ts`
@@ -169,14 +169,14 @@ interface OPALParameter {
 1. **Code Changes**: Updated discovery endpoint format
 2. **Testing**: Validated locally with `functions` array format
 3. **Deployment**: `git push` → Vercel auto-deployment
-4. **Verification**: `curl https://ifpa-strategy.vercel.app/api/opal/discovery | jq '.functions'`
+4. **Verification**: `curl https://opal-2025.vercel.app/api/opal/discovery | jq '.functions'`
 5. **Validation**: `npm run validate:opal:prod`
 
 ### Rollback Plan
 If issues occur:
 1. **Revert commit**: `git revert HEAD`
 2. **Force redeploy**: `npx vercel --prod --yes`
-3. **Update alias**: `npx vercel alias <deployment-url> ifpa-strategy.vercel.app`
+3. **Update alias**: `npx vercel alias <deployment-url> opal-2025.vercel.app`
 
 ## Prevention Measures
 

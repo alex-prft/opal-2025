@@ -8,6 +8,12 @@
  * Uses NEXT_PUBLIC_API_SECRET_KEY for client-side access
  */
 export function getClientAPISecretKey(): string {
+  // Only access environment variables on the client side
+  if (typeof window === 'undefined') {
+    // On server side, we can't access NEXT_PUBLIC_ variables reliably
+    return '';
+  }
+
   const secretKey = process.env.NEXT_PUBLIC_API_SECRET_KEY;
   if (!secretKey) {
     throw new Error('Missing NEXT_PUBLIC_API_SECRET_KEY environment variable');
@@ -61,6 +67,11 @@ export async function authenticatedFetch(
  */
 export function hasValidAPICredentials(): boolean {
   try {
+    // On server side, assume no credentials (will be checked on client)
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
     const apiKey = getClientAPISecretKey();
     return !!apiKey && apiKey.length > 0;
   } catch {

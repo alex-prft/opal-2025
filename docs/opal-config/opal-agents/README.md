@@ -217,7 +217,7 @@ Each agent provides comprehensive monitoring data including:
 
 ## Workflow Orchestration
 
-### Primary Workflow: `strategy_assistant_workflow.json`
+### Primary Workflow: `strategy_workflow.json`
 
 The master workflow configuration that orchestrates all agents in sequence with comprehensive data sharing and error handling.
 

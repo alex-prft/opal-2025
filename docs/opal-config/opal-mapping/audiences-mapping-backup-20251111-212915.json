@@ -1,6 +1,6 @@
 {
   "category": "Audiences",
-  "version": "2.1.0",
+  "version": "2.0.0",
   "last_updated": "2025-11-11",
   "validation_rules": {
     "required_fields": ["field", "type", "tool", "report", "agent", "osa_section"],
@@ -154,86 +154,6 @@
       "decision_layer_impact": true,
       "personal_configurator": true,
       "brain_learning": true
-    },
-    {
-      "field": "dynamic_personalization_rules",
-      "agent": "personalization_idea_generator",
-      "priority": "high",
-      "confidence": 0.89,
-      "type": "AI-generated",
-      "type_tooltip": "AI-generated dynamic personalization rules based on real-time audience behavior and preferences",
-      "tool": "personalization_rule_engine",
-      "tool_tooltip": "OPAL Personalization Rule Engine creates adaptive rules for real-time experience customization",
-      "report": "Dynamic Personalization Dashboard",
-      "report_tooltip": "Real-time personalization rule performance and optimization recommendations",
-      "instructions": ["personalization_maturity_rubric", "personas", "experience_optimization_guidelines"],
-      "instructions_tooltip": "Uses personalization maturity framework and experience optimization best practices",
-      "dxp_sources": ["ODP", "Content Recs", "WEBX"],
-      "osa_section": "Experience Optimization → Personalization",
-      "strategy_link": "Quick Wins",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
-    },
-    {
-      "field": "real_time_experience_optimization",
-      "agent": "personalization_idea_generator",
-      "priority": "high",
-      "confidence": 0.91,
-      "type": "AI-generated",
-      "type_tooltip": "AI-powered real-time experience optimization based on audience behavior and context",
-      "tool": "experience_optimizer",
-      "tool_tooltip": "OPAL Experience Optimizer automatically adjusts experiences based on real-time user data",
-      "report": "Real-time Optimization Performance Report",
-      "report_tooltip": "Performance metrics for real-time experience optimization with impact analysis",
-      "instructions": ["experience_optimization_guidelines", "personalization_maturity_rubric", "kpi_definitions"],
-      "instructions_tooltip": "Applies experience optimization guidelines and personalization maturity standards",
-      "dxp_sources": ["WEBX", "ODP", "Content Recs"],
-      "osa_section": "Experience Optimization → Personalization",
-      "strategy_link": "Strategic Roadmap",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
-    },
-    {
-      "field": "audience_journey_personalization",
-      "agent": "customer_journey",
-      "priority": "high",
-      "confidence": 0.87,
-      "type": "AI-generated",
-      "type_tooltip": "AI-driven personalization strategies for different audience journey stages and touchpoints",
-      "tool": "journey_personalizer",
-      "tool_tooltip": "OPAL Journey Personalizer customizes experiences based on customer journey stage and context",
-      "report": "Journey Personalization Impact Report",
-      "report_tooltip": "Journey-stage personalization performance with conversion impact analysis",
-      "instructions": ["customer_journey_guidelines", "personalization_maturity_rubric", "personas"],
-      "instructions_tooltip": "Personalizes journeys using customer journey mapping and persona insights",
-      "dxp_sources": ["ODP", "WEBX", "CMP"],
-      "osa_section": "Experience Optimization → Personalization",
-      "strategy_link": "Strategic Roadmap",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
-    },
-    {
-      "field": "behavioral_trigger_personalization",
-      "agent": "personalization_idea_generator",
-      "priority": "medium",
-      "confidence": 0.84,
-      "type": "AI-generated",
-      "type_tooltip": "AI identification and implementation of behavioral triggers for personalized experiences",
-      "tool": "behavioral_trigger_engine",
-      "tool_tooltip": "OPAL Behavioral Trigger Engine creates personalization rules based on user behavior patterns",
-      "report": "Behavioral Trigger Performance Report",
-      "report_tooltip": "Performance analysis of behavioral triggers with optimization recommendations",
-      "instructions": ["behavioral_personalization_guidelines", "personas", "experience_optimization_guidelines"],
-      "instructions_tooltip": "Uses behavioral personalization best practices and persona insights",
-      "dxp_sources": ["ODP", "WEBX", "Content Recs"],
-      "osa_section": "Experience Optimization → Personalization",
-      "strategy_link": "Quick Wins",
-      "decision_layer_impact": true,
-      "personal_configurator": true,
-      "brain_learning": true
     }
   ],
   "additional_instructions_needed": [
@@ -260,30 +180,6 @@
       "implementation_timeline": "Q1 2025",
       "affects_agents": ["audience_suggester", "personalization_idea_generator"],
       "validation_impact": "high"
-    },
-    {
-      "instruction": "experience_optimization_guidelines",
-      "purpose": "Best practices for real-time experience optimization and personalization implementation",
-      "priority": "high",
-      "implementation_timeline": "Q1 2025",
-      "affects_agents": ["personalization_idea_generator", "customer_journey"],
-      "validation_impact": "high"
-    },
-    {
-      "instruction": "behavioral_personalization_guidelines",
-      "purpose": "Framework for implementing behavioral trigger-based personalization strategies",
-      "priority": "medium",
-      "implementation_timeline": "Q2 2025",
-      "affects_agents": ["personalization_idea_generator"],
-      "validation_impact": "medium"
-    },
-    {
-      "instruction": "real_time_optimization_protocols",
-      "purpose": "Protocols for real-time experience optimization and performance monitoring",
-      "priority": "medium",
-      "implementation_timeline": "Q2 2025",
-      "affects_agents": ["personalization_idea_generator"],
-      "validation_impact": "medium"
     }
   ],
   "content_suggestions": [

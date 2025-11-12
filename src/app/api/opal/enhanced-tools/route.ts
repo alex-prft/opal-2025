@@ -235,7 +235,7 @@ export async function GET(request: NextRequest) {
           "✅ Target environment auto-detection working"
         ],
         production_integration: [
-          "✅ Uses strategy_assistant_workflow payload format",
+          "✅ Uses strategy_workflow payload format",
           "✅ Comprehensive telemetry and correlation ID tracking",
           "✅ Proper timeout handling and error recovery",
           "✅ Bearer token authentication with production OPAL"
@@ -622,7 +622,7 @@ async function handleEnhancedOSAWebhook(params: any, context: any) {
 
     // Prepare OPAL workflow payload
     const workflowPayload = {
-      workflow_name: 'strategy_assistant_workflow',
+      workflow_name: 'strategy_workflow',
       input_data: {
         client_name: agent_data.client_name || 'OPAL Custom Tools Integration',
         industry: agent_data.industry || 'Technology',
@@ -816,7 +816,7 @@ async function handleEnhancedOSAWebhook(params: any, context: any) {
       environment: target_environment || 'auto-detected',
       auth_method: 'bearer',
       payload_summary: {
-        workflow_name: 'strategy_assistant_workflow',
+        workflow_name: 'strategy_workflow',
         client_name: agent_data?.client_name || 'Unknown',
         agent_id,
         workflow_id,

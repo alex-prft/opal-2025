@@ -28,7 +28,7 @@ User Request → OSA Dashboard → OPAL Mapping → Agent Selection → Tool Int
 
 ### 1. Strategic Orchestration Agents
 
-#### **Strategy Assistant Workflow** (`strategy_assistant_workflow`)
+#### **Strategy Assistant Workflow** (`strategy_workflow`)
 - **Purpose**: Master orchestrator for comprehensive personalization strategy development
 - **Capabilities**: Coordinates sequential execution of specialized agents
 - **Workflow Management**: Handles data handoffs, quality validation, and final synthesis

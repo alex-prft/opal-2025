@@ -89,8 +89,8 @@ Tool JSON files must include proper webhook endpoints:
 ```json
 {
   "integration_endpoints": {
-    "osa_webhook_agent": "https://ifpa-strategy.vercel.app/api/opal/agent-data",
-    "osa_webhook_results": "https://ifpa-strategy.vercel.app/api/opal/workflow-results"
+    "osa_webhook_agent": "https://opal-2025.vercel.app/api/opal/agent-data",
+    "osa_webhook_results": "https://opal-2025.vercel.app/api/opal/workflow-results"
   }
 }
 ```
@@ -278,7 +278,7 @@ grep -r '"type": "structured"' opal-config/opal-agents/
 Test webhook endpoints:
 
 ```bash
-curl -X POST https://ifpa-strategy.vercel.app/api/opal/agent-data \
+curl -X POST https://opal-2025.vercel.app/api/opal/agent-data \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"event_type": "agent.completed", "workflow_id": "test"}'
@@ -343,10 +343,10 @@ curl -X POST https://ifpa-strategy.vercel.app/api/opal/agent-data \
 find opal-config/opal-agents -name "*.json" -exec jq '.schema_version' {} \;
 
 # Validate webhook endpoints
-curl -I https://ifpa-strategy.vercel.app/api/opal/agent-data
+curl -I https://opal-2025.vercel.app/api/opal/agent-data
 
 # Test webhook authentication
-curl -X GET https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow
+curl -X GET https://opal-2025.vercel.app/api/webhooks/opal-workflow
 ```
 
 ## Monitoring & Maintenance

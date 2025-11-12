@@ -1,6 +1,6 @@
 # OSA (Optimizely Strategy Assistant) - Technical Architecture Documentation
 
-**🚀 PRODUCTION SYSTEM** - **Live at**: https://ifpa-strategy.vercel.app
+**🚀 PRODUCTION SYSTEM** - **Live at**: https://opal-2025.vercel.app
 **🏗️ Architecture**: Next.js 16.0.1 Serverless Functions on Vercel Platform
 **📊 Database**: Supabase PostgreSQL with Real-time Event Streaming
 **🔗 OPAL Integration**: Enhanced Tools SDK v2.0.0-api with Intelligent Routing
@@ -131,7 +131,7 @@ Each service can be deployed independently:
 
 **Service Name**: `ingestion-orchestration-service` (Internal Alias: **Opal Connector**)
 **Priority Level**: 🔴 P0 (Core) + 🟡 P1 (Enhanced) - **PRODUCTION READY**
-**Deployment**: ✅ **LIVE** on Vercel Serverless Functions at https://ifpa-strategy.vercel.app
+**Deployment**: ✅ **LIVE** on Vercel Serverless Functions at https://opal-2025.vercel.app
 **Database**: Supabase PostgreSQL with **Enhanced Monitoring Tables** and Real-time Event Streaming
 **API Contract**: `/api/opal/*`, `/api/webhooks/opal-workflow`, `/api/webhook-events/*`
 **Enhanced Tools**: **SDK v2.0.0-api** with Environment-Aware Routing and Comprehensive Error Handling
@@ -293,7 +293,7 @@ Each agent provides comprehensive monitoring data including:
 ```typescript
 // Manual trigger for OPAL workflow when webhook fails
 const workflowTriggerData = {
-  workflow_name: 'strategy_assistant_workflow',
+  workflow_name: 'strategy_workflow',
   input_data: execution,
   trigger_source: 'force_sync',
   metadata: { session_id, execution_id, user_id: 'alex', force_sync: true }
@@ -1824,7 +1824,7 @@ UserInteractions → PatternExtraction → KnowledgeUpdate → ImprovedRecommend
 
 ## Production API Architecture
 
-### **🚀 LIVE API Endpoints** - https://ifpa-strategy.vercel.app
+### **🚀 LIVE API Endpoints** - https://opal-2025.vercel.app
 
 #### **OPAL Integration APIs** (`/api/opal/*`)
 - **`/api/opal/enhanced-tools`** - **OPAL SDK v2.0.0-api** discovery and enhanced tool execution
@@ -1903,7 +1903,7 @@ UserInteractions → PatternExtraction → KnowledgeUpdate → ImprovedRecommend
 
 ### **🚀 Production Deployment Architecture**
 
-#### **Live Production Environment** - **https://ifpa-strategy.vercel.app**
+#### **Live Production Environment** - **https://opal-2025.vercel.app**
 ```yaml
 # Current Production Configuration (VERIFIED OPERATIONAL)
 Frontend:
@@ -2265,7 +2265,7 @@ Use `.claude/commands/update-architecture-docs.md` for detailed procedures and a
 ### **✅ OPERATIONAL STATUS** - November 10, 2024
 
 **🚀 Production Environment**: **FULLY OPERATIONAL**
-- **Live URL**: https://ifpa-strategy.vercel.app
+- **Live URL**: https://opal-2025.vercel.app
 - **API Health**: All 61 endpoints responding (200 OK)
 - **OPAL Integration**: Enhanced Tools SDK v2.0.0-api active with environment routing
 - **Database**: Supabase PostgreSQL with comprehensive monitoring tables operational

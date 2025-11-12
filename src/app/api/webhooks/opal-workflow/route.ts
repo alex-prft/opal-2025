@@ -835,7 +835,7 @@ async function simulateOpalAgentResponses(workflowId: string, inputData: any) {
         const agentWebhookPayload = {
           event_type: 'agent.completed' as const,
           workflow_id: workflowId,
-          workflow_name: 'strategy_assistant_workflow',
+          workflow_name: 'strategy_workflow',
           timestamp: new Date().toISOString(),
           agent_id: agentId,
           agent_name: agentId,
@@ -853,7 +853,7 @@ async function simulateOpalAgentResponses(workflowId: string, inputData: any) {
         await webhookEventOperations.storeWebhookEvent({
           event_type: 'agent.completed',
           workflow_id: workflowId,
-          workflow_name: 'strategy_assistant_workflow',
+          workflow_name: 'strategy_workflow',
           agent_id: agentId,
           agent_name: agentId,
           received_at: new Date().toISOString(),
@@ -901,12 +901,12 @@ async function simulateOpalAgentResponses(workflowId: string, inputData: any) {
           await webhookEventOperations.storeWebhookEvent({
             event_type: 'workflow.completed',
             workflow_id: workflowId,
-            workflow_name: 'strategy_assistant_workflow',
+            workflow_name: 'strategy_workflow',
             received_at: new Date().toISOString(),
             payload: {
               event_type: 'workflow.completed',
               workflow_id: workflowId,
-              workflow_name: 'strategy_assistant_workflow',
+              workflow_name: 'strategy_workflow',
               timestamp: new Date().toISOString(),
               data: { completed_agents: completedCount },
               metadata: { simulation_mode: true, database_fallback: true }
