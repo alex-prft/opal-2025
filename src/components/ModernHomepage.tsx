@@ -12,8 +12,10 @@ import {
   CheckCircle,
   ArrowRight
 } from 'lucide-react';
+import { getDeploymentInfo } from '@/lib/build-info';
 
 export default function ModernHomepage() {
+  const deploymentInfo = getDeploymentInfo();
 
   const features = [
     {
@@ -131,9 +133,18 @@ export default function ModernHomepage() {
       {/* Footer */}
       <footer id="homepage-footer" className="border-t bg-white">
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
+          <div className="text-center space-y-2">
             <div className="text-sm text-muted-foreground">
               © 2025 Opal Personalization Generator from Perficient. Powered by Opal AI.
+            </div>
+            <div className="text-xs text-muted-foreground/70 border-t pt-2 flex justify-center items-center space-x-4">
+              <span>
+                Production Deployed: {deploymentInfo.buildTime}
+              </span>
+              <span className="text-muted-foreground/50">•</span>
+              <span>
+                v{deploymentInfo.version} ({deploymentInfo.commit})
+              </span>
             </div>
           </div>
         </div>
