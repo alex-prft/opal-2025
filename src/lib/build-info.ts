@@ -2,8 +2,8 @@
 // The build timestamp is set when the application is built
 
 export const BUILD_INFO = {
-  // Use environment variable for build time, fallback to a static value
-  BUILD_TIME: process.env.NEXT_PUBLIC_BUILD_TIME || '2025-01-01T00:00:00.000Z',
+  // Use environment variable for build time, fallback to current deployment timestamp
+  BUILD_TIME: process.env.NEXT_PUBLIC_BUILD_TIME || '2025-11-13T01:30:00.000Z',
 
   // Environment information
   NODE_ENV: process.env.NODE_ENV || 'development',
@@ -18,17 +18,11 @@ export const BUILD_INFO = {
   DEPLOYMENT_URL: process.env.VERCEL_URL || 'localhost'
 } as const;
 
-// Helper function to format the build time for display
+// Helper function to format the build time for display (fixed format to avoid hydration issues)
 export function formatBuildTime(): string {
-  return new Date(BUILD_INFO.BUILD_TIME).toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    timeZoneName: 'short'
-  });
+  const date = new Date(BUILD_INFO.BUILD_TIME);
+  // Use fixed format to avoid server/client hydration mismatches
+  return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, ' UTC');
 }
 
 // Helper function to get deployment info
