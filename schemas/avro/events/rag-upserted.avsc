@@ -1,0 +1,153 @@
+{
+  "type": "record",
+  "name": "RagUpserted",
+  "namespace": "com.opal.events.knowledge",
+  "doc": "Event emitted when knowledge base entries are inserted or updated",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "upsert_id",
+      "type": "string",
+      "doc": "Unique upsert operation identifier - serves as idempotency key"
+    },
+    {
+      "name": "operation_type",
+      "type": {
+        "type": "enum",
+        "name": "UpsertOperation",
+        "symbols": ["insert", "update", "bulk_insert", "bulk_update"]
+      },
+      "doc": "Type of upsert operation performed"
+    },
+    {
+      "name": "documents_processed",
+      "type": "int",
+      "doc": "Number of documents processed in this operation"
+    },
+    {
+      "name": "documents_inserted",
+      "type": "int",
+      "doc": "Number of new documents inserted"
+    },
+    {
+      "name": "documents_updated",
+      "type": "int",
+      "doc": "Number of existing documents updated"
+    },
+    {
+      "name": "documents_failed",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Number of documents that failed to process"
+    },
+    {
+      "name": "knowledge_source",
+      "type": {
+        "type": "enum",
+        "name": "KnowledgeSource",
+        "symbols": [
+          "agent_output",
+          "user_feedback",
+          "external_api",
+          "document_upload",
+          "training_data"
+        ]
+      },
+      "doc": "Source of the knowledge being upserted"
+    },
+    {
+      "name": "agent_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Agent ID if knowledge comes from agent output"
+    },
+    {
+      "name": "workflow_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Associated workflow ID if applicable"
+    },
+    {
+      "name": "document_types",
+      "type": ["null", {"type": "array", "items": "string"}],
+      "default": null,
+      "doc": "Types of documents processed (recommendation, insight, analysis, etc.)"
+    },
+    {
+      "name": "processing_time_ms",
+      "type": "long",
+      "doc": "Time taken to process the upsert operation in milliseconds"
+    },
+    {
+      "name": "vector_embeddings_generated",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Number of vector embeddings generated"
+    },
+    {
+      "name": "duplicate_detections",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Number of duplicate documents detected and handled"
+    },
+    {
+      "name": "metadata_enrichment",
+      "type": ["null", {
+        "type": "record",
+        "name": "MetadataEnrichment",
+        "fields": [
+          {"name": "tags_added", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "categories_assigned", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "confidence_scores", "type": ["null", {"type": "map", "values": "double"}], "default": null}
+        ]
+      }],
+      "default": null,
+      "doc": "Metadata enrichment performed during upsert"
+    },
+    {
+      "name": "error_details",
+      "type": ["null", {"type": "array", "items": "string"}],
+      "default": null,
+      "doc": "Details of any errors encountered during processing"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "knowledge-engine",
+      "doc": "System that generated this event"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

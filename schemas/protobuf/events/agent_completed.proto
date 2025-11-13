@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package com.opal.events.agent;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when an individual OPAL agent finishes processing
+message AgentCompleted {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Associated workflow identifier - part of idempotency key
+  string workflow_id = 4;
+
+  // OPAL agent that completed processing - part of idempotency key
+  enum AgentType {
+    AGENT_TYPE_UNSPECIFIED = 0;
+    EXPERIMENT_BLUEPRINTER = 1;
+    AUDIENCE_SUGGESTER = 2;
+    CONTENT_REVIEW = 3;
+    ROADMAP_GENERATOR = 4;
+    INTEGRATION_HEALTH = 5;
+    PERSONALIZATION_IDEA_GENERATOR = 6;
+    CMP_ORGANIZER = 7;
+    CUSTOMER_JOURNEY = 8;
+    GEO_AUDIT = 9;
+  }
+  AgentType agent_id = 5;
+
+  // Event sequence number within workflow - part of idempotency key
+  optional int32 offset = 6;
+
+  // Agent execution result status
+  enum ExecutionStatus {
+    EXECUTION_STATUS_UNSPECIFIED = 0;
+    SUCCESS = 1;
+    FAILURE = 2;
+    TIMEOUT = 3;
+  }
+  ExecutionStatus execution_status = 7;
+
+  // Time taken to process in milliseconds
+  optional int64 processing_time_ms = 8;
+
+  // Agent-specific output data and metrics
+  message AgentData {
+    repeated string recommendations = 1;
+    optional double confidence_score = 2;
+    repeated string data_sources_analyzed = 3;
+    optional string error_message = 4;
+    optional int32 retry_count = 5;
+    map<string, string> metadata = 6;
+  }
+  optional AgentData agent_data = 9;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 10;
+
+  // System that generated this event
+  string source_system = 11;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 12;
+
+  // Whether HMAC signature verification passed
+  optional bool signature_valid = 13;
+
+  // Size of the original webhook payload in bytes
+  optional int64 payload_size_bytes = 14;
+}

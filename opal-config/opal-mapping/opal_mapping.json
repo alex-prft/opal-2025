@@ -17,7 +17,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "OSA",
+        "tier3": [
+          "Overview Dashboard",
+          "Strategic Recommendations",
+          "Performance Metrics",
+          "Data Quality Score",
+          "Workflow Timeline"
+        ]
+      }
     },
     "Quick Wins": {
       "opal_instructions": [
@@ -36,7 +47,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Quick Wins",
+        "tier3": [
+          "Immediate Opportunities",
+          "Implementation Roadmap (30-day)",
+          "Resource Requirements",
+          "Expected Impact",
+          "Success Metrics"
+        ]
+      }
     },
     "Maturity": {
       "opal_instructions": [
@@ -55,7 +77,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Maturity",
+        "tier3": [
+          "Current State Assessment",
+          "Maturity Framework",
+          "Gap Analysis",
+          "Improvement Pathway",
+          "Benchmarking Data"
+        ]
+      }
     },
     "Phases": {
       "opal_instructions": [
@@ -75,7 +108,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Phases",
+        "tier3": [
+          "Phase 1: Foundation (0-3 months)",
+          "Phase 2: Growth (3-6 months)",
+          "Phase 3: Optimization (6-12 months)",
+          "Phase 4: Innovation (12+ months)",
+          "Cross-phase Dependencies"
+        ]
+      }
     },
     "Roadmap": {
       "opal_instructions": [
@@ -94,7 +138,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Roadmap",
+        "tier3": [
+          "Timeline View",
+          "Milestone Tracking",
+          "Resource Allocation",
+          "Risk Assessment",
+          "Progress Indicators"
+        ]
+      }
     }
   },
   "Optimizely DXP Tools": {
@@ -110,7 +165,18 @@
       ],
       "optimizely_dxp_tools": [
         "Content Recs"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "Content Recs",
+        "tier3": [
+          "Visitor Analytics Dashboard",
+          "Content Performance Metrics",
+          "Recommendation Algorithms",
+          "A/B Testing Results",
+          "Personalization Effectiveness"
+        ]
+      }
     },
     "CMS": {
       "opal_instructions": [
@@ -126,7 +192,18 @@
       ],
       "optimizely_dxp_tools": [
         "CMS"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "CMS",
+        "tier3": [
+          "Content Inventory",
+          "Publishing Workflows",
+          "Content Performance",
+          "SEO Optimization",
+          "Multi-channel Publishing"
+        ]
+      }
     },
     "ODP": {
       "opal_instructions": [
@@ -141,7 +218,18 @@
       ],
       "optimizely_dxp_tools": [
         "ODP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "ODP",
+        "tier3": [
+          "Customer Profiles",
+          "Audience Segments",
+          "Journey Analytics",
+          "Real-time Events",
+          "Data Integration Status"
+        ]
+      }
     },
     "WEBX": {
       "opal_instructions": [
@@ -155,7 +243,18 @@
       ],
       "optimizely_dxp_tools": [
         "WebX"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "WEBX",
+        "tier3": [
+          "Active Experiments",
+          "Results Analysis",
+          "Statistical Significance",
+          "Conversion Impact",
+          "Test Configuration"
+        ]
+      }
     },
     "CMP": {
       "opal_instructions": [
@@ -170,7 +269,18 @@
       ],
       "optimizely_dxp_tools": [
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "CMP",
+        "tier3": [
+          "Campaign Performance",
+          "Email Analytics",
+          "Automation Workflows",
+          "Audience Targeting",
+          "ROI Analysis"
+        ]
+      }
     }
   },
   "Analytics Insights": {
@@ -191,7 +301,20 @@
         "Content Recs",
         "CMS",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "OSA",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      }
     },
     "Content": {
       "opal_instructions": [
@@ -209,7 +332,20 @@
         "Content Recs",
         "CMS",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Content",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      }
     },
     "Audiences": {
       "opal_instructions": [
@@ -229,9 +365,22 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Audiences",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      }
     },
-    "Customer Experience": {
+    "CX": {
       "opal_instructions": [
         "content-guidelines",
         "personas",
@@ -249,7 +398,20 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "CX",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      }
     },
     "Other": {
       "opal_instructions": [
@@ -267,7 +429,20 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Other",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      }
     }
   },
   "Experience Optimization": {
@@ -288,7 +463,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Content",
+        "tier3": [
+          "Content Strategy Overview",
+          "Performance Analytics",
+          "Content Optimization Recommendations",
+          "Multi-channel Content Distribution",
+          "Content ROI Analysis"
+        ]
+      }
     },
     "Experimentation": {
       "opal_instructions": [
@@ -307,7 +493,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Experimentation",
+        "tier3": [
+          "Experiment Design Framework",
+          "Statistical Testing Results",
+          "Hypothesis Validation",
+          "Test Impact Assessment",
+          "Experimentation Roadmap"
+        ]
+      }
     },
     "Personalization": {
       "opal_instructions": [
@@ -326,9 +523,20 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Personalization",
+        "tier3": [
+          "Personalization Strategy",
+          "Audience Segmentation",
+          "Dynamic Content Delivery",
+          "Personalization Performance",
+          "Real-time Optimization"
+        ]
+      }
     },
-    "User Experience": {
+    "UX": {
       "opal_instructions": [
         "brand-tone-guidelines",
         "kpi-experimentation"
@@ -345,7 +553,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "UX",
+        "tier3": [
+          "User Journey Mapping",
+          "Interaction Analytics",
+          "Usability Testing Results",
+          "Conversion Path Optimization",
+          "Experience Quality Metrics"
+        ]
+      }
     },
     "Technology": {
       "opal_instructions": [
@@ -362,7 +581,18 @@
         "ODP",
         "WEBX",
         "CMP"
-      ]
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Technology",
+        "tier3": [
+          "Integration Architecture",
+          "Platform Performance",
+          "API Analytics",
+          "Data Flow Optimization",
+          "Technical Implementation Guide"
+        ]
+      }
     }
   }
 }

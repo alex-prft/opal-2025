@@ -19,40 +19,38 @@ import {
 import { SafeDate } from '@/lib/utils/date-formatter';
 
 interface DiagnosticsData {
-  success: boolean;
-  lastWebhook?: {
+  events: Array<{
     id: string;
-    event_type: string;
     workflow_id: string;
-    agent_name?: string;
-    success: boolean;
-    error_message?: string;
+    agent_id: string;
     received_at: string;
-    processing_time_ms?: number;
-    payload?: any;
+    signature_valid: boolean;
+    http_status: number;
+    error_text?: string;
+    dedup_hash: string;
+    payload_preview: string;
+  }>;
+  summary: {
+    total_count: number;
+    returned_count: number;
+    signature_valid_count: number;
+    error_count: number;
+    date_range: {
+      from: string | null;
+      to: string | null;
+    };
+    filters_applied: {
+      limit: number;
+      workflow_id: string | null;
+      agent_id: string | null;
+      status: string;
+      hours: number;
+    };
   };
-  recentEvents: Array<{
-    id: string;
-    event_type: string;
-    workflow_id: string;
-    agent_name?: string;
-    success: boolean;
-    error_message?: string;
-    received_at: string;
-    processing_time_ms?: number;
-  }>;
-  agentEvents: Array<{
-    id: string;
-    event_type: string;
-    workflow_id: string;
-    agent_id?: string;
-    agent_name?: string;
-    success: boolean;
-    error_message?: string;
-    received_at: string;
-    processing_time_ms?: number;
-  }>;
-  timestamp: string;
+  config_diagnostics: any;
+  troubleshooting: any;
+  generated_at: string;
+  query_info: any;
 }
 
 interface DiagnosticsPanelProps {
@@ -66,18 +64,28 @@ export function DiagnosticsPanel({ className = '', id }: DiagnosticsPanelProps) 
   const [error, setError] = useState<string | null>(null);
   const [isTestingWorkflow, setIsTestingWorkflow] = useState(false);
 
+  // Safe access helper for diagnostics data
+  const safeGet = <T>(getter: () => T, defaultValue: T): T => {
+    try {
+      return getter() ?? defaultValue;
+    } catch {
+      return defaultValue;
+    }
+  };
+
   const fetchDiagnostics = async () => {
     try {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch('/api/diagnostics/last-webhook');
+      const response = await fetch('/api/diagnostics/last-webhook?limit=25&status=all&hours=24');
       const data = await response.json();
 
-      if (data.success) {
+      // API returns data directly, check if response is ok or has expected structure
+      if (response.ok && data.events !== undefined) {
         setDiagnosticsData(data);
       } else {
-        setError(data.message || 'Failed to fetch diagnostics data');
+        setError(data.message || data.error || 'Failed to fetch diagnostics data');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error occurred');
@@ -225,80 +233,60 @@ export function DiagnosticsPanel({ className = '', id }: DiagnosticsPanelProps) 
           {/* Diagnostics Data */}
           {diagnosticsData && !isLoading && (
             <div className="space-y-4">
-              {/* Last Webhook */}
-              {diagnosticsData.lastWebhook ? (
+              {/* Summary Statistics */}
+              {safeGet(() => diagnosticsData.summary, null) && (
                 <div>
                   <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                     <Network className="h-4 w-4 text-blue-600" />
-                    Last Webhook Event
+                    Event Summary
                   </h4>
                   <div className="bg-gray-50 rounded-lg p-3 border">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        {getEventIcon(diagnosticsData.lastWebhook.event_type, diagnosticsData.lastWebhook.success)}
-                        <Badge variant={getEventBadgeVariant(diagnosticsData.lastWebhook.event_type, diagnosticsData.lastWebhook.success)}>
-                          {diagnosticsData.lastWebhook.event_type}
-                        </Badge>
-                        {diagnosticsData.lastWebhook.agent_name && (
-                          <span className="text-xs text-gray-600">
-                            {diagnosticsData.lastWebhook.agent_name}
-                          </span>
-                        )}
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                      <div>
+                        <span className="text-gray-600">Total Events:</span>
+                        <span className="font-medium ml-1">{safeGet(() => diagnosticsData.summary.total_count, 0)}</span>
                       </div>
-                      <SafeDate
-                        date={diagnosticsData.lastWebhook.received_at}
-                        format="time"
-                        className="text-xs text-gray-500"
-                      />
-                    </div>
-
-                    <div className="text-xs text-gray-600 space-y-1">
-                      <div>Workflow ID: <code className="bg-gray-200 px-1 rounded">{diagnosticsData.lastWebhook.workflow_id}</code></div>
-                      {diagnosticsData.lastWebhook.processing_time_ms && (
-                        <div>Processing Time: {diagnosticsData.lastWebhook.processing_time_ms}ms</div>
-                      )}
-                      {diagnosticsData.lastWebhook.error_message && (
-                        <div className="text-red-600 mt-2">
-                          <strong>Error:</strong> {diagnosticsData.lastWebhook.error_message}
-                        </div>
-                      )}
+                      <div>
+                        <span className="text-gray-600">Valid Signatures:</span>
+                        <span className="font-medium ml-1">{safeGet(() => diagnosticsData.summary.signature_valid_count, 0)}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Errors:</span>
+                        <span className="font-medium ml-1 text-red-600">{safeGet(() => diagnosticsData.summary.error_count, 0)}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-600">Time Range:</span>
+                        <span className="font-medium ml-1">{safeGet(() => diagnosticsData.summary.filters_applied.hours, 24)}h</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="text-center py-4 text-gray-500">
-                  <AlertCircle className="h-8 w-8 mx-auto mb-2 text-gray-400" />
-                  <p className="text-sm">No recent webhook events found</p>
                 </div>
               )}
 
               {/* Recent Agent Events */}
-              {diagnosticsData.agentEvents.length > 0 && (
+              {safeGet(() => diagnosticsData.events, []).length > 0 && (
                 <div>
                   <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    Recent Agent Events ({diagnosticsData.agentEvents.length})
+                    Recent Agent Events ({safeGet(() => diagnosticsData.events.length, 0)})
                   </h4>
                   <div className="space-y-2">
-                    {diagnosticsData.agentEvents.map((event) => (
+                    {safeGet(() => diagnosticsData.events, []).map((event) => (
                       <div key={event.id} className="flex items-center justify-between text-xs bg-gray-50 rounded p-2">
                         <div className="flex items-center gap-2">
-                          {getEventIcon(event.event_type, event.success)}
+                          {getEventIcon('webhook', event.signature_valid && event.http_status === 202)}
                           <Badge
-                            variant={getEventBadgeVariant(event.event_type, event.success)}
+                            variant={getEventBadgeVariant('webhook', event.signature_valid && event.http_status === 202)}
                             className="text-xs"
                           >
-                            {event.event_type}
+                            Webhook
                           </Badge>
-                          {event.agent_name && (
-                            <span className="text-gray-600">{event.agent_name}</span>
+                          {event.agent_id && (
+                            <span className="text-gray-600">{event.agent_id}</span>
                           )}
-                          {event.processing_time_ms && (
-                            <span className="text-gray-500">
-                              <Clock className="h-3 w-3 inline mr-1" />
-                              {event.processing_time_ms}ms
-                            </span>
-                          )}
+                          <span className="text-gray-500">
+                            Status: {event.http_status}
+                          </span>
                         </div>
                         <SafeDate
                           date={event.received_at}
@@ -312,22 +300,22 @@ export function DiagnosticsPanel({ className = '', id }: DiagnosticsPanelProps) 
               )}
 
               {/* Recent Events Summary */}
-              {diagnosticsData.recentEvents.length > 0 && (
+              {safeGet(() => diagnosticsData.events, []).length > 0 && (
                 <div>
                   <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                     <Database className="h-4 w-4 text-gray-600" />
-                    All Recent Events ({diagnosticsData.recentEvents.length})
+                    All Recent Events ({safeGet(() => diagnosticsData.events.length, 0)})
                   </h4>
                   <div className="grid grid-cols-1 gap-1">
-                    {diagnosticsData.recentEvents.slice(0, 3).map((event) => (
+                    {safeGet(() => diagnosticsData.events, []).slice(0, 3).map((event) => (
                       <div key={event.id} className="flex items-center justify-between text-xs py-1">
                         <div className="flex items-center gap-2">
-                          {getEventIcon(event.event_type, event.success)}
-                          <span className={event.success ? 'text-gray-700' : 'text-red-600'}>
-                            {event.event_type}
+                          {getEventIcon('webhook', event.signature_valid && event.http_status === 202)}
+                          <span className={(event.signature_valid && event.http_status === 202) ? 'text-gray-700' : 'text-red-600'}>
+                            Webhook ({event.http_status})
                           </span>
-                          {event.agent_name && (
-                            <span className="text-gray-500">({event.agent_name})</span>
+                          {event.agent_id && (
+                            <span className="text-gray-500">({event.agent_id})</span>
                           )}
                         </div>
                         <SafeDate

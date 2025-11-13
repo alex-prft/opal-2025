@@ -1,0 +1,170 @@
+{
+  "type": "record",
+  "name": "DecisionGenerated",
+  "namespace": "com.opal.events.decision",
+  "doc": "Event emitted when intelligent recommendations are generated",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "decision_id",
+      "type": "string",
+      "doc": "Unique decision generation identifier - serves as idempotency key"
+    },
+    {
+      "name": "workflow_id",
+      "type": "string",
+      "doc": "Associated workflow identifier"
+    },
+    {
+      "name": "session_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Session identifier if applicable"
+    },
+    {
+      "name": "recommendations_count",
+      "type": "int",
+      "doc": "Number of recommendations generated"
+    },
+    {
+      "name": "recommendations",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Recommendation",
+          "fields": [
+            {"name": "title", "type": "string", "doc": "Recommendation title"},
+            {"name": "description", "type": ["null", "string"], "default": null, "doc": "Detailed description"},
+            {"name": "impact_score", "type": "int", "doc": "Business impact score (1-10)"},
+            {"name": "effort_score", "type": "int", "doc": "Implementation effort score (1-10)"},
+            {"name": "combined_ratio", "type": "double", "doc": "Impact-to-effort ratio"},
+            {"name": "confidence", "type": "double", "doc": "Overall confidence (0.0-1.0)"},
+            {"name": "category", "type": ["null", "string"], "default": null, "doc": "Recommendation category"},
+            {"name": "priority", "type": ["null", "string"], "default": null, "doc": "Priority level"},
+            {
+              "name": "evidence",
+              "type": ["null", {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Evidence",
+                  "fields": [
+                    {"name": "agent_type", "type": "string"},
+                    {"name": "data_source", "type": "string"},
+                    {"name": "confidence", "type": "double"},
+                    {"name": "summary", "type": "string"}
+                  ]
+                }
+              }],
+              "default": null,
+              "doc": "Supporting evidence from agents"
+            }
+          ]
+        }
+      },
+      "doc": "Generated recommendations with scoring and evidence"
+    },
+    {
+      "name": "user_preferences",
+      "type": ["null", {
+        "type": "record",
+        "name": "UserPreferences",
+        "fields": [
+          {
+            "name": "priority_weights",
+            "type": ["null", {
+              "type": "record",
+              "name": "PriorityWeights",
+              "fields": [
+                {"name": "impact", "type": "double"},
+                {"name": "effort", "type": "double"}
+              ]
+            }],
+            "default": null
+          },
+          {"name": "risk_tolerance", "type": ["null", "string"], "default": null},
+          {"name": "business_objectives", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "timeline_constraints", "type": ["null", "string"], "default": null}
+        ]
+      }],
+      "default": null,
+      "doc": "User preferences used for recommendation generation"
+    },
+    {
+      "name": "processing_metadata",
+      "type": {
+        "type": "record",
+        "name": "ProcessingMetadata",
+        "fields": [
+          {"name": "processing_time_ms", "type": "long"},
+          {"name": "agents_consulted", "type": "int"},
+          {"name": "data_sources_analyzed", "type": "int"},
+          {"name": "confidence_threshold", "type": ["null", "double"], "default": null},
+          {"name": "ranking_algorithm", "type": ["null", "string"], "default": null}
+        ]
+      },
+      "doc": "Processing metadata and performance metrics"
+    },
+    {
+      "name": "workflow_state",
+      "type": ["null", {
+        "type": "record",
+        "name": "WorkflowState",
+        "fields": [
+          {"name": "status", "type": "string"},
+          {"name": "agents_completed", "type": "int"},
+          {"name": "total_agents", "type": "int"},
+          {"name": "progress_percentage", "type": "double"}
+        ]
+      }],
+      "default": null,
+      "doc": "Current workflow execution state"
+    },
+    {
+      "name": "client_name",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client organization name"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "decision-engine",
+      "doc": "System that generated this event"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

@@ -5,11 +5,18 @@
  * to their corresponding OPAL components and Optimizely DXP tools.
  */
 
+export interface NavigationStructure {
+  tier1: string;
+  tier2: string;
+  tier3: string[];
+}
+
 export interface OPALMapping {
   opal_instructions: string[];
   opal_agents: string[];
   opal_tools: string[];
   optimizely_dxp_tools: string[];
+  navigation_structure?: NavigationStructure;
 }
 
 export interface AreaMapping {

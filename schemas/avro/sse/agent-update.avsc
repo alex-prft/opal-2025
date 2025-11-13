@@ -1,0 +1,156 @@
+{
+  "type": "record",
+  "name": "AgentUpdate",
+  "namespace": "com.opal.events.sse",
+  "doc": "Real-time agent progress update streamed via Server-Sent Events",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "stream_id",
+      "type": "string",
+      "doc": "Unique stream event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "workflow_id",
+      "type": "string",
+      "doc": "Associated workflow identifier - part of idempotency key"
+    },
+    {
+      "name": "agent_id",
+      "type": {
+        "type": "enum",
+        "name": "StreamingAgentType",
+        "symbols": [
+          "experiment_blueprinter",
+          "audience_suggester",
+          "content_review",
+          "roadmap_generator",
+          "integration_health",
+          "personalization_idea_generator",
+          "cmp_organizer",
+          "customer_journey",
+          "geo_audit"
+        ]
+      },
+      "doc": "OPAL agent sending the update - part of idempotency key"
+    },
+    {
+      "name": "sequence_number",
+      "type": "long",
+      "doc": "Monotonic sequence number for ordering - part of idempotency key"
+    },
+    {
+      "name": "progress_percentage",
+      "type": "int",
+      "doc": "Current progress percentage (0-100)"
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "StreamingStatus",
+        "symbols": ["starting", "running", "completed", "failed", "timeout"]
+      },
+      "doc": "Current agent execution status"
+    },
+    {
+      "name": "preliminary_findings",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Current preliminary findings or recommendations"
+    },
+    {
+      "name": "confidence_scores",
+      "type": ["null", {
+        "type": "record",
+        "name": "ConfidenceScores",
+        "fields": [
+          {"name": "current_confidence", "type": "double", "doc": "Current confidence level (0.0-1.0)"},
+          {"name": "data_quality_score", "type": ["null", "double"], "default": null, "doc": "Quality of data being analyzed"},
+          {"name": "processing_confidence", "type": ["null", "double"], "default": null, "doc": "Confidence in processing approach"}
+        ]
+      }],
+      "default": null,
+      "doc": "Real-time confidence scoring metrics"
+    },
+    {
+      "name": "processing_metadata",
+      "type": ["null", {
+        "type": "record",
+        "name": "StreamingProcessingMetadata",
+        "fields": [
+          {"name": "elapsed_time_ms", "type": "long", "doc": "Time elapsed since agent started"},
+          {"name": "estimated_remaining_ms", "type": ["null", "long"], "default": null, "doc": "Estimated remaining processing time"},
+          {"name": "data_points_processed", "type": ["null", "int"], "default": null, "doc": "Number of data points processed so far"},
+          {"name": "current_operation", "type": ["null", "string"], "default": null, "doc": "Description of current operation"}
+        ]
+      }],
+      "default": null,
+      "doc": "Real-time processing metadata"
+    },
+    {
+      "name": "partial_recommendations",
+      "type": ["null", {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "PartialRecommendation",
+          "fields": [
+            {"name": "title", "type": "string", "doc": "Preliminary recommendation title"},
+            {"name": "confidence", "type": "double", "doc": "Current confidence in this recommendation"},
+            {"name": "category", "type": ["null", "string"], "default": null, "doc": "Recommendation category"},
+            {"name": "status", "type": "string", "doc": "Processing status: analyzing, validating, finalizing"}
+          ]
+        }
+      }],
+      "default": null,
+      "doc": "Preliminary recommendations being developed"
+    },
+    {
+      "name": "error_details",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Error message if agent encountered issues"
+    },
+    {
+      "name": "client_connection_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client connection identifier for targeted streaming"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "sse-streamer",
+      "doc": "System that generated this streaming event"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

@@ -1,0 +1,1557 @@
+openapi: 3.1.0
+info:
+  title: OPAL Decision & Diagnostics API
+  version: 1.0.0
+  description: |
+    Enterprise API for OPAL → OSA data flow, decision-making, diagnostics, and event streaming.
+
+    ## Features
+    - **Workflow Orchestration**: Trigger and manage OPAL strategy workflows
+    - **Webhook Processing**: Receive and process OPAL agent webhook events with HMAC verification
+    - **Diagnostics & Monitoring**: Comprehensive webhook event diagnostics and troubleshooting
+    - **Real-time Streaming**: Server-Sent Events for live agent updates and recommendations
+    - **Decision Layer**: Intelligent recommendations with evidence, confidence, and impact/effort ranking
+    - **Knowledge Retrieval**: Advanced vector search and similarity matching (planned)
+
+    ## Authentication
+    The API supports multiple authentication schemes:
+    - **API Key**: Header-based authentication for service-to-service communication
+    - **Bearer Token**: JWT-based authentication for user sessions
+    - **HMAC Signature**: Cryptographic verification for webhook security
+
+    ## Backward Compatibility
+    All endpoints maintain backward compatibility with existing OPAL integrations, force sync,
+    mapping operations, and custom tools sending data to OSA.
+  contact:
+    name: OPAL Engineering Team
+    email: engineering@opal.ai
+  license:
+    name: Proprietary
+    url: https://opal.ai/license
+  servers:
+    - url: http://localhost:3000
+      description: Local Development Server
+    - url: https://opal-2025.vercel.app
+      description: Production Environment
+
+servers:
+  - url: http://localhost:3000
+    description: Local Development Server
+  - url: https://opal-2025.vercel.app
+    description: Production Environment
+
+# Security Schemes
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for service-to-service authentication
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for user authentication
+    HMACAuth:
+      type: apiKey
+      in: header
+      name: X-OSA-Signature
+      description: |
+        HMAC-SHA256 signature for webhook verification.
+        Format: sha256=<hex_digest>
+
+        Example calculation:
+        ```
+        import hmac, hashlib
+        signature = hmac.new(
+          secret.encode(),
+          payload.encode(),
+          hashlib.sha256
+        ).hexdigest()
+        header_value = f"sha256={signature}"
+        ```
+
+  # Common Schemas
+  schemas:
+    # Base Response Schema
+    BaseResponse:
+      type: object
+      required: [success, correlation_id, timestamp]
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the request was successful
+        correlation_id:
+          type: string
+          description: Unique identifier for request tracing
+          example: "api-1762961202697-ipoahk"
+        timestamp:
+          type: string
+          format: date-time
+          description: Response timestamp in ISO 8601 format
+        duration_ms:
+          type: number
+          description: Request processing time in milliseconds
+          example: 45
+
+    # Error Response Schema
+    ErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            success:
+              type: boolean
+              enum: [false]
+            error:
+              type: string
+              description: Error type identifier
+              example: "VALIDATION_ERROR"
+            message:
+              type: string
+              description: Human-readable error message
+              example: "Missing required field: workflow_name"
+            details:
+              type: object
+              description: Additional error context
+              additionalProperties: true
+
+    # Workflow Trigger Request
+    TriggerRequest:
+      type: object
+      required: [workflow_name, session_id]
+      properties:
+        workflow_name:
+          type: string
+          enum: [strategy_workflow]
+          description: Only strategy_workflow is currently supported
+        session_id:
+          type: string
+          description: Unique session identifier
+          example: "session_12345"
+        client_name:
+          type: string
+          description: Client or organization name
+          example: "ACME Corporation"
+        engine_form:
+          type: object
+          description: Form data from the engine interface
+          properties:
+            industry:
+              type: string
+              example: "retail"
+            company_size:
+              type: string
+              example: "large"
+            current_capabilities:
+              type: array
+              items:
+                type: string
+              example: ["DXP Integration", "Analytics"]
+            business_objectives:
+              type: array
+              items:
+                type: string
+              example: ["Workflow Orchestration", "AI Enhancement"]
+            timeline_preference:
+              type: string
+              example: "6-months"
+            budget_range:
+              type: string
+              example: "50k-100k"
+        preferences:
+          type: object
+          description: User preferences and settings
+          properties:
+            notifications:
+              type: boolean
+              example: true
+            recipients:
+              type: array
+              items:
+                type: string
+                format: email
+              example: ["admin@acme.com"]
+        triggered_by:
+          type: string
+          description: Source of the trigger event
+          example: "api_trigger"
+
+    # Workflow Trigger Response
+    TriggerResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            workflow_id:
+              type: string
+              description: Unique workflow execution identifier
+              example: "wf-789012345"
+            session_id:
+              type: string
+              description: Session identifier from request
+            span_id:
+              type: string
+              description: Distributed tracing span identifier
+              example: "span-abc123def"
+            status:
+              type: string
+              enum: [triggered]
+              description: Current workflow status
+            webhook_url:
+              type: string
+              description: OPAL webhook URL used for execution
+              example: "https://webhook.opal.optimizely.com/webhooks/..."
+            estimated_duration:
+              type: string
+              description: Expected completion time
+              example: "6-8 minutes"
+            polling_url:
+              type: string
+              description: Endpoint for checking workflow status
+              example: "/api/orchestrations/status/session_12345"
+            message:
+              type: string
+              description: Descriptive success message
+
+    # Webhook Event Schema
+    WebhookEvent:
+      type: object
+      required: [workflow_id, agent_id, status, signature_valid, received_at, processing_time_ms, payload_size_bytes]
+      properties:
+        id:
+          type: string
+          description: Unique event identifier
+          example: "evt-789012345"
+        workflow_id:
+          type: string
+          description: Associated workflow identifier
+          example: "wf-123456789"
+        agent_id:
+          type: string
+          description: OPAL agent that generated the event
+          example: "content_review"
+          enum:
+            - experiment_blueprinter
+            - audience_suggester
+            - content_review
+            - roadmap_generator
+            - integration_health
+            - personalization_idea_generator
+            - cmp_organizer
+            - customer_journey
+            - geo_audit
+        status:
+          type: string
+          enum: [success, failure]
+          description: Event processing status
+        signature_valid:
+          type: boolean
+          description: Whether HMAC signature verification passed
+        received_at:
+          type: string
+          format: date-time
+          description: Event reception timestamp
+        processing_time_ms:
+          type: number
+          description: Time taken to process the event in milliseconds
+          example: 45
+        error_details:
+          type: string
+          nullable: true
+          description: Error message if processing failed
+        payload_size_bytes:
+          type: number
+          description: Size of the webhook payload in bytes
+          example: 1024
+        dedup_hash:
+          type: string
+          description: Truncated deduplication hash for display
+          example: "abc123def456..."
+        payload_preview:
+          type: string
+          description: Truncated preview of the payload content
+
+    # Webhook Payload (for POST /api/webhooks/opal-workflow)
+    WebhookPayload:
+      type: object
+      required: [workflow_id, agent_id, execution_status, agent_data]
+      properties:
+        workflow_id:
+          type: string
+          description: Workflow execution identifier
+          example: "wf-123456789"
+        agent_id:
+          type: string
+          description: Agent that completed processing
+        execution_status:
+          type: string
+          enum: [success, failure, timeout]
+          description: Agent execution result
+        agent_data:
+          type: object
+          description: Agent-specific output data
+          additionalProperties: true
+        offset:
+          type: integer
+          description: Event sequence number within workflow
+          example: 3
+
+    # Diagnostics Response
+    DiagnosticsResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            events:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebhookEvent'
+            summary:
+              type: object
+              properties:
+                total_count:
+                  type: integer
+                  description: Total events matching filters
+                returned_count:
+                  type: integer
+                  description: Number of events in this response
+                signature_valid_count:
+                  type: integer
+                  description: Number of events with valid signatures
+                error_count:
+                  type: integer
+                  description: Number of events with errors
+                date_range:
+                  type: object
+                  properties:
+                    from:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    to:
+                      type: string
+                      format: date-time
+                      nullable: true
+                filters_applied:
+                  type: object
+                  properties:
+                    limit:
+                      type: integer
+                    workflow_id:
+                      type: string
+                      nullable: true
+                    agent_id:
+                      type: string
+                      nullable: true
+                    status:
+                      type: string
+                    hours:
+                      type: integer
+            config_diagnostics:
+              type: object
+              properties:
+                osa_webhook_secret_configured:
+                  type: boolean
+                osa_webhook_url_configured:
+                  type: boolean
+                opal_tools_discovery_url_configured:
+                  type: boolean
+                external_opal_configured:
+                  type: boolean
+                osa_webhook_url_accessible:
+                  type: boolean
+                discovery_url_accessible:
+                  type: boolean
+                webhook_secret_length_ok:
+                  type: boolean
+                auth_key_configured:
+                  type: boolean
+            troubleshooting:
+              type: object
+              properties:
+                overall_health:
+                  type: string
+                  enum: [healthy, degraded, unhealthy, no_data]
+                issues_detected:
+                  type: array
+                  items:
+                    type: string
+                recommendations:
+                  type: array
+                  items:
+                    type: string
+                quick_fixes:
+                  type: array
+                  items:
+                    type: string
+
+    # Recommendations Request
+    RecommendationsRequest:
+      type: object
+      required: [workflow_id, preferences]
+      properties:
+        workflow_id:
+          type: string
+          description: Target workflow identifier
+          example: "wf-123456789"
+        preferences:
+          type: object
+          required: [priority_weights, risk_tolerance, business_objectives, timeline_constraints]
+          properties:
+            priority_weights:
+              type: object
+              description: Relative importance of different factors
+              required: [impact, effort]
+              properties:
+                impact:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                  description: Weight for business impact (0-1)
+                  example: 0.7
+                effort:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                  description: Weight for implementation effort (0-1)
+                  example: 0.3
+            risk_tolerance:
+              type: string
+              enum: [low, medium, high]
+              description: Risk appetite for recommendations
+              example: "medium"
+            business_objectives:
+              type: array
+              items:
+                type: string
+              description: Primary business goals
+              example: ["increase_conversion", "reduce_cost", "improve_ux"]
+            timeline_constraints:
+              type: object
+              description: Project timeline requirements
+              properties:
+                start_date:
+                  type: string
+                  format: date
+                  example: "2025-01-01"
+                end_date:
+                  type: string
+                  format: date
+                  example: "2025-06-30"
+
+    # Evidence Item
+    Evidence:
+      type: object
+      required: [agent_type, data_source, confidence, timestamp, summary]
+      properties:
+        agent_type:
+          type: string
+          description: OPAL agent that provided this evidence
+          example: "content_review"
+        data_source:
+          type: string
+          description: Source system for the evidence
+          example: "CMS"
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Agent's confidence in this evidence
+          example: 0.88
+        timestamp:
+          type: string
+          format: date-time
+          description: When evidence was collected
+        summary:
+          type: string
+          description: Brief description of the evidence
+          example: "CTA below fold reduces conversions by 15%"
+
+    # Recommendation Item
+    Recommendation:
+      type: object
+      required: [title, impact, effort, combined_ratio, confidence, confidence_breakdown, evidence]
+      properties:
+        title:
+          type: string
+          description: Recommendation title
+          example: "Improve CTA placement above the fold"
+        description:
+          type: string
+          description: Detailed recommendation description
+          example: "Move primary call-to-action buttons to prominent above-the-fold positions to improve visibility and conversion rates"
+        impact:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: Business impact score (1-10 scale)
+          example: 9
+        effort:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: Implementation effort score (1-10 scale)
+          example: 3
+        combined_ratio:
+          type: number
+          description: Impact-to-effort ratio
+          example: 3.0
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Overall confidence in recommendation
+          example: 0.92
+        confidence_breakdown:
+          type: object
+          description: Detailed confidence metrics
+          properties:
+            data_quality:
+              type: number
+              minimum: 0
+              maximum: 1
+              example: 0.9
+            agent_consensus:
+              type: number
+              minimum: 0
+              maximum: 1
+              example: 0.94
+        evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/Evidence'
+          description: Supporting evidence from OPAL agents
+
+    # Recommendations Response
+    RecommendationsResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            workflow_id:
+              type: string
+            workflow_state:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [running, completed, failed]
+                agents_completed:
+                  type: integer
+                total_agents:
+                  type: integer
+                  example: 9
+                progress_percentage:
+                  type: number
+                  example: 78
+            recommendations:
+              type: array
+              items:
+                $ref: '#/components/schemas/Recommendation'
+            metadata:
+              type: object
+              properties:
+                processing_time_ms:
+                  type: number
+                  example: 150
+                agents_consulted:
+                  type: integer
+                  example: 6
+                data_sources_analyzed:
+                  type: integer
+                  example: 12
+                generated_at:
+                  type: string
+                  format: date-time
+
+    # Knowledge Retrieval (Planned Endpoints)
+    KnowledgeQuery:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          description: Search query or text to match
+          example: "conversion optimization strategies"
+        filters:
+          type: object
+          properties:
+            agent_type:
+              type: string
+            confidence_threshold:
+              type: number
+              minimum: 0
+              maximum: 1
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+
+    KnowledgeResult:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        score:
+          type: number
+        metadata:
+          type: object
+          additionalProperties: true
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+  - HMACAuth: []
+
+# API Paths
+paths:
+  # Orchestration Endpoints
+  /api/orchestrations/trigger:
+    post:
+      summary: Trigger OPAL Strategy Workflow
+      description: |
+        Initiates a strategy_workflow execution in OPAL with comprehensive validation,
+        security, tracking, and error handling. Supports Force Sync operations.
+
+        **Current Implementation**: Fully functional with production-grade features
+        **Backward Compatibility**: Maintains compatibility with existing OPAL integrations
+      operationId: triggerWorkflow
+      tags: [Orchestration]
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerRequest'
+            examples:
+              basic_trigger:
+                summary: Basic workflow trigger
+                value:
+                  workflow_name: "strategy_workflow"
+                  session_id: "session_12345"
+                  client_name: "ACME Corporation"
+              full_trigger:
+                summary: Complete workflow trigger with preferences
+                value:
+                  workflow_name: "strategy_workflow"
+                  session_id: "session_abc123"
+                  client_name: "TechCorp Inc"
+                  engine_form:
+                    industry: "technology"
+                    company_size: "large"
+                    current_capabilities: ["Analytics", "CRM Integration"]
+                    business_objectives: ["Increase Conversion", "Reduce Churn"]
+                    timeline_preference: "3-months"
+                    budget_range: "100k-250k"
+                  preferences:
+                    notifications: true
+                    recipients: ["admin@techcorp.com", "marketing@techcorp.com"]
+                  triggered_by: "dashboard_ui"
+      responses:
+        '200':
+          description: Workflow triggered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+              example:
+                success: true
+                workflow_id: "wf-789012345"
+                session_id: "session_12345"
+                correlation_id: "api-1762961202697-ipoahk"
+                span_id: "span-abc123def"
+                status: "triggered"
+                webhook_url: "https://webhook.opal.optimizely.com/webhooks/..."
+                estimated_duration: "6-8 minutes"
+                polling_url: "/api/orchestrations/status/session_12345"
+                message: "Workflow 'strategy_workflow' triggered successfully"
+                timestamp: "2025-11-12T19:30:00Z"
+                duration_ms: 245
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: "VALIDATION_ERROR"
+                message: "Missing required field: session_id"
+                correlation_id: "api-1762961202697-ipoahk"
+                timestamp: "2025-11-12T19:30:00Z"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      summary: Get Orchestration Endpoint Information
+      description: Returns API documentation and example usage for the orchestration trigger endpoint
+      operationId: getOrchestrationInfo
+      tags: [Orchestration]
+      responses:
+        '200':
+          description: Endpoint information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  endpoint:
+                    type: string
+                  method:
+                    type: string
+                  description:
+                    type: string
+                  workflow_security:
+                    type: object
+                  required_fields:
+                    type: object
+                  optional_fields:
+                    type: object
+                  response_format:
+                    type: object
+                  example_request:
+                    type: object
+
+  # Webhook Endpoints
+  /api/webhooks/opal-workflow:
+    post:
+      summary: OPAL Agent Webhook Event Receiver
+      description: |
+        Idempotent receiver for OPAL agent webhook events with HMAC verification,
+        deduplication, and persistent storage.
+
+        **Security Features**:
+        - HMAC-SHA256 signature verification
+        - Request deduplication via hash comparison
+        - Rate limiting and abuse protection
+
+        **Current Implementation**: Production-ready with full error handling
+        **Backward Compatibility**: Maintains existing webhook contract
+      operationId: receiveWebhook
+      tags: [Webhooks]
+      security:
+        - HMACAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPayload'
+            examples:
+              agent_success:
+                summary: Successful agent completion
+                value:
+                  workflow_id: "wf-123456789"
+                  agent_id: "content_review"
+                  execution_status: "success"
+                  offset: 3
+                  agent_data:
+                    recommendations: ["Improve CTA placement", "Optimize loading speed"]
+                    confidence_score: 0.92
+                    processing_time: 1200
+              agent_failure:
+                summary: Agent execution failure
+                value:
+                  workflow_id: "wf-123456789"
+                  agent_id: "integration_health"
+                  execution_status: "failure"
+                  offset: 5
+                  agent_data:
+                    error: "Connection timeout to external service"
+                    retry_count: 3
+      responses:
+        '202':
+          description: Webhook accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Event received and queued for processing"
+                  event_id:
+                    type: string
+                    example: "evt-789012345"
+                  correlation_id:
+                    type: string
+                    example: "webhook-1762974657783-q8bdz4"
+                  processing:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "queued"
+                      estimated_processing_time:
+                        type: string
+                        example: "30-60 seconds"
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: "Unauthorized"
+                message: "Invalid signature"
+                correlation_id: "webhook-1762974657783-q8bdz4"
+        '400':
+          description: Invalid payload format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      summary: Webhook Health Check
+      description: Returns health status and recent activity metrics for the webhook receiver
+      operationId: getWebhookHealth
+      tags: [Webhooks]
+      responses:
+        '200':
+          description: Webhook receiver health information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  webhook_receiver:
+                    type: object
+                    properties:
+                      endpoint:
+                        type: string
+                      methods:
+                        type: array
+                        items:
+                          type: string
+                      authentication:
+                        type: string
+                      features:
+                        type: array
+                        items:
+                          type: string
+                  recent_activity:
+                    type: object
+                    properties:
+                      total_events_24h:
+                        type: integer
+                      successful_events_24h:
+                        type: integer
+                      failed_events_24h:
+                        type: integer
+                      last_event_timestamp:
+                        type: string
+                        format: date-time
+                        nullable: true
+                      signature_valid_rate:
+                        type: number
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  # Diagnostics Endpoints
+  /api/diagnostics/last-webhook:
+    get:
+      summary: Webhook Event Diagnostics
+      description: |
+        Retrieve recent webhook events with detailed diagnostic information for troubleshooting.
+        Includes configuration validation, signature analysis, and troubleshooting guidance.
+
+        **Current Implementation**: Uses Base API Handler with file-based storage
+        **Features**: Filtering, pagination, configuration diagnostics, troubleshooting guidance
+      operationId: getWebhookDiagnostics
+      tags: [Diagnostics]
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of events to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: status
+          in: query
+          description: Filter by event status
+          schema:
+            type: string
+            enum: [success, failure, all]
+            default: all
+        - name: agent_id
+          in: query
+          description: Filter by specific OPAL agent
+          schema:
+            type: string
+            example: content_review
+        - name: workflow_id
+          in: query
+          description: Filter by workflow identifier
+          schema:
+            type: string
+            example: wf-123456789
+        - name: hours
+          in: query
+          description: Time window for events (hours ago)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 168
+            default: 24
+      responses:
+        '200':
+          description: Diagnostic information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosticsResponse'
+              example:
+                success: true
+                correlation_id: "api-1762974657783-q8bdz4"
+                timestamp: "2025-11-12T19:30:00Z"
+                duration_ms: 20
+                events:
+                  - id: "evt-789012345"
+                    workflow_id: "wf-123456789"
+                    agent_id: "content_review"
+                    status: "success"
+                    signature_valid: true
+                    received_at: "2025-11-12T19:25:00Z"
+                    processing_time_ms: 45
+                    error_details: null
+                    payload_size_bytes: 1024
+                    dedup_hash: "abc123def456..."
+                    payload_preview: "{\"workflow_id\":\"wf-123...\""
+                summary:
+                  total_count: 15
+                  returned_count: 1
+                  signature_valid_count: 14
+                  error_count: 1
+                  date_range:
+                    from: "2025-11-11T19:30:00Z"
+                    to: "2025-11-12T19:30:00Z"
+                  filters_applied:
+                    limit: 25
+                    workflow_id: null
+                    agent_id: null
+                    status: "all"
+                    hours: 24
+                config_diagnostics:
+                  osa_webhook_secret_configured: true
+                  osa_webhook_url_configured: true
+                  opal_tools_discovery_url_configured: true
+                  external_opal_configured: true
+                  osa_webhook_url_accessible: true
+                  discovery_url_accessible: true
+                  webhook_secret_length_ok: true
+                  auth_key_configured: true
+                troubleshooting:
+                  overall_health: "healthy"
+                  issues_detected: []
+                  recommendations: []
+                  quick_fixes: []
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Recommendations Endpoints
+  /api/recommendations:
+    post:
+      summary: Generate Intelligent Recommendations
+      description: |
+        Generate ranked recommendations based on workflow data and user preferences.
+        Uses enterprise decision logic with evidence aggregation, confidence scoring,
+        and impact/effort analysis.
+
+        **Current Implementation**: Production-ready with Base API Handler
+        **Features**: Multi-agent evidence, confidence breakdown, impact/effort ranking
+      operationId: generateRecommendations
+      tags: [Decision Layer]
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationsRequest'
+            examples:
+              optimization_focused:
+                summary: Conversion optimization preferences
+                value:
+                  workflow_id: "wf-123456789"
+                  preferences:
+                    priority_weights:
+                      impact: 0.8
+                      effort: 0.2
+                    risk_tolerance: "medium"
+                    business_objectives: ["increase_conversion", "improve_ux"]
+                    timeline_constraints:
+                      start_date: "2025-01-15"
+                      end_date: "2025-04-15"
+      responses:
+        '200':
+          description: Recommendations generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationsResponse'
+              example:
+                success: true
+                correlation_id: "api-1762974657783-q8bdz4"
+                timestamp: "2025-11-12T19:30:00Z"
+                duration_ms: 150
+                workflow_id: "wf-123456789"
+                workflow_state:
+                  status: "completed"
+                  agents_completed: 9
+                  total_agents: 9
+                  progress_percentage: 100
+                recommendations:
+                  - title: "Improve CTA placement above the fold"
+                    description: "Move primary call-to-action buttons to prominent above-the-fold positions"
+                    impact: 9
+                    effort: 3
+                    combined_ratio: 3.0
+                    confidence: 0.92
+                    confidence_breakdown:
+                      data_quality: 0.9
+                      agent_consensus: 0.94
+                    evidence:
+                      - agent_type: "content_review"
+                        data_source: "CMS"
+                        confidence: 0.88
+                        timestamp: "2025-11-12T19:25:00Z"
+                        summary: "CTA below fold reduces conversions by 15%"
+                metadata:
+                  processing_time_ms: 150
+                  agents_consulted: 9
+                  data_sources_analyzed: 12
+                  generated_at: "2025-11-12T19:30:00Z"
+        '404':
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: "WORKFLOW_NOT_FOUND"
+                message: "Workflow wf-123456789 not found"
+
+  # Knowledge & Retrieval Endpoints (Planned)
+  /api/retrieve:
+    post:
+      summary: Knowledge Retrieval
+      description: |
+        **PLANNED ENDPOINT**: Advanced vector search and semantic retrieval from OPAL knowledge base.
+
+        **Planned Features**:
+        - Vector similarity search
+        - Semantic query understanding
+        - Multi-modal content retrieval
+        - Relevance scoring
+      operationId: retrieveKnowledge
+      tags: [Knowledge (Planned)]
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeQuery'
+            example:
+              query: "conversion optimization strategies for e-commerce"
+              filters:
+                agent_type: "content_review"
+                confidence_threshold: 0.7
+              limit: 10
+      responses:
+        '200':
+          description: Knowledge retrieval results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/KnowledgeResult'
+                  query_info:
+                    type: object
+              example:
+                success: true
+                results:
+                  - id: "kb-001"
+                    content: "A/B testing CTA placement shows 23% conversion improvement"
+                    score: 0.94
+                    metadata:
+                      source: "experiment_blueprinter"
+                      date_collected: "2025-11-10"
+
+  /api/upsert:
+    post:
+      summary: Knowledge Upsert
+      description: |
+        **PLANNED ENDPOINT**: Insert or update knowledge base entries.
+
+        **Planned Features**:
+        - Bulk knowledge insertion
+        - Automatic vector embeddings
+        - Duplicate detection and merging
+        - Metadata enrichment
+      operationId: upsertKnowledge
+      tags: [Knowledge (Planned)]
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      content:
+                        type: string
+                      metadata:
+                        type: object
+      responses:
+        '200':
+          description: Documents upserted successfully
+
+  /api/similar:
+    post:
+      summary: Similarity Search
+      description: |
+        **PLANNED ENDPOINT**: Find similar content using vector similarity.
+
+        **Planned Features**:
+        - Content-based similarity matching
+        - Cross-agent knowledge correlation
+        - Recommendation deduplication
+        - Clustering and categorization
+      operationId: findSimilar
+      tags: [Knowledge (Planned)]
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Similar content found
+
+  /api/trace:
+    get:
+      summary: Decision Trace
+      description: |
+        **PLANNED ENDPOINT**: Trace the decision path and evidence chain for recommendations.
+
+        **Planned Features**:
+        - End-to-end decision tracing
+        - Agent contribution analysis
+        - Evidence provenance tracking
+        - Decision audit trails
+      operationId: traceDecision
+      tags: [Knowledge (Planned)]
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: recommendation_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Decision trace information
+
+# Server-Sent Events Documentation (Informational)
+x-sse-endpoints:
+  /api/stream/agent-updates:
+    summary: Real-time Agent Updates Stream
+    description: |
+      **Server-Sent Events (SSE)** endpoint for real-time agent progress updates and incremental recommendations.
+
+      **Event Format**:
+      ```
+      event: agent_update
+      data: {
+        "workflow_id": "wf-123",
+        "agent_id": "content_review",
+        "progress": 60,
+        "status": "running",
+        "partial_recommendation": "Improve CTA placement"
+      }
+      ```
+
+      **Features**:
+      - 5-second update intervals during active workflows
+      - Automatic connection cleanup after 10 minutes
+      - CORS support for web applications
+      - Event persistence to file-based storage
+
+      **Connection**:
+      ```javascript
+      const eventSource = new EventSource('/api/stream/agent-updates?workflow_id=wf-123');
+      eventSource.addEventListener('agent_update', (event) => {
+        const data = JSON.parse(event.data);
+        // Process agent update...
+      });
+      ```
+    parameters:
+      - name: workflow_id
+        description: Workflow to stream updates for
+        required: true
+        schema:
+          type: string
+    events:
+      connection:
+        description: Initial connection confirmation
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Connected to OPAL agent updates stream"
+            workflow_id:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+      agent_update:
+        description: Agent progress and preliminary findings
+        data:
+          type: object
+          required: [workflow_id, agent_id, progress, status]
+          properties:
+            workflow_id:
+              type: string
+              example: "wf-123"
+            agent_id:
+              type: string
+              enum:
+                - experiment_blueprinter
+                - audience_suggester
+                - content_review
+                - roadmap_generator
+                - integration_health
+                - personalization_idea_generator
+                - cmp_organizer
+                - customer_journey
+                - geo_audit
+              example: "content_review"
+            progress:
+              type: integer
+              minimum: 0
+              maximum: 100
+              example: 60
+            status:
+              type: string
+              enum: [running, completed, failed]
+              example: "running"
+            partial_recommendation:
+              type: string
+              description: Preliminary findings from the agent
+              example: "Improve CTA placement above the fold"
+      error:
+        description: Error event during streaming
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+            error:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+
+# Event Catalog
+x-event-catalog:
+  webhook_events:
+    description: |
+      Webhook events represent state changes and completions from OPAL agents.
+      All events include HMAC signature verification and deduplication handling.
+    events:
+      opal.workflow.started:
+        description: Workflow execution began
+        schema:
+          type: object
+          properties:
+            workflow_id:
+              type: string
+            session_id:
+              type: string
+            triggered_by:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+        example:
+          workflow_id: "wf-123456789"
+          session_id: "session_abc123"
+          triggered_by: "api_trigger"
+          timestamp: "2025-11-12T19:30:00Z"
+
+      opal.agent.completed:
+        description: Individual agent finished processing
+        schema:
+          type: object
+          properties:
+            workflow_id:
+              type: string
+            agent_id:
+              type: string
+            execution_status:
+              type: string
+              enum: [success, failure, timeout]
+            agent_data:
+              type: object
+            processing_time_ms:
+              type: number
+            timestamp:
+              type: string
+              format: date-time
+        example:
+          workflow_id: "wf-123456789"
+          agent_id: "content_review"
+          execution_status: "success"
+          agent_data:
+            recommendations: ["Improve CTA placement"]
+            confidence_score: 0.92
+          processing_time_ms: 1200
+          timestamp: "2025-11-12T19:30:00Z"
+
+      opal.workflow.completed:
+        description: Entire workflow execution finished
+        schema:
+          type: object
+          properties:
+            workflow_id:
+              type: string
+            session_id:
+              type: string
+            status:
+              type: string
+              enum: [completed, failed, timeout]
+            agents_completed:
+              type: integer
+            total_processing_time_ms:
+              type: number
+            timestamp:
+              type: string
+              format: date-time
+        example:
+          workflow_id: "wf-123456789"
+          session_id: "session_abc123"
+          status: "completed"
+          agents_completed: 9
+          total_processing_time_ms: 45000
+          timestamp: "2025-11-12T19:35:00Z"
+
+  sse_events:
+    description: |
+      Server-Sent Events provide real-time updates for live dashboards and monitoring.
+      Events are streamed every 5 seconds during active workflows.
+    events:
+      agent_update:
+        description: Real-time agent progress and preliminary findings
+        frequency: "Every 5 seconds during active workflows"
+        retention: "Events persisted to file-based storage for diagnostics"
+        schema:
+          type: object
+          required: [workflow_id, agent_id, progress, status]
+          properties:
+            workflow_id:
+              type: string
+            agent_id:
+              type: string
+            progress:
+              type: integer
+              minimum: 0
+              maximum: 100
+            status:
+              type: string
+              enum: [running, completed, failed]
+            partial_recommendation:
+              type: string
+        example:
+          workflow_id: "wf-123456789"
+          agent_id: "content_review"
+          progress: 75
+          status: "running"
+          partial_recommendation: "Optimize page load speeds for mobile users"
+
+      recommendation_preview:
+        description: Incremental recommendation updates with confidence scores
+        frequency: "On agent completion or significant progress milestones"
+        schema:
+          type: object
+          properties:
+            workflow_id:
+              type: string
+            agent_id:
+              type: string
+            recommendation:
+              type: string
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+            timestamp:
+              type: string
+              format: date-time
+        example:
+          workflow_id: "wf-123456789"
+          agent_id: "experiment_blueprinter"
+          recommendation: "A/B test hero banner placement for 15% conversion lift"
+          confidence: 0.89
+          timestamp: "2025-11-12T19:30:00Z"
+
+  file_storage_events:
+    description: |
+      Events persisted to file-based storage for diagnostics and audit purposes.
+      Files are automatically rotated and maintained according to retention policies.
+    storage_locations:
+      webhook_events: "data/webhook-events/webhook-events-YYYY-MM-DD.json"
+      streaming_events: "data/streaming-events/streaming-events-YYYY-MM-DD.json"
+    retention_policy:
+      max_events_per_file: 1000
+      max_files_retained: 10
+      cleanup_frequency: "Daily"
+    schema:
+      webhook_event_record:
+        type: object
+        properties:
+          id:
+            type: string
+          workflow_id:
+            type: string
+          agent_id:
+            type: string
+          status:
+            type: string
+            enum: [success, failure]
+          signature_valid:
+            type: boolean
+          received_at:
+            type: string
+            format: date-time
+          processing_time_ms:
+            type: number
+          error_details:
+            type: string
+            nullable: true
+          payload_size_bytes:
+            type: number
+          dedup_hash:
+            type: string
+          http_status:
+            type: integer
+          payload_json:
+            type: object
+      streaming_event_record:
+        type: object
+        properties:
+          id:
+            type: string
+          workflow_id:
+            type: string
+          agent_id:
+            type: string
+          event_type:
+            type: string
+            enum: [agent_update, progress, recommendation_preview, completion]
+          data:
+            type: object
+            properties:
+              progress_percentage:
+                type: number
+              preliminary_findings:
+                type: string
+              confidence_scores:
+                type: number
+              recommendation_previews:
+                type: string
+              status:
+                type: string
+                enum: [running, completed, failed]
+          timestamp:
+            type: string
+            format: date-time
+
+# Tags for grouping endpoints
+tags:
+  - name: Orchestration
+    description: Workflow triggering and management
+  - name: Webhooks
+    description: OPAL agent webhook event processing
+  - name: Diagnostics
+    description: System monitoring and troubleshooting
+  - name: Decision Layer
+    description: Intelligent recommendations and decision support
+  - name: Knowledge (Planned)
+    description: Knowledge retrieval and management (future implementation)
+
+# Additional metadata
+x-api-version: "1.0.0"
+x-implementation-status:
+  current:
+    - "POST /api/orchestrations/trigger"
+    - "POST /api/webhooks/opal-workflow"
+    - "GET /api/diagnostics/last-webhook"
+    - "POST /api/recommendations"
+    - "GET /api/stream/agent-updates (SSE)"
+  planned:
+    - "POST /api/retrieve"
+    - "POST /api/upsert"
+    - "POST /api/similar"
+    - "GET /api/trace"
+
+x-backward-compatibility:
+  preserved_integrations:
+    - "Force Sync operations"
+    - "OPAL mapping configurations"
+    - "OPAL custom tools data flow"
+    - "Existing webhook contracts"
+    - "OSA data ingestion pipelines"
+  migration_notes:
+    - "All existing endpoints remain functional"
+    - "New endpoints use standardized Base API Handler"
+    - "Authentication schemes are additive, not replacing"
+    - "File-based storage supplements existing data flows"

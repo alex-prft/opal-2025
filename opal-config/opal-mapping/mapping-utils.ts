@@ -5,7 +5,7 @@
  * the accuracy and personalization of OSA results.
  */
 
-import { CompleteOPALMapping, OPALMapping, ResultEnhancement } from './types';
+import { CompleteOPALMapping, OPALMapping, ResultEnhancement, NavigationStructure } from './types';
 import opalMappingData from './opal_mapping.json';
 
 /**
@@ -237,4 +237,70 @@ export function convertToMappingKey(areaId: string, tabId: string): { area: stri
     area: areaMapping[areaId] || areaId,
     subSection: sectionMapping[tabId] || tabId
   };
+}
+
+/**
+ * Get navigation structure for a specific area and sub-section
+ */
+export function getNavigationStructure(area: string, subSection: string): NavigationStructure | null {
+  const mapping = getOPALMapping(area, subSection);
+  return mapping?.navigation_structure || null;
+}
+
+/**
+ * Get all tier-3 navigation options for a specific area and sub-section
+ */
+export function getTier3Navigation(area: string, subSection: string): string[] {
+  const navigation = getNavigationStructure(area, subSection);
+  return navigation?.tier3 || [];
+}
+
+/**
+ * Get complete navigation hierarchy for all areas
+ */
+export function getAllNavigationStructure(): { [area: string]: { [subSection: string]: NavigationStructure } } {
+  const mapping = opalMappingData as CompleteOPALMapping;
+  const result: { [area: string]: { [subSection: string]: NavigationStructure } } = {};
+
+  for (const [area, sections] of Object.entries(mapping)) {
+    result[area] = {};
+    for (const [subSection, sectionData] of Object.entries(sections)) {
+      if (sectionData.navigation_structure) {
+        result[area][subSection] = sectionData.navigation_structure;
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Get flattened list of all navigation paths
+ */
+export function getAllNavigationPaths(): Array<{
+  tier1: string;
+  tier2: string;
+  tier3: string;
+  fullPath: string;
+}> {
+  const mapping = opalMappingData as CompleteOPALMapping;
+  const paths: Array<{ tier1: string; tier2: string; tier3: string; fullPath: string }> = [];
+
+  for (const [area, sections] of Object.entries(mapping)) {
+    for (const [subSection, sectionData] of Object.entries(sections)) {
+      if (sectionData.navigation_structure) {
+        const nav = sectionData.navigation_structure;
+        nav.tier3.forEach(tier3Item => {
+          paths.push({
+            tier1: nav.tier1,
+            tier2: nav.tier2,
+            tier3: tier3Item,
+            fullPath: `${nav.tier1} > ${nav.tier2} > ${tier3Item}`
+          });
+        });
+      }
+    }
+  }
+
+  return paths;
 }

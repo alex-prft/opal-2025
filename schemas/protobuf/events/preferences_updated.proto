@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+package com.opal.events.user;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when user preferences or settings are updated
+message PreferencesUpdated {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // User identifier - serves as idempotency key
+  string user_id = 4;
+
+  // Session identifier if applicable
+  optional string session_id = 5;
+
+  // Client organization name
+  optional string client_name = 6;
+
+  // Type of preference update performed
+  enum UpdateType {
+    UPDATE_TYPE_UNSPECIFIED = 0;
+    PREFERENCE_WEIGHTS = 1;
+    NOTIFICATION_SETTINGS = 2;
+    RISK_TOLERANCE = 3;
+    BUSINESS_OBJECTIVES = 4;
+    TIMELINE_CONSTRAINTS = 5;
+    FULL_PROFILE = 6;
+  }
+  UpdateType update_type = 7;
+
+  // User preferences structure
+  message UserPreferences {
+    message PriorityWeights {
+      double impact = 1;
+      double effort = 2;
+    }
+    optional PriorityWeights priority_weights = 1;
+    optional string risk_tolerance = 2;
+    repeated string business_objectives = 3;
+
+    message TimelineConstraints {
+      optional string start_date = 1;
+      optional string end_date = 2;
+      optional string preferred_duration = 3;
+    }
+    optional TimelineConstraints timeline_constraints = 4;
+
+    message NotificationSettings {
+      bool email_notifications = 1;
+      bool push_notifications = 2;
+      bool workflow_updates = 3;
+      bool recommendation_alerts = 4;
+      repeated string recipients = 5;
+    }
+    optional NotificationSettings notification_settings = 5;
+  }
+
+  // Previous preference values before update
+  optional UserPreferences previous_preferences = 8;
+
+  // New preference values after update
+  UserPreferences updated_preferences = 9;
+
+  // Detailed list of changes made to preferences
+  message PreferenceChange {
+    string field_name = 1;
+    optional string previous_value = 2;
+    optional string new_value = 3;
+    string change_type = 4;
+  }
+  repeated PreferenceChange changes_detected = 10;
+
+  // What triggered the preference update
+  enum UpdateTrigger {
+    UPDATE_TRIGGER_UNSPECIFIED = 0;
+    USER_ACTION = 1;
+    ADMIN_ACTION = 2;
+    API_CALL = 3;
+    SYSTEM_MIGRATION = 4;
+    WORKFLOW_COMPLETION = 5;
+  }
+  UpdateTrigger triggered_by = 11;
+
+  // Source system or interface where update was made
+  optional string update_source = 12;
+
+  // Results of preference validation
+  message ValidationResults {
+    bool all_valid = 1;
+    repeated string validation_errors = 2;
+    repeated string validation_warnings = 3;
+  }
+  optional ValidationResults validation_results = 13;
+
+  // Analysis of how preference changes impact system behavior
+  message ImpactAnalysis {
+    bool affects_active_workflows = 1;
+    repeated string affected_workflow_ids = 2;
+    bool recommendation_recalculation_needed = 3;
+    bool notification_changes_applied = 4;
+  }
+  optional ImpactAnalysis impact_analysis = 14;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 15;
+
+  // System that processed the preference update
+  string source_system = 16;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 17;
+}

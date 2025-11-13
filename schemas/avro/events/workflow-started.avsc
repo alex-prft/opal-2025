@@ -1,0 +1,122 @@
+{
+  "type": "record",
+  "name": "WorkflowStarted",
+  "namespace": "com.opal.events.workflow",
+  "doc": "Event emitted when a workflow execution begins",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "workflow_id",
+      "type": "string",
+      "doc": "Unique workflow execution identifier - serves as idempotency key"
+    },
+    {
+      "name": "session_id",
+      "type": "string",
+      "doc": "Session identifier from the original trigger request"
+    },
+    {
+      "name": "workflow_name",
+      "type": {
+        "type": "enum",
+        "name": "WorkflowType",
+        "symbols": ["strategy_workflow"]
+      },
+      "default": "strategy_workflow",
+      "doc": "Type of workflow being executed"
+    },
+    {
+      "name": "triggered_by",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Source or user that initiated the workflow"
+    },
+    {
+      "name": "client_name",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client organization name"
+    },
+    {
+      "name": "engine_form",
+      "type": ["null", {
+        "type": "record",
+        "name": "EngineForm",
+        "fields": [
+          {"name": "industry", "type": ["null", "string"], "default": null},
+          {"name": "company_size", "type": ["null", "string"], "default": null},
+          {"name": "current_capabilities", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "business_objectives", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "timeline_preference", "type": ["null", "string"], "default": null},
+          {"name": "budget_range", "type": ["null", "string"], "default": null}
+        ]
+      }],
+      "default": null,
+      "doc": "Form data from the engine interface"
+    },
+    {
+      "name": "preferences",
+      "type": ["null", {
+        "type": "record",
+        "name": "WorkflowPreferences",
+        "fields": [
+          {"name": "notifications", "type": ["null", "boolean"], "default": null},
+          {"name": "recipients", "type": ["null", {"type": "array", "items": "string"}], "default": null}
+        ]
+      }],
+      "default": null,
+      "doc": "User preferences and settings"
+    },
+    {
+      "name": "webhook_url",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "OPAL webhook URL used for execution"
+    },
+    {
+      "name": "estimated_duration",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Expected completion time"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "opal-api",
+      "doc": "System that generated this event"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

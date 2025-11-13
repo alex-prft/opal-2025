@@ -1,0 +1,191 @@
+{
+  "type": "record",
+  "name": "DecisionDegraded",
+  "namespace": "com.opal.events.decision",
+  "doc": "Event emitted when recommendation quality degrades or confidence drops",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "degradation_id",
+      "type": "string",
+      "doc": "Unique degradation event identifier - serves as idempotency key"
+    },
+    {
+      "name": "original_decision_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "ID of the original decision that degraded"
+    },
+    {
+      "name": "workflow_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Associated workflow identifier"
+    },
+    {
+      "name": "degradation_type",
+      "type": {
+        "type": "enum",
+        "name": "DegradationType",
+        "symbols": [
+          "confidence_drop",
+          "data_quality_issue",
+          "agent_failure",
+          "consensus_loss",
+          "temporal_drift",
+          "external_dependency_failure"
+        ]
+      },
+      "doc": "Type of degradation detected"
+    },
+    {
+      "name": "severity",
+      "type": {
+        "type": "enum",
+        "name": "Severity",
+        "symbols": ["low", "medium", "high", "critical"]
+      },
+      "doc": "Severity level of the degradation"
+    },
+    {
+      "name": "confidence_metrics",
+      "type": {
+        "type": "record",
+        "name": "ConfidenceMetrics",
+        "fields": [
+          {"name": "previous_confidence", "type": ["null", "double"], "default": null, "doc": "Previous confidence score"},
+          {"name": "current_confidence", "type": "double", "doc": "Current confidence score"},
+          {"name": "confidence_drop", "type": "double", "doc": "Amount of confidence drop"},
+          {"name": "threshold_breached", "type": "boolean", "doc": "Whether confidence threshold was breached"},
+          {"name": "minimum_threshold", "type": "double", "doc": "Minimum acceptable confidence threshold"}
+        ]
+      },
+      "doc": "Confidence scoring metrics showing degradation"
+    },
+    {
+      "name": "affected_agents",
+      "type": ["null", {"type": "array", "items": "string"}],
+      "default": null,
+      "doc": "Agents that contributed to the degradation"
+    },
+    {
+      "name": "data_quality_issues",
+      "type": ["null", {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "DataQualityIssue",
+          "fields": [
+            {"name": "data_source", "type": "string"},
+            {"name": "issue_type", "type": "string"},
+            {"name": "severity", "type": "string"},
+            {"name": "description", "type": "string"}
+          ]
+        }
+      }],
+      "default": null,
+      "doc": "Specific data quality issues identified"
+    },
+    {
+      "name": "recommendations_affected",
+      "type": ["null", "int"],
+      "default": null,
+      "doc": "Number of recommendations affected by degradation"
+    },
+    {
+      "name": "mitigation_actions",
+      "type": ["null", {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "MitigationAction",
+          "fields": [
+            {"name": "action_type", "type": "string"},
+            {"name": "description", "type": "string"},
+            {"name": "priority", "type": "string"},
+            {"name": "estimated_resolution_time", "type": ["null", "string"], "default": null}
+          ]
+        }
+      }],
+      "default": null,
+      "doc": "Suggested mitigation actions to address degradation"
+    },
+    {
+      "name": "detection_metadata",
+      "type": {
+        "type": "record",
+        "name": "DetectionMetadata",
+        "fields": [
+          {"name": "detection_algorithm", "type": "string"},
+          {"name": "detection_time_ms", "type": "long"},
+          {"name": "monitoring_window", "type": "string"},
+          {"name": "baseline_metrics", "type": ["null", {"type": "map", "values": "double"}], "default": null}
+        ]
+      },
+      "doc": "Metadata about how the degradation was detected"
+    },
+    {
+      "name": "error_details",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Detailed error information if available"
+    },
+    {
+      "name": "alert_sent",
+      "type": "boolean",
+      "default": false,
+      "doc": "Whether an alert was sent for this degradation"
+    },
+    {
+      "name": "auto_recovery_attempted",
+      "type": "boolean",
+      "default": false,
+      "doc": "Whether automatic recovery was attempted"
+    },
+    {
+      "name": "client_name",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client organization name if applicable"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "quality-monitor",
+      "doc": "System that detected the degradation"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the degradation occurred"
+    }
+  ]
+}

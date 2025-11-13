@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { SafeDate } from '@/lib/utils/date-formatter';
 import { AgentDataPayload, AGENT_ROUTES, AGENT_NAMES } from '@/types/agent-data';
+import { ValidatePayloadPanel, ReplayWorkflowPanel, AgentDataSummaryPanel } from '@/components/agent-monitoring';
 
 interface EditableSection {
   isEditing: boolean;
@@ -406,6 +407,35 @@ export default function AgentPage() {
               View JSON
             </Button>
           </div>
+        </div>
+      </div>
+
+      {/* OPAL → OSA Monitoring Panels */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <Database className="h-5 w-5 text-blue-600" />
+          OPAL → OSA Monitoring & Validation
+        </h2>
+
+        <div className="grid gap-4">
+          {/* Agent Data Summary Panel */}
+          <AgentDataSummaryPanel
+            agentId={agentId}
+            className="bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200"
+          />
+
+          {/* Validate Payload Panel */}
+          <ValidatePayloadPanel
+            agentId={agentId}
+            className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
+          />
+
+          {/* Replay Workflow Panel */}
+          <ReplayWorkflowPanel
+            agentId={agentId}
+            lastWorkflowId={agentData?.lastWorkflowId}
+            className="bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200"
+          />
         </div>
       </div>
 

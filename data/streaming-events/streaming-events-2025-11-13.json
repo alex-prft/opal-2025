@@ -1,0 +1,26 @@
+[
+  {
+    "id": "stream-1762994318651-rybku",
+    "workflow_id": "validation-test",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 25,
+      "status": "running",
+      "preliminary_findings": "Test personalized product recommendations"
+    },
+    "timestamp": "2025-11-13T00:38:38.651Z"
+  },
+  {
+    "id": "stream-1762994318657-y2jiri",
+    "workflow_id": "validation-test",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Segment mobile users for app-specific campaigns"
+    },
+    "timestamp": "2025-11-13T00:38:38.657Z"
+  }
+]

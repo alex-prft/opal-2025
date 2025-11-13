@@ -298,7 +298,7 @@ export async function POST(request: NextRequest) {
     const opalPayload = buildOpalPayload(body, correlationId, spanId);
 
     // 4. Store workflow execution record
-    await webhookEventOperations.createEvent({
+    await webhookEventOperations.storeWebhookEvent({
       event_type: 'workflow_triggered',
       workflow_id: `pending-${correlationId}`,
       workflow_name: body.workflow_name,
@@ -321,14 +321,36 @@ export async function POST(request: NextRequest) {
 
     // 6. Update workflow execution with result
     if (triggerResult.success && triggerResult.workflow_id) {
-      await db.updateWorkflowExecution(`pending-${correlationId}`, {
-        status: 'running',
-        event_count: 0
+      await webhookEventOperations.storeWebhookEvent({
+        event_type: 'workflow_status_update',
+        workflow_id: triggerResult.workflow_id,
+        workflow_name: body.workflow_name,
+        session_id: body.session_id,
+        received_at: new Date().toISOString(),
+        payload: {
+          status: 'running',
+          event_count: 0,
+          correlation_id: correlationId,
+          span_id: spanId
+        },
+        success: true
       });
     } else {
-      await db.updateWorkflowExecution(`pending-${correlationId}`, {
-        status: 'failed',
-        completed_at: new Date().toISOString()
+      await webhookEventOperations.storeWebhookEvent({
+        event_type: 'workflow_status_update',
+        workflow_id: `pending-${correlationId}`,
+        workflow_name: body.workflow_name,
+        session_id: body.session_id,
+        received_at: new Date().toISOString(),
+        payload: {
+          status: 'failed',
+          completed_at: new Date().toISOString(),
+          correlation_id: correlationId,
+          span_id: spanId,
+          error: triggerResult.error
+        },
+        success: false,
+        error_message: triggerResult.error
       });
     }
 

@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package com.opal.events.sse;
+
+import "google/protobuf/timestamp.proto";
+
+// Incremental recommendation update streamed via Server-Sent Events
+message RecommendationPreview {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique stream event identifier for deduplication
+  string stream_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Associated workflow identifier - part of idempotency key
+  string workflow_id = 4;
+
+  // Unique recommendation identifier - part of idempotency key
+  string recommendation_id = 5;
+
+  // Monotonic sequence number for ordering - part of idempotency key
+  int64 sequence_number = 6;
+
+  // Type of recommendation update being streamed
+  enum RecommendationUpdateType {
+    RECOMMENDATION_UPDATE_TYPE_UNSPECIFIED = 0;
+    NEW_RECOMMENDATION = 1;
+    CONFIDENCE_UPDATE = 2;
+    EVIDENCE_ADDED = 3;
+    RANKING_CHANGED = 4;
+    FINALIZED = 5;
+  }
+  RecommendationUpdateType update_type = 7;
+
+  // Agent contributing to this recommendation update
+  enum ContributingAgentType {
+    CONTRIBUTING_AGENT_TYPE_UNSPECIFIED = 0;
+    EXPERIMENT_BLUEPRINTER = 1;
+    AUDIENCE_SUGGESTER = 2;
+    CONTENT_REVIEW = 3;
+    ROADMAP_GENERATOR = 4;
+    INTEGRATION_HEALTH = 5;
+    PERSONALIZATION_IDEA_GENERATOR = 6;
+    CMP_ORGANIZER = 7;
+    CUSTOMER_JOURNEY = 8;
+    GEO_AUDIT = 9;
+  }
+  ContributingAgentType contributing_agent_id = 8;
+
+  // Current state of the recommendation being developed
+  message StreamingRecommendation {
+    string title = 1;
+    optional string description = 2;
+    optional string category = 3;
+    double current_confidence = 4;
+    optional int32 impact_score = 5;
+    optional int32 effort_score = 6;
+    optional int32 priority_rank = 7;
+    string status = 8;
+  }
+  StreamingRecommendation recommendation_preview = 9;
+
+  // New evidence supporting or refuting the recommendation
+  message StreamingEvidence {
+    string agent_type = 1;
+    string data_source = 2;
+    string evidence_type = 3;
+    double confidence = 4;
+    string summary = 5;
+    optional string impact_on_recommendation = 6;
+  }
+  repeated StreamingEvidence evidence_updates = 10;
+
+  // Detailed confidence scoring breakdown
+  message StreamingConfidenceBreakdown {
+    double data_quality = 1;
+    double agent_consensus = 2;
+    double evidence_strength = 3;
+    optional double historical_accuracy = 4;
+  }
+  optional StreamingConfidenceBreakdown confidence_breakdown = 11;
+
+  // Context about recommendation ranking
+  message RankingContext {
+    int32 total_recommendations = 1;
+    optional int32 current_rank = 2;
+    optional int32 previous_rank = 3;
+    optional string rank_change_reason = 4;
+  }
+  optional RankingContext ranking_context = 12;
+
+  // Progress tracking for this specific recommendation
+  message RecommendationProcessingProgress {
+    int32 agents_contributing = 1;
+    int32 total_expected_agents = 2;
+    int32 evidence_count = 3;
+    int32 completion_percentage = 4;
+  }
+  RecommendationProcessingProgress processing_progress = 13;
+
+  // Client connection identifier for targeted streaming
+  optional string client_connection_id = 14;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 15;
+
+  // System that generated this streaming event
+  string source_system = 16;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 17;
+}

@@ -1,0 +1,25 @@
+TRy a different approach to solve the issue and make the correct updates for me.
+
+Please conduct a thorough and critical code review of the following changes. The primary objectives are to fix the above errors and issues:
+
+Prevent Recurrence of Specific Past Errors: We have encountered the following critical issues in past deployments
+
+Please pay close attention to any code that might reintroduce these issues or exhibit similar anti-patterns.
+Ensure Complete Functionality and Correctness: Verify the code meets all functional requirements and produces the expected output under various conditions, including edge cases and potential failure scenarios.
+
+Guarantee Deployment Readiness: Confirm the code is robust, maintainable, and ready for a production deployment. This includes checking for proper error handling, logging, test coverage, performance issues, and adherence to our team's coding standards. 
+
+Focus Areas Checklist:
+
+Error Handling: Are all potential errors, especially those related to the past issues mentioned above, caught and handled gracefully? Is there sufficient logging to aid debugging in a production environment?
+Logic and Edge Cases: Does the logic cover all possible scenarios and edge cases? Are there any unhandled conditions or potential logical flaws?
+
+Testing: Is the code adequately covered by unit and integration tests? Do the tests cover the common success paths and the most common error scenarios?
+
+Readability and Maintainability: Is the code clean, well-structured, and easy to understand for future developers? Does it adhere to our naming conventions and style guides?
+
+Code Duplication: Are there opportunities to simplify or refactor the code to remove duplication and improve modularity? 
+
+Implement these changes to ensure these errors and requests are permanently resolved.
+
+add this repeatable process to a series of unit tests in /tests/unit for this error

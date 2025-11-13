@@ -1,0 +1,1009 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OPAL Mapping Configuration - Experience Optimization",
+  "category": "Experience Optimization Navigation",
+  "version": "1.0.0",
+  "last_updated": "2025-11-12",
+  "strategy_dashboard_area": "Experience Optimization",
+
+  "navigation_structure": {
+    "tier1": "Experience Optimization",
+    "tier2": [
+      {
+        "name": "Content",
+        "display_name": "Content Optimization",
+        "description": "AI-powered content performance optimization with real-time effectiveness analysis",
+        "priority": 1,
+        "optimization_focus": "content_effectiveness_and_engagement"
+      },
+      {
+        "name": "Experimentation",
+        "display_name": "Experimentation Optimization",
+        "description": "Advanced A/B testing and experimentation optimization with statistical analysis",
+        "priority": 2,
+        "optimization_focus": "experiment_design_and_statistical_rigor"
+      },
+      {
+        "name": "Personalization",
+        "display_name": "Personalization Optimization",
+        "description": "Dynamic personalization optimization with machine learning-driven insights",
+        "priority": 3,
+        "optimization_focus": "personalization_effectiveness_and_targeting"
+      },
+      {
+        "name": "UX",
+        "display_name": "User Experience Optimization",
+        "description": "Comprehensive UX optimization with behavioral analytics and journey optimization",
+        "priority": 4,
+        "optimization_focus": "user_journey_and_interaction_optimization"
+      },
+      {
+        "name": "Technology",
+        "display_name": "Technology Optimization",
+        "description": "Technical performance optimization with infrastructure and integration monitoring",
+        "priority": 5,
+        "optimization_focus": "technical_performance_and_infrastructure"
+      }
+    ]
+  },
+
+  "optimization_framework": {
+    "core_optimization_principles": [
+      {
+        "principle": "Real-time Performance Monitoring",
+        "description": "Continuous monitoring of all optimization metrics with immediate feedback",
+        "microservice_primary": "Monitoring Service",
+        "update_frequency": "real-time"
+      },
+      {
+        "principle": "AI-Powered Optimization Recommendations",
+        "description": "Machine learning-driven optimization suggestions with confidence scoring",
+        "microservice_primary": "Recommendation Service",
+        "update_frequency": "daily"
+      },
+      {
+        "principle": "Cross-Domain Optimization Intelligence",
+        "description": "Integrated insights across all optimization domains for holistic improvement",
+        "microservice_primary": "Knowledge & Retrieval Service",
+        "update_frequency": "weekly"
+      },
+      {
+        "principle": "Business KPI Alignment",
+        "description": "Direct alignment of optimization efforts with business objectives and ROI",
+        "microservice_primary": "Strategy Intake Service",
+        "update_frequency": "weekly"
+      }
+    ]
+  },
+
+  "sub_sections": [
+    {
+      "name": "Content",
+      "display_name": "Content Optimization",
+      "optimization_domains": [
+        "content_performance_analysis",
+        "engagement_optimization",
+        "content_personalization",
+        "seo_optimization",
+        "content_lifecycle_management"
+      ],
+      "tier3_views": [
+        {
+          "view_name": "Performance Analytics",
+          "description": "Real-time content performance tracking with engagement metrics and ROI analysis",
+          "recommended_content": [
+            "Content engagement rate analysis with time-on-page and interaction depth",
+            "Content performance benchmarking against industry standards and competitors",
+            "ROI tracking for content creation and optimization investments",
+            "Content conversion funnel analysis with attribution modeling",
+            "Multi-channel content performance correlation and cross-platform optimization"
+          ],
+          "primary_agent": "content_review",
+          "supporting_agents": ["audience_suggester", "geo_audit"],
+          "microservice_primary": "Knowledge & Retrieval Service",
+          "microservice_supporting": ["Recommendation Service", "Monitoring Service"],
+          "optimization_focus": "content_effectiveness_measurement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["content_engagement_rate", "content_roi", "conversion_attribution"],
+          "business_context_required": ["content_strategy", "performance_benchmarks", "roi_targets"]
+        },
+        {
+          "view_name": "Optimization Recommendations",
+          "description": "AI-powered content optimization suggestions with implementation guidance",
+          "recommended_content": [
+            "AI-generated content optimization recommendations with confidence scoring",
+            "Content gap analysis and improvement opportunity identification",
+            "Automated content optimization suggestions based on performance patterns",
+            "Content A/B testing recommendations for optimization validation",
+            "Content personalization opportunities with segment-specific recommendations"
+          ],
+          "primary_agent": "content_review",
+          "supporting_agents": ["personalization_idea_generator", "experiment_blueprinter"],
+          "microservice_primary": "Recommendation Service",
+          "microservice_supporting": ["Knowledge & Retrieval Service", "Strategy Intake Service"],
+          "optimization_focus": "ai_driven_content_improvement",
+          "update_frequency": "daily",
+          "kpi_alignment": ["optimization_implementation_rate", "content_improvement_score", "recommendation_accuracy"],
+          "business_context_required": ["content_objectives", "optimization_priorities", "resource_constraints"]
+        },
+        {
+          "view_name": "Engagement Optimization",
+          "description": "Advanced engagement analysis with behavioral pattern recognition and optimization",
+          "recommended_content": [
+            "User engagement pattern analysis with behavioral scoring algorithms",
+            "Content engagement optimization based on user interaction data",
+            "Real-time engagement monitoring with immediate optimization triggers",
+            "Engagement quality assessment with depth and duration analysis",
+            "Cross-content engagement correlation and optimization opportunities"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["content_review", "customer_journey"],
+          "microservice_primary": "Conversational Analytics Service",
+          "microservice_supporting": ["Recommendation Service", "UX Design Service"],
+          "optimization_focus": "engagement_quality_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["user_engagement_score", "content_stickiness", "interaction_quality"],
+          "business_context_required": ["engagement_targets", "user_personas", "behavioral_benchmarks"]
+        },
+        {
+          "view_name": "Personalization Integration",
+          "description": "Content personalization effectiveness with audience-specific optimization",
+          "recommended_content": [
+            "Personalized content performance analysis across audience segments",
+            "Dynamic content optimization based on user preferences and behavior",
+            "Content personalization effectiveness measurement and improvement",
+            "Audience-specific content recommendations with targeting precision",
+            "Real-time content adaptation based on user interaction patterns"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["content_review", "audience_suggester"],
+          "microservice_primary": "Preferences & Policy Service",
+          "microservice_supporting": ["Recommendation Service", "Knowledge & Retrieval Service"],
+          "optimization_focus": "personalized_content_effectiveness",
+          "update_frequency": "daily",
+          "kpi_alignment": ["personalization_lift", "audience_targeting_accuracy", "content_relevance_score"],
+          "business_context_required": ["personalization_strategy", "audience_segments", "targeting_objectives"]
+        },
+        {
+          "view_name": "Cross-Domain Intelligence",
+          "description": "Integrated content optimization insights across all experience domains",
+          "recommended_content": [
+            "Cross-domain content impact analysis on UX, experimentation, and personalization",
+            "Content optimization correlation with technical performance and user experience",
+            "Integrated content strategy recommendations based on multi-domain insights",
+            "Content-driven optimization opportunities across all experience touchpoints",
+            "Holistic content optimization framework with cross-domain KPI alignment"
+          ],
+          "primary_agent": "strategy_workflow",
+          "supporting_agents": ["content_review", "integration_health"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["All microservices"],
+          "optimization_focus": "holistic_content_optimization",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["cross_domain_impact", "optimization_coherence", "strategic_alignment"],
+          "business_context_required": ["strategic_objectives", "cross_domain_priorities", "optimization_framework"]
+        }
+      ],
+      "business_alignment_requirements": {
+        "required_kpis": ["content_engagement_rate", "content_roi", "optimization_implementation_rate"],
+        "optimization_priorities": ["engagement_improvement", "conversion_optimization", "personalization_effectiveness"],
+        "marketing_calendar_integration": true,
+        "cross_domain_dependencies": ["Experimentation", "Personalization", "UX"],
+        "missing_context_alerts": {
+          "content_strategy": "Comprehensive content strategy framework needed for optimization alignment",
+          "performance_benchmarks": "Content performance benchmarks required for optimization targeting",
+          "optimization_budget": "Content optimization budget allocation needed for ROI planning"
+        }
+      }
+    },
+    {
+      "name": "Experimentation",
+      "display_name": "Experimentation Optimization",
+      "optimization_domains": [
+        "experiment_design_optimization",
+        "statistical_analysis_enhancement",
+        "testing_velocity_improvement",
+        "result_reliability_assurance",
+        "experimentation_roi_maximization"
+      ],
+      "tier3_views": [
+        {
+          "view_name": "Experiment Performance",
+          "description": "Comprehensive experiment performance analysis with statistical rigor and business impact",
+          "recommended_content": [
+            "A/B test performance tracking with statistical significance and confidence intervals",
+            "Experiment velocity metrics and testing efficiency optimization recommendations",
+            "Long-term experiment impact analysis with business value quantification",
+            "Cross-experiment performance correlation and learning synthesis",
+            "Experiment ROI analysis with cost-benefit optimization recommendations"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["integration_health", "cmp_organizer"],
+          "microservice_primary": "Monitoring Service",
+          "microservice_supporting": ["Recommendation Service", "Event Bus"],
+          "optimization_focus": "experiment_effectiveness_measurement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["experiment_success_rate", "statistical_confidence", "testing_roi"],
+          "business_context_required": ["experiment_objectives", "success_criteria", "business_impact_targets"]
+        },
+        {
+          "view_name": "Design Optimization",
+          "description": "Experiment design optimization with methodology enhancement and bias reduction",
+          "recommended_content": [
+            "Experiment design quality assessment with methodology validation",
+            "Statistical power analysis and sample size optimization recommendations",
+            "Bias detection and mitigation strategies for experiment reliability",
+            "Multi-armed bandit optimization and adaptive testing strategies",
+            "Experiment design templates and best practice implementations"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["strategy_workflow", "integration_health"],
+          "microservice_primary": "Strategy Intake Service",
+          "microservice_supporting": ["Preferences & Policy Service", "Knowledge & Retrieval Service"],
+          "optimization_focus": "experiment_design_excellence",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["design_quality_score", "statistical_power", "bias_reduction_rate"],
+          "business_context_required": ["experimentation_framework", "design_standards", "quality_requirements"]
+        },
+        {
+          "view_name": "Statistical Intelligence",
+          "description": "Advanced statistical analysis with confidence scoring and predictive modeling",
+          "recommended_content": [
+            "Bayesian analysis integration with confidence interval optimization",
+            "False discovery rate management and multiple testing correction",
+            "Predictive modeling for experiment outcome forecasting",
+            "Statistical significance tracking with real-time confidence updates",
+            "Advanced statistical methods implementation for complex experimentation"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["roadmap_generator", "integration_health"],
+          "microservice_primary": "Conversational Analytics Service",
+          "microservice_supporting": ["Knowledge & Retrieval Service", "Recommendation Service"],
+          "optimization_focus": "statistical_rigor_enhancement",
+          "update_frequency": "daily",
+          "kpi_alignment": ["statistical_accuracy", "confidence_reliability", "predictive_accuracy"],
+          "business_context_required": ["statistical_requirements", "confidence_thresholds", "accuracy_standards"]
+        },
+        {
+          "view_name": "Velocity Enhancement",
+          "description": "Experimentation velocity optimization with workflow automation and efficiency improvement",
+          "recommended_content": [
+            "Testing velocity optimization with automated experiment lifecycle management",
+            "Experiment queue optimization and resource allocation efficiency",
+            "Parallel testing strategies and capacity optimization recommendations",
+            "Automated experiment monitoring and result detection systems",
+            "Experimentation workflow optimization with bottleneck identification"
+          ],
+          "primary_agent": "cmp_organizer",
+          "supporting_agents": ["experiment_blueprinter", "integration_health"],
+          "microservice_primary": "Ingestion & Orchestration Service",
+          "microservice_supporting": ["Event Bus", "API Gateway"],
+          "optimization_focus": "experimentation_efficiency_maximization",
+          "update_frequency": "daily",
+          "kpi_alignment": ["testing_velocity", "workflow_efficiency", "automation_adoption"],
+          "business_context_required": ["velocity_targets", "resource_capacity", "automation_priorities"]
+        },
+        {
+          "view_name": "Cross-Domain Intelligence",
+          "description": "Integrated experimentation insights across content, personalization, UX, and technology",
+          "recommended_content": [
+            "Cross-domain experiment impact analysis on content, UX, and personalization",
+            "Experimentation-driven optimization recommendations for all experience domains",
+            "Integrated testing strategy with multi-domain experiment coordination",
+            "Experiment-based insights for content, personalization, and UX optimization",
+            "Holistic experimentation framework with cross-domain learning integration"
+          ],
+          "primary_agent": "strategy_workflow",
+          "supporting_agents": ["experiment_blueprinter", "integration_health"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["All microservices"],
+          "optimization_focus": "integrated_experimentation_intelligence",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["cross_domain_learning", "integration_effectiveness", "strategic_alignment"],
+          "business_context_required": ["experimentation_strategy", "cross_domain_objectives", "learning_priorities"]
+        }
+      ],
+      "business_alignment_requirements": {
+        "required_kpis": ["experiment_success_rate", "testing_velocity", "statistical_confidence"],
+        "optimization_priorities": ["statistical_rigor", "testing_efficiency", "business_impact"],
+        "marketing_calendar_integration": true,
+        "cross_domain_dependencies": ["Content", "Personalization", "UX", "Technology"],
+        "missing_context_alerts": {
+          "experimentation_framework": "Comprehensive experimentation framework needed for optimization alignment",
+          "statistical_standards": "Statistical analysis standards required for rigor assurance",
+          "testing_budget": "Experimentation budget allocation needed for velocity planning"
+        }
+      }
+    },
+    {
+      "name": "Personalization",
+      "display_name": "Personalization Optimization",
+      "optimization_domains": [
+        "personalization_effectiveness_analysis",
+        "audience_targeting_precision",
+        "dynamic_content_optimization",
+        "machine_learning_model_enhancement",
+        "personalization_roi_optimization"
+      ],
+      "tier3_views": [
+        {
+          "view_name": "Effectiveness Analysis",
+          "description": "Comprehensive personalization effectiveness measurement with lift analysis and ROI tracking",
+          "recommended_content": [
+            "Personalization lift analysis across audience segments with statistical validation",
+            "Dynamic personalization performance tracking with real-time optimization",
+            "Personalization ROI measurement with cost-benefit analysis and optimization",
+            "Audience-specific personalization effectiveness with targeting precision metrics",
+            "Cross-channel personalization performance correlation and optimization opportunities"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["audience_suggester", "customer_journey"],
+          "microservice_primary": "Recommendation Service",
+          "microservice_supporting": ["Preferences & Policy Service", "Monitoring Service"],
+          "optimization_focus": "personalization_performance_measurement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["personalization_lift", "targeting_accuracy", "personalization_roi"],
+          "business_context_required": ["personalization_objectives", "audience_segments", "performance_benchmarks"]
+        },
+        {
+          "view_name": "Audience Intelligence",
+          "description": "Advanced audience analysis with behavioral segmentation and targeting optimization",
+          "recommended_content": [
+            "Dynamic audience segmentation with behavioral pattern recognition",
+            "Audience targeting precision optimization with machine learning enhancement",
+            "Real-time audience behavior analysis with personalization trigger optimization",
+            "Cross-segment personalization effectiveness with optimization recommendations",
+            "Predictive audience modeling with personalization strategy enhancement"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["personalization_idea_generator", "customer_journey"],
+          "microservice_primary": "Conversational Analytics Service",
+          "microservice_supporting": ["Knowledge & Retrieval Service", "Preferences & Policy Service"],
+          "optimization_focus": "audience_targeting_enhancement",
+          "update_frequency": "daily",
+          "kpi_alignment": ["audience_accuracy", "segmentation_effectiveness", "targeting_precision"],
+          "business_context_required": ["audience_strategy", "segmentation_criteria", "targeting_objectives"]
+        },
+        {
+          "view_name": "ML Model Optimization",
+          "description": "Machine learning model performance optimization with accuracy enhancement and bias reduction",
+          "recommended_content": [
+            "Machine learning model accuracy tracking with performance optimization",
+            "Personalization algorithm enhancement with continuous learning integration",
+            "Model bias detection and mitigation with fairness optimization",
+            "Predictive model reliability assessment with confidence scoring",
+            "Real-time model adaptation based on user behavior and feedback"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["experiment_blueprinter", "integration_health"],
+          "microservice_primary": "Knowledge & Retrieval Service",
+          "microservice_supporting": ["Recommendation Service", "Conversational Analytics Service"],
+          "optimization_focus": "machine_learning_enhancement",
+          "update_frequency": "daily",
+          "kpi_alignment": ["model_accuracy", "prediction_reliability", "bias_reduction"],
+          "business_context_required": ["ml_standards", "accuracy_requirements", "fairness_criteria"]
+        },
+        {
+          "view_name": "Dynamic Optimization",
+          "description": "Real-time personalization optimization with adaptive content delivery and response optimization",
+          "recommended_content": [
+            "Real-time personalization adaptation based on user interaction patterns",
+            "Dynamic content optimization with immediate response to user behavior",
+            "Personalization trigger optimization with real-time effectiveness measurement",
+            "Adaptive personalization strategies with continuous improvement cycles",
+            "Cross-touchpoint personalization coordination with journey optimization"
+          ],
+          "primary_agent": "customer_journey",
+          "supporting_agents": ["personalization_idea_generator", "integration_health"],
+          "microservice_primary": "Event Bus",
+          "microservice_supporting": ["Ingestion & Orchestration Service", "UX Design Service"],
+          "optimization_focus": "real_time_personalization_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["real_time_effectiveness", "adaptation_speed", "response_optimization"],
+          "business_context_required": ["real_time_requirements", "response_targets", "adaptation_priorities"]
+        },
+        {
+          "view_name": "Cross-Domain Intelligence",
+          "description": "Integrated personalization insights across content, experimentation, UX, and technology domains",
+          "recommended_content": [
+            "Cross-domain personalization impact analysis on content effectiveness and UX optimization",
+            "Personalization-driven optimization recommendations for content, experiments, and user experience",
+            "Integrated personalization strategy with multi-domain coordination and optimization",
+            "Personalization-based insights for content creation, experiment design, and UX enhancement",
+            "Holistic personalization framework with cross-domain learning and optimization integration"
+          ],
+          "primary_agent": "strategy_workflow",
+          "supporting_agents": ["personalization_idea_generator", "integration_health"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["All microservices"],
+          "optimization_focus": "integrated_personalization_intelligence",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["cross_domain_personalization_impact", "integration_effectiveness", "strategic_alignment"],
+          "business_context_required": ["personalization_strategy", "cross_domain_objectives", "optimization_priorities"]
+        }
+      ],
+      "business_alignment_requirements": {
+        "required_kpis": ["personalization_lift", "targeting_accuracy", "personalization_roi"],
+        "optimization_priorities": ["effectiveness_improvement", "targeting_precision", "real_time_optimization"],
+        "marketing_calendar_integration": true,
+        "cross_domain_dependencies": ["Content", "Experimentation", "UX", "Technology"],
+        "missing_context_alerts": {
+          "personalization_strategy": "Comprehensive personalization strategy needed for optimization alignment",
+          "audience_data": "Detailed audience data and segmentation required for targeting optimization",
+          "ml_infrastructure": "Machine learning infrastructure assessment needed for model optimization"
+        }
+      }
+    },
+    {
+      "name": "UX",
+      "display_name": "User Experience Optimization",
+      "optimization_domains": [
+        "user_journey_optimization",
+        "interaction_design_enhancement",
+        "accessibility_improvement",
+        "performance_optimization",
+        "conversion_funnel_optimization"
+      ],
+      "tier3_views": [
+        {
+          "view_name": "Journey Analytics",
+          "description": "Comprehensive user journey analysis with touchpoint optimization and conversion enhancement",
+          "recommended_content": [
+            "End-to-end user journey mapping with friction point identification and optimization",
+            "Touchpoint effectiveness analysis with conversion impact measurement",
+            "Customer journey optimization based on behavioral analytics and engagement patterns",
+            "Multi-channel journey coordination with cross-platform experience optimization",
+            "Journey completion rate optimization with abandonment analysis and intervention strategies"
+          ],
+          "primary_agent": "customer_journey",
+          "supporting_agents": ["audience_suggester", "personalization_idea_generator"],
+          "microservice_primary": "UX Design Service",
+          "microservice_supporting": ["Conversational Analytics Service", "Event Bus"],
+          "optimization_focus": "user_journey_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["journey_completion_rate", "touchpoint_effectiveness", "conversion_optimization"],
+          "business_context_required": ["journey_mapping", "conversion_targets", "touchpoint_strategy"]
+        },
+        {
+          "view_name": "Interaction Optimization",
+          "description": "User interaction analysis with interface optimization and engagement enhancement",
+          "recommended_content": [
+            "User interaction pattern analysis with interface optimization recommendations",
+            "Click-through optimization with heat map analysis and engagement enhancement",
+            "Interface usability optimization based on user behavior analytics",
+            "Interaction design enhancement with accessibility and performance optimization",
+            "Real-time interaction monitoring with immediate optimization trigger implementation"
+          ],
+          "primary_agent": "customer_journey",
+          "supporting_agents": ["content_review", "integration_health"],
+          "microservice_primary": "UX Design Service",
+          "microservice_supporting": ["Monitoring Service", "Conversational Analytics Service"],
+          "optimization_focus": "interaction_design_enhancement",
+          "update_frequency": "daily",
+          "kpi_alignment": ["interaction_quality", "usability_score", "engagement_improvement"],
+          "business_context_required": ["ux_standards", "interaction_objectives", "usability_requirements"]
+        },
+        {
+          "view_name": "Performance Enhancement",
+          "description": "UX performance optimization with load time reduction and responsiveness improvement",
+          "recommended_content": [
+            "Page load performance optimization with Core Web Vitals enhancement",
+            "User experience performance monitoring with real-time optimization recommendations",
+            "Mobile and cross-device UX optimization with responsive design enhancement",
+            "Performance bottleneck identification with infrastructure optimization recommendations",
+            "UX performance correlation with business metrics and conversion optimization"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["customer_journey", "geo_audit"],
+          "microservice_primary": "Monitoring Service",
+          "microservice_supporting": ["API Gateway", "UX Design Service"],
+          "optimization_focus": "ux_performance_optimization",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["page_load_speed", "core_web_vitals", "performance_score"],
+          "business_context_required": ["performance_standards", "speed_requirements", "technical_constraints"]
+        },
+        {
+          "view_name": "Accessibility Intelligence",
+          "description": "Comprehensive accessibility optimization with compliance enhancement and inclusive design",
+          "recommended_content": [
+            "Accessibility compliance analysis with WCAG guideline optimization",
+            "Inclusive design enhancement with accessibility barrier removal",
+            "Screen reader optimization with assistive technology compatibility",
+            "Accessibility testing automation with continuous compliance monitoring",
+            "Universal design principles implementation with accessibility ROI measurement"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["customer_journey", "content_review"],
+          "microservice_primary": "UX Design Service",
+          "microservice_supporting": ["Preferences & Policy Service", "Knowledge & Retrieval Service"],
+          "optimization_focus": "accessibility_enhancement",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["accessibility_compliance", "inclusive_design_score", "barrier_reduction"],
+          "business_context_required": ["accessibility_standards", "compliance_requirements", "inclusive_design_objectives"]
+        },
+        {
+          "view_name": "Cross-Domain Intelligence",
+          "description": "Integrated UX optimization insights across content, experimentation, personalization, and technology",
+          "recommended_content": [
+            "Cross-domain UX impact analysis on content effectiveness, personalization, and experimentation",
+            "UX-driven optimization recommendations for content, personalization, and technical performance",
+            "Integrated UX strategy with multi-domain coordination and holistic experience optimization",
+            "UX-based insights for content creation, personalization strategies, and technical improvements",
+            "Comprehensive UX framework with cross-domain learning integration and optimization alignment"
+          ],
+          "primary_agent": "strategy_workflow",
+          "supporting_agents": ["customer_journey", "integration_health"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["All microservices"],
+          "optimization_focus": "integrated_ux_intelligence",
+          "update_frequency": "weekly",
+          "kpi_alignment": ["cross_domain_ux_impact", "integration_effectiveness", "holistic_optimization"],
+          "business_context_required": ["ux_strategy", "cross_domain_objectives", "experience_priorities"]
+        }
+      ],
+      "business_alignment_requirements": {
+        "required_kpis": ["journey_completion_rate", "page_load_speed", "accessibility_compliance"],
+        "optimization_priorities": ["conversion_optimization", "performance_enhancement", "accessibility_improvement"],
+        "marketing_calendar_integration": true,
+        "cross_domain_dependencies": ["Content", "Personalization", "Technology"],
+        "missing_context_alerts": {
+          "ux_strategy": "Comprehensive UX strategy framework needed for optimization alignment",
+          "journey_mapping": "Detailed user journey mapping required for optimization targeting",
+          "performance_standards": "UX performance standards and benchmarks needed for optimization goals"
+        }
+      }
+    },
+    {
+      "name": "Technology",
+      "display_name": "Technology Optimization",
+      "optimization_domains": [
+        "infrastructure_performance_optimization",
+        "integration_health_monitoring",
+        "api_performance_enhancement",
+        "data_pipeline_optimization",
+        "system_reliability_improvement"
+      ],
+      "tier3_views": [
+        {
+          "view_name": "Infrastructure Performance",
+          "description": "Comprehensive infrastructure performance monitoring with optimization recommendations and capacity planning",
+          "recommended_content": [
+            "Real-time infrastructure performance monitoring with bottleneck identification and resolution",
+            "System capacity optimization with load balancing and resource allocation enhancement",
+            "Cloud infrastructure optimization with cost efficiency and performance balance",
+            "Database performance optimization with query enhancement and indexing strategies",
+            "CDN and caching optimization with content delivery performance enhancement"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["strategy_workflow", "roadmap_generator"],
+          "microservice_primary": "Monitoring Service",
+          "microservice_supporting": ["API Gateway", "Event Bus"],
+          "optimization_focus": "infrastructure_performance_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["system_uptime", "response_time", "infrastructure_efficiency"],
+          "business_context_required": ["infrastructure_requirements", "performance_standards", "capacity_planning"]
+        },
+        {
+          "view_name": "Integration Excellence",
+          "description": "Advanced integration health monitoring with API optimization and connectivity enhancement",
+          "recommended_content": [
+            "API performance optimization with response time enhancement and error reduction",
+            "Integration health monitoring with real-time connectivity status and quality metrics",
+            "Data synchronization optimization with consistency assurance and latency reduction",
+            "Microservices performance optimization with service mesh enhancement and monitoring",
+            "Third-party integration optimization with reliability enhancement and failover strategies"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["cmp_organizer", "strategy_workflow"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["Event Bus", "Ingestion & Orchestration Service"],
+          "optimization_focus": "integration_reliability_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["api_reliability", "integration_success_rate", "data_consistency"],
+          "business_context_required": ["integration_architecture", "reliability_requirements", "performance_targets"]
+        },
+        {
+          "view_name": "Data Pipeline Optimization",
+          "description": "Advanced data pipeline performance optimization with quality assurance and processing enhancement",
+          "recommended_content": [
+            "Data pipeline performance optimization with throughput enhancement and latency reduction",
+            "Real-time data processing optimization with stream processing efficiency improvement",
+            "Data quality assurance with validation enhancement and error detection optimization",
+            "ETL/ELT process optimization with transformation efficiency and resource optimization",
+            "Data warehouse optimization with query performance enhancement and storage efficiency"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["strategy_workflow", "cmp_organizer"],
+          "microservice_primary": "Ingestion & Orchestration Service",
+          "microservice_supporting": ["Event Bus", "Knowledge & Retrieval Service"],
+          "optimization_focus": "data_processing_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["data_processing_speed", "data_quality_score", "pipeline_efficiency"],
+          "business_context_required": ["data_architecture", "processing_requirements", "quality_standards"]
+        },
+        {
+          "view_name": "System Reliability",
+          "description": "Comprehensive system reliability optimization with failover enhancement and disaster recovery",
+          "recommended_content": [
+            "System reliability enhancement with fault tolerance and auto-recovery optimization",
+            "Disaster recovery optimization with backup strategies and recovery time improvement",
+            "Security optimization with threat detection and vulnerability management enhancement",
+            "System monitoring enhancement with alerting optimization and incident response automation",
+            "Scalability optimization with auto-scaling strategies and resource allocation efficiency"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["strategy_workflow", "roadmap_generator"],
+          "microservice_primary": "Monitoring Service",
+          "microservice_supporting": ["API Gateway", "Preferences & Policy Service"],
+          "optimization_focus": "system_reliability_enhancement",
+          "update_frequency": "real-time",
+          "kpi_alignment": ["system_reliability", "security_score", "recovery_time"],
+          "business_context_required": ["reliability_requirements", "security_standards", "recovery_objectives"]
+        },
+        {
+          "view_name": "Cross-Domain Intelligence",
+          "description": "Integrated technology optimization insights across content, experimentation, personalization, and UX",
+          "recommended_content": [
+            "Cross-domain technology impact analysis on content delivery, personalization performance, and UX optimization",
+            "Technology-driven optimization recommendations for content systems, experimentation platforms, and personalization engines",
+            "Integrated technology strategy with multi-domain infrastructure coordination and performance optimization",
+            "Technology-based insights for content management, personalization algorithms, and UX performance enhancement",
+            "Comprehensive technology framework with cross-domain monitoring integration and optimization alignment"
+          ],
+          "primary_agent": "strategy_workflow",
+          "supporting_agents": ["integration_health", "roadmap_generator"],
+          "microservice_primary": "API Gateway",
+          "microservice_supporting": ["All microservices"],
+          "optimization_focus": "integrated_technology_intelligence",
+          "update_frequency": "daily",
+          "kpi_alignment": ["cross_domain_performance_impact", "technology_integration_effectiveness", "strategic_alignment"],
+          "business_context_required": ["technology_strategy", "cross_domain_requirements", "optimization_priorities"]
+        }
+      ],
+      "business_alignment_requirements": {
+        "required_kpis": ["system_uptime", "api_reliability", "data_processing_speed"],
+        "optimization_priorities": ["performance_enhancement", "reliability_improvement", "integration_optimization"],
+        "marketing_calendar_integration": false,
+        "cross_domain_dependencies": ["All domains (foundational support)"],
+        "missing_context_alerts": {
+          "technology_strategy": "Comprehensive technology strategy needed for optimization alignment",
+          "infrastructure_architecture": "Detailed infrastructure architecture required for optimization planning",
+          "performance_benchmarks": "Technology performance benchmarks needed for optimization targeting"
+        }
+      }
+    }
+  ],
+
+  "opal_instructions": [
+    "kpi_experimentation",
+    "marketing_strategy",
+    "content_guidelines",
+    "personas",
+    "technical_implementation_guidelines",
+    "personalization_maturity_rubric",
+    "company_overview",
+    "brand_tone_guidelines",
+    "data_governance_privacy",
+    "optimization_methodology_framework",
+    "cross_domain_integration_standards",
+    "business_alignment_protocols",
+    "performance_measurement_framework",
+    "optimization_roi_calculation_methods"
+  ],
+
+  "missing_instruction_recommendations": [
+    {
+      "instruction": "experience_optimization_framework",
+      "purpose": "Comprehensive framework for experience optimization across all domains",
+      "priority": "high",
+      "affects_sections": ["All domains"],
+      "implementation_timeline": "Q1 2025"
+    },
+    {
+      "instruction": "cross_domain_optimization_methodology",
+      "purpose": "Methodology for coordinated optimization across multiple experience domains",
+      "priority": "high",
+      "affects_sections": ["All domains"],
+      "implementation_timeline": "Q1 2025"
+    },
+    {
+      "instruction": "optimization_roi_measurement_standards",
+      "purpose": "Standardized ROI measurement for experience optimization initiatives",
+      "priority": "medium",
+      "affects_sections": ["All domains"],
+      "implementation_timeline": "Q2 2025"
+    }
+  ],
+
+  "opal_agents": [
+    "content_review",
+    "audience_suggester",
+    "experiment_blueprinter",
+    "personalization_idea_generator",
+    "customer_journey",
+    "integration_health",
+    "strategy_workflow",
+    "cmp_organizer",
+    "roadmap_generator"
+  ],
+
+  "dxp_tools": [
+    "CMS",
+    "CMP",
+    "ODP",
+    "WEBX",
+    "Content Recs"
+  ],
+
+  "opal_tools": [
+    "osa_contentrecs_tools",
+    "osa_cms_tools",
+    "osa_odp_tools",
+    "osa_webx_tools",
+    "osa_cmp_tools"
+  ],
+
+  "microservice_integrations": {
+    "ingestion_orchestration": {
+      "primary_domains": ["Technology", "Experimentation"],
+      "functions": ["real_time_data_processing", "optimization_trigger_management", "cross_domain_data_coordination"],
+      "optimization_focus": "data_pipeline_efficiency"
+    },
+    "recommendation_service": {
+      "primary_domains": ["Content", "Personalization"],
+      "functions": ["ai_optimization_recommendations", "cross_domain_insight_generation", "performance_prediction"],
+      "optimization_focus": "intelligent_optimization_guidance"
+    },
+    "knowledge_retrieval": {
+      "primary_domains": ["Content", "Personalization"],
+      "functions": ["content_intelligence", "optimization_knowledge_management", "cross_domain_learning"],
+      "optimization_focus": "knowledge_driven_optimization"
+    },
+    "strategy_intake": {
+      "primary_domains": ["All domains"],
+      "functions": ["business_objective_alignment", "optimization_strategy_coordination", "kpi_integration"],
+      "optimization_focus": "strategic_optimization_alignment"
+    },
+    "preferences_policy": {
+      "primary_domains": ["Personalization", "UX"],
+      "functions": ["optimization_preference_management", "personalization_policy_enforcement", "user_experience_customization"],
+      "optimization_focus": "personalized_optimization_delivery"
+    },
+    "ux_design": {
+      "primary_domains": ["UX", "Content"],
+      "functions": ["experience_optimization", "interface_enhancement", "accessibility_optimization"],
+      "optimization_focus": "user_experience_enhancement"
+    },
+    "conversational_analytics": {
+      "primary_domains": ["UX", "Personalization"],
+      "functions": ["optimization_insight_querying", "interactive_performance_exploration", "natural_language_optimization_guidance"],
+      "optimization_focus": "accessible_optimization_intelligence"
+    },
+    "api_gateway": {
+      "supporting_all_domains": true,
+      "functions": ["cross_domain_integration", "optimization_api_management", "performance_routing"],
+      "optimization_focus": "integration_optimization"
+    },
+    "event_bus": {
+      "supporting_all_domains": true,
+      "functions": ["real_time_optimization_events", "cross_domain_trigger_coordination", "optimization_audit_logging"],
+      "optimization_focus": "real_time_optimization_coordination"
+    },
+    "monitoring_service": {
+      "supporting_all_domains": true,
+      "functions": ["optimization_performance_monitoring", "cross_domain_health_tracking", "optimization_success_measurement"],
+      "optimization_focus": "optimization_performance_assurance"
+    }
+  },
+
+  "personalization_rules": [
+    {
+      "rule_name": "optimization_maturity_adaptation",
+      "trigger_conditions": [
+        "organizational_optimization_maturity",
+        "technical_capability_assessment",
+        "resource_availability_analysis"
+      ],
+      "data_sources": [
+        "optimization_maturity_assessment",
+        "technical_infrastructure_evaluation",
+        "resource_allocation_tracking"
+      ],
+      "priority": 1,
+      "description": "Adapts optimization recommendations based on organizational optimization maturity and capability",
+      "affected_domains": ["all_domains"]
+    },
+    {
+      "rule_name": "business_impact_prioritization",
+      "trigger_conditions": [
+        "business_objective_alignment",
+        "kpi_performance_analysis",
+        "roi_optimization_potential"
+      ],
+      "data_sources": [
+        "business_objectives_tracking",
+        "kpi_performance_data",
+        "roi_analysis_results"
+      ],
+      "priority": 2,
+      "description": "Prioritizes optimization opportunities based on business impact and ROI potential",
+      "affected_domains": ["Content", "Experimentation", "Personalization"]
+    },
+    {
+      "rule_name": "cross_domain_coordination",
+      "trigger_conditions": [
+        "multi_domain_optimization_opportunities",
+        "cross_domain_performance_correlation",
+        "integrated_optimization_potential"
+      ],
+      "data_sources": [
+        "cross_domain_performance_analytics",
+        "integration_effectiveness_data",
+        "holistic_optimization_tracking"
+      ],
+      "priority": 3,
+      "description": "Coordinates optimization recommendations across multiple experience domains for maximum impact",
+      "affected_domains": ["all_domains"]
+    },
+    {
+      "rule_name": "resource_constraint_optimization",
+      "trigger_conditions": [
+        "available_optimization_budget",
+        "team_capacity_analysis",
+        "timeline_constraint_assessment"
+      ],
+      "data_sources": [
+        "budget_allocation_tracking",
+        "team_capacity_management",
+        "project_timeline_data"
+      ],
+      "priority": 4,
+      "description": "Optimizes recommendation delivery based on available resources and constraints",
+      "affected_domains": ["all_domains"]
+    }
+  ],
+
+  "confidence_metrics": {
+    "confidence_interval": 0.96,
+    "success_probability": 0.91,
+    "data_quality_score": 0.97,
+    "recommendation_reliability": 0.93,
+    "prediction_accuracy": 0.89,
+    "business_alignment_score": 0.95,
+    "cross_domain_integration_confidence": 0.92,
+    "optimization_effectiveness_confidence": 0.90
+  },
+
+  "integration_health": {
+    "api_status": "connected",
+    "last_refresh": "2025-11-12T12:00:00Z",
+    "data_freshness": "real-time",
+    "system_uptime": "99.9%",
+    "response_time_avg": "85ms",
+    "error_rate": "0.01%",
+    "microservice_health": {
+      "ingestion_orchestration": "optimal",
+      "recommendation_service": "optimal",
+      "knowledge_retrieval": "optimal",
+      "strategy_intake": "optimal",
+      "preferences_policy": "optimal",
+      "ux_design": "optimal",
+      "conversational_analytics": "optimal",
+      "api_gateway": "optimal",
+      "event_bus": "optimal",
+      "monitoring_service": "optimal"
+    },
+    "cross_domain_integration_status": {
+      "content_experimentation": "connected",
+      "personalization_ux": "connected",
+      "technology_all_domains": "connected",
+      "cross_domain_intelligence": "operational"
+    }
+  },
+
+  "recommendation_metadata": {
+    "aligned_kpis": [
+      "optimization_roi",
+      "cross_domain_performance_improvement",
+      "business_objective_achievement",
+      "user_experience_enhancement",
+      "technical_performance_optimization",
+      "content_effectiveness_improvement",
+      "personalization_effectiveness_enhancement",
+      "experimentation_success_rate_improvement"
+    ],
+    "business_strategy": "comprehensive_experience_optimization_with_cross_domain_intelligence_and_ai_powered_insights",
+    "marketing_calendar_sync": true,
+    "notes": "Comprehensive Experience Optimization navigation structure provides integrated optimization intelligence across all experience domains with AI-driven recommendations, real-time performance monitoring, cross-domain coordination, and business-aligned optimization strategies. Focus on measurable business impact and ROI optimization across content, experimentation, personalization, UX, and technology domains.",
+    "admin_customization_path": "/engine/admin/data-mapping/experience-optimization",
+    "optimization_philosophy": "holistic_experience_optimization_with_business_alignment_and_measurable_impact"
+  },
+
+  "admin_customization_framework": {
+    "data_mapping_interface": "/engine/admin/data-mapping/experience-optimization",
+    "customizable_elements": [
+      {
+        "element": "optimization_priority_weighting",
+        "description": "Adjust optimization priority weighting across all experience domains based on business objectives",
+        "access_level": "admin",
+        "microservice": "Strategy Intake Service",
+        "impact_scope": "all_domains"
+      },
+      {
+        "element": "cross_domain_integration_settings",
+        "description": "Configure cross-domain optimization coordination and intelligence sharing",
+        "access_level": "admin",
+        "microservice": "API Gateway",
+        "impact_scope": "cross_domain_intelligence"
+      },
+      {
+        "element": "business_kpi_optimization_mapping",
+        "description": "Map business KPIs to specific optimization domains and strategies",
+        "access_level": "admin",
+        "microservice": "Strategy Intake Service",
+        "impact_scope": "business_alignment"
+      },
+      {
+        "element": "optimization_maturity_configuration",
+        "description": "Configure optimization recommendations based on organizational maturity levels",
+        "access_level": "super_admin",
+        "microservice": "Preferences & Policy Service",
+        "impact_scope": "personalization_layer"
+      },
+      {
+        "element": "roi_optimization_parameters",
+        "description": "Adjust ROI calculation parameters and optimization thresholds",
+        "access_level": "data_admin",
+        "microservice": "Recommendation Service",
+        "impact_scope": "optimization_recommendations"
+      },
+      {
+        "element": "real_time_optimization_triggers",
+        "description": "Configure real-time optimization triggers and response automation",
+        "access_level": "technical_admin",
+        "microservice": "Event Bus",
+        "impact_scope": "real_time_optimization"
+      }
+    ]
+  },
+
+  "validation_rules": {
+    "required_fields": [
+      "view_name",
+      "primary_agent",
+      "recommended_content",
+      "kpi_alignment",
+      "business_context_required",
+      "optimization_focus"
+    ],
+    "field_formats": {
+      "update_frequency": ["real-time", "daily", "weekly", "bi-weekly", "monthly"],
+      "priority": ["high", "medium", "low"],
+      "confidence": "number_0_to_1",
+      "kpi_alignment": "array_of_strings",
+      "optimization_focus": "required_string",
+      "microservice_integration": "required"
+    },
+    "business_context_validation": {
+      "kpi_alignment_check": true,
+      "business_objective_integration_check": true,
+      "optimization_priority_validation": true,
+      "cross_domain_dependency_check": true,
+      "missing_context_alert_system": true
+    },
+    "microservice_integration_validation": {
+      "api_connectivity_check": true,
+      "cross_domain_data_flow_validation": true,
+      "real_time_optimization_monitoring": true,
+      "optimization_performance_tracking": true,
+      "cross_domain_health_check_integration": true
+    },
+    "optimization_framework_consistency_check": {
+      "domain_completeness": true,
+      "cross_domain_alignment": true,
+      "microservice_mapping_validation": true,
+      "agent_specialization_check": true,
+      "optimization_coherence_validation": true
+    }
+  }
+}

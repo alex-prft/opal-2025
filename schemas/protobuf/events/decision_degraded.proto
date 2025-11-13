@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package com.opal.events.decision;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when recommendation quality degrades or confidence drops
+message DecisionDegraded {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Unique degradation event identifier - serves as idempotency key
+  string degradation_id = 4;
+
+  // ID of the original decision that degraded
+  optional string original_decision_id = 5;
+
+  // Associated workflow identifier
+  optional string workflow_id = 6;
+
+  // Type of degradation detected
+  enum DegradationType {
+    DEGRADATION_TYPE_UNSPECIFIED = 0;
+    CONFIDENCE_DROP = 1;
+    DATA_QUALITY_ISSUE = 2;
+    AGENT_FAILURE = 3;
+    CONSENSUS_LOSS = 4;
+    TEMPORAL_DRIFT = 5;
+    EXTERNAL_DEPENDENCY_FAILURE = 6;
+  }
+  DegradationType degradation_type = 7;
+
+  // Severity level of the degradation
+  enum Severity {
+    SEVERITY_UNSPECIFIED = 0;
+    LOW = 1;
+    MEDIUM = 2;
+    HIGH = 3;
+    CRITICAL = 4;
+  }
+  Severity severity = 8;
+
+  // Confidence scoring metrics showing degradation
+  message ConfidenceMetrics {
+    optional double previous_confidence = 1;
+    double current_confidence = 2;
+    double confidence_drop = 3;
+    bool threshold_breached = 4;
+    double minimum_threshold = 5;
+  }
+  ConfidenceMetrics confidence_metrics = 9;
+
+  // Agents that contributed to the degradation
+  repeated string affected_agents = 10;
+
+  // Specific data quality issues identified
+  message DataQualityIssue {
+    string data_source = 1;
+    string issue_type = 2;
+    string severity = 3;
+    string description = 4;
+  }
+  repeated DataQualityIssue data_quality_issues = 11;
+
+  // Number of recommendations affected by degradation
+  optional int32 recommendations_affected = 12;
+
+  // Suggested mitigation actions to address degradation
+  message MitigationAction {
+    string action_type = 1;
+    string description = 2;
+    string priority = 3;
+    optional string estimated_resolution_time = 4;
+  }
+  repeated MitigationAction mitigation_actions = 13;
+
+  // Metadata about how the degradation was detected
+  message DetectionMetadata {
+    string detection_algorithm = 1;
+    int64 detection_time_ms = 2;
+    string monitoring_window = 3;
+    map<string, double> baseline_metrics = 4;
+  }
+  DetectionMetadata detection_metadata = 14;
+
+  // Detailed error information if available
+  optional string error_details = 15;
+
+  // Whether an alert was sent for this degradation
+  bool alert_sent = 16;
+
+  // Whether automatic recovery was attempted
+  bool auto_recovery_attempted = 17;
+
+  // Client organization name if applicable
+  optional string client_name = 18;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 19;
+
+  // System that detected the degradation
+  string source_system = 20;
+
+  // Environment where the degradation occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 21;
+}

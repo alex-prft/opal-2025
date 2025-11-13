@@ -10,7 +10,7 @@ export default defineConfig({
     reporter: ['verbose', 'json'],
     outputFile: 'test-results.json',
     timeout: 10000,
-    setupFiles: ['tests/setup.ts']
+    setupFiles: ['tests/vitest-setup.ts']
   },
   resolve: {
     alias: {

@@ -1,391 +1,248 @@
 /**
- * Diagnostics API: Last Webhook Attempts
- *
- * Provides comprehensive diagnostics for troubleshooting OPAL webhook integration issues.
- * Shows recent webhook attempts, failures, authentication issues, and configuration problems.
+ * OPAL Webhook Diagnostics Endpoint - Phase 3 Implementation
+ * Provides detailed diagnostics and troubleshooting information for OPAL webhook events
+ * Uses Base API Handler for consistency and file-based storage for persistence
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { workflowDb } from '@/lib/database/workflow-operations';
+import { NextRequest } from 'next/server';
+import { createApiHandler } from '@/lib/api/base-api-handler';
+import { WebhookDatabase } from '@/lib/storage/webhook-database';
+import { loadOpalConfig } from '@/lib/config/opal-env';
+import { truncatePayloadForPreview } from '@/lib/schemas/opal-schemas';
+import { z } from 'zod';
 
-// In-memory storage for recent webhook attempts (for development/debugging)
-// In production, this would be stored in database or external logging service
-let recentWebhookAttempts: WebhookAttempt[] = [];
-const MAX_STORED_ATTEMPTS = 50;
+// Query parameters validation schema
+const DiagnosticsQuerySchema = z.object({
+  limit: z.string().optional().default('25').transform(val => parseInt(val, 10)).pipe(z.number().int().min(1).max(100)),
+  workflow_id: z.string().optional().nullable().transform(val => val === 'null' || val === '' || !val ? undefined : val),
+  agent_id: z.string().optional().nullable().transform(val => val === 'null' || val === '' || !val ? undefined : val),
+  status: z.string().optional().default('all').pipe(z.enum(['success', 'failure', 'all'])),
+  hours: z.string().optional().default('24').transform(val => parseInt(val, 10)).pipe(z.number().int().min(1).max(168))
+});
 
-interface WebhookAttempt {
-  id: string;
-  timestamp: string;
-  webhook_url: string;
-  method: string;
-  headers: Record<string, string>;
-  payload_size_bytes: number;
-  response_status?: number;
-  response_time_ms?: number;
-  success: boolean;
-  error_message?: string;
-  correlation_id?: string;
-  span_id?: string;
-  source: 'force_sync' | 'custom_tools' | 'manual';
-  environment: string;
-  auth_method: 'bearer' | 'hmac' | 'none';
-  payload_summary: any;
-}
+// Create API handler with diagnostics-specific configuration
+const handler = createApiHandler({
+  endpoint: '/api/diagnostics/last-webhook',
+  validation: {
+    query: DiagnosticsQuerySchema
+  },
+  rateLimit: {
+    enabled: true,
+    windowMs: 60000,    // 1 minute window
+    maxRequests: 200,   // Higher limit for diagnostics
+    keyGenerator: (req, ctx) => `diagnostics:${ctx.ip}`
+  },
+  requireAuth: false,
+  cors: true,
+  compression: true
+});
 
-// Store webhook attempt for diagnostics
-export function logWebhookAttempt(attempt: Omit<WebhookAttempt, 'id' | 'timestamp'>) {
-  const diagnosticEntry: WebhookAttempt = {
-    id: `webhook-${Date.now()}-${Math.random().toString(36).substring(7)}`,
-    timestamp: new Date().toISOString(),
-    ...attempt
-  };
-
-  // Add to in-memory storage
-  recentWebhookAttempts.unshift(diagnosticEntry);
-
-  // Limit storage size
-  if (recentWebhookAttempts.length > MAX_STORED_ATTEMPTS) {
-    recentWebhookAttempts = recentWebhookAttempts.slice(0, MAX_STORED_ATTEMPTS);
-  }
-
-  console.log(`📊 [Webhook Diagnostics] Logged attempt: ${diagnosticEntry.id}`, {
-    success: attempt.success,
-    status: attempt.response_status,
-    duration: attempt.response_time_ms,
-    source: attempt.source
-  });
-}
-
+/**
+ * GET /api/diagnostics/last-webhook - Webhook Event Diagnostics
+ * Returns recent webhook events with detailed diagnostic information
+ */
 export async function GET(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams;
-    const limit = parseInt(searchParams.get('limit') || '10', 10);
-    const source = searchParams.get('source') as 'force_sync' | 'custom_tools' | 'manual' | null;
-    const success = searchParams.get('success');
+  return handler.handle(request, async (req, context) => {
+    // Extract and validate query parameters manually
+    const url = new URL(request.url);
+    const searchParams = url.searchParams;
 
-    console.log(`🔍 [Webhook Diagnostics] Retrieving webhook attempts`, {
-      limit,
-      source,
-      success_filter: success
+    const queryParams = {
+      limit: searchParams.get('limit') || '25',
+      workflow_id: searchParams.get('workflow_id'),
+      agent_id: searchParams.get('agent_id'),
+      status: searchParams.get('status') || 'all',
+      hours: searchParams.get('hours') || '24'
+    };
+
+    const validatedParams = DiagnosticsQuerySchema.parse(queryParams);
+
+    console.log('🔍 [Diagnostics] Last webhook request received', {
+      correlation_id: context.correlationId,
+      filters: validatedParams
     });
 
-    // Filter attempts based on query parameters
-    let filteredAttempts = [...recentWebhookAttempts];
+    // Load configuration for status checks
+    const config = loadOpalConfig();
 
-    if (source) {
-      filteredAttempts = filteredAttempts.filter(attempt => attempt.source === source);
-    }
+    // Get filtered events from file-based storage
+    const { events: filteredEvents, total_count } = await WebhookDatabase.getFilteredEvents({
+      limit: validatedParams.limit,
+      status: validatedParams.status,
+      agent_id: validatedParams.agent_id,
+      workflow_id: validatedParams.workflow_id,
+      hours: validatedParams.hours
+    });
 
-    if (success !== null) {
-      const successBoolean = success === 'true';
-      filteredAttempts = filteredAttempts.filter(attempt => attempt.success === successBoolean);
-    }
+    // Transform events for response with Phase 3 required fields
+    const diagnosticEvents = filteredEvents.map(event => ({
+      id: event.id,
+      workflow_id: event.workflow_id,
+      agent_id: event.agent_id,
+      status: event.status,
+      signature_valid: event.signature_valid,
+      received_at: event.received_at,
+      processing_time_ms: event.processing_time_ms,
+      error_details: event.error_details,
+      payload_size_bytes: event.payload_size_bytes,
+      http_status: event.http_status,
+      dedup_hash: event.dedup_hash.substring(0, 12) + '...', // Truncated for display
+      payload_preview: truncatePayloadForPreview(event.payload_json, 150)
+    }));
 
-    // Limit results
-    const limitedAttempts = filteredAttempts.slice(0, limit);
-
-    // Get database-stored Force Sync attempts for additional context
-    let databaseAttempts = [];
-    try {
-      databaseAttempts = await workflowDb.getRecentForceSyncAttempts(10);
-    } catch (dbError) {
-      console.warn('⚠️ [Webhook Diagnostics] Could not retrieve database attempts:', dbError);
-    }
-
-    // Analyze patterns and issues
-    const diagnosticSummary = analyzeWebhookAttempts(filteredAttempts);
-
-    // Current environment configuration
-    const currentConfig = {
-      node_env: process.env.NODE_ENV || 'development',
-      opal_target_env: process.env.OPAL_TARGET_ENV,
-      opal_webhook_url: process.env.OPAL_WEBHOOK_URL ?
-        `${process.env.OPAL_WEBHOOK_URL.substring(0, 30)}...` : 'NOT_CONFIGURED',
-      opal_auth_configured: !!(process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || process.env.OPAL_WEBHOOK_AUTH_KEY)
-      // opal_workspace_id removed per user request
-    };
-
-    const diagnosticsResponse = {
-      summary: {
-        total_attempts_stored: recentWebhookAttempts.length,
-        filtered_results: limitedAttempts.length,
-        database_attempts: databaseAttempts.length,
-        last_attempt: recentWebhookAttempts[0]?.timestamp || 'No attempts recorded',
-        diagnostic_analysis: diagnosticSummary
+    // Calculate summary statistics
+    const summary = {
+      total_count: total_count,
+      returned_count: diagnosticEvents.length,
+      signature_valid_count: filteredEvents.filter(e => e.signature_valid).length,
+      error_count: filteredEvents.filter(e => e.error_details).length,
+      date_range: {
+        from: filteredEvents.length > 0
+          ? filteredEvents[filteredEvents.length - 1].received_at
+          : null,
+        to: filteredEvents.length > 0
+          ? filteredEvents[0].received_at
+          : null
       },
-
-      current_configuration: currentConfig,
-
-      recent_webhook_attempts: limitedAttempts.map(attempt => ({
-        ...attempt,
-        // Mask sensitive information
-        headers: maskSensitiveHeaders(attempt.headers),
-        payload_summary: attempt.payload_summary
-      })),
-
-      database_force_sync_attempts: databaseAttempts.slice(0, 5).map(attempt => ({
-        span_id: attempt.span_id,
-        correlation_id: attempt.correlation_id,
-        started_at: attempt.started_at,
-        status: attempt.status,
-        success: attempt.success,
-        duration_ms: attempt.duration_ms,
-        sync_scope: attempt.sync_scope,
-        triggered_by: attempt.triggered_by,
-        external_opal_triggered: attempt.external_opal_triggered,
-        error_message: attempt.error_message
-      })),
-
-      troubleshooting_guidance: generateTroubleshootingGuidance(diagnosticSummary, currentConfig),
-
-      debug_endpoints: {
-        force_sync_test: '/api/opal/sync',
-        enhanced_tools_discovery: '/api/opal/enhanced-tools',
-        mock_webhook_test: '/api/webhooks/opal-mock-test'
-      },
-
-      timestamp: new Date().toISOString()
+      filters_applied: {
+        limit: validatedParams.limit,
+        workflow_id: validatedParams.workflow_id || null,
+        agent_id: validatedParams.agent_id || null,
+        status: validatedParams.status,
+        hours: validatedParams.hours
+      }
     };
 
-    return NextResponse.json(diagnosticsResponse);
+    // Configuration diagnostic checks
+    const configDiagnostics = {
+      osa_webhook_secret_configured: !!config.osaWebhookSecret,
+      osa_webhook_url_configured: !!config.osaSelfWebhookUrl,
+      opal_tools_discovery_url_configured: !!config.opalToolsDiscoveryUrl,
+      external_opal_configured: !!config.opalWebhookUrl,
 
-  } catch (error) {
-    console.error('❌ [Webhook Diagnostics] Diagnostics endpoint failed:', error);
+      // URL validations
+      osa_webhook_url_accessible: config.osaSelfWebhookUrl?.startsWith('https://'),
+      discovery_url_accessible: config.opalToolsDiscoveryUrl?.startsWith('https://'),
 
-    return NextResponse.json({
-      success: false,
-      error: 'Diagnostics retrieval failed',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      timestamp: new Date().toISOString()
-    }, { status: 500 });
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { action } = body;
-
-    if (action === 'clear_attempts') {
-      const previousCount = recentWebhookAttempts.length;
-      recentWebhookAttempts = [];
-
-      console.log(`🗑️ [Webhook Diagnostics] Cleared ${previousCount} stored webhook attempts`);
-
-      return NextResponse.json({
-        success: true,
-        message: `Cleared ${previousCount} webhook attempts from diagnostic storage`,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    if (action === 'test_configuration') {
-      // Test current webhook configuration
-      const configTest = await testWebhookConfiguration();
-
-      return NextResponse.json({
-        success: true,
-        configuration_test: configTest,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    return NextResponse.json({
-      success: false,
-      error: 'Unknown action',
-      available_actions: ['clear_attempts', 'test_configuration']
-    }, { status: 400 });
-
-  } catch (error) {
-    console.error('❌ [Webhook Diagnostics] POST action failed:', error);
-
-    return NextResponse.json({
-      success: false,
-      error: 'Diagnostics action failed',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
-  }
-}
-
-function analyzeWebhookAttempts(attempts: WebhookAttempt[]) {
-  if (attempts.length === 0) {
-    return {
-      status: 'no_data',
-      message: 'No webhook attempts recorded yet'
+      // Secret validations
+      webhook_secret_length_ok: config.osaWebhookSecret ? config.osaWebhookSecret.length >= 32 : false,
+      auth_key_configured: !!config.opalAuthKey
     };
-  }
 
-  const successfulAttempts = attempts.filter(a => a.success);
-  const failedAttempts = attempts.filter(a => !a.success);
-  const recentAttempts = attempts.filter(a =>
-    new Date(a.timestamp).getTime() > Date.now() - (30 * 60 * 1000) // Last 30 minutes
-  );
+    // Common troubleshooting guidance
+    const troubleshootingGuidance = generateTroubleshootingGuidance(
+      summary,
+      configDiagnostics,
+      filteredEvents
+    );
 
-  // Common failure patterns
-  const authFailures = failedAttempts.filter(a =>
-    a.response_status === 401 || a.response_status === 403
-  );
-  const timeoutFailures = failedAttempts.filter(a =>
-    a.error_message?.includes('timeout') || a.error_message?.includes('AbortError')
-  );
-  const networkFailures = failedAttempts.filter(a =>
-    a.error_message?.includes('network') || a.error_message?.includes('ENOTFOUND')
-  );
+    const response = {
+      events: diagnosticEvents,
+      summary,
+      config_diagnostics: configDiagnostics,
+      troubleshooting: troubleshootingGuidance,
+      query_info: {
+        parameters: validatedParams,
+        total_events_matching_filters: total_count,
+        events_returned: diagnosticEvents.length
+      }
+    };
 
-  return {
-    success_rate: attempts.length > 0 ? (successfulAttempts.length / attempts.length * 100).toFixed(1) : '0',
-    total_attempts: attempts.length,
-    successful_attempts: successfulAttempts.length,
-    failed_attempts: failedAttempts.length,
-    recent_attempts_30min: recentAttempts.length,
-    average_response_time: attempts
-      .filter(a => a.response_time_ms)
-      .reduce((sum, a) => sum + (a.response_time_ms || 0), 0) /
-      Math.max(attempts.filter(a => a.response_time_ms).length, 1),
-    failure_patterns: {
-      auth_failures: authFailures.length,
-      timeout_failures: timeoutFailures.length,
-      network_failures: networkFailures.length,
-      other_failures: failedAttempts.length - authFailures.length - timeoutFailures.length - networkFailures.length
-    },
-    most_recent_error: failedAttempts[0]?.error_message || 'No recent failures'
-  };
-}
+    console.log('✅ [Diagnostics] Response generated', {
+      correlation_id: context.correlationId,
+      total_events: response.summary.total_count,
+      returned_events: response.summary.returned_count,
+      signature_valid_rate: response.summary.total_count > 0
+        ? (response.summary.signature_valid_count / response.summary.total_count * 100).toFixed(1) + '%'
+        : '0%'
+    });
 
-function maskSensitiveHeaders(headers: Record<string, string>) {
-  const maskedHeaders = { ...headers };
-
-  // Mask authorization header
-  if (maskedHeaders.Authorization) {
-    maskedHeaders.Authorization = `Bearer ${maskedHeaders.Authorization.substring(7, 15)}...`;
-  }
-
-  // Mask other sensitive headers
-  Object.keys(maskedHeaders).forEach(key => {
-    if (key.toLowerCase().includes('secret') || key.toLowerCase().includes('token')) {
-      maskedHeaders[key] = `${maskedHeaders[key].substring(0, 8)}...`;
-    }
+    return response;
   });
-
-  return maskedHeaders;
 }
 
-function generateTroubleshootingGuidance(analysis: any, config: any) {
-  const guidance = [];
+/**
+ * Generate troubleshooting guidance based on diagnostic data
+ */
+function generateTroubleshootingGuidance(
+  summary: any,
+  configDiagnostics: any,
+  events: any[]
+): any {
+  const guidance = {
+    overall_health: 'unknown',
+    issues_detected: [] as string[],
+    recommendations: [] as string[],
+    quick_fixes: [] as string[]
+  };
 
-  // Check configuration issues
-  if (!config.opal_auth_configured) {
-    guidance.push({
-      level: 'CRITICAL',
-      issue: 'Missing OPAL authentication configuration',
-      solution: 'Set OPAL_STRATEGY_WORKFLOW_AUTH_KEY or OPAL_WEBHOOK_AUTH_KEY in your environment variables',
-      docs_link: '/OPAL_CONFIGURATION.md#authentication'
-    });
+  // Determine overall health
+  const signatureValidRate = summary.total_count > 0
+    ? summary.signature_valid_count / summary.total_count
+    : 0;
+
+  const errorRate = summary.total_count > 0
+    ? summary.error_count / summary.total_count
+    : 0;
+
+  if (summary.total_count === 0) {
+    guidance.overall_health = 'no_data';
+    guidance.issues_detected.push('No webhook events received in the specified time range');
+    guidance.recommendations.push('Verify OPAL agents are configured and running');
+    guidance.recommendations.push('Check OPAL_TOOLS_DISCOVERY_URL is accessible');
+  } else if (signatureValidRate >= 0.98 && errorRate <= 0.02) {
+    guidance.overall_health = 'healthy';
+  } else if (signatureValidRate >= 0.9 && errorRate <= 0.1) {
+    guidance.overall_health = 'degraded';
+    guidance.issues_detected.push(`Signature validation rate: ${(signatureValidRate * 100).toFixed(1)}%`);
+    guidance.issues_detected.push(`Error rate: ${(errorRate * 100).toFixed(1)}%`);
+  } else {
+    guidance.overall_health = 'unhealthy';
+    guidance.issues_detected.push(`High error rate: ${(errorRate * 100).toFixed(1)}%`);
+    guidance.issues_detected.push(`Low signature validation rate: ${(signatureValidRate * 100).toFixed(1)}%`);
   }
 
-  if (config.opal_webhook_url === 'NOT_CONFIGURED') {
-    guidance.push({
-      level: 'CRITICAL',
-      issue: 'Missing OPAL webhook URL configuration',
-      solution: 'Set OPAL_WEBHOOK_URL to your production OPAL webhook endpoint',
-      docs_link: '/OPAL_CONFIGURATION.md#webhook-url'
-    });
+  // Configuration issues
+  if (!configDiagnostics.osa_webhook_secret_configured) {
+    guidance.issues_detected.push('OSA_WEBHOOK_SECRET not configured');
+    guidance.quick_fixes.push('Set OSA_WEBHOOK_SECRET environment variable (min 32 chars)');
   }
 
-  // Check failure patterns
-  if (analysis.failure_patterns?.auth_failures > 0) {
-    guidance.push({
-      level: 'HIGH',
-      issue: 'Authentication failures detected',
-      solution: 'Verify your OPAL auth token is correct and not expired',
-      docs_link: '/OPAL_CONFIGURATION.md#troubleshooting-auth'
-    });
+  if (!configDiagnostics.webhook_secret_length_ok) {
+    guidance.issues_detected.push('OSA_WEBHOOK_SECRET too short');
+    guidance.quick_fixes.push('Use webhook secret with at least 32 characters');
   }
 
-  if (analysis.failure_patterns?.timeout_failures > 0) {
-    guidance.push({
-      level: 'MEDIUM',
-      issue: 'Timeout failures detected',
-      solution: 'Check network connectivity to OPAL webhook endpoint or increase timeout values',
-      docs_link: '/OPAL_CONFIGURATION.md#timeout-configuration'
-    });
+  if (!configDiagnostics.osa_webhook_url_configured) {
+    guidance.issues_detected.push('OSA_WEBHOOK_URL not configured');
+    guidance.quick_fixes.push('Set OSA_WEBHOOK_URL environment variable');
   }
 
-  if (analysis.success_rate < 50 && analysis.total_attempts > 5) {
-    guidance.push({
-      level: 'HIGH',
-      issue: 'Low webhook success rate',
-      solution: 'Review error patterns and check OPAL endpoint health',
-      docs_link: '/OPAL_CONFIGURATION.md#troubleshooting'
-    });
+  if (!configDiagnostics.opal_tools_discovery_url_configured) {
+    guidance.issues_detected.push('OPAL_TOOLS_DISCOVERY_URL not configured');
+    guidance.quick_fixes.push('Set OPAL_TOOLS_DISCOVERY_URL environment variable');
   }
 
-  if (guidance.length === 0) {
-    guidance.push({
-      level: 'INFO',
-      issue: 'No critical issues detected',
-      solution: 'Webhook integration appears to be working correctly',
-      docs_link: '/OPAL_CONFIGURATION.md'
-    });
+  // Event pattern analysis
+  if (summary.total_count > 0) {
+    const recentErrors = events
+      .filter(e => e.error_details)
+      .slice(0, 3)
+      .map(e => e.error_details);
+
+    if (recentErrors.length > 0) {
+      guidance.issues_detected.push(`Recent errors: ${recentErrors.length} different error types`);
+      guidance.recommendations.push('Review error patterns in recent events');
+    }
+
+    // Check for signature failures
+    const signatureFailures = events.filter(e => !e.signature_valid);
+    if (signatureFailures.length > 0) {
+      guidance.issues_detected.push(`${signatureFailures.length} signature validation failures`);
+      guidance.recommendations.push('Verify webhook secret consistency between sender and receiver');
+      guidance.recommendations.push('Check for time skew between systems (max 5 minutes)');
+    }
   }
 
   return guidance;
-}
-
-async function testWebhookConfiguration() {
-  const config = {
-    webhook_url: process.env.OPAL_WEBHOOK_URL,
-    auth_key: process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY || process.env.OPAL_WEBHOOK_AUTH_KEY,
-    // workspace_id removed per user request
-    environment: process.env.NODE_ENV
-  };
-
-  const tests = [];
-
-  // Test 1: Configuration completeness
-  tests.push({
-    test: 'configuration_completeness',
-    result: !!(config.webhook_url && config.auth_key),
-    details: {
-      webhook_url_configured: !!config.webhook_url,
-      auth_key_configured: !!config.auth_key,
-      workspace_id_configured: !!config.workspace_id
-    }
-  });
-
-  // Test 2: URL format validation
-  if (config.webhook_url) {
-    try {
-      new URL(config.webhook_url);
-      tests.push({
-        test: 'webhook_url_format',
-        result: true,
-        details: 'Webhook URL format is valid'
-      });
-    } catch {
-      tests.push({
-        test: 'webhook_url_format',
-        result: false,
-        details: 'Webhook URL format is invalid'
-      });
-    }
-  }
-
-  // Test 3: Auth key length validation
-  if (config.auth_key) {
-    tests.push({
-      test: 'auth_key_strength',
-      result: config.auth_key.length >= 32,
-      details: `Auth key length: ${config.auth_key.length} characters (minimum 32 recommended)`
-    });
-  }
-
-  return {
-    overall_status: tests.every(t => t.result) ? 'PASS' : 'FAIL',
-    tests,
-    configuration_summary: {
-      ...config,
-      auth_key: config.auth_key ? `${config.auth_key.substring(0, 8)}...` : 'NOT_SET'
-    }
-  };
 }

@@ -1,0 +1,300 @@
+openapi: 3.0.3
+info:
+  title: OSA Force Sync API
+  description: Production-ready OPAL workflow orchestration for Optimizely Strategy Assistant
+  version: 1.0.0
+
+servers:
+  - url: https://your-app.vercel.app
+    description: Production
+  - url: https://staging-app.vercel.app
+    description: Staging
+  - url: http://localhost:3000
+    description: Development
+
+paths:
+  /api/orchestrations/trigger:
+    post:
+      summary: Trigger OPAL workflow
+      description: Initiates strategy_workflow in OPAL and creates execution tracking
+      operationId: triggerWorkflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_name
+                - session_id
+              properties:
+                workflow_name:
+                  type: string
+                  enum: ["strategy_workflow"]
+                  description: Must be strategy_workflow
+                session_id:
+                  type: string
+                  description: Unique session identifier
+                client_name:
+                  type: string
+                  description: Client identifier for tracking
+                engine_form:
+                  type: object
+                  description: Optional form data context
+                preferences:
+                  type: object
+                  description: User preferences and configuration
+                triggered_by:
+                  type: string
+                  default: force_sync
+            example:
+              workflow_name: "strategy_workflow"
+              session_id: "session_12345"
+              client_name: "ACME Corp"
+              engine_form: {"industry": "retail"}
+              preferences: {"notifications": true}
+      responses:
+        '200':
+          description: Workflow triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  workflow_id:
+                    type: string
+                  session_id:
+                    type: string
+                  correlation_id:
+                    type: string
+                  span_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: ["triggered"]
+                  webhook_url:
+                    type: string
+                  estimated_duration:
+                    type: string
+                  polling_url:
+                    type: string
+        '400':
+          description: Invalid request
+        '401':
+          description: Authentication required
+        '500':
+          description: Internal server error
+
+  /api/webhooks/opal-workflow:
+    post:
+      summary: Receive OPAL workflow events
+      description: Webhook endpoint for OPAL to send agent results and completion events
+      operationId: receiveWorkflowEvent
+      parameters:
+        - name: X-OSA-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+          description: HMAC signature for payload verification
+        - name: X-Workflow-ID
+          in: header
+          schema:
+            type: string
+          description: Workflow identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+                - event_type
+                - timestamp
+              properties:
+                workflow_id:
+                  type: string
+                session_id:
+                  type: string
+                event_type:
+                  type: string
+                  enum: ["workflow_started", "agent_completed", "workflow_completed", "workflow_failed"]
+                agent_id:
+                  type: string
+                  enum: ["content_review", "geo_audit", "audience_suggester", "experiment_blueprinter", "personalization_idea_generator", "roadmap_generator", "integration_health", "cmp_organizer", "customer_journey"]
+                offset:
+                  type: integer
+                  description: Event sequence number for ordering
+                timestamp:
+                  type: string
+                  format: date-time
+                payload:
+                  type: object
+                  description: Agent-specific result data
+                metadata:
+                  type: object
+            example:
+              workflow_id: "wf_12345"
+              session_id: "session_12345"
+              event_type: "agent_completed"
+              agent_id: "content_review"
+              offset: 1
+              timestamp: "2024-01-15T10:30:00Z"
+              payload:
+                summary: "Content analysis completed"
+                recommendations: ["Improve headlines", "Add CTAs"]
+                confidence_score: 0.85
+              metadata:
+                duration_ms: 2500
+      responses:
+        '202':
+          description: Event received and queued for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  event_id:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Invalid payload or signature
+        '409':
+          description: Duplicate event (idempotency)
+
+  /api/diagnostics/last-webhook:
+    get:
+      summary: Get recent webhook events
+      description: Returns last N webhook receipts for troubleshooting
+      operationId: getLastWebhooks
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 25
+            maximum: 100
+          description: Number of events to return
+        - name: workflow_id
+          in: query
+          schema:
+            type: string
+          description: Filter by workflow ID
+        - name: agent_id
+          in: query
+          schema:
+            type: string
+          description: Filter by agent ID
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: ["success", "failed", "all"]
+            default: "all"
+          description: Filter by processing status
+      responses:
+        '200':
+          description: List of recent webhook events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        workflow_id:
+                          type: string
+                        agent_id:
+                          type: string
+                        event_type:
+                          type: string
+                        received_at:
+                          type: string
+                          format: date-time
+                        signature_valid:
+                          type: boolean
+                        processing_status:
+                          type: string
+                        payload_preview:
+                          type: object
+                          description: Truncated payload for debugging
+                  total:
+                    type: integer
+                  has_more:
+                    type: boolean
+
+  /api/orchestrations/replay:
+    post:
+      summary: Replay workflow events
+      description: Reprocess stored webhook events for a given workflow
+      operationId: replayWorkflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+              properties:
+                workflow_id:
+                  type: string
+                from_offset:
+                  type: integer
+                  description: Start replay from this event offset
+                  default: 0
+                dry_run:
+                  type: boolean
+                  description: Validate events without processing
+                  default: false
+            example:
+              workflow_id: "wf_12345"
+              from_offset: 5
+              dry_run: false
+      responses:
+        '200':
+          description: Replay initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  replay_id:
+                    type: string
+                  events_found:
+                    type: integer
+                  events_processed:
+                    type: integer
+                  status:
+                    type: string
+                    enum: ["started", "completed", "failed"]
+        '404':
+          description: Workflow not found
+        '409':
+          description: Replay already in progress
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    HmacSignature:
+      type: apiKey
+      in: header
+      name: X-OSA-Signature
+
+security:
+  - BearerAuth: []

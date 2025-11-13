@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube, Eye, Heart } from 'lucide-react';
 import { SafeDate } from '@/lib/utils/date-formatter';
 
 interface AgentErrorPattern {
@@ -16,6 +16,40 @@ interface AgentErrorPattern {
     timestamp: string;
     message: string;
   }>;
+}
+
+// New TypeScript interfaces for OSA integration enhancements
+interface WebhookEvent {
+  id: string;
+  workflow_id: string;
+  agent_id: string;
+  http_status: number;
+  signature_valid: boolean;
+  processing_time_ms: number;
+  timestamp: string;
+  event_type?: string;
+}
+
+interface HealthCheckData {
+  overall_status: 'green' | 'yellow' | 'red';
+  signature_valid_rate: number;
+  error_rate_24h: number;
+  last_webhook_minutes_ago: number;
+  uptime_percentage?: number;
+}
+
+interface PayloadValidationResult {
+  success: boolean;
+  payload?: any;
+  validation_errors?: string[];
+  timestamp: string;
+}
+
+interface AgentTestResult {
+  success: boolean;
+  message: string;
+  response_time_ms?: number;
+  workflow_id?: string;
 }
 
 interface RecentDataComponentProps {
@@ -41,6 +75,19 @@ export default function RecentDataComponent({ className = '', compact = false }:
     cmp_organizer: 'unknown'
   });
   const [agentErrorPatterns, setAgentErrorPatterns] = useState<AgentErrorPattern[]>([]);
+
+  // New state variables for OSA integration enhancements
+  const [webhookEvents, setWebhookEvents] = useState<WebhookEvent[]>([]);
+  const [webhookEventsExpanded, setWebhookEventsExpanded] = useState(false);
+  const [webhookEventsLoading, setWebhookEventsLoading] = useState(false);
+  const [healthData, setHealthData] = useState<HealthCheckData | null>(null);
+  const [healthLoading, setHealthLoading] = useState(false);
+  const [payloadModalOpen, setPayloadModalOpen] = useState(false);
+  const [payloadResult, setPayloadResult] = useState<PayloadValidationResult | null>(null);
+  const [payloadLoading, setPayloadLoading] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<string>('');
+  const [agentTestLoading, setAgentTestLoading] = useState(false);
+  const [testResult, setTestResult] = useState<AgentTestResult | null>(null);
 
   // Fetch webhook statistics and agent statuses
   const fetchDashboardData = async () => {
@@ -101,15 +148,173 @@ export default function RecentDataComponent({ className = '', compact = false }:
     }
   };
 
+  // New fetch functions for OSA integration enhancements
+
+  // 1. Fetch webhook event logs
+  const fetchWebhookEvents = async () => {
+    try {
+      setWebhookEventsLoading(true);
+      const response = await fetch('/api/diagnostics/last-webhook?limit=10&status=all&hours=24');
+      const data = await response.json();
+
+      if (data.success && data.events) {
+        setWebhookEvents(data.events);
+      } else {
+        console.warn('Failed to fetch webhook events:', data.error);
+        setWebhookEvents([]);
+      }
+    } catch (error) {
+      console.error('Error fetching webhook events:', error);
+      setWebhookEvents([]);
+    } finally {
+      setWebhookEventsLoading(false);
+    }
+  };
+
+  // 2. Fetch health check data
+  const fetchHealthData = async () => {
+    try {
+      setHealthLoading(true);
+      const response = await fetch('/api/opal/health');
+      const data = await response.json();
+
+      // Handle both successful responses and expected 503 status (service unavailable but configured)
+      if (response.ok || response.status === 503) {
+        setHealthData({
+          overall_status: data.overall_status || 'red',
+          signature_valid_rate: data.signature_valid_rate || 0,
+          error_rate_24h: data.error_rate_24h || 0,
+          last_webhook_minutes_ago: data.last_webhook_minutes_ago || 999,
+          uptime_percentage: data.uptime_percentage
+        });
+
+        // Silent handling for expected 503 responses - no console output
+        if (response.status === 503) {
+          // 503 is expected when OPAL service is not available but health endpoint is functioning
+          // This is normal behavior and should not generate console errors
+          return;
+        }
+      } else {
+        // Only log truly unexpected errors (400, 500, etc. - not 503)
+        console.error('Unexpected health API error:', response.status, data);
+        setHealthData({
+          overall_status: 'red',
+          signature_valid_rate: 0,
+          error_rate_24h: 100,
+          last_webhook_minutes_ago: 999
+        });
+      }
+    } catch (error) {
+      // Only log network errors, not expected API responses
+      console.error('Network error fetching health data:', error);
+      setHealthData({
+        overall_status: 'red',
+        signature_valid_rate: 0,
+        error_rate_24h: 100,
+        last_webhook_minutes_ago: 999
+      });
+    } finally {
+      setHealthLoading(false);
+    }
+  };
+
+  // 3. Validate payload
+  const validatePayload = async () => {
+    try {
+      setPayloadLoading(true);
+      const response = await fetch('/api/opal/test-payload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ test_mode: true })
+      });
+      const data = await response.json();
+
+      setPayloadResult({
+        success: data.success || false,
+        payload: data.payload,
+        validation_errors: data.validation_errors || [],
+        timestamp: new Date().toISOString()
+      });
+      setPayloadModalOpen(true);
+    } catch (error) {
+      setPayloadResult({
+        success: false,
+        validation_errors: [`Network error: ${error instanceof Error ? error.message : 'Unknown error'}`],
+        timestamp: new Date().toISOString()
+      });
+      setPayloadModalOpen(true);
+    } finally {
+      setPayloadLoading(false);
+    }
+  };
+
+  // 4. Test agent execution
+  const testAgent = async (agentId: string) => {
+    try {
+      setAgentTestLoading(true);
+      const startTime = Date.now();
+
+      const response = await fetch('/api/opal/enhanced-tools', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tool_name: "send_data_to_osa_enhanced",
+          parameters: {
+            workflow_id: "test-workflow-ui",
+            agent_id: agentId,
+            execution_status: "success",
+            agent_data: { test: "data", timestamp: new Date().toISOString() }
+          }
+        })
+      });
+
+      const data = await response.json();
+      const responseTime = Date.now() - startTime;
+
+      setTestResult({
+        success: data.success || false,
+        message: data.message || (data.success ? 'Agent test completed successfully' : 'Agent test failed'),
+        response_time_ms: responseTime,
+        workflow_id: "test-workflow-ui"
+      });
+
+      // Show success/failure toast notification
+      setTimeout(() => setTestResult(null), 5000);
+    } catch (error) {
+      setTestResult({
+        success: false,
+        message: `Test failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      });
+      setTimeout(() => setTestResult(null), 5000);
+    } finally {
+      setAgentTestLoading(false);
+      setSelectedAgent('');
+    }
+  };
+
   useEffect(() => {
     // Initial fetch
     fetchDashboardData();
+    fetchHealthData();
 
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(fetchDashboardData, 30000);
+    // Auto-refresh every 30 seconds for dashboard data
+    const dashboardInterval = setInterval(fetchDashboardData, 30000);
 
-    return () => clearInterval(interval);
+    // Health check every 60 seconds
+    const healthInterval = setInterval(fetchHealthData, 60000);
+
+    return () => {
+      clearInterval(dashboardInterval);
+      clearInterval(healthInterval);
+    };
   }, []);
+
+  // Fetch webhook events when expanded
+  useEffect(() => {
+    if (webhookEventsExpanded) {
+      fetchWebhookEvents();
+    }
+  }, [webhookEventsExpanded]);
 
   // Check if an agent has repeated failures
   const hasRepeatedFailures = (agentId: string): AgentErrorPattern | null => {
@@ -379,12 +584,94 @@ export default function RecentDataComponent({ className = '', compact = false }:
       {/* OPAL Agent Status */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-3">
-            <Activity className="h-6 w-6 text-blue-600" />
-            OPAL Agent Status
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Activity className="h-6 w-6 text-blue-600" />
+              OPAL Agent Status
+              {/* Health Check Widget - inline badge next to title */}
+              {healthData && (
+                <div className="flex items-center gap-2">
+                  <Heart
+                    className={`h-4 w-4 ${
+                      healthData.overall_status === 'green' ? 'text-green-600' :
+                      healthData.overall_status === 'yellow' ? 'text-yellow-600' :
+                      'text-red-600'
+                    }`}
+                  />
+                  <Badge
+                    variant="outline"
+                    className={`text-xs ${
+                      healthData.overall_status === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
+                      healthData.overall_status === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                      'bg-red-50 text-red-700 border-red-200'
+                    }`}
+                    title={`Error rate: ${healthData.error_rate_24h.toFixed(1)}% | Last webhook: ${healthData.last_webhook_minutes_ago}m ago`}
+                  >
+                    {Math.round(healthData.signature_valid_rate)}% valid
+                  </Badge>
+                </div>
+              )}
+            </div>
+
+            {/* Enhanced Controls Row */}
+            <div className="flex items-center gap-2">
+              {/* Agent Test Dropdown */}
+              <div className="flex items-center gap-1">
+                <select
+                  value={selectedAgent}
+                  onChange={(e) => setSelectedAgent(e.target.value)}
+                  className="text-xs border border-gray-300 rounded px-2 py-1 text-gray-700"
+                  disabled={agentTestLoading}
+                >
+                  <option value="">Test Agent</option>
+                  {Object.keys(agentStatuses).map((agentId) => (
+                    <option key={agentId} value={agentId}>
+                      {getAgentDisplayName(agentId)}
+                    </option>
+                  ))}
+                </select>
+                {selectedAgent && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => testAgent(selectedAgent)}
+                    disabled={agentTestLoading}
+                    className="h-7 px-2 text-xs"
+                  >
+                    <TestTube className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+
+              {/* Payload Preview Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={validatePayload}
+                disabled={payloadLoading}
+                className="h-7 px-2 text-xs flex items-center gap-1"
+              >
+                <Eye className="h-3 w-3" />
+                {payloadLoading ? 'Validating...' : 'Validate Payload'}
+              </Button>
+
+              {/* Refresh Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  fetchDashboardData();
+                  fetchHealthData();
+                }}
+                className="h-7 px-2"
+                disabled={isLoading}
+              >
+                <RefreshCw className={`h-3 w-3 ${isLoading ? 'animate-spin' : ''}`} />
+              </Button>
+            </div>
           </CardTitle>
           <CardDescription>
-            Real-time status of all 9 OPAL strategy agents
+            Real-time status of all 9 OPAL strategy agents with OSA integration monitoring
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -472,7 +759,190 @@ export default function RecentDataComponent({ className = '', compact = false }:
                   );
                 })}
               </div>
+
+              {/* Webhook Event Logs Panel - Collapsible */}
+              <div className="mt-6 border-t border-gray-200 pt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-blue-600" />
+                    Recent Webhook Events
+                  </h4>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setWebhookEventsExpanded(!webhookEventsExpanded)}
+                    className="h-6 px-2 text-xs text-gray-500"
+                  >
+                    {webhookEventsExpanded ? (
+                      <>
+                        <ChevronUp className="h-3 w-3 mr-1" />
+                        Hide
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-3 w-3 mr-1" />
+                        Show Last 10
+                      </>
+                    )}
+                  </Button>
+                </div>
+
+                {webhookEventsExpanded && (
+                  <div className="space-y-2">
+                    {webhookEventsLoading ? (
+                      <div className="flex items-center justify-center py-4">
+                        <RefreshCw className="h-4 w-4 animate-spin text-blue-600 mr-2" />
+                        <span className="text-xs text-gray-600">Loading events...</span>
+                      </div>
+                    ) : webhookEvents.length > 0 ? (
+                      <div className="max-h-64 overflow-y-auto">
+                        {webhookEvents.map((event, index) => (
+                          <div
+                            key={event.id || index}
+                            className="flex items-center justify-between p-2 bg-gray-50 rounded text-xs border"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Badge
+                                variant="outline"
+                                className={`${
+                                  event.http_status >= 200 && event.http_status < 300
+                                    ? 'bg-green-50 text-green-700 border-green-200'
+                                    : 'bg-red-50 text-red-700 border-red-200'
+                                }`}
+                              >
+                                {event.http_status}
+                              </Badge>
+                              <span className="font-mono text-gray-600">{event.workflow_id?.substring(0, 12) || 'N/A'}...</span>
+                              <span className="text-gray-500">{getAgentDisplayName(event.agent_id)}</span>
+                              {event.signature_valid !== undefined && (
+                                <span className={`${event.signature_valid ? 'text-green-600' : 'text-red-600'}`}>
+                                  {event.signature_valid ? '✓' : '✗'} Signature
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {event.processing_time_ms && (
+                                <span className="text-gray-400">{event.processing_time_ms}ms</span>
+                              )}
+                              <SafeDate date={event.timestamp} format="time" fallback="Unknown" />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-4 text-xs text-gray-500">
+                        No recent webhook events found
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </>
+          )}
+
+          {/* Agent Test Result Toast Notification */}
+          {testResult && (
+            <div
+              className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg border z-50 ${
+                testResult.success
+                  ? 'bg-green-50 text-green-800 border-green-200'
+                  : 'bg-red-50 text-red-800 border-red-200'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {testResult.success ? (
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-red-600" />
+                )}
+                <div>
+                  <div className="text-sm font-semibold">
+                    {testResult.success ? 'Test Successful' : 'Test Failed'}
+                  </div>
+                  <div className="text-xs mt-1">{testResult.message}</div>
+                  {testResult.response_time_ms && (
+                    <div className="text-xs text-gray-600 mt-1">
+                      Response time: {testResult.response_time_ms}ms
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Payload Validation Modal */}
+          {payloadModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900">Payload Validation Result</h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setPayloadModalOpen(false)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <XCircle className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="p-6 overflow-y-auto max-h-[60vh]">
+                  {payloadResult && (
+                    <>
+                      <div className="flex items-center gap-2 mb-4">
+                        {payloadResult.success ? (
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                        ) : (
+                          <XCircle className="h-5 w-5 text-red-600" />
+                        )}
+                        <span className={`font-semibold ${
+                          payloadResult.success ? 'text-green-800' : 'text-red-800'
+                        }`}>
+                          {payloadResult.success ? 'Validation Successful' : 'Validation Failed'}
+                        </span>
+                        <Badge variant="outline" className="text-xs ml-auto">
+                          <SafeDate date={payloadResult.timestamp} format="datetime" />
+                        </Badge>
+                      </div>
+
+                      {payloadResult.validation_errors && payloadResult.validation_errors.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-semibold text-red-800 mb-2">Validation Errors:</h4>
+                          <ul className="text-xs text-red-700 space-y-1">
+                            {payloadResult.validation_errors.map((error, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-red-500">•</span>
+                                <span>{error}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {payloadResult.payload && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Payload Preview:</h4>
+                          <pre className="text-xs bg-gray-100 p-3 rounded border overflow-x-auto">
+                            {JSON.stringify(payloadResult.payload, null, 2)}
+                          </pre>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                  <div className="flex justify-end">
+                    <Button
+                      variant="outline"
+                      onClick={() => setPayloadModalOpen(false)}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>

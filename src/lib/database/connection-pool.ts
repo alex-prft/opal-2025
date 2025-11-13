@@ -1,11 +1,12 @@
 /**
  * Database Connection Pool Manager
- * Manages Supabase client instances and connection lifecycle
+ * Enhanced connection pooling with PostgreSQL support, caching, and performance monitoring
  */
 
 import { createSupabaseAdmin } from './supabase-client';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@/lib/types/database';
+import { cache } from '@/lib/cache/redis-cache';
 
 interface ConnectionPoolConfig {
   /** Minimum number of connections to maintain */
@@ -27,6 +28,20 @@ interface PooledConnection {
   lastUsedAt: number;
   inUse: boolean;
   isHealthy: boolean;
+  queryCount: number;
+  totalQueryTime: number;
+  lastHealthCheck: number;
+}
+
+interface PerformanceMetrics {
+  totalQueries: number;
+  averageQueryTime: number;
+  cacheHitRate: number;
+  poolUtilization: number;
+  healthyConnections: number;
+  errors: number;
+  slowQueries: number;
+  lastReset: number;
 }
 
 export class DatabaseConnectionPool {
@@ -34,6 +49,8 @@ export class DatabaseConnectionPool {
   private config: ConnectionPoolConfig;
   private healthCheckTimer?: NodeJS.Timeout;
   private cleanupTimer?: NodeJS.Timeout;
+  private metrics: PerformanceMetrics;
+  private slowQueryThreshold: number = 1000; // 1 second
 
   constructor(config?: Partial<ConnectionPoolConfig>) {
     this.config = {
@@ -43,6 +60,17 @@ export class DatabaseConnectionPool {
       acquireTimeoutMs: 5000,
       healthCheckIntervalMs: 60000, // 1 minute
       ...config
+    };
+
+    this.metrics = {
+      totalQueries: 0,
+      averageQueryTime: 0,
+      cacheHitRate: 0,
+      poolUtilization: 0,
+      healthyConnections: 0,
+      errors: 0,
+      slowQueries: 0,
+      lastReset: Date.now()
     };
 
     this.initialize();
@@ -84,7 +112,10 @@ export class DatabaseConnectionPool {
       createdAt: now,
       lastUsedAt: now,
       inUse: false,
-      isHealthy: true
+      isHealthy: true,
+      queryCount: 0,
+      totalQueryTime: 0,
+      lastHealthCheck: now
     };
 
     this.connections.set(id, connection);
@@ -155,12 +186,138 @@ export class DatabaseConnectionPool {
     operation: (client: SupabaseClient<Database>) => Promise<T>
   ): Promise<T> {
     const client = await this.acquireConnection();
+    const startTime = performance.now();
 
     try {
-      return await operation(client);
+      const result = await operation(client);
+      const queryTime = performance.now() - startTime;
+
+      // Update connection and pool metrics
+      this.updateConnectionMetrics(client, queryTime);
+      this.updatePoolMetrics(queryTime);
+
+      return result;
+    } catch (error) {
+      this.metrics.errors++;
+      throw error;
     } finally {
       this.releaseConnection(client);
     }
+  }
+
+  /**
+   * Execute cached query with automatic caching and performance monitoring
+   */
+  async executeCachedQuery<T = any>(
+    table: string,
+    query: any,
+    cacheKey?: string,
+    cacheTTL: number = 300
+  ): Promise<{ data: T[] | null; fromCache: boolean; duration: number }> {
+    const startTime = performance.now();
+    const effectiveCacheKey = cacheKey || `query:${table}:${JSON.stringify(query).slice(0, 50)}`;
+
+    // Try cache first
+    try {
+      const redisClient = cache.getClient();
+      const cached = redisClient ? await redisClient.get(effectiveCacheKey) : null;
+      if (cached) {
+        const duration = performance.now() - startTime;
+        this.metrics.cacheHitRate = (this.metrics.cacheHitRate + 1) / 2; // Simplified running average
+        return {
+          data: JSON.parse(cached),
+          fromCache: true,
+          duration: parseFloat(duration.toFixed(2))
+        };
+      }
+    } catch (cacheError) {
+      console.warn('[Pool] Cache read error:', cacheError);
+    }
+
+    // Execute query
+    const result = await this.withConnection(async (client) => {
+      const { data, error } = await client.from(table).select(query);
+      if (error) throw error;
+      return data;
+    });
+
+    const duration = performance.now() - startTime;
+
+    // Cache result
+    try {
+      const redisClient = cache.getClient();
+      if (redisClient) {
+        await redisClient.setex(effectiveCacheKey, cacheTTL, JSON.stringify(result));
+      }
+    } catch (cacheError) {
+      console.warn('[Pool] Cache write error:', cacheError);
+    }
+
+    return {
+      data: result,
+      fromCache: false,
+      duration: parseFloat(duration.toFixed(2))
+    };
+  }
+
+  /**
+   * Get OPAL mapping with caching
+   */
+  async getMappingConfig(mappingType: string): Promise<any | null> {
+    const { data } = await this.executeCachedQuery(
+      'opal_mapping_configurations',
+      '*',
+      `mapping:${mappingType}`,
+      3600 // 1 hour cache
+    );
+
+    return data?.[0] || null;
+  }
+
+  /**
+   * Get optimization metrics with caching
+   */
+  async getOptimizationMetrics(domain: string, timeframe: string = '24h'): Promise<any[]> {
+    const { data } = await this.executeCachedQuery(
+      'optimization_metrics',
+      `*, domain, recorded_at`,
+      `metrics:${domain}:${timeframe}`,
+      300 // 5 minutes cache
+    );
+
+    return data || [];
+  }
+
+  /**
+   * Update connection-specific metrics
+   */
+  private updateConnectionMetrics(client: SupabaseClient<Database>, queryTime: number): void {
+    for (const connection of this.connections.values()) {
+      if (connection.client === client) {
+        connection.queryCount++;
+        connection.totalQueryTime += queryTime;
+
+        if (queryTime > this.slowQueryThreshold) {
+          this.metrics.slowQueries++;
+          console.warn(`[Pool] Slow query detected: ${queryTime.toFixed(2)}ms on connection ${connection.id}`);
+        }
+        break;
+      }
+    }
+  }
+
+  /**
+   * Update pool-wide metrics
+   */
+  private updatePoolMetrics(queryTime: number): void {
+    this.metrics.totalQueries++;
+    this.metrics.averageQueryTime = (this.metrics.averageQueryTime + queryTime) / 2;
+
+    const inUseCount = Array.from(this.connections.values()).filter(c => c.inUse).length;
+    this.metrics.poolUtilization = (inUseCount / this.config.maxConnections) * 100;
+
+    const healthyCount = Array.from(this.connections.values()).filter(c => c.isHealthy).length;
+    this.metrics.healthyConnections = healthyCount;
   }
 
   /**
@@ -253,24 +410,80 @@ export class DatabaseConnectionPool {
   }
 
   /**
-   * Get pool statistics
+   * Get pool statistics with performance metrics
    */
   getStats(): {
-    total: number;
-    available: number;
-    inUse: number;
-    healthy: number;
-    unhealthy: number;
+    pool: {
+      total: number;
+      available: number;
+      inUse: number;
+      healthy: number;
+      unhealthy: number;
+    };
+    performance: PerformanceMetrics;
+    connections: Array<{
+      id: string;
+      queryCount: number;
+      avgQueryTime: number;
+      isHealthy: boolean;
+      inUse: boolean;
+      ageMs: number;
+    }>;
   } {
     const connections = Array.from(this.connections.values());
+    const now = Date.now();
+
+    this.updatePoolMetrics(0); // Update current metrics
 
     return {
-      total: connections.length,
-      available: connections.filter(c => !c.inUse && c.isHealthy).length,
-      inUse: connections.filter(c => c.inUse).length,
-      healthy: connections.filter(c => c.isHealthy).length,
-      unhealthy: connections.filter(c => !c.isHealthy).length
+      pool: {
+        total: connections.length,
+        available: connections.filter(c => !c.inUse && c.isHealthy).length,
+        inUse: connections.filter(c => c.inUse).length,
+        healthy: connections.filter(c => c.isHealthy).length,
+        unhealthy: connections.filter(c => !c.isHealthy).length
+      },
+      performance: { ...this.metrics },
+      connections: connections.map(c => ({
+        id: c.id,
+        queryCount: c.queryCount,
+        avgQueryTime: c.queryCount > 0 ? c.totalQueryTime / c.queryCount : 0,
+        isHealthy: c.isHealthy,
+        inUse: c.inUse,
+        ageMs: now - c.createdAt
+      }))
     };
+  }
+
+  /**
+   * Get performance metrics only
+   */
+  getPerformanceMetrics(): PerformanceMetrics {
+    return { ...this.metrics };
+  }
+
+  /**
+   * Reset performance metrics
+   */
+  resetMetrics(): void {
+    this.metrics = {
+      totalQueries: 0,
+      averageQueryTime: 0,
+      cacheHitRate: 0,
+      poolUtilization: 0,
+      healthyConnections: 0,
+      errors: 0,
+      slowQueries: 0,
+      lastReset: Date.now()
+    };
+
+    // Reset connection-specific metrics
+    for (const connection of this.connections.values()) {
+      connection.queryCount = 0;
+      connection.totalQueryTime = 0;
+    }
+
+    console.log('[Pool] Performance metrics reset');
   }
 
   /**

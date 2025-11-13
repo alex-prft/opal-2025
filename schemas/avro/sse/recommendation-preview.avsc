@@ -1,0 +1,185 @@
+{
+  "type": "record",
+  "name": "RecommendationPreview",
+  "namespace": "com.opal.events.sse",
+  "doc": "Incremental recommendation update streamed via Server-Sent Events",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "stream_id",
+      "type": "string",
+      "doc": "Unique stream event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "workflow_id",
+      "type": "string",
+      "doc": "Associated workflow identifier - part of idempotency key"
+    },
+    {
+      "name": "recommendation_id",
+      "type": "string",
+      "doc": "Unique recommendation identifier - part of idempotency key"
+    },
+    {
+      "name": "sequence_number",
+      "type": "long",
+      "doc": "Monotonic sequence number for ordering - part of idempotency key"
+    },
+    {
+      "name": "update_type",
+      "type": {
+        "type": "enum",
+        "name": "RecommendationUpdateType",
+        "symbols": [
+          "new_recommendation",
+          "confidence_update",
+          "evidence_added",
+          "ranking_changed",
+          "finalized"
+        ]
+      },
+      "doc": "Type of recommendation update being streamed"
+    },
+    {
+      "name": "contributing_agent_id",
+      "type": {
+        "type": "enum",
+        "name": "ContributingAgentType",
+        "symbols": [
+          "experiment_blueprinter",
+          "audience_suggester",
+          "content_review",
+          "roadmap_generator",
+          "integration_health",
+          "personalization_idea_generator",
+          "cmp_organizer",
+          "customer_journey",
+          "geo_audit"
+        ]
+      },
+      "doc": "Agent contributing to this recommendation update"
+    },
+    {
+      "name": "recommendation_preview",
+      "type": {
+        "type": "record",
+        "name": "StreamingRecommendation",
+        "fields": [
+          {"name": "title", "type": "string", "doc": "Current recommendation title"},
+          {"name": "description", "type": ["null", "string"], "default": null, "doc": "Current description"},
+          {"name": "category", "type": ["null", "string"], "default": null, "doc": "Recommendation category"},
+          {"name": "current_confidence", "type": "double", "doc": "Current confidence score (0.0-1.0)"},
+          {"name": "impact_score", "type": ["null", "int"], "default": null, "doc": "Preliminary impact score (1-10)"},
+          {"name": "effort_score", "type": ["null", "int"], "default": null, "doc": "Preliminary effort score (1-10)"},
+          {"name": "priority_rank", "type": ["null", "int"], "default": null, "doc": "Current ranking position"},
+          {"name": "status", "type": "string", "doc": "Processing status: analyzing, validating, scoring, finalizing"}
+        ]
+      },
+      "doc": "Current state of the recommendation being developed"
+    },
+    {
+      "name": "evidence_updates",
+      "type": ["null", {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "StreamingEvidence",
+          "fields": [
+            {"name": "agent_type", "type": "string", "doc": "Agent providing evidence"},
+            {"name": "data_source", "type": "string", "doc": "Source of the evidence"},
+            {"name": "evidence_type", "type": "string", "doc": "Type of evidence: metric, analysis, prediction"},
+            {"name": "confidence", "type": "double", "doc": "Confidence in this evidence"},
+            {"name": "summary", "type": "string", "doc": "Brief evidence summary"},
+            {"name": "impact_on_recommendation", "type": ["null", "string"], "default": null, "doc": "How this evidence affects the recommendation"}
+          ]
+        }
+      }],
+      "default": null,
+      "doc": "New evidence supporting or refuting the recommendation"
+    },
+    {
+      "name": "confidence_breakdown",
+      "type": ["null", {
+        "type": "record",
+        "name": "StreamingConfidenceBreakdown",
+        "fields": [
+          {"name": "data_quality", "type": "double", "doc": "Data quality confidence component"},
+          {"name": "agent_consensus", "type": "double", "doc": "Inter-agent consensus confidence"},
+          {"name": "evidence_strength", "type": "double", "doc": "Evidence strength confidence"},
+          {"name": "historical_accuracy", "type": ["null", "double"], "default": null, "doc": "Historical prediction accuracy"}
+        ]
+      }],
+      "default": null,
+      "doc": "Detailed confidence scoring breakdown"
+    },
+    {
+      "name": "ranking_context",
+      "type": ["null", {
+        "type": "record",
+        "name": "RankingContext",
+        "fields": [
+          {"name": "total_recommendations", "type": "int", "doc": "Total recommendations being considered"},
+          {"name": "current_rank", "type": ["null", "int"], "default": null, "doc": "Current ranking position"},
+          {"name": "previous_rank", "type": ["null", "int"], "default": null, "doc": "Previous ranking position"},
+          {"name": "rank_change_reason", "type": ["null", "string"], "default": null, "doc": "Reason for ranking change"}
+        ]
+      }],
+      "default": null,
+      "doc": "Context about recommendation ranking"
+    },
+    {
+      "name": "processing_progress",
+      "type": {
+        "type": "record",
+        "name": "RecommendationProcessingProgress",
+        "fields": [
+          {"name": "agents_contributing", "type": "int", "doc": "Number of agents that have contributed"},
+          {"name": "total_expected_agents", "type": "int", "doc": "Total agents expected to contribute"},
+          {"name": "evidence_count", "type": "int", "doc": "Number of evidence items collected"},
+          {"name": "completion_percentage", "type": "int", "doc": "Completion percentage for this recommendation (0-100)"}
+        ]
+      },
+      "doc": "Progress tracking for this specific recommendation"
+    },
+    {
+      "name": "client_connection_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client connection identifier for targeted streaming"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "recommendation-streamer",
+      "doc": "System that generated this streaming event"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

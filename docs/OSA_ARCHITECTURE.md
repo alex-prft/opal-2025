@@ -8,25 +8,31 @@
 
 ## Main Services Overview
 
-OSA consists of **seven core microservices** that work together to provide AI-powered optimization strategy recommendations, now enhanced with comprehensive OPAL integration, real-time monitoring, and production-grade deployment infrastructure:
+OSA consists of **seven core microservices** that work together to provide AI-powered optimization strategy recommendations, now enhanced with comprehensive OPAL integration, real-time monitoring, and production-grade deployment infrastructure with a comprehensive admin interface system:
 
 ### 🔴 Core Services (P0 - Mandatory)
-- **Ingestion & Orchestration Service** (`Opal Connector`) - **ENHANCED** OPAL workflow orchestration with real-time agent monitoring, webhook event streaming, and comprehensive error handling
-- **Recommendation Service** (`Decision Layer`) - Central AI intelligence engine with analytics integration (GA4, Salesforce) and API-driven recommendation generation
-- **Knowledge & Retrieval Service** (`RAG Brain`) - Foundation knowledge layer with file storage, webhook event streaming, and advanced data persistence
+- **Ingestion & Orchestration Service** (`Opal Connector`) - **ENHANCED** OPAL workflow orchestration with real-time agent monitoring, webhook event streaming, and comprehensive error handling. Supports 9 specialized OPAL agents with advanced monitoring capabilities accessible via `/engine/admin/opal-monitoring`
+- **Recommendation Service** (`Decision Layer`) - Central AI intelligence engine with analytics integration (GA4, Salesforce) and API-driven recommendation generation. Admin interface at `/engine/admin/recommendation-engine` provides ML model management and performance monitoring
+- **Knowledge & Retrieval Service** (`RAG Brain`) - Foundation knowledge layer with file storage, webhook event streaming, and advanced data persistence. Integrates with all admin interfaces to provide contextual knowledge and learning capabilities
 
 ### 🟡 Enhanced Services (P1 - High Priority)
-- **Strategy Intake Service** (`Engine Form`) - **DEPLOYED** Business context collection with enhanced validation and workflow coordination
-- **Preferences & Policy Service** (`Personal Configurator`) - User preference management with policy enforcement and configuration constraints
-- **UX Design Service** (`Artist`) - **PRODUCTION** Frontend experience layer with component library, accessibility compliance, and responsive design
+- **Strategy Intake Service** (`Engine Form`) - **DEPLOYED** Business context collection with enhanced validation and workflow coordination. Admin configuration available at `/engine/admin/strategy-ai` for influence factors and roadmap management
+- **Preferences & Policy Service** (`Personal Configurator`) - User preference management with policy enforcement and configuration constraints. Admin access via `/engine/admin/configurations` for system-wide settings and integration management
+- **UX Design Service** (`Artist`) - **PRODUCTION** Frontend experience layer with component library, accessibility compliance, and responsive design. Provides the admin dashboard interface with real-time monitoring widgets and agent status panels
 
 ### 🟢 Future Services (P2 - Optional)
-- **Conversational Analytics Service** (`TTYD - Talk To Your Data`) - Natural language querying interface for interactive data exploration
+- **Conversational Analytics Service** (`TTYD - Talk To Your Data`) - Natural language querying interface for interactive data exploration. Will integrate with admin analytics at `/engine/admin` when implemented
 
 ### 🌐 Platform Services (P0 - Infrastructure)
 - **API Gateway** - **OPERATIONAL** Authentication, rate limiting, request routing with circuit breakers and performance monitoring
 - **Event Bus** - **DEPLOYED** Supabase Realtime with webhook event streaming and comprehensive audit logging
-- **Monitoring Service** - **ACTIVE** Real-time health checks, metrics collection, agent status tracking, and workflow progress monitoring
+- **Monitoring Service** - **ACTIVE** Real-time health checks, metrics collection, agent status tracking, and workflow progress monitoring. Accessible via comprehensive admin dashboard at `/engine/admin` with dedicated monitoring sections
+
+### 🏠 Admin Interface System
+- **Central Admin Dashboard** (`/engine/admin`) - **OPERATIONAL** Two-column responsive design with real-time data monitoring and system diagnostics
+- **Configuration Management** (`/engine/admin/configurations`) - System-wide configuration, data integrations, webhooks, and OPAL workflow settings
+- **OPAL Monitoring Hub** (`/engine/admin/opal-monitoring`) - Comprehensive agent monitoring with individual agent pages, payload validation, and workflow replay capabilities
+- **Data Mapping Visualization** (`/engine/admin/data-mapping`) - Visual representation of OPAL-to-OSA service relationships and data flow monitoring
 
 ## Table of Contents
 1. [System Overview](#system-overview)
@@ -39,6 +45,28 @@ OSA consists of **seven core microservices** that work together to provide AI-po
 8. [System Integration & Data Flow](#system-integration--data-flow)
 9. [Technical Stack & Infrastructure](#technical-stack--infrastructure)
 10. [Security & Performance](#security--performance)
+
+---
+
+## Quick Reference Links
+
+### 📖 Related Documentation
+- **[Quick Start Guide](quick-start.md)** - Get started with OSA in under 10 minutes
+- **[Admin Interface Guide](OSA_ADMIN.md)** - Complete admin functionality and monitoring
+- **[OPAL Integration Details](OPAL_MAPPING.md)** - Deep dive into OPAL agent workflows and mappings
+- **[Interactive API Documentation](/docs)** - Live API testing and reference
+
+### 🚀 Live System Access
+- **Production Dashboard**: https://opal-2025.vercel.app
+- **Admin Interface**: https://opal-2025.vercel.app/engine/admin
+- **API Documentation**: https://opal-2025.vercel.app/docs
+- **OPAL Monitoring**: https://opal-2025.vercel.app/engine/admin/opal-monitoring
+
+### 🔧 Key Configuration Files
+- **Environment Setup**: `.env.local` (see [Quick Start Guide](quick-start.md))
+- **OPAL Configuration**: `src/lib/config/opal-env.ts:41`
+- **Webhook Security**: `src/lib/security/hmac.ts:23`
+- **Database Schema**: `migrations/` directory
 
 ---
 
@@ -286,6 +314,12 @@ Each agent provides comprehensive monitoring data including:
 - **Persistent Storage**: File-based JSON storage in `/data/agent-overrides.json` with change tracking
 - **API Integration**: PUT endpoint `/api/opal/agent-data?agent={id}` for saving admin modifications
 - **Audit Trail**: Comprehensive change tracking with timestamps and modification history
+
+**Enhanced Monitoring Components** (Recently Implemented):
+- **ValidatePayloadPanel**: Test and validate OPAL payload structure with JSON preview and error handling
+- **ReplayWorkflowPanel**: Re-execute workflows in dry-run mode with correlation ID tracking
+- **AgentDataSummaryPanel**: Overview of agent data flow with metrics summary and sync status indicators
+- **RecentDataComponent Enhancements**: OPAL → OSA integration monitoring with webhook event logs, health check widgets, payload preview buttons, and agent execution testing
 
 #### 3. Force Sync Mechanism
 **File**: `/src/app/api/opal/sync/route.ts`
@@ -1752,7 +1786,7 @@ interface AccessibilityAudit {
 
 ## System Integration & Data Flow
 
-### Overall Architecture Pattern
+### Overall Architecture Pattern with Admin Interface Integration
 
 ```mermaid
 graph TB
@@ -1766,7 +1800,32 @@ graph TB
     H --> G
     F --> I[Recommendations]
     I --> G
+
+    subgraph "Admin Interface System"
+        J[Admin Dashboard /engine/admin]
+        K[OPAL Monitoring /opal-monitoring]
+        L[Configuration /configurations]
+        M[Data Mapping /data-mapping]
+        N[Strategy AI /strategy-ai]
+        O[Recommendation Engine /recommendation-engine]
+    end
+
+    B --> J
+    B --> K
+    F --> O
+    E --> L
+    C --> N
+    J --> G
 ```
+
+### Admin Interface Integration Pattern
+
+The comprehensive admin interface system provides real-time monitoring and management capabilities across all OSA services:
+
+- **Central Dashboard** (`/engine/admin`) - Two-column responsive design with RecentDataComponent for OPAL agent status and DiagnosticsPanel for system health
+- **OPAL Monitoring Hub** (`/engine/admin/opal-monitoring`) - Dedicated monitoring for all 9 OPAL agents with individual agent pages, payload validation, and workflow replay
+- **Configuration Management** - System-wide settings, data integrations, webhooks, and OPAL workflow configurations
+- **Strategic Intelligence** - AI-powered influence factors, roadmap management, and maturity scoring systems
 
 ### Data Flow Patterns
 
@@ -1858,6 +1917,22 @@ UserInteractions → PatternExtraction → KnowledgeUpdate → ImprovedRecommend
 #### **Real-time Event APIs** (`/api/webhook-events/*`)
 - **`/api/webhook-events/stream`** - **Server-Sent Events** for real-time dashboard updates
 - **`/api/webhook-events/stats`** - Webhook performance statistics and analytics
+
+#### **Admin Interface APIs** (`/api/*`)
+- **`/api/opal/health`** - OPAL system health checks and metrics collection
+- **`/api/opal/test-payload`** - Payload validation testing for agent debugging
+- **`/api/orchestrations/replay`** - Workflow replay functionality for admin testing
+- **`/api/diagnostics/last-webhook`** - Recent webhook event analysis and monitoring
+- **`/api/monitoring/agent-logs`** - Agent error pattern analysis and tracking
+
+#### **Frontend Admin Routes** (`/engine/admin/*`)
+- **`/engine/admin`** - Central admin dashboard with two-column responsive design
+- **`/engine/admin/configurations`** - Data integrations, webhooks, system settings, OPAL workflows
+- **`/engine/admin/recommendation-engine`** - ML models, content recommendations, personalization, optimization, targeting, audience recommendations
+- **`/engine/admin/strategy-ai`** - Influence factors, roadmap management, maturity scoring
+- **`/engine/admin/opal-monitoring`** - Agent data tracking, webhook events, performance metrics, system logs, testing tools
+- **`/engine/admin/opal-monitoring/agent-data/[agent]`** - Individual agent monitoring pages with ValidatePayloadPanel, ReplayWorkflowPanel, and AgentDataSummaryPanel components
+- **`/engine/admin/data-mapping`** - OPAL-to-OSA service relationship visualization and health monitoring
 
 ## Technical Stack & Infrastructure
 
@@ -1960,32 +2035,52 @@ OPAL Integration:
 ### **OPAL Workflow Coordination System**
 
 #### **Enhanced OPAL Agents** (Production Active)
-OSA now coordinates **5 specialized OPAL agents** with comprehensive monitoring:
+OSA now coordinates **9 specialized OPAL agents** with comprehensive monitoring and admin interface integration:
 
-1. **Content Review Agent** (`content_review`)
-   - **Purpose**: Analyzes experiment content and variations for optimization opportunities
-   - **Integration**: `/api/tools/content` + `/api/tools/contentrecs/analyze`
-   - **Monitoring**: Real-time execution tracking with performance metrics
+0. **Integration Health Monitor** (`integration_health`) - **Main Dashboard Display**
+   - **Admin Route**: Displayed on main `/engine/admin/opal-monitoring` dashboard
+   - **Purpose**: 99.8% uptime tracking, API response analysis (avg 120ms), error monitoring (0.01-0.02%)
+   - **Monitoring**: 0-100 scale system health assessment with service availability tracking
 
-2. **Geographic Audit Agent** (`geo_audit`)
-   - **Purpose**: Evaluates geographic performance distribution and targeting opportunities
-   - **Integration**: Regional analytics processing with automated insights
-   - **Monitoring**: Geographic performance correlation analysis
+1. **Content Review Agent** (`content_review`) - **Route**: `/engine/admin/opal-monitoring/agent-data/content`
+   - **Purpose**: Content quality analysis (87/100), variation analysis (156 total, 142 approved, 14 flagged)
+   - **Integration**: SEO & Accessibility: 92% optimization level, 95% accessibility compliance, 89% brand consistency
+   - **Admin Features**: Editable strategic recommendations and content optimization priorities
 
-3. **Audience Suggester Agent** (`audience_suggester`)
-   - **Purpose**: AI-powered audience segmentation with statistical validation
-   - **Integration**: `/api/tools/audience` with ML-based segment generation
-   - **Monitoring**: Segmentation quality scoring and validation metrics
+2. **Geographic Audit Agent** (`geo_audit`) - **Route**: `/engine/admin/opal-monitoring/agent-data/aeo`
+   - **Purpose**: GEO Analysis with 92/100 AI search optimization score
+   - **Integration**: Google AI (85), Bing Chat (78), Claude (92) optimization scores
+   - **Monitoring**: 12 content gaps identified across 15 regions analyzed
 
-4. **Experiment Blueprinter Agent** (`experiment_blueprinter`)
-   - **Purpose**: Statistical experiment design with power analysis and ROI projections
-   - **Integration**: `/api/tools/experiments` with comprehensive blueprint generation
-   - **Monitoring**: Statistical validation and success probability tracking
+3. **Audience Suggester Agent** (`audience_suggester`) - **Route**: `/engine/admin/opal-monitoring/agent-data/audiences`
+   - **Purpose**: 42 segments analyzed with high-value identification and targeting recommendations
+   - **Integration**: 8.5% conversion rate, 12.3% engagement rate, $2,340 lifetime value
+   - **Monitoring**: 7 new segments identified with statistical validation
 
-5. **Personalization Idea Generator** (`personalization_idea_generator`)
-   - **Purpose**: AI-generated personalization strategies with implementation guidance
-   - **Integration**: `/api/tools/ai_personalization` with behavioral analysis
-   - **Monitoring**: Personalization opportunity scoring and feasibility analysis
+4. **Experiment Blueprinter Agent** (`experiment_blueprinter`) - **Route**: `/engine/admin/opal-monitoring/agent-data/exp`
+   - **Purpose**: 18 experiments designed with 34 hypotheses generated
+   - **Integration**: High (12), Medium (15), Low (7) confidence scoring system
+   - **Monitoring**: 12-18% conversion lift estimates, $125K-$180K revenue impact modeling
+
+5. **Personalization Idea Generator** (`personalization_idea_generator`) - **Route**: `/engine/admin/opal-monitoring/agent-data/pers`
+   - **Purpose**: 45 personalization ideas with targeting strategy breakdown
+   - **Integration**: 25-35% expected engagement lift, $200K-$350K annual ROI projections
+   - **Monitoring**: Simple (20), Moderate (15), Complex (10) implementation categories
+
+6. **Customer Journey Agent** (`customer_journey`) - **Route**: `/engine/admin/opal-monitoring/agent-data/journeys`
+   - **Purpose**: 8 stages mapped with touchpoint analysis (34 total, 28 optimized)
+   - **Integration**: 15% acquisition, 68% retention, 12% advocacy rate analysis
+   - **Monitoring**: 22 opportunities with conversion bottleneck analysis
+
+7. **Roadmap Generator** (`roadmap_generator`) - **Route**: `/engine/admin/opal-monitoring/agent-data/roadmap`
+   - **Purpose**: 67 roadmap items with priority distribution (23 high, 28 medium, 16 low)
+   - **Integration**: Quarterly estimation (Q1: 18, Q2: 22, Q3: 15, Q4: 12 items)
+   - **Monitoring**: 480 development hours, 120 design hours, 96 QA hours allocation
+
+8. **CMP Organizer** (`cmp_organizer`) - **Route**: `/engine/admin/opal-monitoring/agent-data/cmp`
+   - **Purpose**: 156 campaigns organized with workflow optimization analysis
+   - **Integration**: 340% ROI, 8.7% conversion rate, 15.2% engagement rate metrics
+   - **Monitoring**: 23 automation opportunities, 12 process standardizations identified
 
 #### **Agent Execution Monitoring** (Real-time Production Tracking)
 ```typescript
@@ -2299,10 +2394,52 @@ Use `.claude/commands/update-architecture-docs.md` for detailed procedures and a
 
 **📋 Architecture Documentation Maintenance**
 
-*Last Updated: **November 10, 2024** - Major Production Update*
-*Document Version: **2.0** - Enhanced OPAL Integration & Production Deployment*
+*Last Updated: **November 12, 2024** - Admin Interface Alignment Update*
+*Document Version: **2.1** - Enhanced OPAL Integration, Production Deployment & Comprehensive Admin Interface*
 *Production Verification: **✅ CONFIRMED OPERATIONAL***
-*Next Review: **December 10, 2024***
+*Next Review: **December 12, 2024***
 *Maintenance Protocol: **Active** - See .claude/commands/update-architecture-docs.md*
 
-**🔄 Update Summary**: Complete architecture update reflecting production deployment, enhanced OPAL integration with SDK v2.0.0-api, comprehensive monitoring infrastructure, and verified operational status of all 7 microservices.
+**🔄 Update Summary**:
+- Complete architecture update reflecting production deployment with enhanced OPAL integration SDK v2.0.0-api
+- Comprehensive monitoring infrastructure with verified operational status of all 7 microservices
+- **Admin Interface Integration**: Full alignment with OSA_ADMIN.md documentation including:
+  - 9 OPAL agents with individual monitoring pages and admin routes
+  - Enhanced monitoring components (ValidatePayloadPanel, ReplayWorkflowPanel, AgentDataSummaryPanel)
+  - Complete admin API endpoints and frontend route documentation
+  - Real-time monitoring capabilities with webhook event streaming
+  - Strategic intelligence features including influence factors and roadmap management
+
+**📖 Related Documentation**: This document is now fully aligned with `docs/OSA_ADMIN.md` which provides detailed admin interface usage guidelines and maintenance procedures.
+
+## See Also
+
+### 📚 Core Documentation
+- **[Quick Start Guide](quick-start.md)** - Essential setup and first-time user guide
+- **[Admin Interface Guide](OSA_ADMIN.md)** - Complete admin functionality reference
+- **[OPAL Integration Guide](OPAL_MAPPING.md)** - Detailed OPAL agent workflows and mapping system
+
+### 🔧 Technical References
+- **[API Documentation](/docs)** - Interactive Swagger UI with live endpoint testing
+- **Configuration Files**: Environment setup and service configuration details
+  - `src/lib/config/opal-env.ts:41` - OPAL integration configuration
+  - `src/lib/security/hmac.ts:23` - Webhook security implementation
+  - `.env.local` - Environment variable setup
+
+### 🚀 Live System Access
+- **Production Environment**: https://opal-2025.vercel.app
+- **Admin Dashboard**: https://opal-2025.vercel.app/engine/admin
+- **OPAL Monitoring**: https://opal-2025.vercel.app/engine/admin/opal-monitoring
+- **API Testing Interface**: https://opal-2025.vercel.app/docs
+
+### 🏗️ Architecture Deep Dives
+- **Service Isolation**: Each service can be deployed and scaled independently
+- **Event-Driven Patterns**: Asynchronous communication prevents cascading failures
+- **Circuit Breaker Implementation**: Automatic failure detection and recovery
+- **Real-Time Monitoring**: Live system health and performance tracking
+
+### 📊 Monitoring and Analytics
+- **Agent Performance**: Real-time execution tracking and historical analysis
+- **Workflow Analytics**: Completion rates, execution times, and success metrics
+- **System Health**: Comprehensive monitoring across all microservices
+- **Event Auditing**: Complete webhook and system event trail

@@ -1,0 +1,247 @@
+{
+  "type": "record",
+  "name": "PreferencesUpdated",
+  "namespace": "com.opal.events.user",
+  "doc": "Event emitted when user preferences or settings are updated",
+  "fields": [
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0.0",
+      "doc": "Schema version for backward compatibility tracking"
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique event identifier for deduplication"
+    },
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Correlation ID for distributed tracing across services"
+    },
+    {
+      "name": "user_id",
+      "type": "string",
+      "doc": "User identifier - serves as idempotency key"
+    },
+    {
+      "name": "session_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Session identifier if applicable"
+    },
+    {
+      "name": "client_name",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Client organization name"
+    },
+    {
+      "name": "update_type",
+      "type": {
+        "type": "enum",
+        "name": "UpdateType",
+        "symbols": [
+          "preference_weights",
+          "notification_settings",
+          "risk_tolerance",
+          "business_objectives",
+          "timeline_constraints",
+          "full_profile"
+        ]
+      },
+      "doc": "Type of preference update performed"
+    },
+    {
+      "name": "previous_preferences",
+      "type": ["null", {
+        "type": "record",
+        "name": "UserPreferences",
+        "fields": [
+          {
+            "name": "priority_weights",
+            "type": ["null", {
+              "type": "record",
+              "name": "PriorityWeights",
+              "fields": [
+                {"name": "impact", "type": "double"},
+                {"name": "effort", "type": "double"}
+              ]
+            }],
+            "default": null
+          },
+          {"name": "risk_tolerance", "type": ["null", "string"], "default": null},
+          {"name": "business_objectives", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {
+            "name": "timeline_constraints",
+            "type": ["null", {
+              "type": "record",
+              "name": "TimelineConstraints",
+              "fields": [
+                {"name": "start_date", "type": ["null", "string"], "default": null},
+                {"name": "end_date", "type": ["null", "string"], "default": null},
+                {"name": "preferred_duration", "type": ["null", "string"], "default": null}
+              ]
+            }],
+            "default": null
+          },
+          {
+            "name": "notification_settings",
+            "type": ["null", {
+              "type": "record",
+              "name": "NotificationSettings",
+              "fields": [
+                {"name": "email_notifications", "type": "boolean", "default": true},
+                {"name": "push_notifications", "type": "boolean", "default": false},
+                {"name": "workflow_updates", "type": "boolean", "default": true},
+                {"name": "recommendation_alerts", "type": "boolean", "default": true},
+                {"name": "recipients", "type": ["null", {"type": "array", "items": "string"}], "default": null}
+              ]
+            }],
+            "default": null
+          }
+        ]
+      }],
+      "default": null,
+      "doc": "Previous preference values before update"
+    },
+    {
+      "name": "updated_preferences",
+      "type": {
+        "type": "record",
+        "name": "UpdatedUserPreferences",
+        "fields": [
+          {
+            "name": "priority_weights",
+            "type": ["null", {
+              "type": "record",
+              "name": "UpdatedPriorityWeights",
+              "fields": [
+                {"name": "impact", "type": "double"},
+                {"name": "effort", "type": "double"}
+              ]
+            }],
+            "default": null
+          },
+          {"name": "risk_tolerance", "type": ["null", "string"], "default": null},
+          {"name": "business_objectives", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {
+            "name": "timeline_constraints",
+            "type": ["null", {
+              "type": "record",
+              "name": "UpdatedTimelineConstraints",
+              "fields": [
+                {"name": "start_date", "type": ["null", "string"], "default": null},
+                {"name": "end_date", "type": ["null", "string"], "default": null},
+                {"name": "preferred_duration", "type": ["null", "string"], "default": null}
+              ]
+            }],
+            "default": null
+          },
+          {
+            "name": "notification_settings",
+            "type": ["null", {
+              "type": "record",
+              "name": "UpdatedNotificationSettings",
+              "fields": [
+                {"name": "email_notifications", "type": "boolean", "default": true},
+                {"name": "push_notifications", "type": "boolean", "default": false},
+                {"name": "workflow_updates", "type": "boolean", "default": true},
+                {"name": "recommendation_alerts", "type": "boolean", "default": true},
+                {"name": "recipients", "type": ["null", {"type": "array", "items": "string"}], "default": null}
+              ]
+            }],
+            "default": null
+          }
+        ]
+      },
+      "doc": "New preference values after update"
+    },
+    {
+      "name": "changes_detected",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "PreferenceChange",
+          "fields": [
+            {"name": "field_name", "type": "string", "doc": "Name of the changed preference field"},
+            {"name": "previous_value", "type": ["null", "string"], "default": null, "doc": "Previous value as string"},
+            {"name": "new_value", "type": ["null", "string"], "default": null, "doc": "New value as string"},
+            {"name": "change_type", "type": "string", "doc": "Type of change: added, modified, removed"}
+          ]
+        }
+      },
+      "doc": "Detailed list of changes made to preferences"
+    },
+    {
+      "name": "triggered_by",
+      "type": {
+        "type": "enum",
+        "name": "UpdateTrigger",
+        "symbols": ["user_action", "admin_action", "api_call", "system_migration", "workflow_completion"]
+      },
+      "doc": "What triggered the preference update"
+    },
+    {
+      "name": "update_source",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Source system or interface where update was made"
+    },
+    {
+      "name": "validation_results",
+      "type": ["null", {
+        "type": "record",
+        "name": "ValidationResults",
+        "fields": [
+          {"name": "all_valid", "type": "boolean"},
+          {"name": "validation_errors", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "validation_warnings", "type": ["null", {"type": "array", "items": "string"}], "default": null}
+        ]
+      }],
+      "default": null,
+      "doc": "Results of preference validation"
+    },
+    {
+      "name": "impact_analysis",
+      "type": ["null", {
+        "type": "record",
+        "name": "ImpactAnalysis",
+        "fields": [
+          {"name": "affects_active_workflows", "type": "boolean"},
+          {"name": "affected_workflow_ids", "type": ["null", {"type": "array", "items": "string"}], "default": null},
+          {"name": "recommendation_recalculation_needed", "type": "boolean"},
+          {"name": "notification_changes_applied", "type": "boolean"}
+        ]
+      }],
+      "default": null,
+      "doc": "Analysis of how preference changes impact system behavior"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Event timestamp in milliseconds since epoch"
+    },
+    {
+      "name": "source_system",
+      "type": "string",
+      "default": "preference-manager",
+      "doc": "System that processed the preference update"
+    },
+    {
+      "name": "environment",
+      "type": {
+        "type": "enum",
+        "name": "Environment",
+        "symbols": ["development", "staging", "production"]
+      },
+      "default": "development",
+      "doc": "Environment where the event occurred"
+    }
+  ]
+}

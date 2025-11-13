@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package com.opal.events.decision;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when intelligent recommendations are generated
+message DecisionGenerated {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Unique decision generation identifier - serves as idempotency key
+  string decision_id = 4;
+
+  // Associated workflow identifier
+  string workflow_id = 5;
+
+  // Session identifier if applicable
+  optional string session_id = 6;
+
+  // Number of recommendations generated
+  int32 recommendations_count = 7;
+
+  // Generated recommendations with scoring and evidence
+  message Recommendation {
+    string title = 1;
+    optional string description = 2;
+    int32 impact_score = 3;
+    int32 effort_score = 4;
+    double combined_ratio = 5;
+    double confidence = 6;
+    optional string category = 7;
+    optional string priority = 8;
+
+    message Evidence {
+      string agent_type = 1;
+      string data_source = 2;
+      double confidence = 3;
+      string summary = 4;
+    }
+    repeated Evidence evidence = 9;
+  }
+  repeated Recommendation recommendations = 8;
+
+  // User preferences used for recommendation generation
+  message UserPreferences {
+    message PriorityWeights {
+      double impact = 1;
+      double effort = 2;
+    }
+    optional PriorityWeights priority_weights = 1;
+    optional string risk_tolerance = 2;
+    repeated string business_objectives = 3;
+    optional string timeline_constraints = 4;
+  }
+  optional UserPreferences user_preferences = 9;
+
+  // Processing metadata and performance metrics
+  message ProcessingMetadata {
+    int64 processing_time_ms = 1;
+    int32 agents_consulted = 2;
+    int32 data_sources_analyzed = 3;
+    optional double confidence_threshold = 4;
+    optional string ranking_algorithm = 5;
+  }
+  ProcessingMetadata processing_metadata = 10;
+
+  // Current workflow execution state
+  message WorkflowState {
+    string status = 1;
+    int32 agents_completed = 2;
+    int32 total_agents = 3;
+    double progress_percentage = 4;
+  }
+  optional WorkflowState workflow_state = 11;
+
+  // Client organization name
+  optional string client_name = 12;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 13;
+
+  // System that generated this event
+  string source_system = 14;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 15;
+}

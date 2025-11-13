@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package com.opal.events.sse;
+
+import "google/protobuf/timestamp.proto";
+
+// Real-time agent progress update streamed via Server-Sent Events
+message AgentUpdate {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique stream event identifier for deduplication
+  string stream_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Associated workflow identifier - part of idempotency key
+  string workflow_id = 4;
+
+  // OPAL agent sending the update - part of idempotency key
+  enum StreamingAgentType {
+    STREAMING_AGENT_TYPE_UNSPECIFIED = 0;
+    EXPERIMENT_BLUEPRINTER = 1;
+    AUDIENCE_SUGGESTER = 2;
+    CONTENT_REVIEW = 3;
+    ROADMAP_GENERATOR = 4;
+    INTEGRATION_HEALTH = 5;
+    PERSONALIZATION_IDEA_GENERATOR = 6;
+    CMP_ORGANIZER = 7;
+    CUSTOMER_JOURNEY = 8;
+    GEO_AUDIT = 9;
+  }
+  StreamingAgentType agent_id = 5;
+
+  // Monotonic sequence number for ordering - part of idempotency key
+  int64 sequence_number = 6;
+
+  // Current progress percentage (0-100)
+  int32 progress_percentage = 7;
+
+  // Current agent execution status
+  enum StreamingStatus {
+    STREAMING_STATUS_UNSPECIFIED = 0;
+    STARTING = 1;
+    RUNNING = 2;
+    COMPLETED = 3;
+    FAILED = 4;
+    TIMEOUT = 5;
+  }
+  StreamingStatus status = 8;
+
+  // Current preliminary findings or recommendations
+  optional string preliminary_findings = 9;
+
+  // Real-time confidence scoring metrics
+  message ConfidenceScores {
+    double current_confidence = 1;
+    optional double data_quality_score = 2;
+    optional double processing_confidence = 3;
+  }
+  optional ConfidenceScores confidence_scores = 10;
+
+  // Real-time processing metadata
+  message StreamingProcessingMetadata {
+    int64 elapsed_time_ms = 1;
+    optional int64 estimated_remaining_ms = 2;
+    optional int32 data_points_processed = 3;
+    optional string current_operation = 4;
+  }
+  optional StreamingProcessingMetadata processing_metadata = 11;
+
+  // Preliminary recommendations being developed
+  message PartialRecommendation {
+    string title = 1;
+    double confidence = 2;
+    optional string category = 3;
+    string status = 4;
+  }
+  repeated PartialRecommendation partial_recommendations = 12;
+
+  // Error message if agent encountered issues
+  optional string error_details = 13;
+
+  // Client connection identifier for targeted streaming
+  optional string client_connection_id = 14;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 15;
+
+  // System that generated this streaming event
+  string source_system = 16;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 17;
+}

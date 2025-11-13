@@ -1,0 +1,161 @@
+{
+  "name": "OSA Integration Agent Configuration",
+  "description": "Production OPAL agent configuration for OSA enhanced tools integration",
+  "version": "2.0.0",
+  "agent_config": {
+    "agent_id": "osa-integration-agent-v2",
+    "discovery_url": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+    "discovery_interval_minutes": 5,
+    "execution_timeout_seconds": 60,
+    "retry_config": {
+      "max_retries": 3,
+      "base_delay_ms": 1000,
+      "max_delay_ms": 10000
+    }
+  },
+  "tools": [
+    {
+      "name": "send_data_to_osa_enhanced",
+      "description": "Send OPAL agent execution data to OSA with enhanced processing capabilities",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "method": "POST",
+      "authentication": {
+        "type": "hmac_signature",
+        "header": "X-OSA-Signature",
+        "algorithm": "HMAC-SHA256"
+      },
+      "payload_schema": {
+        "tool_name": "send_data_to_osa_enhanced",
+        "parameters": {
+          "workflow_id": "{WORKFLOW_ID}",
+          "agent_id": "{AGENT_ID}",
+          "agent_data": "{AGENT_EXECUTION_DATA}",
+          "execution_status": "{EXECUTION_STATUS}",
+          "target_environment": "production",
+          "offset": "{SEQUENCE_OFFSET}",
+          "metadata": {
+            "opal_version": "2.0.0",
+            "source_system": "OPAL",
+            "execution_timestamp": "{ISO_TIMESTAMP}"
+          }
+        }
+      },
+      "execution_triggers": [
+        "agent.completed",
+        "agent.failed",
+        "workflow.step_completed"
+      ]
+    }
+  ],
+  "webhook_configuration": {
+    "target_url": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+    "signature_header": "X-OSA-Signature",
+    "content_type": "application/json",
+    "timeout_seconds": 30,
+    "required_headers": {
+      "User-Agent": "OPAL-Agent/2.0",
+      "Content-Type": "application/json"
+    }
+  },
+  "environment_configs": {
+    "development": {
+      "discovery_url": "http://localhost:3000/api/opal/enhanced-tools",
+      "webhook_url": "http://localhost:3000/api/webhooks/opal-workflow",
+      "debug_mode": true,
+      "signature_validation": false
+    },
+    "staging": {
+      "discovery_url": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "webhook_url": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+      "debug_mode": true,
+      "signature_validation": true
+    },
+    "production": {
+      "discovery_url": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "webhook_url": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+      "debug_mode": false,
+      "signature_validation": true
+    }
+  },
+  "example_payloads": {
+    "successful_execution": {
+      "tool_name": "send_data_to_osa_enhanced",
+      "parameters": {
+        "workflow_id": "workflow-abc123",
+        "agent_id": "content-analysis-agent",
+        "agent_data": {
+          "analysis_results": {
+            "content_score": 0.87,
+            "recommendations": ["Increase call-to-action prominence", "Add social proof elements"],
+            "categories": ["ecommerce", "conversion-optimization"],
+            "confidence": 0.94
+          },
+          "processing_metrics": {
+            "execution_time_ms": 2340,
+            "memory_usage_mb": 128,
+            "api_calls_made": 3
+          }
+        },
+        "execution_status": "success",
+        "target_environment": "production",
+        "offset": 1,
+        "metadata": {
+          "opal_version": "2.0.0",
+          "source_system": "OPAL",
+          "execution_timestamp": "2023-11-12T10:30:00.000Z",
+          "agent_type": "content-analyzer"
+        }
+      }
+    },
+    "failed_execution": {
+      "tool_name": "send_data_to_osa_enhanced",
+      "parameters": {
+        "workflow_id": "workflow-def456",
+        "agent_id": "personalization-agent",
+        "agent_data": {
+          "error_details": {
+            "error_code": "TIMEOUT",
+            "error_message": "External API request timed out after 30 seconds",
+            "stack_trace": "...",
+            "retry_attempts": 3
+          }
+        },
+        "execution_status": "failure",
+        "target_environment": "production",
+        "offset": 2,
+        "metadata": {
+          "opal_version": "2.0.0",
+          "source_system": "OPAL",
+          "execution_timestamp": "2023-11-12T10:35:00.000Z",
+          "agent_type": "personalizer"
+        }
+      }
+    }
+  },
+  "monitoring": {
+    "health_check_url": "https://opal-2025.vercel.app/api/opal/health",
+    "diagnostics_url": "https://opal-2025.vercel.app/api/diagnostics/last-webhook",
+    "metrics": {
+      "success_rate_threshold": 0.95,
+      "max_response_time_ms": 5000,
+      "alert_on_consecutive_failures": 3
+    }
+  },
+  "security": {
+    "signature_validation": {
+      "algorithm": "HMAC-SHA256",
+      "header": "X-OSA-Signature",
+      "format": "t=timestamp,v1=signature",
+      "max_timestamp_age_minutes": 5
+    },
+    "required_headers": [
+      "User-Agent",
+      "Content-Type",
+      "X-OSA-Signature"
+    ],
+    "allowed_domains": [
+      "opal-2025.vercel.app",
+      "webhook.opal.optimizely.com"
+    ]
+  }
+}

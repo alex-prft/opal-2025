@@ -1,0 +1,622 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OPAL Mapping Configuration - Optimizely DXP Tools",
+  "category": "Optimizely DXP Tools Navigation",
+  "version": "1.0.0",
+  "last_updated": "2025-11-12",
+  "strategy_dashboard_area": "Optimizely DXP Tools",
+
+  "navigation_structure": {
+    "tier1": "Optimizely DXP Tools",
+    "tier2": [
+      {
+        "name": "Content Recs",
+        "display_name": "Content Recommendations",
+        "description": "AI-powered content recommendation engine and personalization platform",
+        "priority": 1
+      },
+      {
+        "name": "CMS",
+        "display_name": "Content Management System",
+        "description": "Headless CMS for content creation, management, and multi-channel publishing",
+        "priority": 2
+      },
+      {
+        "name": "ODP",
+        "display_name": "Optimizely Data Platform",
+        "description": "Customer data platform with real-time profiles and audience management",
+        "priority": 3
+      },
+      {
+        "name": "WEBX",
+        "display_name": "Web Experimentation",
+        "description": "A/B testing and experimentation platform for web optimization",
+        "priority": 4
+      },
+      {
+        "name": "CMP",
+        "display_name": "Campaign Management Platform",
+        "description": "Multi-channel marketing automation and campaign orchestration",
+        "priority": 5
+      }
+    ]
+  },
+
+  "sub_sections": [
+    {
+      "name": "Content Recs",
+      "tier3_views": [
+        {
+          "view_name": "Visitor Analytics Dashboard",
+          "description": "Real-time behavior patterns, engagement heatmaps, and user journey analysis",
+          "recommended_content": [
+            "Real-time visitor behavior tracking and pattern analysis",
+            "Interactive engagement heatmaps with click-through visualization",
+            "User journey mapping with content touchpoint analysis",
+            "Behavioral scoring and engagement quality metrics",
+            "Content affinity analysis by visitor segments"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["customer_journey", "content_review"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["engagement_rate", "content_effectiveness", "user_journey_optimization"]
+        },
+        {
+          "view_name": "Performance Metrics",
+          "description": "Click-through rates, conversion attribution, revenue impact analysis",
+          "recommended_content": [
+            "Click-through rate optimization with A/B testing insights",
+            "Revenue attribution modeling across content touchpoints",
+            "Conversion funnel analysis with content impact assessment",
+            "ROI tracking for content recommendation algorithms",
+            "Performance benchmarking against industry standards"
+          ],
+          "primary_agent": "content_review",
+          "supporting_agents": ["experiment_blueprinter", "cmp_organizer"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["conversion_rate", "revenue_per_visitor", "content_roi"]
+        },
+        {
+          "view_name": "Personalization Effectiveness",
+          "description": "Segment performance, lift analysis, and optimization opportunities",
+          "recommended_content": [
+            "Personalization lift analysis across audience segments",
+            "Algorithm performance comparison and optimization recommendations",
+            "Segment-specific content effectiveness analysis",
+            "Machine learning model accuracy and improvement suggestions",
+            "Real-time personalization adjustment recommendations"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["audience_suggester", "experiment_blueprinter"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["personalization_lift", "segment_engagement", "algorithm_accuracy"]
+        },
+        {
+          "view_name": "Integration Health",
+          "description": "API connectivity, data sync status, and system performance monitoring",
+          "recommended_content": [
+            "Real-time API health monitoring and response time tracking",
+            "Data synchronization status across all integrated systems",
+            "Content delivery performance and CDN optimization metrics",
+            "System uptime monitoring and availability tracking",
+            "Error detection and automated resolution recommendations"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["strategy_workflow"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["system_uptime", "api_response_time", "data_quality"]
+        },
+        {
+          "view_name": "Confidence Scoring",
+          "description": "AI recommendation confidence, statistical significance, and quality metrics",
+          "recommended_content": [
+            "AI recommendation confidence scoring and validation",
+            "Statistical significance analysis for content recommendations",
+            "Quality assurance metrics for recommendation algorithms",
+            "Model accuracy tracking and improvement recommendations",
+            "Prediction reliability analysis and confidence intervals"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["content_review", "integration_health"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["prediction_accuracy", "confidence_level", "recommendation_quality"]
+        }
+      ]
+    },
+    {
+      "name": "CMS",
+      "tier3_views": [
+        {
+          "view_name": "Visitor Analytics Dashboard",
+          "description": "Content consumption patterns, page performance, and user engagement analysis",
+          "recommended_content": [
+            "Content consumption analytics with engagement time tracking",
+            "Page performance metrics including load times and bounce rates",
+            "User navigation patterns and content discovery analysis",
+            "Content popularity trends and viral coefficient tracking",
+            "Multi-device and cross-platform engagement analysis"
+          ],
+          "primary_agent": "content_review",
+          "supporting_agents": ["audience_suggester", "geo_audit"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["page_engagement", "content_discovery", "user_satisfaction"]
+        },
+        {
+          "view_name": "Performance Metrics",
+          "description": "Content effectiveness, SEO performance, and multi-channel publishing success",
+          "recommended_content": [
+            "Content performance tracking across all publishing channels",
+            "SEO optimization metrics including search rankings and organic traffic",
+            "Publishing efficiency analysis with workflow optimization recommendations",
+            "Content lifecycle management and performance decay analysis",
+            "Cross-channel content consistency and brand alignment metrics"
+          ],
+          "primary_agent": "geo_audit",
+          "supporting_agents": ["content_review", "cmp_organizer"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["seo_performance", "content_reach", "publishing_efficiency"]
+        },
+        {
+          "view_name": "Personalization Effectiveness",
+          "description": "Dynamic content performance, audience-specific optimization",
+          "recommended_content": [
+            "Dynamic content personalization performance analysis",
+            "Audience-specific content optimization recommendations",
+            "Content variation effectiveness across different user segments",
+            "Automated content adaptation based on user behavior",
+            "Personalized content journey optimization"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["customer_journey", "audience_suggester"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["content_relevance", "personalization_lift", "user_engagement"]
+        },
+        {
+          "view_name": "Integration Health",
+          "description": "CMS API connectivity, content sync status, and publishing workflow health",
+          "recommended_content": [
+            "CMS API health monitoring and content delivery tracking",
+            "Content synchronization status across all channels and platforms",
+            "Publishing workflow performance and bottleneck identification",
+            "Asset management system health and storage optimization",
+            "Version control integrity and content governance compliance"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["cmp_organizer"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["system_reliability", "content_delivery", "workflow_efficiency"]
+        },
+        {
+          "view_name": "Confidence Scoring",
+          "description": "Content quality scoring, SEO confidence, and publishing success prediction",
+          "recommended_content": [
+            "Content quality assessment with AI-powered scoring algorithms",
+            "SEO optimization confidence and search performance prediction",
+            "Publishing success probability based on historical performance",
+            "Content engagement prediction with confidence intervals",
+            "Brand compliance scoring and quality assurance metrics"
+          ],
+          "primary_agent": "content_review",
+          "supporting_agents": ["geo_audit", "integration_health"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["content_quality", "seo_confidence", "publishing_success"]
+        }
+      ]
+    },
+    {
+      "name": "ODP",
+      "tier3_views": [
+        {
+          "view_name": "Visitor Analytics Dashboard",
+          "description": "Customer profile analytics, behavioral patterns, and lifecycle stage tracking",
+          "recommended_content": [
+            "360-degree customer profile analytics with behavioral insights",
+            "Real-time visitor activity monitoring and engagement tracking",
+            "Customer lifecycle stage progression and journey mapping",
+            "Behavioral scoring algorithms and engagement quality assessment",
+            "Cross-platform identity resolution and profile unification"
+          ],
+          "primary_agent": "customer_journey",
+          "supporting_agents": ["audience_suggester", "integration_health"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["customer_lifetime_value", "engagement_score", "profile_completeness"]
+        },
+        {
+          "view_name": "Performance Metrics",
+          "description": "Audience segment performance, data quality metrics, and activation success rates",
+          "recommended_content": [
+            "Audience segment performance analysis with conversion tracking",
+            "Data quality metrics including completeness, accuracy, and freshness",
+            "Customer data activation success rates across marketing channels",
+            "Segment overlap analysis and optimization recommendations",
+            "Real-time event processing performance and latency monitoring"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["cmp_organizer", "integration_health"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["data_quality", "segment_performance", "activation_rate"]
+        },
+        {
+          "view_name": "Personalization Effectiveness",
+          "description": "Profile-based personalization performance and audience targeting optimization",
+          "recommended_content": [
+            "Profile-based personalization effectiveness across customer segments",
+            "Dynamic audience creation and performance optimization",
+            "Predictive analytics for customer behavior and preferences",
+            "Real-time personalization trigger performance and response rates",
+            "Machine learning model accuracy for customer predictions"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["customer_journey", "experiment_blueprinter"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["personalization_accuracy", "targeting_effectiveness", "prediction_quality"]
+        },
+        {
+          "view_name": "Integration Health",
+          "description": "Data pipeline health, API connectivity, and real-time processing status",
+          "recommended_content": [
+            "Data pipeline health monitoring and processing performance",
+            "API connectivity status for all integrated data sources",
+            "Real-time event streaming performance and latency tracking",
+            "Data synchronization quality and consistency monitoring",
+            "Customer profile merge and deduplication accuracy tracking"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["strategy_workflow"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["data_pipeline_health", "integration_stability", "processing_speed"]
+        },
+        {
+          "view_name": "Confidence Scoring",
+          "description": "Data quality confidence, profile accuracy, and predictive model reliability",
+          "recommended_content": [
+            "Customer profile accuracy and completeness confidence scoring",
+            "Predictive model reliability assessment and improvement recommendations",
+            "Data quality confidence metrics across all integrated sources",
+            "Audience segment accuracy and targeting confidence analysis",
+            "Real-time data validation and quality assurance scoring"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["integration_health", "customer_journey"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["profile_accuracy", "model_confidence", "data_reliability"]
+        }
+      ]
+    },
+    {
+      "name": "WEBX",
+      "tier3_views": [
+        {
+          "view_name": "Visitor Analytics Dashboard",
+          "description": "Experiment participation analytics, visitor behavior during tests, engagement patterns",
+          "recommended_content": [
+            "Real-time experiment participation rates and visitor allocation tracking",
+            "Visitor behavior analysis during active experiments",
+            "Test engagement patterns and interaction quality metrics",
+            "Cross-experiment visitor journey analysis and impact assessment",
+            "Experiment-driven conversion funnel performance tracking"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["audience_suggester", "customer_journey"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["experiment_participation", "visitor_engagement", "test_completion"]
+        },
+        {
+          "view_name": "Performance Metrics",
+          "description": "A/B test results, statistical significance, conversion impact analysis",
+          "recommended_content": [
+            "A/B test performance results with statistical significance analysis",
+            "Conversion impact measurement and revenue attribution",
+            "Experiment velocity tracking and testing efficiency metrics",
+            "Winner identification algorithms and confidence intervals",
+            "Long-term experiment impact analysis and business value assessment"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["integration_health", "cmp_organizer"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["conversion_lift", "statistical_significance", "experiment_roi"]
+        },
+        {
+          "view_name": "Personalization Effectiveness",
+          "description": "Audience-specific test performance, segment optimization, targeting effectiveness",
+          "recommended_content": [
+            "Audience-specific experiment performance and optimization recommendations",
+            "Segment-based test effectiveness and targeting accuracy analysis",
+            "Personalized experiment variations and dynamic testing strategies",
+            "Multi-armed bandit optimization and adaptive testing performance",
+            "Audience overlap analysis for experiment targeting optimization"
+          ],
+          "primary_agent": "audience_suggester",
+          "supporting_agents": ["personalization_idea_generator", "experiment_blueprinter"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["segment_performance", "targeting_accuracy", "personalization_lift"]
+        },
+        {
+          "view_name": "Integration Health",
+          "description": "Experiment platform connectivity, data collection accuracy, testing infrastructure health",
+          "recommended_content": [
+            "Experiment platform connectivity and performance monitoring",
+            "Data collection accuracy and experiment tracking validation",
+            "Testing infrastructure health and load capacity analysis",
+            "Cross-platform experiment synchronization and consistency tracking",
+            "Experiment data pipeline integrity and quality assurance"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["experiment_blueprinter"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["platform_reliability", "data_accuracy", "infrastructure_health"]
+        },
+        {
+          "view_name": "Confidence Scoring",
+          "description": "Statistical confidence analysis, test reliability, and result accuracy metrics",
+          "recommended_content": [
+            "Statistical confidence analysis with power calculations and sample size validation",
+            "Test reliability assessment and result accuracy confidence scoring",
+            "Experiment design quality evaluation and optimization recommendations",
+            "False discovery rate management and multiple testing correction",
+            "Bayesian analysis integration and confidence interval optimization"
+          ],
+          "primary_agent": "experiment_blueprinter",
+          "supporting_agents": ["integration_health", "strategy_workflow"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["statistical_power", "result_reliability", "test_accuracy"]
+        }
+      ]
+    },
+    {
+      "name": "CMP",
+      "tier3_views": [
+        {
+          "view_name": "Visitor Analytics Dashboard",
+          "description": "Campaign audience engagement, cross-channel behavior, and journey analytics",
+          "recommended_content": [
+            "Multi-channel campaign audience engagement tracking and analysis",
+            "Cross-channel visitor behavior patterns and journey mapping",
+            "Campaign-driven traffic analysis and source attribution",
+            "Audience response rates and engagement quality across campaigns",
+            "Real-time campaign performance monitoring and visitor flow analysis"
+          ],
+          "primary_agent": "cmp_organizer",
+          "supporting_agents": ["customer_journey", "audience_suggester"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["campaign_engagement", "cross_channel_performance", "audience_quality"]
+        },
+        {
+          "view_name": "Performance Metrics",
+          "description": "Campaign ROI, multi-channel attribution, automation workflow performance",
+          "recommended_content": [
+            "Campaign ROI analysis with multi-touch attribution modeling",
+            "Cross-channel campaign performance optimization and budget allocation",
+            "Marketing automation workflow efficiency and conversion tracking",
+            "Campaign lifecycle management and performance decay analysis",
+            "Competitive campaign analysis and market share tracking"
+          ],
+          "primary_agent": "cmp_organizer",
+          "supporting_agents": ["experiment_blueprinter", "integration_health"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["campaign_roi", "attribution_accuracy", "automation_efficiency"]
+        },
+        {
+          "view_name": "Personalization Effectiveness",
+          "description": "Audience targeting accuracy, personalized campaign performance, segment optimization",
+          "recommended_content": [
+            "Audience targeting accuracy and personalized campaign effectiveness",
+            "Dynamic content personalization performance across campaign channels",
+            "Segment-specific campaign optimization and performance enhancement",
+            "Real-time campaign personalization and adaptive content delivery",
+            "Customer lifetime value optimization through personalized campaigns"
+          ],
+          "primary_agent": "personalization_idea_generator",
+          "supporting_agents": ["audience_suggester", "cmp_organizer"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["targeting_precision", "personalization_impact", "ltv_optimization"]
+        },
+        {
+          "view_name": "Integration Health",
+          "description": "Campaign platform connectivity, data synchronization, and automation workflow health",
+          "recommended_content": [
+            "Campaign platform connectivity and multi-channel integration health",
+            "Marketing data synchronization quality and consistency monitoring",
+            "Automation workflow performance and trigger accuracy tracking",
+            "Cross-platform campaign coordination and execution monitoring",
+            "Campaign data pipeline integrity and processing performance"
+          ],
+          "primary_agent": "integration_health",
+          "supporting_agents": ["cmp_organizer", "strategy_workflow"],
+          "update_frequency": "real-time",
+          "kpi_alignment": ["integration_stability", "workflow_reliability", "data_consistency"]
+        },
+        {
+          "view_name": "Confidence Scoring",
+          "description": "Campaign performance prediction, ROI confidence, and optimization reliability",
+          "recommended_content": [
+            "Campaign performance prediction accuracy and confidence scoring",
+            "ROI forecasting reliability and budget optimization confidence",
+            "Audience targeting confidence and segment accuracy validation",
+            "Attribution model accuracy and confidence interval analysis",
+            "Campaign optimization recommendation confidence and success probability"
+          ],
+          "primary_agent": "cmp_organizer",
+          "supporting_agents": ["experiment_blueprinter", "integration_health"],
+          "update_frequency": "daily",
+          "kpi_alignment": ["prediction_confidence", "roi_accuracy", "optimization_reliability"]
+        }
+      ]
+    }
+  ],
+
+  "opal_instructions": [
+    "technical_implementation_guidelines",
+    "marketing_strategy",
+    "personas",
+    "content_guidelines",
+    "kpi_definitions",
+    "brand_tone_guidelines",
+    "seo_content_optimization",
+    "personalization_strategy_framework",
+    "campaign_management_protocols",
+    "data_integration_standards",
+    "experiment_design_methodology",
+    "audience_segmentation_guidelines",
+    "performance_measurement_framework",
+    "automation_workflow_standards"
+  ],
+
+  "opal_agents": [
+    "content_review",
+    "cmp_organizer",
+    "audience_suggester",
+    "experiment_blueprinter",
+    "personalization_idea_generator",
+    "customer_journey",
+    "geo_audit",
+    "integration_health",
+    "strategy_workflow",
+    "roadmap_generator"
+  ],
+
+  "dxp_tools": [
+    "Content Recs",
+    "CMS",
+    "ODP",
+    "WEBX",
+    "CMP"
+  ],
+
+  "opal_tools": [
+    "osa_contentrecs_tools",
+    "osa_cms_tools",
+    "osa_odp_tools",
+    "osa_webx_tools",
+    "osa_cmp_tools"
+  ],
+
+  "personalization_rules": [
+    {
+      "rule_name": "dxp_tool_usage_optimization",
+      "trigger_conditions": [
+        "current_dxp_tool_adoption_level",
+        "user_technical_proficiency",
+        "business_objectives_alignment"
+      ],
+      "data_sources": [
+        "dxp_usage_analytics",
+        "user_interaction_patterns",
+        "business_goal_tracking"
+      ],
+      "priority": 1,
+      "description": "Optimizes DXP tool recommendations based on current usage patterns and technical capability"
+    },
+    {
+      "rule_name": "performance_based_prioritization",
+      "trigger_conditions": [
+        "tool_performance_metrics",
+        "roi_tracking_data",
+        "conversion_impact_analysis"
+      ],
+      "data_sources": [
+        "performance_analytics",
+        "revenue_attribution_data",
+        "conversion_tracking_systems"
+      ],
+      "priority": 2,
+      "description": "Prioritizes DXP tool features based on performance impact and ROI optimization"
+    },
+    {
+      "rule_name": "integration_complexity_adaptation",
+      "trigger_conditions": [
+        "technical_infrastructure_assessment",
+        "integration_readiness_score",
+        "resource_availability"
+      ],
+      "data_sources": [
+        "system_integration_data",
+        "technical_capability_assessment",
+        "resource_allocation_tracking"
+      ],
+      "priority": 3,
+      "description": "Adapts recommendations based on technical integration complexity and organizational readiness"
+    },
+    {
+      "rule_name": "audience_segment_optimization",
+      "trigger_conditions": [
+        "audience_segment_performance",
+        "personalization_effectiveness",
+        "engagement_quality_metrics"
+      ],
+      "data_sources": [
+        "audience_analytics",
+        "personalization_performance_data",
+        "engagement_tracking_systems"
+      ],
+      "priority": 4,
+      "description": "Customizes DXP tool configurations based on audience segment performance and personalization effectiveness"
+    }
+  ],
+
+  "confidence_metrics": {
+    "confidence_interval": 0.94,
+    "success_probability": 0.89,
+    "data_quality_score": 0.96,
+    "recommendation_reliability": 0.91,
+    "prediction_accuracy": 0.87,
+    "integration_confidence": 0.93
+  },
+
+  "integration_health": {
+    "api_status": "connected",
+    "last_refresh": "2025-11-12T10:45:00Z",
+    "data_freshness": "real-time",
+    "system_uptime": "99.9%",
+    "response_time_avg": "95ms",
+    "error_rate": "0.02%"
+  },
+
+  "recommendation_metadata": {
+    "aligned_kpis": [
+      "dxp_tool_adoption_rate",
+      "cross_platform_integration_success",
+      "personalization_effectiveness",
+      "campaign_performance_optimization",
+      "content_engagement_improvement",
+      "experiment_success_rate",
+      "customer_data_activation",
+      "automation_workflow_efficiency"
+    ],
+    "business_strategy": "integrated_dxp_optimization_with_ai_powered_insights",
+    "marketing_calendar_sync": true,
+    "notes": "Comprehensive DXP tools navigation structure provides integrated view of all Optimizely platform capabilities with AI-driven optimization recommendations, real-time performance monitoring, and personalized insights based on organizational maturity and technical capabilities.",
+    "technical_requirements": {
+      "api_integrations_required": ["Content Recs API", "CMS API", "ODP API", "WEBX API", "CMP API"],
+      "data_sync_frequency": "real-time",
+      "authentication_method": "OAuth 2.0 with PKCE",
+      "rate_limiting": "1000 requests/minute per endpoint"
+    }
+  },
+
+  "validation_rules": {
+    "required_fields": ["view_name", "primary_agent", "recommended_content", "kpi_alignment"],
+    "field_formats": {
+      "update_frequency": ["real-time", "daily", "weekly", "bi-weekly", "monthly"],
+      "priority": ["high", "medium", "low"],
+      "confidence": "number_0_to_1",
+      "kpi_alignment": "array_of_strings"
+    },
+    "agent_validation": {
+      "valid_agents": [
+        "content_review", "cmp_organizer", "audience_suggester",
+        "experiment_blueprinter", "personalization_idea_generator",
+        "customer_journey", "geo_audit", "integration_health",
+        "strategy_workflow", "roadmap_generator"
+      ],
+      "tool_agent_mapping": true,
+      "dxp_tool_validation": true
+    },
+    "integration_requirements": {
+      "minimum_api_version": "v2.0",
+      "required_permissions": ["read", "write", "admin"],
+      "data_retention_period": "365_days",
+      "gdpr_compliance": true
+    }
+  }
+}

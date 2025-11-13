@@ -6,7 +6,6 @@
  */
 
 import crypto from 'crypto';
-import { logWebhookAttempt } from '@/app/api/diagnostics/last-webhook/route';
 
 export interface WebhookValidationResult {
   valid: boolean;
@@ -292,27 +291,19 @@ export class WebhookSecurityValidator {
     try {
       const headers = this.normalizeHeaders(request.headers);
 
-      logWebhookAttempt({
-        webhook_url: request.url,
+      // Log validation attempt details to console for now
+      console.log(`📊 [Webhook Security] Validation attempt logged`, {
+        url: request.url,
         method: request.method,
-        headers: this.maskSensitiveHeaders(headers),
         payload_size_bytes: typeof request.body === 'string'
           ? Buffer.byteLength(request.body, 'utf8')
           : request.body.length,
         response_time_ms: duration,
         success: result.valid,
         error_message: result.error_message,
-        correlation_id: headers['x-correlation-id'] || `validation-${Date.now()}`,
-        span_id: headers['x-span-id'] || `validation-span-${Date.now()}`,
         source,
-        environment: process.env.NODE_ENV || 'development',
         auth_method: result.method,
-        payload_summary: {
-          validation_method: result.method,
-          bearer_token_present: result.validation_details.bearer_token_present,
-          hmac_signature_present: result.validation_details.hmac_signature_present,
-          validation_result: result.valid ? 'success' : 'failure'
-        }
+        validation_result: result.valid ? 'success' : 'failure'
       });
     } catch (error) {
       console.error('❌ [Webhook Security] Failed to log validation attempt:', error);

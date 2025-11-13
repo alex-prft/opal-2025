@@ -36,5 +36,9 @@ export {
   getAllOPALAgents,
   getAllOPALInstructions,
   getAllOPALTools,
-  getAllDXPTools
+  getAllDXPTools,
+  getNavigationStructure,
+  getTier3Navigation,
+  getAllNavigationStructure,
+  getAllNavigationPaths
 } from './mapping-utils';

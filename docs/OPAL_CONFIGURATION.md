@@ -1,4 +1,4 @@
-# OPAL Configuration & Architecture Guide
+ # OPAL Configuration & Architecture Guide
 
 ## Overview
 

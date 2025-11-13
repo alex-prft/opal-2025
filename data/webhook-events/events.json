@@ -1,0 +1,46 @@
+[
+  {
+    "event_type": "workflow_started",
+    "workflow_id": "test-workflow-123",
+    "session_id": "test-session-456",
+    "client_name": "Test Client",
+    "workflow_name": "strategy_workflow",
+    "triggered_by": "test-script",
+    "payload": {
+      "test": true,
+      "timestamp": 1762991884721
+    },
+    "received_at": "2025-11-12T23:58:04.721Z",
+    "id": "simple-event-1762991884721-3qdrxj3sp"
+  },
+  {
+    "event_type": "agent_completed",
+    "workflow_id": "test-workflow-123",
+    "agent_id": "content_review",
+    "execution_status": "success",
+    "received_at": "2025-11-12T23:58:04.773Z",
+    "id": "simple-event-1762991884773-oviuyfqpe"
+  },
+  {
+    "event_type": "workflow_completed",
+    "workflow_id": "test-workflow-123",
+    "status": "completed",
+    "total_duration_ms": 5000,
+    "received_at": "2025-11-12T23:58:04.814Z",
+    "id": "simple-event-1762991884816-6vwz3u5g8"
+  },
+  {
+    "event_type": "decision_generated",
+    "workflow_id": "test-workflow-123",
+    "decision_id": "decision-789",
+    "recommendations_count": 3,
+    "received_at": "2025-11-12T23:58:04.929Z",
+    "id": "simple-event-1762991884929-5dz2gtrh1"
+  },
+  {
+    "event_type": "test_error_handling",
+    "workflow_id": "error-test",
+    "received_at": "2025-11-12T23:58:04.965Z",
+    "id": "simple-event-1762991884965-h6ue9m9ik"
+  }
+]

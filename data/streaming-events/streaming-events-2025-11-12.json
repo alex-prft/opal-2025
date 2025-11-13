@@ -1,0 +1,218 @@
+[
+  {
+    "id": "stream-1762974697320-n4lbm",
+    "workflow_id": "test-workflow",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Multivariate test checkout flow optimization"
+    },
+    "timestamp": "2025-11-12T19:11:37.320Z"
+  },
+  {
+    "id": "stream-1762974697325-ol045",
+    "workflow_id": "test-workflow",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 45,
+      "status": "running",
+      "preliminary_findings": "Create lookalike audience based on recent purchasers"
+    },
+    "timestamp": "2025-11-12T19:11:37.325Z"
+  },
+  {
+    "id": "stream-1762974697329-i224il",
+    "workflow_id": "test-workflow",
+    "agent_id": "content_review",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 85,
+      "status": "running",
+      "preliminary_findings": "Update product descriptions with emotional triggers"
+    },
+    "timestamp": "2025-11-12T19:11:37.329Z"
+  },
+  {
+    "id": "stream-1762974702320-h1lmqq",
+    "workflow_id": "test-workflow",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Multivariate test checkout flow optimization"
+    },
+    "timestamp": "2025-11-12T19:11:42.321Z"
+  },
+  {
+    "id": "stream-1762974702324-f4myo7",
+    "workflow_id": "test-workflow",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 90,
+      "status": "running",
+      "preliminary_findings": "Segment mobile users for app-specific campaigns"
+    },
+    "timestamp": "2025-11-12T19:11:42.324Z"
+  },
+  {
+    "id": "stream-1762974702327-osguzw",
+    "workflow_id": "test-workflow",
+    "agent_id": "content_review",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 85,
+      "status": "running",
+      "preliminary_findings": "Optimize page load speeds for mobile users"
+    },
+    "timestamp": "2025-11-12T19:11:42.327Z"
+  },
+  {
+    "id": "stream-1762974840703-ba7pcr",
+    "workflow_id": "full-test",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Test personalized product recommendations"
+    },
+    "timestamp": "2025-11-12T19:14:00.703Z"
+  },
+  {
+    "id": "stream-1762974840709-9rh1fn",
+    "workflow_id": "full-test",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 85,
+      "status": "running",
+      "preliminary_findings": "Segment mobile users for app-specific campaigns"
+    },
+    "timestamp": "2025-11-12T19:14:00.709Z"
+  },
+  {
+    "id": "stream-1762974840712-c8sdy9",
+    "workflow_id": "full-test",
+    "agent_id": "content_review",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 90,
+      "status": "running",
+      "preliminary_findings": "Improve CTA button copy for better engagement"
+    },
+    "timestamp": "2025-11-12T19:14:00.712Z"
+  },
+  {
+    "id": "stream-1762974840715-7h8zs",
+    "workflow_id": "full-test",
+    "agent_id": "roadmap_generator",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 25,
+      "status": "running",
+      "preliminary_findings": "Implement AI chatbot for customer support"
+    },
+    "timestamp": "2025-11-12T19:14:00.715Z"
+  },
+  {
+    "id": "stream-1762974845706-8gwl1",
+    "workflow_id": "full-test",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Multivariate test checkout flow optimization"
+    },
+    "timestamp": "2025-11-12T19:14:05.706Z"
+  },
+  {
+    "id": "stream-1762974845709-n1p61b",
+    "workflow_id": "full-test",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 85,
+      "status": "running",
+      "preliminary_findings": "Target high-value customers aged 25-45 in urban areas"
+    },
+    "timestamp": "2025-11-12T19:14:05.709Z"
+  },
+  {
+    "id": "stream-1762974850706-128c9",
+    "workflow_id": "full-test",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 75,
+      "status": "running",
+      "preliminary_findings": "Multivariate test checkout flow optimization"
+    },
+    "timestamp": "2025-11-12T19:14:10.706Z"
+  },
+  {
+    "id": "stream-1762974850710-64kdgb",
+    "workflow_id": "full-test",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 95,
+      "status": "completed",
+      "preliminary_findings": "Create lookalike audience based on recent purchasers"
+    },
+    "timestamp": "2025-11-12T19:14:10.710Z"
+  },
+  {
+    "id": "stream-1762974850714-yv4tni",
+    "workflow_id": "full-test",
+    "agent_id": "content_review",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 60,
+      "status": "running",
+      "preliminary_findings": "Optimize page load speeds for mobile users"
+    },
+    "timestamp": "2025-11-12T19:14:10.714Z"
+  },
+  {
+    "id": "stream-1762978629877-4e39rm",
+    "workflow_id": "validation-test",
+    "agent_id": "experiment_blueprinter",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 45,
+      "status": "running",
+      "preliminary_findings": "Test personalized product recommendations"
+    },
+    "timestamp": "2025-11-12T20:17:09.877Z"
+  },
+  {
+    "id": "stream-1762978629900-hszg8o",
+    "workflow_id": "validation-test",
+    "agent_id": "audience_suggester",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 95,
+      "status": "completed",
+      "preliminary_findings": "Segment mobile users for app-specific campaigns"
+    },
+    "timestamp": "2025-11-12T20:17:09.900Z"
+  },
+  {
+    "id": "stream-1762978629907-vxsxiy",
+    "workflow_id": "validation-test",
+    "agent_id": "content_review",
+    "event_type": "agent_update",
+    "data": {
+      "progress_percentage": 45,
+      "status": "running",
+      "preliminary_findings": "Update product descriptions with emotional triggers"
+    },
+    "timestamp": "2025-11-12T20:17:09.907Z"
+  }
+]

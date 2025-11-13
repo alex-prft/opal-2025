@@ -1,0 +1,207 @@
+version: '3.8'
+
+# OPAL 2025 Event-Driven Architecture Infrastructure
+# This docker-compose file provides the complete Kafka ecosystem for OPAL → OSA event processing
+#
+# Services:
+# - Zookeeper: Kafka cluster coordination
+# - Kafka: Event streaming backbone
+# - Schema Registry: Avro/Protobuf schema management
+# - Redis: Idempotency and caching layer
+#
+# Usage:
+#   docker-compose up -d      # Start all services in background
+#   docker-compose logs -f    # Follow logs
+#   docker-compose down       # Stop and remove containers
+
+services:
+  # Zookeeper - Required for Kafka cluster coordination
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    container_name: opal-zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      # Allow anonymous login for development (do NOT use in production)
+      ALLOW_ANONYMOUS_LOGIN: yes
+      # Zookeeper data directory
+      ZOO_DATA_DIR: /bitnami/zookeeper/data
+      # Enable JMX for monitoring
+      ZOO_ENABLE_ADMIN_SERVER: yes
+      ZOO_ADMIN_SERVER_PORT_NUMBER: 8080
+    volumes:
+      - zookeeper_data:/bitnami/zookeeper
+    networks:
+      - opal_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "zkServer.sh", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Kafka Broker - Event streaming backbone
+  kafka:
+    image: bitnami/kafka:3.5
+    container_name: opal-kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"   # External access
+      - "9093:9093"   # Internal broker communication
+    environment:
+      # Broker configuration
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      # Listener configuration for both internal and external access
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+
+      # Topic configuration
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_NUM_PARTITIONS: 6
+
+      # Performance tuning for development
+      KAFKA_LOG_FLUSH_INTERVAL_MESSAGES: 1000
+      KAFKA_LOG_FLUSH_INTERVAL_MS: 1000
+      KAFKA_LOG_RETENTION_HOURS: 168  # 7 days
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824  # 1GB
+
+      # JMX configuration for monitoring
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=1099"
+      JMX_PORT: 1099
+
+      # Development settings (optimize for local development)
+      KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
+      KAFKA_LOG_DIRS: /bitnami/kafka/data
+    volumes:
+      - kafka_data:/bitnami/kafka
+    networks:
+      - opal_network
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Confluent Schema Registry - Manages Avro and Protobuf schemas
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.0
+    container_name: opal-schema-registry
+    hostname: schema-registry
+    ports:
+      - "8081:8081"
+    environment:
+      # Schema Registry configuration
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
+      # Compatibility settings
+      SCHEMA_REGISTRY_COMPATIBILITY_LEVEL: BACKWARD
+      SCHEMA_REGISTRY_SCHEMA_CACHE_SIZE: 1000
+
+      # Development settings
+      SCHEMA_REGISTRY_DEBUG: false
+      SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 10000
+
+      # Authentication (disabled for development)
+      SCHEMA_REGISTRY_AUTHENTICATION_METHOD: NONE
+
+      # CORS configuration for web access
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_METHODS: GET,POST,PUT,DELETE,OPTIONS
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+    networks:
+      - opal_network
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/subjects"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Redis - Idempotency tracking and caching layer
+  redis:
+    image: redis:7-alpine
+    container_name: opal-redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_data:/data
+    networks:
+      - opal_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Kafka UI - Web interface for Kafka management (optional, for development)
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: opal-kafka-ui
+    ports:
+      - "8082:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: opal-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      # Optional: JMX configuration
+      KAFKA_CLUSTERS_0_JMXPORT: 1099
+    networks:
+      - opal_network
+    depends_on:
+      kafka:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    restart: unless-stopped
+    profiles:
+      - ui  # Use: docker-compose --profile ui up -d
+
+# Named volumes for data persistence
+volumes:
+  kafka_data:
+    driver: local
+    name: opal_kafka_data
+  zookeeper_data:
+    driver: local
+    name: opal_zookeeper_data
+  redis_data:
+    driver: local
+    name: opal_redis_data
+
+# Custom network for service communication
+networks:
+  opal_network:
+    driver: bridge
+    name: opal_event_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

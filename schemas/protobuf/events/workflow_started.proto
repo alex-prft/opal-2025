@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package com.opal.events.workflow;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when a workflow execution begins
+message WorkflowStarted {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Unique workflow execution identifier - serves as idempotency key
+  string workflow_id = 4;
+
+  // Session identifier from the original trigger request
+  string session_id = 5;
+
+  // Type of workflow being executed
+  enum WorkflowType {
+    WORKFLOW_TYPE_UNSPECIFIED = 0;
+    STRATEGY_WORKFLOW = 1;
+  }
+  WorkflowType workflow_name = 6;
+
+  // Source or user that initiated the workflow
+  optional string triggered_by = 7;
+
+  // Client organization name
+  optional string client_name = 8;
+
+  // Form data from the engine interface
+  message EngineForm {
+    optional string industry = 1;
+    optional string company_size = 2;
+    repeated string current_capabilities = 3;
+    repeated string business_objectives = 4;
+    optional string timeline_preference = 5;
+    optional string budget_range = 6;
+  }
+  optional EngineForm engine_form = 9;
+
+  // User preferences and settings
+  message WorkflowPreferences {
+    optional bool notifications = 1;
+    repeated string recipients = 2;
+  }
+  optional WorkflowPreferences preferences = 10;
+
+  // OPAL webhook URL used for execution
+  optional string webhook_url = 11;
+
+  // Expected completion time
+  optional string estimated_duration = 12;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 13;
+
+  // System that generated this event
+  string source_system = 14;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 15;
+}

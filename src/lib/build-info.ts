@@ -2,8 +2,8 @@
 // The build timestamp is set when the application is built
 
 export const BUILD_INFO = {
-  // This will be the time when the build process runs
-  BUILD_TIME: new Date().toISOString(),
+  // Use environment variable for build time, fallback to a static value
+  BUILD_TIME: process.env.NEXT_PUBLIC_BUILD_TIME || '2025-01-01T00:00:00.000Z',
 
   // Environment information
   NODE_ENV: process.env.NODE_ENV || 'development',

@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package com.opal.events.knowledge;
+
+import "google/protobuf/timestamp.proto";
+
+// Event emitted when knowledge base entries are inserted or updated
+message RagUpserted {
+  // Schema version for backward compatibility tracking
+  string schema_version = 1;
+
+  // Unique event identifier for deduplication
+  string event_id = 2;
+
+  // Correlation ID for distributed tracing across services
+  string correlation_id = 3;
+
+  // Unique upsert operation identifier - serves as idempotency key
+  string upsert_id = 4;
+
+  // Type of upsert operation performed
+  enum UpsertOperation {
+    UPSERT_OPERATION_UNSPECIFIED = 0;
+    INSERT = 1;
+    UPDATE = 2;
+    BULK_INSERT = 3;
+    BULK_UPDATE = 4;
+  }
+  UpsertOperation operation_type = 5;
+
+  // Number of documents processed in this operation
+  int32 documents_processed = 6;
+
+  // Number of new documents inserted
+  int32 documents_inserted = 7;
+
+  // Number of existing documents updated
+  int32 documents_updated = 8;
+
+  // Number of documents that failed to process
+  optional int32 documents_failed = 9;
+
+  // Source of the knowledge being upserted
+  enum KnowledgeSource {
+    KNOWLEDGE_SOURCE_UNSPECIFIED = 0;
+    AGENT_OUTPUT = 1;
+    USER_FEEDBACK = 2;
+    EXTERNAL_API = 3;
+    DOCUMENT_UPLOAD = 4;
+    TRAINING_DATA = 5;
+  }
+  KnowledgeSource knowledge_source = 10;
+
+  // Agent ID if knowledge comes from agent output
+  optional string agent_id = 11;
+
+  // Associated workflow ID if applicable
+  optional string workflow_id = 12;
+
+  // Types of documents processed
+  repeated string document_types = 13;
+
+  // Time taken to process the upsert operation in milliseconds
+  int64 processing_time_ms = 14;
+
+  // Number of vector embeddings generated
+  optional int32 vector_embeddings_generated = 15;
+
+  // Number of duplicate documents detected and handled
+  optional int32 duplicate_detections = 16;
+
+  // Metadata enrichment performed during upsert
+  message MetadataEnrichment {
+    repeated string tags_added = 1;
+    repeated string categories_assigned = 2;
+    map<string, double> confidence_scores = 3;
+  }
+  optional MetadataEnrichment metadata_enrichment = 17;
+
+  // Details of any errors encountered during processing
+  repeated string error_details = 18;
+
+  // Event timestamp
+  google.protobuf.Timestamp timestamp = 19;
+
+  // System that generated this event
+  string source_system = 20;
+
+  // Environment where the event occurred
+  enum Environment {
+    ENVIRONMENT_UNSPECIFIED = 0;
+    DEVELOPMENT = 1;
+    STAGING = 2;
+    PRODUCTION = 3;
+  }
+  Environment environment = 21;
+}

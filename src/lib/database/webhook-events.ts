@@ -37,7 +37,65 @@ export interface WebhookEventQuery {
 
 export class WebhookEventOperations {
   /**
-   * Store a new webhook event
+   * Simple file-based event creation (as requested in fix)
+   * Creates events.json in data/webhook-events/ directory
+   */
+  async createEvent(eventData: any): Promise<{ success: boolean; error?: any }> {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+
+      const dataDir = path.join(process.cwd(), 'data/webhook-events');
+      const filePath = path.join(dataDir, 'events.json');
+
+      // Ensure directory exists
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+
+      // Load existing events or start with empty array
+      const events = fs.existsSync(filePath)
+        ? JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+        : [];
+
+      // Add new event with timestamp
+      events.push({
+        ...eventData,
+        received_at: new Date().toISOString(),
+        id: `simple-event-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+      });
+
+      // Write back to file
+      fs.writeFileSync(filePath, JSON.stringify(events, null, 2));
+
+      console.log(`📝 [SimpleDB] Event stored: ${eventData.event_type || 'unknown'}`);
+      return { success: true };
+    } catch (error) {
+      console.error('❌ [SimpleDB] Error saving event:', error);
+      return { success: false, error };
+    }
+  }
+
+  /**
+   * Simple file-based event retrieval (companion to createEvent)
+   */
+  async getEvents(): Promise<any[]> {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+
+      const filePath = path.join(process.cwd(), 'data/webhook-events/events.json');
+      return fs.existsSync(filePath)
+        ? JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+        : [];
+    } catch (error) {
+      console.error('❌ [SimpleDB] Error reading events:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Store a new webhook event (original sophisticated method)
    */
   async storeWebhookEvent(event: WebhookEvent): Promise<string> {
     // Check if database is available before attempting connection
