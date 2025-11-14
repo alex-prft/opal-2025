@@ -335,23 +335,22 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     tier2KPIs: tierDataResult.tier2.data,
     tier3Content: tierDataResult.tier3.data,
 
-    // SOP compliance metadata
-    sopCompliance: tierDataResult.sopCompliance,
+    // Simple data service - no compliance metadata needed
 
-    // Agent source attribution per SOP requirements
-    agent_source: tierDataResult.tier1.metadata.agent_source || tierDataResult.tier2.metadata.agent_source || tierDataResult.tier3.metadata.agent_source,
+    // Agent source attribution
+    agent_source: tierDataResult.tier1.metadata?.agent_source || tierDataResult.tier2.metadata?.agent_source || tierDataResult.tier3.metadata?.agent_source || 'unknown',
     confidence_score: Math.max(
-      tierDataResult.tier1.metadata.confidence_score || 0,
-      tierDataResult.tier2.metadata.confidence_score || 0,
-      tierDataResult.tier3.metadata.confidence_score || 0
+      tierDataResult.tier1.metadata?.confidence_score || 0,
+      tierDataResult.tier2.metadata?.confidence_score || 0,
+      tierDataResult.tier3.metadata?.confidence_score || 0
     ),
     timestamp: new Date().toISOString(),
 
     // Legacy data structure for widget compatibility
     confidenceScore: Math.max(
-      tierDataResult.tier1.metadata.confidence_score || 0,
-      tierDataResult.tier2.metadata.confidence_score || 0,
-      tierDataResult.tier3.metadata.confidence_score || 0
+      tierDataResult.tier1.metadata?.confidence_score || 0,
+      tierDataResult.tier2.metadata?.confidence_score || 0,
+      tierDataResult.tier3.metadata?.confidence_score || 0
     ),
 
     // Merge actual data content
@@ -359,17 +358,16 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     ...tierDataResult.tier2.data,
     ...tierDataResult.tier3.data,
 
-    // Full metadata for debugging and SOP tracking
+    // Full metadata for debugging
     dataMetadata: {
       tier1: tierDataResult.tier1.metadata,
       tier2: tierDataResult.tier2.metadata,
-      tier3: tierDataResult.tier3.metadata,
-      sopCompliance: tierDataResult.sopCompliance
+      tier3: tierDataResult.tier3.metadata
     }
   };
 
-  const isLoading = tierDataResult.isLoading;
-  const hasError = tierDataResult.hasError;
+  const isLoading = tierDataResult.loading;
+  const hasError = !!tierDataResult.error;
   const combinedError = tierDataResult.tier1.error || tierDataResult.tier2.error || tierDataResult.tier3.error;
 
   // Helper functions for enhanced fallback rendering
