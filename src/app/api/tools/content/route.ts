@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ContentRecsClient } from '@/lib/integrations/content-recs-client';
-import { requireAuthentication, createAuthErrorResponse, createAuthAuditLog } from '@/lib/utils/auth';
 import { APIResponse, ContentToolResponse } from '@/lib/types';
 
 /**
@@ -12,13 +10,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
 
   try {
-    // Authenticate request
-    const authResult = requireAuthentication(request);
-    if (!authResult.isValid) {
-      const auditLog = createAuthAuditLog(request, authResult, 'content-lookup');
-      console.error('Authentication failed:', auditLog);
-      return NextResponse.json(createAuthErrorResponse(authResult.error!), { status: 401 });
-    }
+    console.log('🔍 [Content Tool] Request received');
 
     // Parse request body
     const body = await request.json();
@@ -32,17 +24,40 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }, { status: 400 });
     }
 
-    // Initialize Content Recommendations client
-    const contentRecsClient = new ContentRecsClient();
-
     try {
       let recommendations: any[] = [];
 
       // Fetch recommendations based on topic or section
       if (topic) {
-        recommendations = await contentRecsClient.getRecommendationsByTopic(topic, audience);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/tools/contentrecs/by-topic`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ topic, audience })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Topic recommendations API failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        recommendations = data.recommendations || [];
       } else if (section) {
-        recommendations = await contentRecsClient.getRecommendationsBySection(section, audience);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/tools/contentrecs/by-section`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ section, audience })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Section recommendations API failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        recommendations = data.recommendations || [];
       }
 
       // Transform recommendations to match expected response format
@@ -100,22 +115,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const authResult = requireAuthentication(request);
-    if (!authResult.isValid) {
-      return NextResponse.json(createAuthErrorResponse(authResult.error!), { status: 401 });
-    }
 
     const url = new URL(request.url);
     const catalogType = url.searchParams.get('catalog');
 
-    const contentRecsClient = new ContentRecsClient();
-
     if (catalogType === 'topics') {
       try {
-        const topics = await contentRecsClient.getAvailableTopics();
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/tools/contentrecs/catalog?catalog_type=topics`);
+
+        if (!response.ok) {
+          throw new Error(`Catalog API failed: ${response.status}`);
+        }
+
+        const data = await response.json();
         return NextResponse.json({
           success: true,
-          data: { topics },
+          data: { topics: data.topics || [] },
           timestamp: new Date().toISOString()
         });
       } catch (error) {
@@ -130,10 +145,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (catalogType === 'sections') {
       try {
-        const sections = await contentRecsClient.getAvailableSections();
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/tools/contentrecs/catalog?catalog_type=sections`);
+
+        if (!response.ok) {
+          throw new Error(`Catalog API failed: ${response.status}`);
+        }
+
+        const data = await response.json();
         return NextResponse.json({
           success: true,
-          data: { sections },
+          data: { sections: data.sections || [] },
           timestamp: new Date().toISOString()
         });
       } catch (error) {

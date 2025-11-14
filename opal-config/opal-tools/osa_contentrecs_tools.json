@@ -1,7 +1,7 @@
 {
   "name": "OSA - Content Recommendations Tools",
   "description": "Content recommendation and analysis tools for content review, optimization, and personalized content strategy development in OSA workflows",
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/discovery",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/contentrecs/discovery",
   "registry_id": "osa_contentrecs",
   "version": "1.0.0",
   "tools": [
@@ -267,6 +267,220 @@
         },
         "required": ["content_pages", "seo_objectives"]
       }
+    },
+    {
+      "name": "get_content_recommendations_by_topic",
+      "description": "Retrieve content recommendations filtered by topic and audience segment for DXP tools content-recs pages",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Content topic filter (e.g., 'seasonal_produce', 'member_benefits', 'industry_news')"
+          },
+          "audience": {
+            "type": "string",
+            "description": "Target audience segment (e.g., 'premium_members', 'commercial_buyers', 'home_cooks')",
+            "enum": ["premium_members", "commercial_buyers", "home_cooks", "industry_professionals", "all"]
+          },
+          "limit": {
+            "type": "number",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Maximum number of recommendations to return"
+          },
+          "include_metadata": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include confidence scores and recommendation metadata"
+          },
+          "content_format": {
+            "type": "string",
+            "enum": ["article", "video", "infographic", "resource", "all"],
+            "default": "all",
+            "description": "Filter by content format type"
+          }
+        },
+        "required": ["topic"]
+      }
+    },
+    {
+      "name": "get_content_recommendations_by_section",
+      "description": "Retrieve content recommendations filtered by section and audience segment for DXP tools content-recs pages",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "Content section filter (e.g., 'homepage_hero', 'member_portal', 'resource_center')"
+          },
+          "audience": {
+            "type": "string",
+            "description": "Target audience segment (e.g., 'premium_members', 'commercial_buyers', 'home_cooks')",
+            "enum": ["premium_members", "commercial_buyers", "home_cooks", "industry_professionals", "all"]
+          },
+          "limit": {
+            "type": "number",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Maximum number of recommendations to return"
+          },
+          "include_metadata": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include confidence scores and recommendation metadata"
+          },
+          "personalization_level": {
+            "type": "string",
+            "enum": ["basic", "moderate", "advanced"],
+            "default": "moderate",
+            "description": "Level of personalization for recommendations"
+          }
+        },
+        "required": ["section"]
+      }
+    },
+    {
+      "name": "get_available_content_catalog",
+      "description": "Retrieve available topics and sections for content recommendation filtering in DXP tools content-recs pages",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "catalog_type": {
+            "type": "string",
+            "enum": ["topics", "sections", "both"],
+            "default": "both",
+            "description": "Type of catalog to retrieve"
+          },
+          "include_metadata": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include metadata like content count, popularity, and last updated"
+          },
+          "audience_filter": {
+            "type": "string",
+            "description": "Filter catalog by audience relevance",
+            "enum": ["premium_members", "commercial_buyers", "home_cooks", "industry_professionals", "all"]
+          },
+          "active_only": {
+            "type": "boolean",
+            "default": true,
+            "description": "Only return active/published content categories"
+          },
+          "sort_by": {
+            "type": "string",
+            "enum": ["alphabetical", "popularity", "recent", "relevance"],
+            "default": "popularity",
+            "description": "Sort order for catalog results"
+          }
+        }
+      }
+    },
+    {
+      "name": "generate_tier_based_content_data",
+      "description": "Generate structured tier-based content data for DXP tools content-recs pages with proper metadata and SOP compliance",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "url": {"type": "string"},
+                "topics": {"type": "array"},
+                "sections": {"type": "array"},
+                "confidence_score": {"type": "number"}
+              }
+            },
+            "description": "Raw content recommendations to structure"
+          },
+          "tier_configuration": {
+            "type": "object",
+            "properties": {
+              "tier1_summary": {
+                "type": "boolean",
+                "default": true,
+                "description": "Generate Tier 1 executive summary data"
+              },
+              "tier2_kpis": {
+                "type": "boolean",
+                "default": true,
+                "description": "Generate Tier 2 KPI and metrics data"
+              },
+              "tier3_detailed": {
+                "type": "boolean",
+                "default": true,
+                "description": "Generate Tier 3 detailed content data"
+              }
+            },
+            "description": "Configuration for tier-based data generation"
+          },
+          "sop_compliance": {
+            "type": "boolean",
+            "default": true,
+            "description": "Ensure Standard Operating Procedure compliance in data structure"
+          },
+          "confidence_scoring": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include confidence scoring and quality metrics"
+          },
+          "agent_metadata": {
+            "type": "object",
+            "properties": {
+              "agent_source": {"type": "string", "default": "content_recommendations"},
+              "workflow_id": {"type": "string"},
+              "execution_timestamp": {"type": "string"}
+            },
+            "description": "Agent execution metadata for tracking"
+          }
+        },
+        "required": ["content_recommendations"]
+      }
+    },
+    {
+      "name": "refresh_content_recommendations_cache",
+      "description": "Refresh and update content recommendations cache for real-time data in DXP tools content-recs pages",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cache_scope": {
+            "type": "string",
+            "enum": ["topics", "sections", "recommendations", "catalog", "all"],
+            "default": "all",
+            "description": "Scope of cache refresh operation"
+          },
+          "force_refresh": {
+            "type": "boolean",
+            "default": false,
+            "description": "Force refresh even if cache is still valid"
+          },
+          "audience_segments": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Specific audience segments to refresh cache for"
+          },
+          "priority_content": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Priority content topics/sections for immediate refresh"
+          },
+          "cache_duration": {
+            "type": "string",
+            "enum": ["5_minutes", "15_minutes", "1_hour", "6_hours", "24_hours"],
+            "default": "1_hour",
+            "description": "Cache validity duration for refreshed content"
+          },
+          "notification_webhook": {
+            "type": "string",
+            "description": "Webhook URL for cache refresh completion notification"
+          }
+        }
+      }
     }
   ],
   "authentication": {
@@ -275,10 +489,15 @@
     "header_value": "Bearer ${CONTENT_RECS_API_KEY}"
   },
   "integration_endpoints": {
-    "content_analysis": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/analyze",
-    "seo_assessment": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/seo",
-    "personalization_engine": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/personalization",
-    "performance_metrics": "https://ifpa-strategy.vercel.app/api/tools/contentrecs/performance"
+    "content_analysis": "https://opal-2025.vercel.app/api/tools/contentrecs/analyze",
+    "seo_assessment": "https://opal-2025.vercel.app/api/tools/contentrecs/seo",
+    "personalization_engine": "https://opal-2025.vercel.app/api/tools/contentrecs/personalization",
+    "performance_metrics": "https://opal-2025.vercel.app/api/tools/contentrecs/performance",
+    "content_by_topic": "https://opal-2025.vercel.app/api/tools/contentrecs/by-topic",
+    "content_by_section": "https://opal-2025.vercel.app/api/tools/contentrecs/by-section",
+    "content_catalog": "https://opal-2025.vercel.app/api/tools/contentrecs/catalog",
+    "tier_data_generation": "https://opal-2025.vercel.app/api/tools/contentrecs/tier-data",
+    "cache_refresh": "https://opal-2025.vercel.app/api/tools/contentrecs/cache-refresh"
   },
   "configuration": {
     "account_id": "${CONTENT_RECS_ACCOUNT_ID}",
