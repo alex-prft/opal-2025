@@ -1,0 +1,72 @@
+{
+  "Strategy Plans": {
+    "widgets": [
+      {
+        "name": "StrategyPlansWidget",
+        "components": ["ConfidenceGauge","RoadmapTimeline","MaturityScoreCard"],
+        "data_sources": ["OPAL API","Optimizely CMS","ODP"],
+        "visualizations": ["LineChart","MilestoneHeatmap"]
+      }
+    ]
+  },
+  "Optimizely DXP Tools": {
+    "widgets": [
+      {
+        "name": "IntegrationHealthWidget",
+        "components": ["StatusIndicator","PerformanceMetrics","DataFreshness"],
+        "data_sources": ["OPAL API","Optimizely APIs","System Monitoring"],
+        "visualizations": ["StatusGrid","PerformanceChart","AlertPanel"]
+      }
+    ]
+  },
+  "Analytics Insights": {
+    "widgets": [
+      {
+        "name": "EngagementAnalyticsWidget",
+        "components": ["EngagementMetrics","TopicAnalysis","PopularContent"],
+        "data_sources": ["OPAL API","Google Analytics","Content Analytics"],
+        "visualizations": ["HeatMap","TrendChart","TopicCloud"]
+      },
+      {
+        "name": "AIVisibilityWidget",
+        "components": ["SemanticAnalysis","GeographicInsights","ContentFreshness"],
+        "data_sources": ["OPAL API","Search Console","Content Database"],
+        "visualizations": ["SemanticMap","GeoChart","FreshnessIndicator"]
+      }
+    ]
+  },
+  "Experience Optimization": {
+    "widgets": [
+      {
+        "name": "ContentOptimizationWidget",
+        "components": ["ContentPerformance","OptimizationRecommendations","TestResults"],
+        "data_sources": ["OPAL API","Optimizely Web","Content Analytics"],
+        "visualizations": ["PerformanceMatrix","RecommendationList","TestResultsChart"]
+      },
+      {
+        "name": "ExperimentationWidget",
+        "components": ["ExperimentDesign","StatisticalAnalysis","ImpactAssessment"],
+        "data_sources": ["OPAL API","Optimizely Web","Analytics"],
+        "visualizations": ["ExperimentTimeline","StatisticalCharts","ImpactMetrics"]
+      },
+      {
+        "name": "PersonalizationWidget",
+        "components": ["AudienceSegments","PersonalizationRules","PerformanceTracking"],
+        "data_sources": ["OPAL API","ODP","Personalization Engine"],
+        "visualizations": ["SegmentMatrix","RuleFlowChart","PerformanceDashboard"]
+      },
+      {
+        "name": "UXMetricsWidget",
+        "components": ["UserJourneyMap","InteractionAnalytics","UsabilityMetrics"],
+        "data_sources": ["OPAL API","User Analytics","Heatmap Tools"],
+        "visualizations": ["JourneyMap","InteractionHeatmap","UsabilityScores"]
+      },
+      {
+        "name": "TechnologyHealthWidget",
+        "components": ["SystemPerformance","IntegrationStatus","TechnicalMetrics"],
+        "data_sources": ["OPAL API","System Monitoring","Performance Tools"],
+        "visualizations": ["HealthDashboard","IntegrationMap","PerformanceGraphs"]
+      }
+    ]
+  }
+}

@@ -9,6 +9,7 @@ import ResultsSidebar from '@/components/ResultsSidebar';
 import TalkToYourData from '@/components/TalkToYourData';
 import { ServiceStatusProvider, useServiceErrorListener } from '@/components/ServiceStatusProvider';
 import ServiceStatusFooter from '@/components/ServiceStatusFooter';
+import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
 import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import {
   Sparkles,
@@ -29,6 +30,14 @@ function ResultsPageContent() {
 
   // Initialize service error listener
   useServiceErrorListener();
+
+  // Add tier0 class to body
+  useEffect(() => {
+    document.body.classList.add('results-tier0');
+    return () => {
+      document.body.classList.remove('results-tier0');
+    };
+  }, []);
 
   useEffect(() => {
     // Check for skipAuth parameter
@@ -134,6 +143,10 @@ function ResultsPageContent() {
 
           {/* Main Content - TTYD Interface */}
           <main id="results-main-content" className="flex-1 bg-gradient-to-br from-slate-50 via-white to-slate-100">
+            <BreadcrumbSearchHeader
+              onSearch={(query) => console.log('Search query:', query)}
+              searchPlaceholder="Search Your Data"
+            />
             <TalkToYourData workflowResult={workflowResult} />
           </main>
         </div>

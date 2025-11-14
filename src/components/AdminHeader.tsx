@@ -5,8 +5,15 @@ import { BarChart } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ForceSyncButton from '@/components/ForceSyncButton';
+import { PollingToggle } from '@/components/admin/PollingToggle';
 
 export default function AdminHeader() {
+  const handlePollingToggle = (enabled: boolean) => {
+    console.log(`🔄 [Admin Header] Polling ${enabled ? 'enabled' : 'disabled'}`, {
+      timestamp: new Date().toISOString()
+    });
+  };
+
   return (
     <header className="border-b bg-white/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-4">
@@ -26,12 +33,20 @@ export default function AdminHeader() {
             <Link href="/engine/admin">
               <div className="cursor-pointer hover:text-blue-600 transition-colors">
                 <h1 className="text-xl font-bold">Admin Configuration</h1>
-                <p className="text-muted-foreground text-sm">Opal Strategy Assistant</p>
+                <p className="text-muted-foreground text-sm">
+                  Opal Strategy Assistant
+                </p>
               </div>
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Polling Toggle Control */}
+            <PollingToggle
+              defaultEnabled={false}
+              onToggle={handlePollingToggle}
+            />
+
             <ForceSyncButton />
 
             <Link href="/engine/results">

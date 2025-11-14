@@ -1,7 +1,7 @@
 {
   "name": "OSA - CMP Integration Tools",
   "description": "Campaign Management Platform integration tools for strategy compilation, campaign creation, and executive deliverable generation in OSA workflows",
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/cmp/discovery",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/cmp/discovery",
   "registry_id": "osa_cmp",
   "version": "1.0.0",
   "tools": [
@@ -269,10 +269,10 @@
     "header_value": "Bearer ${CMP_API_KEY}"
   },
   "integration_endpoints": {
-    "strategy_compilation": "https://ifpa-strategy.vercel.app/api/tools/cmp/compile",
-    "campaign_generation": "https://ifpa-strategy.vercel.app/api/tools/cmp/campaigns",
-    "cmp_export": "https://ifpa-strategy.vercel.app/api/tools/cmp/export",
-    "timeline_planning": "https://ifpa-strategy.vercel.app/api/tools/cmp/timeline"
+    "strategy_compilation": "https://opal-2025.vercel.app/api/tools/cmp/compile",
+    "campaign_generation": "https://opal-2025.vercel.app/api/tools/cmp/campaigns",
+    "cmp_export": "https://opal-2025.vercel.app/api/tools/cmp/export",
+    "timeline_planning": "https://opal-2025.vercel.app/api/tools/cmp/timeline"
   },
   "configuration": {
     "workspace_id": "${CMP_WORKSPACE_ID}",

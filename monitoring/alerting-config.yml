@@ -1,0 +1,356 @@
+# OSA Platform Monitoring & Alerting Configuration
+# Configure alerts for critical system failures and degradation
+
+alerting_rules:
+  # ============================================================================
+  # Force Sync Monitoring
+  # ============================================================================
+
+  force_sync_failure_rate:
+    description: "Alert when force sync failure rate exceeds threshold"
+    condition: "force_sync_failure_rate_5m > 0.3" # 30% failure rate
+    severity: "critical"
+    for: "2m"
+    labels:
+      service: "force-sync"
+      component: "workflow-trigger"
+    annotations:
+      summary: "High force sync failure rate detected"
+      description: "Force sync failure rate is {{ $value | humanizePercentage }} over the last 5 minutes"
+      runbook_url: "https://docs.osa-platform.com/runbooks/force-sync-failures"
+      action_required: "Check OPAL workflow service health and authentication"
+
+  force_sync_consecutive_failures:
+    description: "Alert on 3+ consecutive force sync failures"
+    condition: "force_sync_consecutive_failures >= 3"
+    severity: "critical"
+    for: "1m"
+    labels:
+      service: "force-sync"
+      urgency: "high"
+    annotations:
+      summary: "Multiple consecutive force sync failures"
+      description: "{{ $value }} consecutive force sync failures detected"
+      immediate_action: "Investigate OPAL service connectivity and restart if necessary"
+
+  # ============================================================================
+  # Health Monitoring
+  # ============================================================================
+
+  health_degraded_extended:
+    description: "Alert when health status is degraded for >5 minutes"
+    condition: "health_status_degraded_duration_minutes > 5"
+    severity: "warning"
+    for: "1m"
+    labels:
+      service: "health-monitoring"
+      component: "health-api"
+    annotations:
+      summary: "Health status degraded for extended period"
+      description: "System health has been degraded for {{ $value }} minutes"
+      investigation_steps: |
+        1. Check /api/opal/health endpoint response
+        2. Verify database connectivity
+        3. Check OPAL API availability
+        4. Review webhook processing status
+
+  health_unhealthy:
+    description: "Alert when health status becomes unhealthy"
+    condition: "health_status == 'unhealthy'"
+    severity: "critical"
+    for: "30s"
+    labels:
+      service: "health-monitoring"
+      urgency: "immediate"
+    annotations:
+      summary: "System health status is UNHEALTHY"
+      description: "Critical system components are failing"
+      immediate_action: |
+        1. Check system status dashboard
+        2. Verify all service dependencies
+        3. Escalate to on-call engineer
+
+  # ============================================================================
+  # API Performance Monitoring
+  # ============================================================================
+
+  api_response_time_high:
+    description: "Alert when API response times are consistently high"
+    condition: "api_response_time_p95_5m > 2000" # 2 seconds
+    severity: "warning"
+    for: "3m"
+    labels:
+      service: "api-performance"
+    annotations:
+      summary: "High API response times detected"
+      description: "95th percentile API response time is {{ $value }}ms"
+      optimization_needed: "Review database queries and caching strategies"
+
+  api_error_rate_high:
+    description: "Alert when API error rate exceeds 5%"
+    condition: "api_error_rate_5m > 0.05"
+    severity: "warning"
+    for: "2m"
+    labels:
+      service: "api-reliability"
+    annotations:
+      summary: "High API error rate detected"
+      description: "API error rate is {{ $value | humanizePercentage }}"
+
+  # ============================================================================
+  # Webhook Processing Monitoring
+  # ============================================================================
+
+  webhook_lag_detection:
+    description: "Alert when no webhooks received for >15 minutes"
+    condition: "webhook_last_received_minutes > 15"
+    severity: "warning"
+    for: "1m"
+    labels:
+      service: "webhook-processing"
+    annotations:
+      summary: "Webhook processing lag detected"
+      description: "No webhooks received for {{ $value }} minutes"
+      check_items: |
+        1. OPAL workflow execution status
+        2. Webhook endpoint availability
+        3. Signature validation errors
+
+  webhook_signature_failure_rate:
+    description: "Alert when webhook signature validation failure rate is high"
+    condition: "webhook_signature_failure_rate_1h > 0.1" # 10%
+    severity: "warning"
+    for: "5m"
+    annotations:
+      summary: "High webhook signature validation failure rate"
+      description: "{{ $value | humanizePercentage }} of webhooks failed signature validation"
+
+  # ============================================================================
+  # Database & Infrastructure
+  # ============================================================================
+
+  database_connection_failures:
+    description: "Alert on database connectivity issues"
+    condition: "database_connection_failures_5m > 0"
+    severity: "critical"
+    for: "1m"
+    annotations:
+      summary: "Database connection failures detected"
+      description: "{{ $value }} database connection failures in the last 5 minutes"
+
+  memory_usage_high:
+    description: "Alert when memory usage exceeds 85%"
+    condition: "memory_usage_percent > 85"
+    severity: "warning"
+    for: "5m"
+    annotations:
+      summary: "High memory usage detected"
+      description: "Memory usage is {{ $value }}%"
+
+  # ============================================================================
+  # User Experience Monitoring
+  # ============================================================================
+
+  force_sync_user_timeout:
+    description: "Alert when force sync operations timeout frequently"
+    condition: "force_sync_timeout_rate_1h > 0.05"
+    severity: "warning"
+    for: "2m"
+    annotations:
+      summary: "Force sync timeout rate high"
+      description: "{{ $value | humanizePercentage }} of force syncs are timing out"
+      user_impact: "Users experiencing slow force sync operations"
+
+# ============================================================================
+# Notification Channels
+# ============================================================================
+
+notification_channels:
+  slack_critical:
+    type: "slack"
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#osa-alerts-critical"
+    severity_filter: ["critical"]
+    message_template: |
+      🚨 **CRITICAL ALERT**: {{ .CommonAnnotations.summary }}
+
+      **Service**: {{ .GroupLabels.service }}
+      **Description**: {{ .CommonAnnotations.description }}
+
+      {% if .CommonAnnotations.immediate_action %}
+      **Immediate Action Required**:
+      {{ .CommonAnnotations.immediate_action }}
+      {% endif %}
+
+      **Time**: {{ .StartsAt | date "2006-01-02 15:04:05 UTC" }}
+      **Dashboard**: https://monitoring.osa-platform.com/alerts
+
+  slack_warnings:
+    type: "slack"
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channel: "#osa-alerts-warnings"
+    severity_filter: ["warning"]
+    message_template: |
+      ⚠️ **WARNING**: {{ .CommonAnnotations.summary }}
+
+      **Service**: {{ .GroupLabels.service }}
+      **Description**: {{ .CommonAnnotations.description }}
+      **Time**: {{ .StartsAt | date "2006-01-02 15:04:05 UTC" }}
+
+  email_oncall:
+    type: "email"
+    recipients: ["oncall@company.com"]
+    severity_filter: ["critical"]
+    rate_limit: "5m" # Max 1 email per 5 minutes per alert
+
+  pagerduty_critical:
+    type: "pagerduty"
+    integration_key: "${PAGERDUTY_INTEGRATION_KEY}"
+    severity_filter: ["critical"]
+    auto_resolve: true
+
+# ============================================================================
+# Dashboards Configuration
+# ============================================================================
+
+dashboards:
+  force_sync_monitoring:
+    title: "Force Sync Operations Dashboard"
+    panels:
+      - title: "Force Sync Success Rate"
+        type: "single_stat"
+        metric: "force_sync_success_rate_1h"
+        thresholds:
+          good: 0.95
+          warning: 0.90
+          critical: 0.85
+
+      - title: "Average Force Sync Duration"
+        type: "graph"
+        metrics:
+          - "force_sync_duration_p50_5m"
+          - "force_sync_duration_p95_5m"
+        time_range: "1h"
+
+      - title: "Concurrent Force Sync Sessions"
+        type: "graph"
+        metric: "force_sync_active_sessions"
+
+  health_monitoring:
+    title: "System Health Dashboard"
+    panels:
+      - title: "Overall Health Status"
+        type: "status"
+        metric: "health_status"
+        color_mapping:
+          healthy: "green"
+          degraded: "yellow"
+          unhealthy: "red"
+
+      - title: "Service Component Status"
+        type: "table"
+        columns:
+          - "Component"
+          - "Status"
+          - "Response Time"
+          - "Last Check"
+
+  api_performance:
+    title: "API Performance Dashboard"
+    panels:
+      - title: "Request Rate"
+        type: "graph"
+        metric: "api_requests_per_second"
+
+      - title: "Response Times"
+        type: "heatmap"
+        metric: "api_response_time_distribution"
+
+      - title: "Error Rate"
+        type: "single_stat"
+        metric: "api_error_rate_5m"
+
+# ============================================================================
+# Redis Caching Configuration
+# ============================================================================
+
+redis_caching:
+  health_status:
+    key: "osa:health:status"
+    ttl: "60s"
+    refresh_ahead: "45s" # Refresh 15s before expiry
+
+  agent_status:
+    key: "osa:agents:status"
+    ttl: "30s"
+    refresh_ahead: "20s"
+
+  force_sync_sessions:
+    key_pattern: "osa:sync:session:{session_id}"
+    ttl: "600s" # 10 minutes
+    cleanup_interval: "300s"
+
+  webhook_stats:
+    key: "osa:webhooks:stats"
+    ttl: "120s"
+    aggregation_window: "5m"
+
+# ============================================================================
+# WebSocket Configuration for Real-time Updates
+# ============================================================================
+
+websocket_config:
+  force_sync_updates:
+    path: "/ws/force-sync"
+    authentication_required: true
+    max_connections_per_user: 3
+    heartbeat_interval: "30s"
+    message_types:
+      - "sync_started"
+      - "sync_progress"
+      - "sync_completed"
+      - "sync_failed"
+      - "sync_cancelled"
+
+  health_updates:
+    path: "/ws/health"
+    broadcast_interval: "60s"
+    message_types:
+      - "health_status_changed"
+      - "service_degraded"
+      - "service_recovered"
+
+# ============================================================================
+# Health Validation in CI/CD
+# ============================================================================
+
+ci_health_validation:
+  pre_deployment:
+    - name: "Database Connectivity"
+      endpoint: "/api/health/database"
+      expected_status: 200
+      timeout: "10s"
+
+    - name: "OPAL API Connectivity"
+      endpoint: "/api/health/opal"
+      expected_status: 200
+      timeout: "15s"
+
+  post_deployment:
+    - name: "Overall Health Check"
+      endpoint: "/api/opal/health"
+      expected_status: 200
+      expected_fields: ["status", "data", "timestamp"]
+      timeout: "30s"
+
+    - name: "Force Sync Availability"
+      endpoint: "/api/force-sync/trigger"
+      method: "GET"
+      expected_status: 200
+      timeout: "10s"
+
+    smoke_tests:
+      - "Admin dashboard loads"
+      - "Force sync button is clickable"
+      - "Health status displays correctly"
+      - "Recent data section updates"

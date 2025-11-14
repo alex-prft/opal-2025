@@ -1,0 +1,13 @@
+{
+  "lastForceSync": null,
+  "forceSyncWorkflowId": null,
+  "forceSyncSuccess": false,
+  "forceSyncAgentCount": 0,
+  "allForceSyncEvents": [],
+  "forceSyncHistory": [],
+  "data_source": "database",
+  "events_analyzed": 2,
+  "time_range_hours": 24,
+  "generated_at": "2025-11-13T14:41:05.782Z",
+  "timestamp": "2025-11-13T14:41:05.784Z"
+}

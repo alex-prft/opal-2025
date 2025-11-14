@@ -1,7 +1,7 @@
 {
   "name": "OSA - CMS PaaS Integration Tools",
   "description": "Content Management System Platform-as-a-Service tools for content optimization, personalized content creation, and content strategy implementation in OSA workflows",
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/discovery",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/cmspaas/discovery",
   "registry_id": "osa_cmspaas",
   "version": "1.0.0",
   "tools": [
@@ -313,11 +313,11 @@
     "header_value": "Bearer ${CMS_PAAS_API_KEY}"
   },
   "integration_endpoints": {
-    "content_audit": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/audit",
-    "template_generation": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/templates",
-    "content_optimization": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/optimize",
-    "governance_setup": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/governance",
-    "performance_tracking": "https://ifpa-strategy.vercel.app/api/tools/cmspaas/performance"
+    "content_audit": "https://opal-2025.vercel.app/api/tools/cmspaas/audit",
+    "template_generation": "https://opal-2025.vercel.app/api/tools/cmspaas/templates",
+    "content_optimization": "https://opal-2025.vercel.app/api/tools/cmspaas/optimize",
+    "governance_setup": "https://opal-2025.vercel.app/api/tools/cmspaas/governance",
+    "performance_tracking": "https://opal-2025.vercel.app/api/tools/cmspaas/performance"
   },
   "configuration": {
     "supported_cms_platforms": [

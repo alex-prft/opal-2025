@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { authenticatedFetch } from '@/lib/utils/client-auth';
+import { useForceSyncUnified } from '@/hooks/useForceSyncUnified';
 import {
   RefreshCw,
   Database,
   CheckCircle,
   AlertCircle,
   Clock,
-  Zap
+  Zap,
+  XCircle,
+  RotateCcw
 } from 'lucide-react';
 
 interface ForceSyncButtonProps {
@@ -20,116 +22,58 @@ interface ForceSyncButtonProps {
   className?: string;
 }
 
-interface SyncStatus {
-  isRunning: boolean;
-  sessionId?: string;
-  syncId?: string;
-  startTime?: Date;
-  platforms?: string[];
-  estimatedDuration?: string;
-}
-
 export default function ForceSyncButton({
   variant = 'button',
   size = 'md',
   className = ''
 }: ForceSyncButtonProps) {
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>({ isRunning: false });
-  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    syncStatus,
+    triggerSync,
+    cancelSync,
+    retrySync,
+    isLoading,
+    isActive,
+    canCancel,
+    canRetry,
+    lastSyncTime,
+    error
+  } = useForceSyncUnified();
 
-  const triggerForceSync = async (syncScope: string = 'priority_platforms') => {
+  const handleTriggerSync = async (syncScope: 'quick' | 'full' = 'quick') => {
     try {
-      setError(null);
-      setSyncStatus({ isRunning: true });
-
-      console.log(`🚀 [Force Sync] Triggering ${syncScope} sync...`);
-
-      const response = await authenticatedFetch('/api/opal/sync', {
-        method: 'POST',
-        body: JSON.stringify({
-          sync_scope: syncScope,
-          include_rag_update: true,
-          triggered_by: 'manual_user_request',
-          client_context: {
-            client_name: 'Manual Sync Operation',
-            industry: 'System Administration'
-          }
-        })
+      await triggerSync({
+        sync_scope: syncScope,
+        client_context: {
+          client_name: 'Force Sync Button',
+          industry: 'System Administration'
+        },
+        triggered_by: 'force_sync_button_ui'
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Sync failed: ${response.status}`);
-      }
-
-      const syncResult = await response.json();
-
-      setSyncStatus({
-        isRunning: true,
-        sessionId: syncResult.session_id,
-        syncId: syncResult.sync_id,
-        startTime: new Date(),
-        platforms: syncResult.sync_details.platforms_included,
-        estimatedDuration: syncResult.sync_details.estimated_duration
-      });
-
-      // Poll for completion
-      pollSyncStatus(syncResult.session_id);
-
     } catch (error) {
-      console.error('❌ [Force Sync] Failed:', error);
-      setError(error instanceof Error ? error.message : 'Unknown sync error');
-      setSyncStatus({ isRunning: false });
+      console.error('Failed to trigger sync:', error);
     }
   };
 
-  const pollSyncStatus = async (sessionId: string) => {
+  const handleCancel = async () => {
     try {
-      let attempts = 0;
-      const maxAttempts = 120; // 10 minutes max
-      const pollInterval = 5000; // 5 seconds
-
-      const poll = async (): Promise<void> => {
-        if (attempts >= maxAttempts) {
-          throw new Error('Sync timeout - please check system logs');
-        }
-
-        attempts++;
-
-        const statusResponse = await authenticatedFetch(`/api/opal/status/${sessionId}`, {
-          method: 'GET'
-        });
-
-        if (!statusResponse.ok) {
-          throw new Error(`Status check failed: ${statusResponse.status}`);
-        }
-
-        const statusData = await statusResponse.json();
-
-        if (statusData.status === 'completed') {
-          console.log('✅ [Force Sync] Sync completed successfully');
-          setSyncStatus({ isRunning: false });
-          setLastSyncTime(new Date());
-        } else if (statusData.status === 'failed') {
-          throw new Error(`Sync failed: ${statusData.error_message || 'Unknown error'}`);
-        } else {
-          // Still running, continue polling
-          setTimeout(poll, pollInterval);
-        }
-      };
-
-      await poll();
-
+      await cancelSync();
     } catch (error) {
-      console.error('❌ [Force Sync] Polling failed:', error);
-      setError(error instanceof Error ? error.message : 'Sync monitoring failed');
-      setSyncStatus({ isRunning: false });
+      console.error('Failed to cancel sync:', error);
     }
   };
 
-  const formatDuration = (startTime: Date): string => {
-    const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
+  const handleRetry = async () => {
+    try {
+      await retrySync();
+    } catch (error) {
+      console.error('Failed to retry sync:', error);
+    }
+  };
+
+  const formatDuration = (startTime?: string): string => {
+    if (!startTime) return '0:00';
+    const elapsed = Math.floor((Date.now() - new Date(startTime).getTime()) / 1000);
     const minutes = Math.floor(elapsed / 60);
     const seconds = elapsed % 60;
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
@@ -148,40 +92,54 @@ export default function ForceSyncButton({
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Sync Status */}
-          {syncStatus.isRunning ? (
+          {/* Sync Status Display */}
+          {isActive ? (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <RefreshCw className="h-4 w-4 animate-spin text-blue-500" />
-                <span className="text-sm font-medium">Syncing platforms...</span>
+                <span className="text-sm font-medium">
+                  {syncStatus.message || 'Syncing platforms...'}
+                </span>
               </div>
 
-              {syncStatus.startTime && (
+              {syncStatus.started_at && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-gray-500" />
                   <span className="text-sm text-gray-600">
-                    Running for {formatDuration(syncStatus.startTime)}
+                    Running for {formatDuration(syncStatus.started_at)}
                   </span>
                 </div>
               )}
 
-              {syncStatus.platforms && (
+              {syncStatus.progress !== undefined && syncStatus.progress > 0 && (
                 <div className="space-y-2">
-                  <span className="text-sm font-medium">Syncing platforms:</span>
-                  <div className="flex flex-wrap gap-1">
-                    {syncStatus.platforms.map((platform, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {platform}
-                      </Badge>
-                    ))}
+                  <div className="flex justify-between text-sm">
+                    <span>Progress</span>
+                    <span>{syncStatus.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${syncStatus.progress}%` }}
+                    />
                   </div>
                 </div>
               )}
 
-              {syncStatus.estimatedDuration && (
-                <p className="text-xs text-gray-500">
-                  Estimated duration: {syncStatus.estimatedDuration}
-                </p>
+              {syncStatus.details && (
+                <div className="space-y-2">
+                  <span className="text-sm font-medium">Sync Details:</span>
+                  {typeof syncStatus.details === 'object' && (
+                    <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
+                      {Object.entries(syncStatus.details).map(([key, value]) => (
+                        <div key={key} className="flex justify-between">
+                          <span className="capitalize">{key.replace(/_/g, ' ')}:</span>
+                          <span>{String(value)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           ) : (
@@ -190,7 +148,7 @@ export default function ForceSyncButton({
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-500" />
                   <span className="text-sm">
-                    Last sync: {lastSyncTime.toLocaleTimeString()}
+                    Last sync: {new Date(lastSyncTime).toLocaleTimeString()}
                   </span>
                 </div>
               ) : (
@@ -210,41 +168,67 @@ export default function ForceSyncButton({
 
           {/* Action Buttons */}
           <div className="flex gap-2">
-            <Button
-              onClick={() => triggerForceSync('priority_platforms')}
-              disabled={syncStatus.isRunning}
-              size="sm"
-              className="flex-1"
-            >
-              {syncStatus.isRunning ? (
-                <>
-                  <RefreshCw className="h-4 w-4 animate-spin mr-2" />
-                  Syncing...
-                </>
-              ) : (
-                <>
-                  <Zap className="h-4 w-4 mr-2" />
-                  Quick Sync
-                </>
-              )}
-            </Button>
+            {canRetry ? (
+              <Button
+                onClick={handleRetry}
+                disabled={isLoading}
+                size="sm"
+                className="flex-1"
+                variant="outline"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
+            ) : canCancel ? (
+              <Button
+                onClick={handleCancel}
+                disabled={isLoading}
+                size="sm"
+                className="flex-1"
+                variant="destructive"
+              >
+                <XCircle className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+            ) : (
+              <>
+                <Button
+                  onClick={() => handleTriggerSync('quick')}
+                  disabled={isLoading || isActive}
+                  size="sm"
+                  className="flex-1"
+                >
+                  {isLoading ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                      Starting...
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="h-4 w-4 mr-2" />
+                      Quick Sync
+                    </>
+                  )}
+                </Button>
 
-            <Button
-              onClick={() => triggerForceSync('all_platforms')}
-              disabled={syncStatus.isRunning}
-              size="sm"
-              variant="outline"
-              className="flex-1"
-            >
-              {syncStatus.isRunning ? (
-                'Please Wait...'
-              ) : (
-                <>
-                  <Database className="h-4 w-4 mr-2" />
-                  Full Sync
-                </>
-              )}
-            </Button>
+                <Button
+                  onClick={() => handleTriggerSync('full')}
+                  disabled={isLoading || isActive}
+                  size="sm"
+                  variant="outline"
+                  className="flex-1"
+                >
+                  {isLoading ? (
+                    'Please Wait...'
+                  ) : (
+                    <>
+                      <Database className="h-4 w-4 mr-2" />
+                      Full Sync
+                    </>
+                  )}
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="text-xs text-gray-500 space-y-1">
@@ -261,16 +245,21 @@ export default function ForceSyncButton({
 
   return (
     <Button
-      onClick={() => triggerForceSync('priority_platforms')}
-      disabled={syncStatus.isRunning}
+      onClick={() => handleTriggerSync('quick')}
+      disabled={isLoading || isActive}
       size={buttonSize}
       variant="outline"
       className={`gap-2 ${className}`}
     >
-      {syncStatus.isRunning ? (
+      {isActive ? (
         <>
           <RefreshCw className="h-4 w-4 animate-spin" />
           Syncing...
+        </>
+      ) : isLoading ? (
+        <>
+          <RefreshCw className="h-4 w-4 animate-spin" />
+          Starting...
         </>
       ) : (
         <>

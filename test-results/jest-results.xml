@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="OSA Admin Dashboard API Tests" tests="12" failures="0" errors="0" time="1.75">
+  <testsuite name="Health API Endpoints" errors="0" failures="0" skipped="0" timestamp="2025-11-13T17:19:28" time="1.337" tests="12">
+    <testcase classname="Health API Endpoints GET /api/opal/health should return healthy status with live data" name="Health API Endpoints GET /api/opal/health should return healthy status with live data" time="0.014">
+    </testcase>
+    <testcase classname="Health API Endpoints GET /api/opal/health should return degraded status with partial failures" name="Health API Endpoints GET /api/opal/health should return degraded status with partial failures" time="0.003">
+    </testcase>
+    <testcase classname="Health API Endpoints GET /api/opal/health should return unhealthy status with multiple failures" name="Health API Endpoints GET /api/opal/health should return unhealthy status with multiple failures" time="0.002">
+    </testcase>
+    <testcase classname="Health API Endpoints GET /api/opal/health should use cached data when live check fails" name="Health API Endpoints GET /api/opal/health should use cached data when live check fails" time="0.003">
+    </testcase>
+    <testcase classname="Health API Endpoints GET /api/opal/health should return minimal response when no cached data available" name="Health API Endpoints GET /api/opal/health should return minimal response when no cached data available" time="0.002">
+    </testcase>
+    <testcase classname="Health API Endpoints GET /api/opal/health should handle health service with intelligent caching" name="Health API Endpoints GET /api/opal/health should handle health service with intelligent caching" time="0.001">
+    </testcase>
+    <testcase classname="Health API Endpoints POST /api/opal/health should force refresh health data" name="Health API Endpoints POST /api/opal/health should force refresh health data" time="0.001">
+    </testcase>
+    <testcase classname="Health API Endpoints POST /api/opal/health should handle force refresh failure" name="Health API Endpoints POST /api/opal/health should handle force refresh failure" time="0.001">
+    </testcase>
+    <testcase classname="Health API Endpoints Health API Edge Cases should handle malformed health service response" name="Health API Endpoints Health API Edge Cases should handle malformed health service response" time="0.002">
+    </testcase>
+    <testcase classname="Health API Endpoints Health API Edge Cases should handle concurrent health check requests" name="Health API Endpoints Health API Edge Cases should handle concurrent health check requests" time="0.103">
+    </testcase>
+    <testcase classname="Health API Endpoints Health API Edge Cases should validate cache headers for different health states" name="Health API Endpoints Health API Edge Cases should validate cache headers for different health states" time="0.002">
+    </testcase>
+    <testcase classname="Health Service Integration Tests should handle health degradation scenarios" name="Health Service Integration Tests should handle health degradation scenarios" time="0.003">
+    </testcase>
+  </testsuite>
+</testsuites>

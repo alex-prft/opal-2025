@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube, Eye, Heart } from 'lucide-react';
+import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube, Eye, Heart, Database } from 'lucide-react';
 import { SafeDate } from '@/lib/utils/date-formatter';
+import { useOPALStatusPolling } from '@/hooks/useOPALStatusPolling';
 
 interface AgentErrorPattern {
   agent_id: string;
@@ -57,6 +58,26 @@ interface RecentDataComponentProps {
   compact?: boolean;
 }
 
+interface ForceSyncData {
+  lastForceSync: string | null;
+  forceSyncWorkflowId: string | null;
+  forceSyncSuccess: boolean;
+  forceSyncAgentCount: number;
+  // OPAL workflow tracking fields
+  opalWorkflowId?: string | null;
+  opalCorrelationId?: string | null;
+  opalStatus?: 'initiated' | 'in_progress' | 'completed' | 'failed' | null;
+  opalProgress?: number;
+}
+
+interface OSAWorkflowData {
+  lastOSAToolExecution: string | null;
+  totalOSAToolExecutions: number;
+  agentDataReception: {[key: string]: any};
+  successfulReceptions: number;
+  dataReceptionRate: number;
+}
+
 export default function RecentDataComponent({ className = '', compact = false }: RecentDataComponentProps) {
   const [lastWebhookTrigger, setLastWebhookTrigger] = useState<string | null>(null);
   const [webhookStatus, setWebhookStatus] = useState<'success' | 'failed' | 'processing' | 'none'>('none');
@@ -75,6 +96,60 @@ export default function RecentDataComponent({ className = '', compact = false }:
     cmp_organizer: 'unknown'
   });
   const [agentErrorPatterns, setAgentErrorPatterns] = useState<AgentErrorPattern[]>([]);
+
+  // New state for enhanced OPAL integration
+  const [forceSyncData, setForceSyncData] = useState<ForceSyncData | null>(null);
+  const [osaWorkflowData, setOSAWorkflowData] = useState<OSAWorkflowData | null>(null);
+
+  // Polling control state
+  const [isPollingEnabled, setIsPollingEnabled] = useState(false);
+
+  // Load polling preference from localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem('opal-polling-enabled');
+    setIsPollingEnabled(savedState === 'true');
+  }, []);
+
+  // OPAL status polling integration with toggle control
+  const {
+    status: opalStatus,
+    isPolling: isOPALPolling,
+    error: opalError,
+    isCompleted: isOPALCompleted,
+    progress: opalProgress,
+    circuitBreakerOpen,
+    attemptCount,
+    maxAttempts,
+    timeRemaining
+  } = useOPALStatusPolling(
+    forceSyncData?.opalCorrelationId || null,
+    {
+      enabled: isPollingEnabled, // Control via toggle
+      maxPollDuration: 90 * 1000, // 90 seconds max duration
+      pollInterval: 3000, // 3 second intervals
+      onCompleted: (status) => {
+        console.log('🎉 [RecentData] OPAL workflow completed:', status);
+        // Refresh dashboard data when OPAL completes
+        fetchDashboardData();
+      },
+      onFailed: (status, error) => {
+        console.error('❌ [RecentData] OPAL workflow failed:', status, error);
+        // Refresh dashboard data when OPAL fails
+        fetchDashboardData();
+      },
+      onStatusUpdate: (status) => {
+        console.log('📊 [RecentData] OPAL status update:', status);
+        // Update local force sync data with latest OPAL status
+        if (forceSyncData) {
+          setForceSyncData({
+            ...forceSyncData,
+            opalStatus: status.status,
+            opalProgress: status.progress_percentage
+          });
+        }
+      }
+    }
+  );
 
   // New state variables for OSA integration enhancements
   const [webhookEvents, setWebhookEvents] = useState<WebhookEvent[]>([]);
@@ -123,10 +198,22 @@ export default function RecentDataComponent({ className = '', compact = false }:
           setAgentStatuses(statsData.agentStatuses);
         }
 
+        // Update enhanced OPAL force sync data
+        if (statsData.forceSync) {
+          setForceSyncData(statsData.forceSync);
+        }
+
+        // Update OSA Workflow Data Tools data
+        if (statsData.osaWorkflowData) {
+          setOSAWorkflowData(statsData.osaWorkflowData);
+        }
+
         console.log('📊 Recent data component updated:', {
           lastTrigger: statsData.lastTriggerTime,
           workflowStatus: statsData.workflowStatus,
-          agentStatuses: statsData.agentStatuses
+          agentStatuses: statsData.agentStatuses,
+          forceSync: statsData.forceSync,
+          osaWorkflowData: statsData.osaWorkflowData
         });
       } else {
         console.error('Failed to fetch recent data:', statsData.error);
@@ -175,11 +262,11 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const fetchHealthData = async () => {
     try {
       setHealthLoading(true);
-      const response = await fetch('/api/opal/health');
+      const response = await fetch('/api/opal/health-with-fallback');
       const data = await response.json();
 
-      // Handle both successful responses and expected 503 status (service unavailable but configured)
-      if (response.ok || response.status === 503) {
+      // Health-with-fallback always returns 200, so we can handle the response directly
+      if (response.ok) {
         setHealthData({
           overall_status: data.overall_status || 'red',
           signature_valid_rate: data.signature_valid_rate || 0,
@@ -187,15 +274,8 @@ export default function RecentDataComponent({ className = '', compact = false }:
           last_webhook_minutes_ago: data.last_webhook_minutes_ago || 999,
           uptime_percentage: data.uptime_percentage
         });
-
-        // Silent handling for expected 503 responses - no console output
-        if (response.status === 503) {
-          // 503 is expected when OPAL service is not available but health endpoint is functioning
-          // This is normal behavior and should not generate console errors
-          return;
-        }
       } else {
-        // Only log truly unexpected errors (400, 500, etc. - not 503)
+        // This should rarely happen with health-with-fallback endpoint
         console.error('Unexpected health API error:', response.status, data);
         setHealthData({
           overall_status: 'red',
@@ -326,20 +406,50 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const getAgentStatusColor = (agentId: string, status: 'unknown' | 'success' | 'failed') => {
     const errorPattern = hasRepeatedFailures(agentId);
 
-    // Priority: Repeated failures > Current status
+    // Check OSA Workflow Data Tools reception status
+    const osaReception = osaWorkflowData?.agentDataReception?.[agentId];
+    const hasOSAData = osaReception && osaReception.success;
+
+    // Priority: Repeated failures > OSA Tool Status > Current status
     if (errorPattern && errorPattern.error_count >= 3) {
       return 'bg-red-600'; // Dark red for multiple failures
     } else if (errorPattern && errorPattern.error_count >= 2) {
       return 'bg-orange-500'; // Orange for repeated failures warning
     }
 
-    // Regular status colors
-    switch (status) {
-      case 'success': return 'bg-green-500'; // Green for successful OPAL data reception
-      case 'failed': return 'bg-red-500';    // Red for failed OPAL data reception
-      case 'unknown':
-      default: return 'bg-gray-400';         // Gray for unknown status (default)
+    // Enhanced status with OSA tool integration
+    if (hasOSAData) {
+      return 'bg-green-500'; // Green for successful OSA Workflow Data Tools reception
+    } else if (status === 'success') {
+      return 'bg-blue-500'; // Blue for webhook success but no OSA tool data
+    } else if (status === 'failed') {
+      return 'bg-red-500'; // Red for failed webhook reception
+    } else {
+      return 'bg-gray-400'; // Gray for unknown status (default)
     }
+  };
+
+  const getAgentTooltipText = (agentId: string, status: 'unknown' | 'success' | 'failed') => {
+    const errorPattern = hasRepeatedFailures(agentId);
+    const osaReception = osaWorkflowData?.agentDataReception?.[agentId];
+    const agentName = getAgentDisplayName(agentId);
+
+    let statusText = '';
+    if (errorPattern && errorPattern.error_count >= 2) {
+      statusText = `${errorPattern.error_count} failures`;
+    } else if (osaReception && osaReception.success) {
+      const dataAge = Math.floor((Date.now() - new Date(osaReception.timestamp).getTime()) / (1000 * 60));
+      statusText = `OSA Data Active (${dataAge}m ago)`;
+    } else if (status === 'success') {
+      statusText = 'Webhook Active (No OSA Data)';
+    } else if (status === 'failed') {
+      statusText = 'Failed';
+    } else {
+      statusText = 'Idle';
+    }
+
+    const errorTime = errorPattern ? ` (Last: ${new Date(errorPattern.last_error).toLocaleTimeString()})` : '';
+    return `${agentName}: ${statusText}${errorTime}`;
   };
 
   const getAgentDisplayName = (agentId: string) => {
@@ -447,11 +557,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
                   <div
                     key={agentId}
                     className={`w-3 h-3 rounded-full ${getAgentStatusColor(agentId, status)} flex-shrink-0 cursor-help`}
-                    title={`${getAgentDisplayName(agentId)}: ${
-                      hasErrors ? `${errorPattern!.error_count} failures` :
-                      status === 'success' ? 'Active' :
-                      status === 'failed' ? 'Failed' : 'Idle'
-                    }${hasErrors ? ` (Last: ${new Date(errorPattern!.last_error).toLocaleTimeString()})` : ''}`}
+                    title={getAgentTooltipText(agentId, status)}
                   />
                 );
               })}
@@ -545,6 +651,123 @@ export default function RecentDataComponent({ className = '', compact = false }:
               Refresh
             </Button>
           </div>
+
+          {/* Enhanced Force Sync Status Display with OPAL Integration */}
+          {forceSyncData && forceSyncData.lastForceSync && (
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-blue-600" />
+                  <span className="text-sm font-semibold text-blue-800">
+                    Last OPAL Force Sync
+                  </span>
+                  {isOPALPolling && (
+                    <div className="animate-spin h-3 w-3 border border-blue-600 border-t-transparent rounded-full"></div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  {/* OPAL Workflow Status Badge */}
+                  {forceSyncData.opalStatus && (
+                    <Badge
+                      variant={
+                        forceSyncData.opalStatus === 'completed' ? "default" :
+                        forceSyncData.opalStatus === 'failed' ? "destructive" :
+                        forceSyncData.opalStatus === 'in_progress' ? "secondary" : "outline"
+                      }
+                      className="text-xs"
+                    >
+                      OPAL: {forceSyncData.opalStatus}
+                    </Badge>
+                  )}
+                  {/* Force Sync Status Badge */}
+                  <Badge
+                    variant={forceSyncData.forceSyncSuccess ? "default" : "destructive"}
+                    className="text-xs"
+                  >
+                    Sync: {forceSyncData.forceSyncSuccess ? 'Success' : 'Failed'}
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="text-sm text-blue-700">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-3 w-3" />
+                  <SafeDate date={forceSyncData.lastForceSync} format="datetime" />
+                </div>
+
+                {/* OPAL Progress Bar */}
+                {forceSyncData.opalProgress !== undefined && forceSyncData.opalStatus !== 'completed' && (
+                  <div className="mt-2">
+                    <div className="flex items-center justify-between text-xs text-blue-600 mb-1">
+                      <span>OPAL Workflow Progress</span>
+                      <span>{forceSyncData.opalProgress}%</span>
+                    </div>
+                    <div className="w-full bg-blue-200 rounded-full h-1.5">
+                      <div
+                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
+                        style={{ width: `${forceSyncData.opalProgress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Agent Count */}
+                {forceSyncData.forceSyncAgentCount > 0 && (
+                  <div className="mt-1 text-xs text-blue-600">
+                    {forceSyncData.forceSyncAgentCount} agents received force sync data
+                  </div>
+                )}
+
+                {/* OPAL Error Display */}
+                {opalError && (
+                  <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-700">
+                    <div className="flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      OPAL Polling Error: {opalError}
+                    </div>
+                  </div>
+                )}
+
+                {/* OPAL Completion Message */}
+                {isOPALCompleted && (
+                  <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded text-xs text-green-700">
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3" />
+                      OPAL workflow completed successfully
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* OSA Workflow Data Tools Status */}
+          {osaWorkflowData && osaWorkflowData.lastOSAToolExecution && (
+            <div className="mt-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Database className="h-4 w-4 text-purple-600" />
+                  <span className="text-sm font-semibold text-purple-800">
+                    OSA Workflow Data Tools
+                  </span>
+                </div>
+                <Badge variant="outline" className="text-xs text-purple-700 border-purple-300">
+                  {osaWorkflowData.successfulReceptions}/{Object.keys(agentStatuses).length} Active
+                </Badge>
+              </div>
+              <div className="text-sm text-purple-700">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-3 w-3" />
+                  <span>Last Tool Execution: </span>
+                  <SafeDate date={osaWorkflowData.lastOSAToolExecution} format="datetime" />
+                </div>
+                <div className="mt-1 text-xs text-purple-600">
+                  {osaWorkflowData.totalOSAToolExecutions} total executions |
+                  {Math.round(osaWorkflowData.dataReceptionRate * 100)}% reception rate
+                </div>
+              </div>
+            </div>
+          )}
 
           {webhookStatus === 'success' && lastWebhookTrigger && workflowAnalysis && (
             <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">

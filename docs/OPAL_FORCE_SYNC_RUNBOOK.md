@@ -7,15 +7,16 @@ This runbook provides comprehensive operational guidance for the OPAL Force Sync
 ## Table of Contents
 
 1. [System Architecture](#system-architecture)
-2. [Environment Setup](#environment-setup)
-3. [API Endpoints](#api-endpoints)
-4. [Deployment Procedures](#deployment-procedures)
-5. [Monitoring & Alerting](#monitoring--alerting)
-6. [Troubleshooting Guide](#troubleshooting-guide)
-7. [Maintenance Procedures](#maintenance-procedures)
-8. [Security Considerations](#security-considerations)
-9. [Performance Optimization](#performance-optimization)
-10. [Emergency Procedures](#emergency-procedures)
+2. [Force Sync Button Workflow](#force-sync-button-workflow)
+3. [Environment Setup](#environment-setup)
+4. [API Endpoints](#api-endpoints)
+5. [Deployment Procedures](#deployment-procedures)
+6. [Monitoring & Alerting](#monitoring--alerting)
+7. [Troubleshooting Guide](#troubleshooting-guide)
+8. [Maintenance Procedures](#maintenance-procedures)
+9. [Security Considerations](#security-considerations)
+10. [Performance Optimization](#performance-optimization)
+11. [Emergency Procedures](#emergency-procedures)
 
 ---
 
@@ -43,6 +44,236 @@ This runbook provides comprehensive operational guidance for the OPAL Force Sync
 - **Webhook Receiver**: `/api/webhooks/opal-workflow` - Receives OPAL event callbacks
 - **Diagnostics**: `/api/diagnostics/last-webhook` - Monitoring and troubleshooting
 - **Replay System**: `/api/orchestrations/replay` - Event replay for recovery
+
+---
+
+## Force Sync Button Workflow
+
+### Overview
+
+The Force Sync button in the admin header triggers a comprehensive workflow that orchestrates the OPAL strategy workflow agent and coordinates data collection from multiple OPAL agents through OSA Workflow Data Tools.
+
+### Workflow Components
+
+#### Primary Workflow Agent
+- **Agent Name**: `strategy_workflow`
+- **Agent ID**: `strategy_workflow`
+- **Webhook URL**: `https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14`
+- **Authentication**:
+  - **Header**: `Authorization: Bearer {token}`
+  - **Auth Key**: `7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8`
+
+### Workflow Process
+
+#### 1. Force Sync Trigger
+When the Force Sync button is clicked in the admin header:
+
+```
+Admin UI → Force Sync Button Click → /api/opal/sync → OPAL Platform Webhook
+```
+
+#### 2. Strategy Workflow Activation
+The Force Sync API triggers the `strategy_workflow` agent:
+
+```bash
+POST https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14
+Headers:
+  Authorization: Bearer 7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8
+  Content-Type: application/json
+```
+
+#### 3. OPAL Agent Orchestration
+Once `strategy_workflow` is triggered, multiple OPAL agents are activated and begin data collection:
+
+- Each OPAL agent utilizes **OSA Workflow Data Tools**
+- Agents collect and process data according to their specialized functions
+- Data is aggregated and sent to OSA (Optimizely Strategy Assistant)
+- All communication flows through the centralized workflow system
+
+#### 4. Data Flow Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│  Force Sync     │───▶│  strategy_       │───▶│  OPAL Agents    │
+│  Button         │    │  workflow        │    │  (Multiple)     │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                              │                          │
+                              ▼                          ▼
+                      ┌──────────────────┐    ┌─────────────────┐
+                      │  Webhook Events  │    │  OSA Workflow   │
+                      │  & Monitoring    │    │  Data Tools     │
+                      └──────────────────┘    └─────────────────┘
+                              │                          │
+                              ▼                          ▼
+                      ┌──────────────────┐    ┌─────────────────┐
+                      │   Event Store    │    │      OSA        │
+                      │   (Database)     │    │   (Final        │
+                      └──────────────────┘    │  Destination)   │
+                                              └─────────────────┘
+```
+
+### Configuration Requirements
+
+#### Environment Variables
+The following environment variables must be configured for the Force Sync workflow:
+
+```bash
+# Primary Workflow Configuration
+OPAL_WEBHOOK_URL="https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14"
+OPAL_STRATEGY_WORKFLOW_AUTH_KEY="7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8"
+
+# Workflow Security
+OSA_WEBHOOK_SHARED_SECRET="your-32-character-hmac-secret"
+OPAL_WORKSPACE_ID="your-workspace-id"
+
+# Application Context
+NODE_ENV="production"
+BASE_URL="https://opal-2025.vercel.app"
+```
+
+#### Workflow Agent Security
+- **Agent Restriction**: Only `strategy_workflow` agent is permitted
+- **Authentication**: Bearer token authentication required
+- **Webhook Security**: HMAC signature validation on all callbacks
+- **Rate Limiting**: Implemented to prevent abuse
+
+### Monitoring & Troubleshooting
+
+#### Key Monitoring Points
+
+1. **Force Sync Button Response**
+   ```bash
+   # Test the Force Sync endpoint
+   curl -X POST https://opal-2025.vercel.app/api/opal/sync \
+     -H "Content-Type: application/json" \
+     -d '{"sync_scope": "priority_platforms"}'
+   ```
+
+2. **Strategy Workflow Status**
+   ```bash
+   # Check recent workflow events
+   curl "https://opal-2025.vercel.app/api/diagnostics/last-webhook?workflow=strategy_workflow&limit=10"
+   ```
+
+3. **Agent Activity Monitoring**
+   ```bash
+   # Monitor agent completion events
+   curl "https://opal-2025.vercel.app/api/diagnostics/last-webhook?event_type=agent_completed&limit=20"
+   ```
+
+#### Common Troubleshooting Scenarios
+
+##### Scenario 1: Force Sync Button Not Responding
+**Symptoms:**
+- Button click produces no visible result
+- No workflow events in diagnostics
+
+**Diagnosis Steps:**
+1. Check browser console for JavaScript errors
+2. Verify Force Sync API endpoint accessibility
+3. Check environment variable configuration
+
+**Resolution:**
+```bash
+# Validate configuration
+curl -X GET https://opal-2025.vercel.app/api/opal/sync
+
+# Expected response should show strategy_workflow configuration
+```
+
+##### Scenario 2: Strategy Workflow Not Triggering
+**Symptoms:**
+- Force Sync API returns success but no workflow events
+- OPAL agents not activated
+
+**Diagnosis Steps:**
+1. Verify webhook URL accessibility
+2. Check authentication key validity
+3. Review OPAL platform status
+
+**Resolution:**
+```bash
+# Test webhook connectivity
+curl -X POST https://webhook.opal.optimizely.com/webhooks/d3e181a30acf493bb65a5c7792cfeced/ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14 \
+  -H "Authorization: Bearer 7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8" \
+  -H "Content-Type: application/json" \
+  -d '{"test": "connectivity"}'
+```
+
+##### Scenario 3: Partial Agent Completion
+**Symptoms:**
+- Some OPAL agents complete successfully
+- Others fail or timeout
+- Incomplete data in OSA
+
+**Diagnosis Steps:**
+1. Review agent-specific logs in diagnostics
+2. Check for network connectivity issues
+3. Verify OSA Workflow Data Tools availability
+
+**Resolution:**
+```bash
+# Check failed agent events
+curl "https://opal-2025.vercel.app/api/diagnostics/last-webhook?status=failed&event_type=agent_completed"
+
+# Replay failed workflows if needed
+curl -X POST https://opal-2025.vercel.app/api/orchestrations/replay \
+  -H "Content-Type: application/json" \
+  -d '{
+    "workflow_id": "strategy_workflow_xxx",
+    "agent_filter": ["failed_agent_name"],
+    "dry_run": false
+  }'
+```
+
+### Success Criteria
+
+#### Expected Workflow Outcomes
+
+1. **Immediate Response** (< 5 seconds)
+   - Force Sync API returns 200 status
+   - Workflow ID generated and returned
+   - Initial webhook event logged
+
+2. **Agent Activation** (< 30 seconds)
+   - `strategy_workflow` agent receives trigger
+   - Multiple OPAL agents begin data collection
+   - Agent start events logged in diagnostics
+
+3. **Data Collection** (< 5 minutes)
+   - All OPAL agents complete data gathering
+   - OSA Workflow Data Tools successfully utilized
+   - Agent completion events logged
+
+4. **Final Completion** (< 8 minutes)
+   - All data transmitted to OSA
+   - Workflow marked as completed
+   - Success confirmation available in diagnostics
+
+#### Performance Benchmarks
+
+- **Force Sync Response Time**: < 2 seconds
+- **Agent Activation Rate**: > 95% success
+- **Complete Workflow Success Rate**: > 90%
+- **End-to-End Processing Time**: < 8 minutes average
+
+### Integration with OSA Workflow Data Tools
+
+#### Tool Categories
+The OPAL agents utilize various OSA Workflow Data Tools categories:
+
+1. **Content Management Tools** (`cmp`)
+2. **Content Management Systems/Platform as a Service** (`cmspaas`)
+3. **Content Recommendations** (`contentrecs`)
+4. **Optimization Data Platform** (`odp`)
+5. **Web Experience Tools** (`webx`)
+6. **Workflow Data Processing** (`workflow-data`)
+
+#### Data Transmission Protocol
+- **Format**: JSON payloads via HTTPS
+- **Authentication**: OAuth 2.0 Bearer tokens
+- **Retry Logic**: Exponential backoff for failed transmissions
+- **Validation**: Schema validation on all data transfers
 
 ---
 

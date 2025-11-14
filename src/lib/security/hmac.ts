@@ -27,9 +27,10 @@ export interface HmacVerificationResult {
 export function generateHmacSignature(
   payload: Buffer | string,
   secret: string,
-  includeTimestamp: boolean = true
+  includeTimestamp: boolean = true,
+  providedTimestamp?: number
 ): HmacSignatureResult {
-  const timestamp = includeTimestamp ? Date.now() : 0;
+  const timestamp = providedTimestamp || (includeTimestamp ? Date.now() : 0);
   const payloadBuffer = Buffer.isBuffer(payload) ? payload : Buffer.from(payload, 'utf8');
 
   // Create signature with optional timestamp
@@ -69,8 +70,14 @@ export function verifyHmacSignature(
   maxAgeMs: number = 5 * 60 * 1000 // 5 minutes
 ): HmacVerificationResult {
   try {
-    // Generate expected signature
-    const expected = generateHmacSignature(payload, secret, !!timestamp);
+    console.log(`🐛 [HMAC Verify] Input timestamp: ${timestamp}, includeTimestamp: ${!!timestamp}`);
+
+    // Generate expected signature using the original timestamp from the request
+    const expected = generateHmacSignature(payload, secret, !!timestamp, timestamp);
+
+    console.log(`🐛 [HMAC Verify] Expected signature: ${expected.signature}`);
+    console.log(`🐛 [HMAC Verify] Expected timestamp: ${expected.timestamp}`);
+    console.log(`🐛 [HMAC Verify] Received signature: ${signature}`);
 
     // Prepare buffers for constant-time comparison
     const receivedBuffer = Buffer.from(signature, 'hex');

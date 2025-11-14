@@ -1,7 +1,7 @@
 {
   "name": "OSA - ODP Integration Tools",
   "description": "Optimizely Data Platform integration tools for audience segmentation, behavioral analysis, and member profile management in OSA workflows",
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/odp/discovery",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/odp/discovery",
   "registry_id": "osa_odp",
   "version": "1.0.0",
   "tools": [
@@ -245,7 +245,7 @@
     "odp_segments": "https://function.zaius.com/twilio_segment/api/segments",
     "odp_profiles": "https://function.zaius.com/twilio_segment/api/profiles",
     "odp_events": "https://function.zaius.com/twilio_segment/api/events",
-    "statistical_analysis": "https://ifpa-strategy.vercel.app/api/tools/odp/statistics"
+    "statistical_analysis": "https://opal-2025.vercel.app/api/tools/odp/statistics"
   },
   "configuration": {
     "project_id": "${ODP_PROJECT_ID}",

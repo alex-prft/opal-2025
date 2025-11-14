@@ -1,0 +1,754 @@
+{
+  "Strategy Plans": {
+    "OSA": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "strategy_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "OSA",
+        "tier3": [
+          "Overview Dashboard",
+          "Strategic Recommendations",
+          "Performance Metrics",
+          "Data Quality Score",
+          "Workflow Timeline"
+        ]
+      },
+      "tier_mapping": {
+        "Overview Dashboard": {
+          "url_pattern": "/engine/results/strategy-plans/osa/overview-dashboard",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "OSA",
+            "tier3": "Overview Dashboard"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["ConfidenceGauge", "KPISummaryWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "confidenceScore": "confidenceScore",
+            "roadmapData": "roadmapData",
+            "overviewMetrics": "overviewMetrics",
+            "strategicKPIs": "strategicKPIs"
+          },
+          "content_focus": {
+            "title": "Strategic Overview Dashboard",
+            "description": "Executive-level strategic KPIs and performance overview",
+            "key_metrics": ["Confidence Score", "Strategic Alignment", "Performance Index", "Implementation Progress"],
+            "chart_types": ["confidence-gauge", "kpi-cards", "progress-bars", "trend-lines"]
+          }
+        },
+        "Strategic Recommendations": {
+          "url_pattern": "/engine/results/strategy-plans/osa/strategic-recommendations",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "OSA",
+            "tier3": "Strategic Recommendations"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RecommendationsWidget", "ImpactAnalysisWidget"],
+            "layout": "cards"
+          },
+          "data_props": {
+            "recommendations": "strategicRecommendations",
+            "impactAnalysis": "impactAnalysis",
+            "priorityMatrix": "priorityMatrix",
+            "implementationPlan": "implementationPlan"
+          },
+          "content_focus": {
+            "title": "AI-Powered Strategic Recommendations",
+            "description": "Data-driven strategic recommendations with implementation guidance",
+            "key_metrics": ["Recommendation Score", "Implementation Priority", "Expected Impact", "Success Probability"],
+            "chart_types": ["priority-matrix", "impact-charts", "implementation-timeline", "success-probability"]
+          }
+        },
+        "Performance Metrics": {
+          "url_pattern": "/engine/results/strategy-plans/osa/performance-metrics",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "OSA",
+            "tier3": "Performance Metrics"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["PerformanceMetricsWidget", "TrendAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "performanceMetrics": "performanceMetrics",
+            "trendData": "performanceTrends",
+            "benchmarks": "performanceBenchmarks",
+            "targets": "performanceTargets"
+          },
+          "content_focus": {
+            "title": "Strategic Performance Analytics",
+            "description": "Comprehensive performance metrics tracking and trend analysis",
+            "key_metrics": ["Performance Score", "Trend Direction", "Benchmark Position", "Target Achievement"],
+            "chart_types": ["performance-dashboard", "trend-analysis", "benchmark-comparison", "target-tracking"]
+          }
+        },
+        "Data Quality Score": {
+          "url_pattern": "/engine/results/strategy-plans/osa/data-quality-score",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "OSA",
+            "tier3": "Data Quality Score"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["DataQualityWidget", "IntegrityScoreWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "qualityScore": "dataQualityScore",
+            "integrityMetrics": "dataIntegrity",
+            "completeness": "dataCompleteness",
+            "accuracy": "dataAccuracy"
+          },
+          "content_focus": {
+            "title": "Data Quality Assessment",
+            "description": "Comprehensive data quality evaluation and integrity scoring",
+            "key_metrics": ["Quality Score", "Data Completeness", "Accuracy Rate", "Integrity Index"],
+            "chart_types": ["quality-gauge", "completeness-matrix", "accuracy-trends", "integrity-scorecard"]
+          }
+        },
+        "Workflow Timeline": {
+          "url_pattern": "/engine/results/strategy-plans/osa/workflow-timeline",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "OSA",
+            "tier3": "Workflow Timeline"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["WorkflowTimelineWidget", "ProcessFlowWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "workflowData": "workflowTimeline",
+            "processFlow": "workflowProcess",
+            "milestones": "workflowMilestones",
+            "dependencies": "workflowDependencies"
+          },
+          "content_focus": {
+            "title": "Strategic Workflow Timeline",
+            "description": "Detailed workflow timeline with process mapping and milestone tracking",
+            "key_metrics": ["Workflow Progress", "Process Efficiency", "Milestone Achievement", "Dependency Status"],
+            "chart_types": ["timeline-view", "process-flow", "milestone-tracker", "dependency-map"]
+          }
+        }
+      }
+    },
+    "Phases": {
+      "opal_instructions": [
+        "marketing-strategy.md",
+        "technical-implementation-guidelines"
+      ],
+      "opal_agents": [
+        "strategy_workflow",
+        "personalization_idea_generator"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Phases",
+        "tier3": [
+          "Phase 1: Foundation (0-3 months)",
+          "Phase 2: Growth (3-6 months)",
+          "Phase 3: Optimization (6-12 months)",
+          "Phase 4: Innovation (12+ months)",
+          "Cross-phase Dependencies"
+        ]
+      },
+      "tier_mapping": {
+        "Phase 1: Foundation (0-3 months)": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Phases",
+            "tier3": "Phase 1: Foundation (0-3 months)"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RoadmapTimeline", "MilestoneHeatmap", "PhaseTrackingWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "phaseData": "phase1Data",
+            "milestoneData": "foundationMilestones",
+            "timeline": "phase1Timeline",
+            "deliverables": "phase1Deliverables"
+          },
+          "content_focus": {
+            "title": "Phase 1: Foundation Implementation",
+            "description": "Critical foundation phase focused on establishing core capabilities and infrastructure",
+            "key_metrics": ["Foundation Progress", "Milestone Completion", "Timeline Adherence", "Deliverable Quality"],
+            "chart_types": ["phase-timeline", "milestone-tracker", "resource-allocation", "risk-matrix"]
+          }
+        },
+        "Phase 2: Growth (3-6 months)": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-2-growth-3-6-months",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Phases",
+            "tier3": "Phase 2: Growth (3-6 months)"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RoadmapTimeline", "MilestoneHeatmap", "GrowthMetricsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "phaseData": "phase2Data",
+            "milestoneData": "growthMilestones",
+            "growthMetrics": "phase2GrowthMetrics",
+            "scalingPlan": "scalingStrategy"
+          },
+          "content_focus": {
+            "title": "Phase 2: Growth & Scaling",
+            "description": "Growth phase focused on scaling capabilities and expanding implementation",
+            "key_metrics": ["Growth Rate", "Scaling Efficiency", "Capability Expansion", "Performance Improvement"],
+            "chart_types": ["growth-trends", "scaling-metrics", "capability-expansion", "performance-uplift"]
+          }
+        },
+        "Phase 3: Optimization (6-12 months)": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-3-optimization-6-12-months",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Phases",
+            "tier3": "Phase 3: Optimization (6-12 months)"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RoadmapTimeline", "MilestoneHeatmap", "OptimizationWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "phaseData": "phase3Data",
+            "milestoneData": "optimizationMilestones",
+            "optimizationMetrics": "phase3OptimizationMetrics",
+            "efficiencyGains": "efficiencyImprovements"
+          },
+          "content_focus": {
+            "title": "Phase 3: Optimization & Refinement",
+            "description": "Optimization phase focused on performance tuning and capability refinement",
+            "key_metrics": ["Optimization Score", "Efficiency Gains", "Performance Refinement", "Process Maturity"],
+            "chart_types": ["optimization-dashboard", "efficiency-metrics", "refinement-tracking", "maturity-progression"]
+          }
+        },
+        "Phase 4: Innovation (12+ months)": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-4-innovation-12-months",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Phases",
+            "tier3": "Phase 4: Innovation (12+ months)"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RoadmapTimeline", "MilestoneHeatmap", "InnovationWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "phaseData": "phase4Data",
+            "milestoneData": "innovationMilestones",
+            "innovationMetrics": "phase4InnovationMetrics",
+            "futureRoadmap": "innovationRoadmap"
+          },
+          "content_focus": {
+            "title": "Phase 4: Innovation & Future State",
+            "description": "Innovation phase focused on advanced capabilities and future-state achievements",
+            "key_metrics": ["Innovation Index", "Future Readiness", "Advanced Capabilities", "Strategic Vision"],
+            "chart_types": ["innovation-pipeline", "future-readiness", "capability-evolution", "vision-alignment"]
+          }
+        },
+        "Cross-phase Dependencies": {
+          "url_pattern": "/engine/results/strategy-plans/phases/cross-phase-dependencies",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Phases",
+            "tier3": "Cross-phase Dependencies"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["DependencyMapWidget", "CriticalPathWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "dependencyData": "crossPhaseDependencies",
+            "criticalPath": "phaseCriticalPath",
+            "riskFactors": "dependencyRisks",
+            "mitigation": "riskMitigation"
+          },
+          "content_focus": {
+            "title": "Cross-Phase Dependencies Management",
+            "description": "Critical dependency mapping and risk management across all implementation phases",
+            "key_metrics": ["Dependency Health", "Critical Path Status", "Risk Level", "Mitigation Effectiveness"],
+            "chart_types": ["dependency-network", "critical-path", "risk-heatmap", "mitigation-tracker"]
+          }
+        }
+      }
+    }
+  },
+
+  "Optimizely DXP Tools": {
+    "Content Recs": {
+      "opal_instructions": [
+        "content-strategy",
+        "audience-analysis"
+      ],
+      "opal_agents": [
+        "content_review",
+        "audience_suggester"
+      ],
+      "opal_tools": [
+        "osa_contentrecs_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs"
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "Content Recs",
+        "tier3": [
+          "Visitor Analytics Dashboard",
+          "Content Performance Metrics",
+          "Recommendation Algorithms",
+          "A/B Testing Results",
+          "Personalization Effectiveness"
+        ]
+      },
+      "tier_mapping": {
+        "Visitor Analytics Dashboard": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/visitor-analytics-dashboard",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "Content Recs",
+            "tier3": "Visitor Analytics Dashboard"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["VisitorAnalyticsWidget", "ContentPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "visitorData": "visitorAnalytics",
+            "contentMetrics": "contentRecommendationMetrics",
+            "engagementData": "visitorEngagement",
+            "performanceData": "contentPerformance"
+          },
+          "content_focus": {
+            "title": "Content Recommendations - Visitor Analytics",
+            "description": "Comprehensive visitor behavior analytics and content engagement insights",
+            "key_metrics": ["Click-through Rate", "Engagement Score", "Conversion Rate", "Recommendation Accuracy"],
+            "chart_types": ["visitor-flow", "engagement-heatmap", "behavior-funnel", "recommendation-performance"]
+          }
+        },
+        "A/B Testing Results": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/ab-testing-results",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "Content Recs",
+            "tier3": "A/B Testing Results"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["ABTestingWidget", "StatisticalAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "testResults": "abTestingResults",
+            "statisticalData": "testStatistics",
+            "conversionData": "conversionMetrics",
+            "significanceData": "statisticalSignificance"
+          },
+          "content_focus": {
+            "title": "Content Recommendation A/B Testing",
+            "description": "Statistical analysis of content recommendation A/B testing performance",
+            "key_metrics": ["Test Significance", "Conversion Uplift", "Statistical Power", "Confidence Level"],
+            "chart_types": ["ab-test-results", "statistical-significance", "conversion-comparison", "confidence-intervals"]
+          }
+        }
+      }
+    },
+
+    "WEBX": {
+      "opal_instructions": [
+        "experimentation-strategy",
+        "statistical-analysis"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter",
+        "integration_health"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "WEBX"
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "WEBX",
+        "tier3": [
+          "Active Experiments",
+          "Results Analysis",
+          "Statistical Significance",
+          "Conversion Impact",
+          "Test Configuration"
+        ]
+      },
+      "tier_mapping": {
+        "Active Experiments": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/webx/active-experiments",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "WEBX",
+            "tier3": "Active Experiments"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["ExperimentMonitoringWidget", "LiveResultsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "activeExperiments": "activeExperimentData",
+            "liveResults": "liveExperimentResults",
+            "experimentStatus": "experimentStatusData",
+            "realTimeMetrics": "realTimeExperimentMetrics"
+          },
+          "content_focus": {
+            "title": "WEBX - Active Experiments Monitor",
+            "description": "Real-time monitoring and management of currently running A/B tests and experiments",
+            "key_metrics": ["Active Tests", "Live Results", "Statistical Progress", "Performance Alerts"],
+            "chart_types": ["experiment-status", "live-results", "progress-tracking", "alert-dashboard"]
+          }
+        },
+        "Statistical Significance": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/webx/statistical-significance",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "WEBX",
+            "tier3": "Statistical Significance"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["StatisticalAnalysisWidget", "SignificanceTestingWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "significanceData": "statisticalSignificance",
+            "powerAnalysis": "statisticalPower",
+            "confidenceIntervals": "confidenceIntervals",
+            "hypothesisTesting": "hypothesisResults"
+          },
+          "content_focus": {
+            "title": "Statistical Significance Analysis",
+            "description": "Comprehensive statistical analysis and significance testing for experiments",
+            "key_metrics": ["Significance Level", "Statistical Power", "Effect Size", "Confidence Intervals"],
+            "chart_types": ["significance-testing", "power-analysis", "effect-size", "confidence-visualization"]
+          }
+        }
+      }
+    }
+  },
+
+  "Analytics Insights": {
+    "Content": {
+      "opal_instructions": [
+        "content-analysis",
+        "engagement-optimization"
+      ],
+      "opal_agents": [
+        "content_review",
+        "audience_suggester"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Content",
+        "tier3": [
+          "Engagement",
+          "Topics",
+          "Popular",
+          "AI Visibility",
+          "Semantic",
+          "Geographic",
+          "Freshness"
+        ]
+      },
+      "tier_mapping": {
+        "Engagement": {
+          "url_pattern": "/engine/results/analytics-insights/content/engagement",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Content",
+            "tier3": "Engagement"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["ContentEngagementWidget", "UserInteractionWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "engagementMetrics": "contentEngagementData",
+            "interactionData": "userInteractionData",
+            "behaviorAnalytics": "engagementBehavior",
+            "performanceData": "contentPerformanceMetrics"
+          },
+          "content_focus": {
+            "title": "Content Engagement Analytics",
+            "description": "Deep analysis of content engagement patterns and user interaction behavior",
+            "key_metrics": ["Page Views", "Engagement Rate", "Time on Page", "Bounce Rate"],
+            "chart_types": ["engagement-trends", "interaction-heatmap", "behavior-flow", "performance-comparison"]
+          }
+        },
+        "Topics": {
+          "url_pattern": "/engine/results/analytics-insights/content/topics",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Content",
+            "tier3": "Topics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["TopicAnalysisWidget", "ContentClusteringWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "topicData": "contentTopics",
+            "clusterAnalysis": "topicClusters",
+            "topicPerformance": "topicEngagement",
+            "themeAnalysis": "contentThemes"
+          },
+          "content_focus": {
+            "title": "Content Topic Analysis",
+            "description": "AI-powered topic clustering and content theme performance analysis",
+            "key_metrics": ["Topic Clusters", "Theme Performance", "Content Categorization", "Engagement by Topic"],
+            "chart_types": ["topic-clusters", "theme-performance", "content-mapping", "engagement-by-topic"]
+          }
+        }
+      }
+    }
+  },
+
+  "Experience Optimization": {
+    "Experimentation": {
+      "opal_instructions": [
+        "experimentation-strategy",
+        "statistical-analysis"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter",
+        "customer_journey"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "WEBX",
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Experimentation",
+        "tier3": [
+          "Experiment Design Framework",
+          "Statistical Testing Results",
+          "Hypothesis Validation",
+          "Test Impact Assessment",
+          "Experimentation Roadmap"
+        ]
+      },
+      "tier_mapping": {
+        "Experiment Design Framework": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/experiment-design-framework",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Experiment Design Framework"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["ExperimentDesignWidget", "HypothesisValidationWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "experimentDesigns": "experimentDesignData",
+            "hypothesesData": "hypothesisValidation",
+            "designPrinciples": "designFramework",
+            "validationMetrics": "validationCriteria"
+          },
+          "content_focus": {
+            "title": "Experiment Design Framework",
+            "description": "Systematic approach to designing statistically valid and business-relevant experiments",
+            "key_metrics": ["Design Quality", "Statistical Rigor", "Business Relevance", "Implementation Feasibility"],
+            "chart_types": ["design-framework", "statistical-power", "hypothesis-tree", "feasibility-matrix"]
+          }
+        },
+        "Statistical Testing Results": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/statistical-testing-results",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Statistical Testing Results"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["StatisticalResultsWidget", "SignificanceAnalysisWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "testResults": "statisticalTestResults",
+            "significanceData": "statisticalSignificance",
+            "effectSizes": "experimentEffectSizes",
+            "confidenceIntervals": "resultConfidenceIntervals"
+          },
+          "content_focus": {
+            "title": "Statistical Testing Results",
+            "description": "Comprehensive statistical analysis and results interpretation for experiments",
+            "key_metrics": ["Statistical Significance", "Effect Size", "Confidence Level", "Power Analysis"],
+            "chart_types": ["statistical-results", "significance-testing", "effect-size-analysis", "power-curves"]
+          }
+        }
+      }
+    },
+
+    "Personalization": {
+      "opal_instructions": [
+        "personalization-strategy",
+        "audience-analysis"
+      ],
+      "opal_agents": [
+        "personalization_idea_generator",
+        "audience_suggester",
+        "customer_journey"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools",
+        "osa_odp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "CMP",
+        "Content Recs"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Personalization",
+        "tier3": [
+          "Personalization Strategy",
+          "Audience Segmentation",
+          "Dynamic Content Delivery",
+          "Personalization Performance",
+          "Real-time Optimization"
+        ]
+      },
+      "tier_mapping": {
+        "Personalization Strategy": {
+          "url_pattern": "/engine/results/experience-optimization/personalization/personalization-strategy",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Personalization",
+            "tier3": "Personalization Strategy"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["PersonalizationStrategyWidget", "AudienceTargetingWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "personalizationData": "personalizationStrategy",
+            "audienceData": "personalizationAudiences",
+            "strategyMetrics": "personalizationPerformance",
+            "optimizationData": "personalizationOptimization"
+          },
+          "content_focus": {
+            "title": "Personalization Strategy Framework",
+            "description": "Comprehensive personalization strategy and audience-driven optimization methodology",
+            "key_metrics": ["Personalization Score", "Audience Reach", "Content Relevance", "Conversion Uplift"],
+            "chart_types": ["strategy-framework", "audience-matrix", "content-mapping", "optimization-funnel"]
+          }
+        },
+        "Audience Segmentation": {
+          "url_pattern": "/engine/results/experience-optimization/personalization/audience-segmentation",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Personalization",
+            "tier3": "Audience Segmentation"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["AudienceSegmentationWidget", "BehaviorAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "segmentData": "audienceSegments",
+            "behaviorData": "segmentBehavior",
+            "segmentPerformance": "segmentMetrics",
+            "targetingData": "segmentTargeting"
+          },
+          "content_focus": {
+            "title": "Audience Segmentation Analysis",
+            "description": "Advanced audience segmentation with behavioral analysis and targeting optimization",
+            "key_metrics": ["Segment Size", "Behavioral Patterns", "Engagement Score", "Conversion Potential"],
+            "chart_types": ["segment-analysis", "behavior-clustering", "engagement-matrix", "conversion-funnel"]
+          }
+        }
+      }
+    }
+  }
+}

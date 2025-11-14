@@ -9,6 +9,9 @@
 
 import { workflowDb } from '@/lib/database/workflow-operations';
 import { orchestratorEventBus } from '@/lib/events/orchestrator-events';
+import { generateWebhookSignature } from '@/lib/security/hmac';
+import { opalWorkflowTracker } from '@/lib/monitoring/opal-workflow-tracker';
+import { getOPALReliabilityManager } from '@/lib/reliability/opal-reliability-manager';
 
 export interface OpalProductionWebhookRequest {
   workflow_name: string;
@@ -68,22 +71,22 @@ export async function callOpalProductionWebhook(
   const isDevelopment = process.env.NODE_ENV === 'development';
   const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
-  // Get webhook URL and auth token with development fallbacks
+  // Get webhook URL and auth token - use configured values in all environments
   let webhookUrl = process.env.OPAL_WEBHOOK_URL;
   let authToken = process.env.OPAL_STRATEGY_WORKFLOW_AUTH_KEY;
 
-  if (isDevelopment) {
-    // Development Mode: Use local mock endpoint if OPAL credentials not available
-    if (!webhookUrl || !authToken ||
-        authToken.includes('placeholder') ||
-        authToken.length < 32) {
-      console.log(`🛠️ [OPAL Production] Development mode detected - using local mock webhook`);
-      webhookUrl = `${baseUrl}/api/webhooks/opal-mock-test`;
-      authToken = 'dev-mock-auth-key-12345678901234567890123456789012';
-      console.log(`🔧 [OPAL Production] Mock webhook URL: ${webhookUrl}`);
-    } else {
-      console.log(`🛠️ [OPAL Production] Development mode with real OPAL credentials`);
-    }
+  console.log('🐛 DEBUG: OPAL_WEBHOOK_URL =', process.env.OPAL_WEBHOOK_URL);
+
+  // If no webhook URL is configured, fall back to local endpoint in development
+  if (!webhookUrl && isDevelopment) {
+    console.log(`🛠️ [OPAL Production] No OPAL_WEBHOOK_URL configured - using local webhook endpoint for development`);
+    webhookUrl = `${baseUrl}/api/webhooks/opal-workflow`;
+    console.log(`🔧 [OPAL Production] Development webhook URL: ${webhookUrl}`);
+  }
+
+  // If no auth token is configured, use development default
+  if (!authToken && isDevelopment) {
+    authToken = 'dev-mock-auth-key-12345678901234567890123456789012';
   }
 
   if (!webhookUrl) {
@@ -101,6 +104,15 @@ export async function callOpalProductionWebhook(
     client_name: request.input_data.client_name,
     webhook_url: webhookUrl,
     triggered_by: request.input_data.triggered_by
+  });
+
+  // Track workflow initiation
+  opalWorkflowTracker.trackWorkflowInitiated({
+    correlation_id: correlationId,
+    span_id: spanId,
+    workflow_name: request.workflow_name,
+    client_name: request.input_data.client_name,
+    webhook_url: webhookUrl
   });
 
   // Emit orchestrator event: workflow started
@@ -164,70 +176,109 @@ export async function callOpalProductionWebhook(
       'Authorization': `Bearer ${authToken.substring(0, 8)}...${authToken.substring(authToken.length - 4)}`,
       'User-Agent': 'OSA-ForceSync-Production/1.0',
       'X-Correlation-ID': correlationId,
-      'X-Span-ID': spanId
+      'X-Span-ID': spanId,
+      'X-OSA-Signature': webhookUrl.includes('localhost') || webhookUrl.includes('/api/webhooks/') ? 'PRESENT' : 'NOT_REQUIRED'
     },
     payload_size_bytes: payloadSizeBytes,
     workflow_name: request.workflow_name,
     client_name: request.input_data.client_name
   });
 
-  let webhookResponse: Response;
-  let responseData: string;
   let parsedResponse: any = {};
   let responseSizeBytes = 0;
+  let duration = 0;
+  let reliabilityUsed = false;
+  let alertTriggered = false;
 
   try {
-    // Make the webhook call to OPAL
-    webhookResponse = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`,
-        'User-Agent': 'OSA-ForceSync-Production/1.0',
-        'X-Correlation-ID': correlationId,
-        'X-Span-ID': spanId,
-        'X-Workflow-Name': request.workflow_name,
-        'X-Source-System': 'OSA-ForceSync-Production'
-      },
-      body: payloadJson,
-      signal: AbortSignal.timeout(45000) // 45 second timeout for production
-    });
+    // Generate HMAC signature for webhook authentication
+    const webhookSecret = process.env.OSA_WEBHOOK_SECRET;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`,
+      'User-Agent': 'OSA-ForceSync-Production/1.0',
+      'X-Correlation-ID': correlationId,
+      'X-Span-ID': spanId,
+      'X-Workflow-Name': request.workflow_name,
+      'X-Source-System': 'OSA-ForceSync-Production'
+    };
 
-    responseData = await webhookResponse.text();
-    responseSizeBytes = Buffer.byteLength(responseData, 'utf8');
-
-    // Parse response
-    try {
-      parsedResponse = JSON.parse(responseData);
-    } catch {
-      parsedResponse = { raw_response: responseData };
+    // Add HMAC signature for local webhook endpoints
+    if (webhookUrl.includes('localhost') || webhookUrl.includes('127.0.0.1') || webhookUrl.includes('/api/webhooks/')) {
+      if (webhookSecret) {
+        const signature = generateWebhookSignature(payloadJson, webhookSecret);
+        headers['X-OSA-Signature'] = signature;
+        console.log(`🔐 [OPAL Production] Generated HMAC signature for local webhook`);
+        console.log(`🐛 SECRET: ${webhookSecret?.substring(0, 8)}...${webhookSecret?.slice(-4)} (len: ${webhookSecret?.length})`);
+        console.log(`🐛 SIGNATURE: ${signature}`);
+      } else {
+        console.warn(`⚠️ [OPAL Production] OSA_WEBHOOK_SECRET not found for local webhook - call may fail`);
+      }
     }
 
-    const duration = Date.now() - startTime;
+    // Use reliability manager for the webhook call
+    const reliabilityManager = getOPALReliabilityManager();
+    const reliabilityResult = await reliabilityManager.executeOPALWebhook(
+      webhookUrl,
+      enhancedPayload,
+      headers,
+      {
+        name: `${request.workflow_name} (${request.input_data.triggered_by})`,
+        correlationId: correlationId,
+        timeout: 45000, // 45 second timeout
+        critical: request.input_data.force_sync || false
+      }
+    );
 
-    // Log response details
+    duration = reliabilityResult.duration || (Date.now() - startTime);
+    reliabilityUsed = true;
+    alertTriggered = reliabilityResult.alertTriggered || false;
+
+    if (!reliabilityResult.success) {
+      // Handle failure with potential fallback
+      if (reliabilityResult.fallbackUsed && reliabilityResult.data) {
+        console.log(`🔄 [OPAL Production] Using fallback data due to failure`, {
+          span_id: spanId,
+          correlation_id: correlationId,
+          error: reliabilityResult.error?.message,
+          fallback_workflow: reliabilityResult.data.workflow_id
+        });
+
+        parsedResponse = reliabilityResult.data;
+        responseSizeBytes = Buffer.byteLength(JSON.stringify(parsedResponse), 'utf8');
+      } else {
+        throw reliabilityResult.error || new Error('OPAL webhook failed with no fallback available');
+      }
+    } else {
+      parsedResponse = reliabilityResult.data!;
+      responseSizeBytes = Buffer.byteLength(JSON.stringify(parsedResponse), 'utf8');
+    }
+
+    // Log response details with reliability information
     console.log(`📥 [OPAL Production] Received webhook response`, {
       span_id: spanId,
       correlation_id: correlationId,
-      status: webhookResponse.status,
-      status_text: webhookResponse.statusText,
       response_size_bytes: responseSizeBytes,
       duration_ms: duration,
       workflow_id: parsedResponse.workflow_id,
       session_id: parsedResponse.session_id,
-      success: webhookResponse.ok
+      success: true,
+      reliability: {
+        used: reliabilityUsed,
+        fallbackUsed: reliabilityResult?.fallbackUsed || false,
+        fromCache: reliabilityResult?.fromCache || false,
+        retryAttempts: reliabilityResult?.retryAttempts || 1,
+        circuitState: reliabilityResult?.circuitState,
+        alertTriggered: alertTriggered
+      }
     });
-
-    if (!webhookResponse.ok) {
-      throw new Error(`OPAL webhook failed: ${webhookResponse.status} ${webhookResponse.statusText} - ${responseData}`);
-    }
 
     // Success case - update database and emit success event
     const responseMetadata: OpalProductionWebhookResponse = {
       success: true,
       workflow_id: parsedResponse.workflow_id || `opal-${Date.now()}`,
       session_id: parsedResponse.session_id || parsedResponse.workflow_id,
-      message: `OPAL production webhook '${request.workflow_name}' triggered successfully`,
+      message: `OPAL production webhook '${request.workflow_name}' triggered successfully${reliabilityResult?.fallbackUsed ? ' (using fallback data)' : ''}${reliabilityResult?.retryAttempts && reliabilityResult.retryAttempts > 1 ? ` (${reliabilityResult.retryAttempts} attempts)` : ''}`,
       external_reference: parsedResponse.reference || parsedResponse.id,
       polling_url: parsedResponse.polling_url || parsedResponse.status_url,
       request_metadata: {
@@ -241,6 +292,13 @@ export async function callOpalProductionWebhook(
         response_size_bytes: responseSizeBytes
       }
     };
+
+    // Update workflow tracker with success
+    opalWorkflowTracker.updateWorkflowStatus(correlationId, 'in_progress', {
+      workflow_id: responseMetadata.workflow_id,
+      response_data: parsedResponse,
+      duration_ms: duration
+    });
 
     // Update database with success (non-blocking)
     try {
@@ -298,6 +356,12 @@ export async function callOpalProductionWebhook(
       error: errorMessage,
       workflow_name: request.workflow_name,
       client_name: request.input_data.client_name
+    });
+
+    // Update workflow tracker with failure
+    opalWorkflowTracker.updateWorkflowStatus(correlationId, 'failed', {
+      error_details: errorMessage,
+      duration_ms: duration
     });
 
     // Update database with failure (non-blocking)

@@ -8,6 +8,7 @@ import { loadOpalConfig } from '@/lib/config/opal-env';
 import { verifyWebhookSignature } from '@/lib/security/hmac';
 import { parseWebhookEvent, generateDedupHash, truncatePayloadForPreview } from '@/lib/schemas/opal-schemas';
 import { WebhookDatabase } from '@/lib/storage/webhook-database';
+import { opalWorkflowTracker } from '@/lib/monitoring/opal-workflow-tracker';
 import { z } from 'zod';
 
 // Disable Next.js body parsing to access raw body for HMAC verification
@@ -40,6 +41,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Load configuration
     const config = loadOpalConfig();
 
+    // DEBUG: Log environment and config values
+    console.log(`🐛 [Webhook Debug] ${correlationId}`);
+    console.log(`🐛 ENV_SECRET: ${process.env.OSA_WEBHOOK_SECRET?.substring(0, 8)}...${process.env.OSA_WEBHOOK_SECRET?.slice(-4)} (len: ${process.env.OSA_WEBHOOK_SECRET?.length})`);
+    console.log(`🐛 CONFIG_SECRET: ${config.osaWebhookSecret?.substring(0, 8)}...${config.osaWebhookSecret?.slice(-4)} (len: ${config.osaWebhookSecret?.length})`);
+
     // Extract and verify HMAC signature
     const signatureHeader = request.headers.get('x-osa-signature');
     if (!signatureHeader) {
@@ -49,6 +55,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         message: 'Missing signature header',
         correlation_id: correlationId
       }, { status: 401 });
+    }
+
+    console.log(`🐛 RECEIVED_SIGNATURE: ${signatureHeader}`);
+
+    // Parse the signature header to see the timestamp
+    const { parseSignatureHeader } = await import('@/lib/security/hmac');
+    const parsedSignature = parseSignatureHeader(signatureHeader);
+    if (parsedSignature) {
+      console.log(`🐛 PARSED_TIMESTAMP: ${parsedSignature.timestamp} (${new Date(parsedSignature.timestamp).toISOString()})`);
+      console.log(`🐛 PARSED_SIGNATURE: ${parsedSignature.signature}`);
+      console.log(`🐛 CURRENT_TIME: ${Date.now()} (${new Date().toISOString()})`);
+      console.log(`🐛 TIME_DIFF: ${Date.now() - parsedSignature.timestamp}ms`);
     }
 
     // Verify HMAC signature with constant-time comparison
@@ -162,6 +180,28 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       error_text: null,
       processing_time_ms: processingTime
     });
+
+    // Record callback in OPAL workflow tracker
+    const callbackEvent = {
+      correlation_id: webhookEvent.correlation_id || webhookEvent.workflow_id,
+      workflow_id: webhookEvent.workflow_id,
+      agent_id: webhookEvent.agent_id,
+      execution_status: webhookEvent.execution_status || 'unknown',
+      callback_data: webhookEvent,
+      received_at: new Date().toISOString(),
+      signature_valid: true
+    };
+
+    try {
+      opalWorkflowTracker.recordCallback(callbackEvent);
+      console.log('📊 [Webhook] Callback recorded in workflow tracker', {
+        correlationId,
+        workflow_id: webhookEvent.workflow_id,
+        execution_status: webhookEvent.execution_status
+      });
+    } catch (trackerError) {
+      console.warn('⚠️ [Webhook] Failed to record callback in workflow tracker (non-blocking):', trackerError);
+    }
 
     const duration = Date.now() - startTime;
 

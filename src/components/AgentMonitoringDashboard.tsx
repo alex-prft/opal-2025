@@ -175,6 +175,41 @@ function AgentCard({ agentInfo, agentConfig }: AgentCardProps) {
         <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded text-xs">
           <span className="text-red-700 font-medium">Error: </span>
           <span className="text-red-600">{agentInfo.error_message}</span>
+
+          {/* Retry Sync Button */}
+          <div className="mt-2 flex justify-end">
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch('/api/opal/sync', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      sync_scope: 'priority_platforms',
+                      triggered_by: 'agent_retry',
+                      client_context: {
+                        client_name: `Retry for ${agentId}`,
+                        recipients: ['admin@opal.ai']
+                      }
+                    })
+                  });
+
+                  if (response.ok) {
+                    // Optionally refresh the agent status or show success feedback
+                    console.log('Retry sync initiated successfully');
+                  }
+                } catch (error) {
+                  console.error('Retry sync failed:', error);
+                }
+              }}
+              className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors flex items-center gap-1"
+            >
+              <RotateCcw className="h-3 w-3" />
+              Retry Sync
+            </button>
+          </div>
         </div>
       )}
 
@@ -193,6 +228,7 @@ export default function AgentMonitoringDashboard({ className }: AgentMonitoringD
   const [workflowProgress, setWorkflowProgress] = useState<Map<string, WorkflowProgress>>(new Map());
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [isAutoRefresh, setIsAutoRefresh] = useState(true);
+  const [isStreamConnected, setIsStreamConnected] = useState(false);
 
   // Real-time status updates
   useEffect(() => {
@@ -234,6 +270,80 @@ export default function AgentMonitoringDashboard({ className }: AgentMonitoringD
       unsubscribeAgent();
       unsubscribeWorkflow();
       clearInterval(interval);
+    };
+  }, [isAutoRefresh]);
+
+  // SSE Real-time webhook event streaming
+  useEffect(() => {
+    if (!isAutoRefresh) return;
+
+    const eventSource = new EventSource('/api/webhook-events/stream');
+
+    eventSource.onopen = () => {
+      console.log('[AgentMonitoring] SSE connection opened');
+      setIsStreamConnected(true);
+    };
+
+    eventSource.onmessage = (event) => {
+      try {
+        const eventData = JSON.parse(event.data);
+
+        // Update agent status based on webhook events
+        if (eventData.type === 'agent_status_update' && eventData.payload?.agent_id) {
+          const agentUpdate: AgentStatusInfo = {
+            agent_id: eventData.payload.agent_id,
+            agent_name: eventData.payload.agent_name || eventData.payload.agent_id,
+            status: eventData.payload.status || 'idle',
+            last_updated: eventData.timestamp || new Date().toISOString(),
+            execution_time_ms: eventData.payload.execution_time_ms,
+            error_message: eventData.payload.error_message,
+            retry_count: eventData.payload.retry_count || 0,
+            progress_percentage: eventData.payload.progress_percentage,
+            workflow_id: eventData.payload.workflow_id
+          };
+
+          setAgentStatuses(prevStatuses => {
+            const newStatuses = new Map(prevStatuses);
+            newStatuses.set(agentUpdate.agent_id, agentUpdate);
+            return newStatuses;
+          });
+          setLastUpdate(new Date());
+        }
+
+        // Handle workflow progress updates
+        if (eventData.type === 'workflow_progress' && eventData.payload?.workflow_id) {
+          const workflowUpdate: WorkflowProgress = {
+            workflow_id: eventData.payload.workflow_id,
+            status: eventData.payload.status,
+            progress_percentage: eventData.payload.progress_percentage,
+            completed_agents: eventData.payload.completed_agents || [],
+            active_agent: eventData.payload.active_agent,
+            estimated_completion_time: eventData.payload.estimated_completion_time,
+            last_updated: eventData.timestamp || new Date().toISOString()
+          };
+
+          setWorkflowProgress(prevProgress => {
+            const newProgress = new Map(prevProgress);
+            newProgress.set(workflowUpdate.workflow_id, workflowUpdate);
+            return newProgress;
+          });
+        }
+
+      } catch (error) {
+        console.error('[AgentMonitoring] Error parsing SSE message:', error);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('[AgentMonitoring] SSE connection error:', error);
+      setIsStreamConnected(false);
+      // Connection will automatically retry
+    };
+
+    return () => {
+      console.log('[AgentMonitoring] Closing SSE connection');
+      setIsStreamConnected(false);
+      eventSource.close();
     };
   }, [isAutoRefresh]);
 
@@ -338,6 +448,21 @@ export default function AgentMonitoringDashboard({ className }: AgentMonitoringD
                 {isAutoRefresh ? 'Auto-Refresh On' : 'Auto-Refresh Off'}
               </span>
             </button>
+
+            {/* SSE Streaming Status */}
+            <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${
+              isStreamConnected
+                ? 'bg-blue-50 text-blue-700 border-blue-200'
+                : 'bg-gray-50 text-gray-500 border-gray-200'
+            }`}>
+              <div className={`w-2 h-2 rounded-full ${
+                isStreamConnected ? 'bg-blue-500 animate-pulse' : 'bg-gray-400'
+              }`}></div>
+              <span className="font-medium">
+                {isStreamConnected ? 'Live Stream' : 'Not Connected'}
+              </span>
+            </div>
+
             <div className="text-xs text-gray-500">
               Last updated: {lastUpdate.toLocaleTimeString()}
             </div>

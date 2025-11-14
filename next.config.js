@@ -3,6 +3,18 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    // Exclude dev pages in production
+    if (process.env.NODE_ENV === 'production') {
+      return [
+        {
+          source: '/dev/:path*',
+          destination: '/404',
+        },
+      ];
+    }
+    return [];
+  },
   async headers() {
     // Environment-based CORS configuration for security
     const isDevelopment = process.env.NODE_ENV === 'development';

@@ -1,7 +1,7 @@
 {
   "name": "OSA - WebX Technical Analysis Tools",
   "description": "Web experience and technical analysis tools for GEO audits, performance assessment, and technical personalization feasibility in OSA workflows",
-  "discovery_url": "https://ifpa-strategy.vercel.app/api/tools/webx/discovery",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/webx/discovery",
   "registry_id": "osa_webx",
   "version": "1.0.0",
   "tools": [
@@ -297,10 +297,10 @@
     "header_value": "Bearer ${WEBX_API_KEY}"
   },
   "integration_endpoints": {
-    "performance_analysis": "https://ifpa-strategy.vercel.app/api/tools/webx/performance",
-    "geo_audit": "https://ifpa-strategy.vercel.app/api/tools/webx/geo",
-    "technical_assessment": "https://ifpa-strategy.vercel.app/api/tools/webx/technical",
-    "mobile_audit": "https://ifpa-strategy.vercel.app/api/tools/webx/mobile"
+    "performance_analysis": "https://opal-2025.vercel.app/api/tools/webx/performance",
+    "geo_audit": "https://opal-2025.vercel.app/api/tools/webx/geo",
+    "technical_assessment": "https://opal-2025.vercel.app/api/tools/webx/technical",
+    "mobile_audit": "https://opal-2025.vercel.app/api/tools/webx/mobile"
   },
   "configuration": {
     "performance_testing": {
