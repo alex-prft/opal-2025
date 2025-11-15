@@ -11,6 +11,7 @@ import ServiceStatusFooter from '@/components/ServiceStatusFooter';
 import { ServiceStatusProvider } from '@/components/ServiceStatusProvider';
 import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
 import MegaMenuDropdown from '@/components/shared/MegaMenuDropdown';
+import Tier2SubNavigation from '@/components/shared/Tier2SubNavigation';
 import {
   ArrowLeft,
   BarChart3,
@@ -34,28 +35,34 @@ const tier1IconMapping = {
   'Experience Optimization': TrendingUp
 } as const;
 
+// Helper function to convert tier3 item names to URL-friendly format
+// Preserves special characters like parentheses and colons as they're used in routing
+function tier3ItemToUrl(tier3Item: string): string {
+  return tier3Item.toLowerCase().replace(/\s+/g, '-');
+}
+
 // Enhanced descriptions for tier2 sections
 const tier2Descriptions = {
   // Strategy Plans tier2 descriptions
   'OSA': {
-    description: 'Comprehensive Optimizely Site Analytics with strategic insights, performance metrics, and data quality assessments.',
-    keyFeatures: ['Strategic recommendations', 'Performance tracking', 'Data quality scoring', 'Workflow analysis']
+    description: 'Comprehensive Optimizely Strategy Assistant with AI-generated strategy confidence scores, multi-dimensional health indicators, and strategic recommendations. Features executive summary dashboard, comprehensive strategy visualization, and real-time implementation status.',
+    keyFeatures: ['AI strategy confidence scoring', 'Strategic recommendations engine', 'Performance metrics tracking', 'Data quality assessment', 'Workflow timeline management', 'Integration status monitoring']
   },
   'Quick Wins': {
-    description: 'Immediate optimization opportunities with 30-day implementation roadmaps and expected impact analysis.',
-    keyFeatures: ['Immediate opportunities', '30-day roadmap', 'Resource planning', 'Impact metrics']
+    description: 'Immediate optimization opportunities with high-impact, low-effort initiatives designed for 30-day implementation. Includes detailed opportunity analysis, resource requirements, and expected impact projections with success metrics tracking.',
+    keyFeatures: ['Immediate opportunity identification', '30-day execution roadmap', 'Resource requirement analysis', 'Impact projection dashboard', 'Success metrics framework', 'Implementation difficulty assessment']
   },
   'Maturity': {
-    description: 'Current state assessment with maturity framework analysis, gap identification, and improvement pathways.',
-    keyFeatures: ['Maturity assessment', 'Gap analysis', 'Improvement pathway', 'Benchmarking data']
+    description: 'Digital optimization maturity assessment with comprehensive capability evaluation across multiple dimensions. Features current state analysis, structured advancement methodology, and industry benchmarking with competitive intelligence.',
+    keyFeatures: ['Digital maturity scorecard', 'Capability gap analysis', 'Structured improvement pathway', 'Industry benchmarking', 'Competitive positioning', 'Maturity advancement roadmap']
   },
   'Phases': {
-    description: 'Strategic implementation phases from foundation to innovation with timeline and dependency mapping.',
-    keyFeatures: ['4-phase roadmap', 'Timeline planning', 'Dependencies', 'Progress tracking']
+    description: 'Multi-phase implementation strategy from foundation to innovation spanning 12+ months. Includes detailed phase planning, cross-phase dependencies, resource allocation, and risk assessment with success validation frameworks.',
+    keyFeatures: ['4-phase strategic roadmap', 'Cross-phase dependency mapping', 'Resource allocation planning', 'Risk assessment matrix', 'Success criteria validation', 'Timeline coordination']
   },
   'Roadmap': {
-    description: 'Comprehensive timeline view with milestone tracking, resource allocation, and risk assessment.',
-    keyFeatures: ['Timeline visualization', 'Milestone tracking', 'Resource allocation', 'Risk management']
+    description: 'Master implementation roadmap with comprehensive timeline visualization, milestone tracking, and resource management. Features interactive planning tools, progress monitoring, and risk mitigation strategies with stakeholder coordination.',
+    keyFeatures: ['Interactive timeline visualization', 'Milestone achievement tracking', 'Resource utilization planning', 'Risk mitigation strategies', 'Progress health monitoring', 'Stakeholder coordination']
   },
 
   // Optimizely DXP Tools tier2 descriptions
@@ -81,35 +88,43 @@ const tier2Descriptions = {
   },
 
   // Analytics Insights tier2 descriptions
+  'OSA': {
+    description: 'Comprehensive Content Quality Assessment Dashboard with content performance scoring (1-100), SEO readiness evaluation, and actionable optimization insights. Features real-time performance scorecards, personalization opportunity heatmaps, and content optimization priority matrices.',
+    keyFeatures: ['Content Quality Scoring', 'SEO Technical Health', 'Personalization Opportunities', 'Content Performance Metrics', 'Optimization Priority Matrix', 'Real-time Analytics']
+  },
   'Content': {
     description: 'Deep content analytics with engagement metrics, topic analysis, AI visibility insights, and geographic performance.',
     keyFeatures: ['Engagement tracking', 'Topic modeling', 'AI visibility', 'Geographic analysis']
   },
   'Audiences': {
-    description: 'Audience analytics with behavioral insights, engagement patterns, and semantic analysis across user segments.',
-    keyFeatures: ['Audience segmentation', 'Behavioral analysis', 'Engagement patterns', 'Semantic insights']
+    description: 'Advanced Audience Segmentation Dashboard with member segment distribution, behavioral profile analysis, and engagement pattern tracking. Includes interactive segment explorer, personalization opportunity matrices, and cross-segment performance comparisons.',
+    keyFeatures: ['Interactive Segment Explorer', 'Behavioral Pattern Visualization', 'Engagement Metrics by Segment', 'Channel Effectiveness Analysis', 'Personalization Opportunity Matrix', 'Segment Performance Comparison']
   },
   'CX': {
-    description: 'Customer experience analytics with journey mapping, interaction analysis, and experience quality metrics.',
-    keyFeatures: ['Experience tracking', 'Journey analysis', 'Interaction metrics', 'Quality assessment']
+    description: 'Customer Experience Health Dashboard with Core Web Vitals tracking, user journey analysis, and friction point identification. Features real-time performance monitoring, mobile experience scoring, and conversion funnel optimization insights.',
+    keyFeatures: ['Core Web Vitals Dashboard', 'User Journey Visualization', 'Mobile Experience Scorecard', 'Conversion Funnel Analysis', 'Performance Monitoring', 'Experience Quality Metrics']
   },
   'Experimentation': {
-    description: 'Experimentation analytics and insights with test performance, statistical analysis, and conversion impact measurement.',
-    keyFeatures: ['Test performance', 'Statistical analysis', 'Conversion tracking', 'Impact measurement']
+    description: 'Experimentation Analytics Dashboard with test performance tracking, statistical significance monitoring, and A/B test health insights. Features experiment ROI metrics, test duration optimization, and variation performance analytics.',
+    keyFeatures: ['Test Performance Analytics', 'Statistical Significance Tracking', 'A/B Test Health Dashboard', 'Experiment ROI Metrics', 'Test Duration Optimization', 'Variation Performance Insights']
   },
   'Personalization': {
-    description: 'Personalization analytics with audience targeting, dynamic content performance, and optimization insights.',
-    keyFeatures: ['Audience targeting', 'Content performance', 'Optimization insights', 'Personalization effectiveness']
+    description: 'Personalization Analytics Dashboard with audience engagement tracking, content relevance scoring, and dynamic content performance analysis. Features real-time optimization statistics and campaign effectiveness metrics.',
+    keyFeatures: ['Audience Engagement Analytics', 'Content Relevance Scoring', 'Dynamic Content Performance', 'Segment Behavior Analysis', 'Real-time Optimization Stats', 'Campaign Effectiveness Tracking']
+  },
+  'Trends': {
+    description: 'Market Trend Intelligence Dashboard with industry trend analysis, competitive landscape monitoring, and emerging technology adoption patterns. Features trend prediction analytics, market opportunity detection, and seasonal pattern analysis.',
+    keyFeatures: ['Trend Prediction Dashboard', 'Competitive Intelligence Tracker', 'Market Opportunity Detector', 'Seasonal Pattern Analyzer', 'Industry Conversation Analysis', 'Emerging Technology Tracking']
   },
 
   // Experience Optimization tier2 descriptions
   'Experimentation': {
-    description: 'Comprehensive experimentation framework with hypothesis validation, statistical testing, and impact assessment.',
-    keyFeatures: ['Experiment design', 'Statistical testing', 'Hypothesis validation', 'Impact analysis']
+    description: 'Comprehensive experimentation framework and strategy with hypothesis validation, statistical testing, experiment design methodology, and impact assessment. Focuses on creating and managing experimental programs.',
+    keyFeatures: ['Experiment Design Framework', 'Hypothesis Validation', 'Statistical Testing Methodology', 'Impact Assessment', 'Experimentation Strategy', 'Program Management']
   },
   'Personalization': {
-    description: 'Personalization strategy and performance with audience segmentation, dynamic content, and real-time optimization.',
-    keyFeatures: ['Personalization strategy', 'Dynamic content', 'Audience targeting', 'Real-time optimization']
+    description: 'Personalization strategy development and implementation with audience segmentation strategy, dynamic content creation, and real-time optimization frameworks. Focuses on building personalization programs.',
+    keyFeatures: ['Personalization Strategy Development', 'Dynamic Content Creation', 'Audience Targeting Strategy', 'Real-time Optimization Framework', 'Program Implementation', 'Strategy Planning']
   },
   'UX': {
     description: 'User experience optimization with journey mapping, usability testing, and conversion path analysis.',
@@ -219,6 +234,15 @@ function Tier2PageContent() {
               currentTier2Url={tier2.toLowerCase()}
             />
 
+            {/* Sub Navigation for Tier 3 Items */}
+            <Tier2SubNavigation
+              tier1Name={tier1Name}
+              tier2Name={tier2Name}
+              currentTier1Url={tier1.toLowerCase()}
+              currentTier2Url={tier2.toLowerCase()}
+              currentTier3Url={undefined}
+            />
+
             <div className="max-w-7xl mx-auto p-6">
 
         {/* Page Header */}
@@ -285,8 +309,8 @@ function Tier2PageContent() {
               </p>
               <div id="tier2-tier3-accordions" className="space-y-3">
                 {tier3Items.map((tier3Item, index) => {
-                  const tier3Url = `/engine/results/${tier1.toLowerCase()}/${tier2.toLowerCase()}/${tier3Item.toLowerCase().replace(/\s+/g, '-')}`;
-                  const tier3Id = `tier3-accordion-${tier3Item.toLowerCase().replace(/\s+/g, '-')}`;
+                  const tier3Url = `/engine/results/${tier1.toLowerCase()}/${tier2.toLowerCase()}/${tier3ItemToUrl(tier3Item)}`;
+                  const tier3Id = `tier3-accordion-${tier3ItemToUrl(tier3Item)}`;
                   const isExpanded = expandedAccordions.has(tier3Item);
 
                   return (

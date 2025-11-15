@@ -1,12 +1,38 @@
 /** @type {import('jest').Config} */
 const config = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   rootDir: '.',
   testMatch: [
-    '<rootDir>/tests/**/*.test.{js,ts}',
-    '<rootDir>/src/**/*.test.{js,ts}',
+    '<rootDir>/tests/**/*.test.{js,ts,tsx}',
+    '<rootDir>/src/**/*.test.{js,ts,tsx}',
     '<rootDir>/__tests__/**/*.test.{js,ts,tsx}' // Added our new test directory
+  ],
+  // Use different environments for different test types
+  testEnvironmentOptions: {
+    customExportConditions: ['node', 'node-addons'],
+  },
+  projects: [
+    {
+      displayName: 'jsdom',
+      testEnvironment: 'jsdom',
+      testMatch: [
+        '<rootDir>/tests/unit/**/*.test.{js,ts,tsx}',
+        '<rootDir>/src/components/**/*.test.{js,ts,tsx}',
+        '<rootDir>/src/hooks/**/*.test.{js,ts,tsx}'
+      ],
+      setupFilesAfterEnv: ['<rootDir>/tests/setup.ts']
+    },
+    {
+      displayName: 'node',
+      testEnvironment: 'node',
+      testMatch: [
+        '<rootDir>/tests/unit/**/opal-*.test.{js,ts}',
+        '<rootDir>/tests/unit/**/api-*.test.{js,ts}',
+        '<rootDir>/src/app/api/**/*.test.{js,ts}'
+      ],
+      setupFilesAfterEnv: ['<rootDir>/tests/setup-node.ts']
+    }
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',

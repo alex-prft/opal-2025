@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, Loader2, Target, Settings, BarChart3, TrendingUp } from 'lucide-react';
+import { safeConfidenceScore, safeRound, safeAverage, makeSafeForChildren } from '@/lib/utils/number-formatting';
 
 // Import enhanced fallback components
 import {
@@ -44,9 +45,39 @@ import {
 // Import tier-2 specialized widgets
 import { PhasesWidget } from './tier2/PhasesWidget';
 import { WEBXWidget } from './tier2/WEBXWidget';
+import { RoadmapSpecializedWidget } from './tier2/RoadmapSpecializedWidget';
+import { MaturitySpecializedWidget } from './tier2/MaturitySpecializedWidget';
+import { OSAWidget } from './strategy/OSAWidget';
+import { QuickWinsWidget as QuickWinsEnhancedWidget } from './strategy/QuickWinsWidget';
+import { MaturityWidget as MaturityEnhancedWidget } from './strategy/MaturityWidget';
+import { PhasesEnhancedWidget } from './strategy/PhasesEnhancedWidget';
+import { RoadmapEnhancedWidget } from './strategy/RoadmapEnhancedWidget';
+
+// Helper function to calculate confidence score and eliminate NaN
+function calculateConfidenceScore(scores: (number | undefined)[]): number {
+  // Use safe average function to avoid NaN issues
+  const validScores = scores
+    .filter((score): score is number => typeof score === 'number' && !isNaN(score) && isFinite(score))
+    .map(score => {
+      // Ensure score is in valid range 0-1
+      if (score > 1) return score / 100; // Convert percentage to decimal
+      return score;
+    });
+
+  if (validScores.length === 0) {
+    // No valid scores, return default confidence
+    return 0.75; // 75% default confidence
+  }
+
+  // Use safe math operations to get the highest confidence
+  const maxScore = safeAverage([Math.max(...validScores)], 0.75);
+
+  // Ensure final score is reasonable (between 0.6 and 0.95)
+  return Math.min(Math.max(maxScore, 0.6), 0.95);
+}
 
 // Placeholder components for tier-2 widgets not yet implemented with fallback handling
-const OSAWidget = ({ data, context, className }: any) => {
+const OSAWidgetContainer = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
     return (
       <div className={className}>
@@ -60,12 +91,12 @@ const OSAWidget = ({ data, context, className }: any) => {
 
   return (
     <div className={className}>
-      <StrategyPlansWidget data={data} className="osa-specialized" />
+      <OSAWidget data={data} context={context} className="osa-specialized" />
     </div>
   );
 };
 
-const QuickWinsWidget = ({ data, context, className }: any) => {
+const QuickWinsWidgetContainer = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
     return (
       <div className={className}>
@@ -76,14 +107,15 @@ const QuickWinsWidget = ({ data, context, className }: any) => {
       </div>
     );
   }
+
   return (
     <div className={className}>
-      <StrategyPlansWidget data={data} className="quick-wins-specialized" />
+      <QuickWinsEnhancedWidget data={data} context={context} className="quick-wins-specialized" />
     </div>
   );
 };
 
-const MaturityWidget = ({ data, context, className }: any) => {
+const MaturityWidgetContainer = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
     return (
       <div className={className}>
@@ -96,12 +128,12 @@ const MaturityWidget = ({ data, context, className }: any) => {
   }
   return (
     <div className={className}>
-      <StrategyPlansWidget data={data} className="maturity-specialized" />
+      <MaturityEnhancedWidget data={data} context={context} className="maturity-specialized" />
     </div>
   );
 };
 
-const RoadmapWidget = ({ data, context, className }: any) => {
+const RoadmapWidgetContainer = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
     return (
       <div className={className}>
@@ -114,7 +146,7 @@ const RoadmapWidget = ({ data, context, className }: any) => {
   }
   return (
     <div className={className}>
-      <StrategyPlansWidget data={data} className="roadmap-specialized" />
+      <RoadmapEnhancedWidget data={data} context={context} className="roadmap-specialized" />
     </div>
   );
 };
@@ -281,6 +313,60 @@ const PersonalizationFrameworkWidget = ({ data, context, className }: any) => {
   );
 };
 
+const TrendsAnalyticsWidget = ({ data, context, className }: any) => {
+  if (!data || Object.keys(data).length === 0) {
+    return (
+      <div className={className}>
+        <CompactDataNotAvailable
+          message="Trends Analytics data not available"
+          onRetry={() => window.location.reload()}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className={className}>
+      <EngagementAnalyticsWidget data={data} className="trends-analytics-specialized" />
+    </div>
+  );
+};
+
+const ExperimentationAnalyticsWidget = ({ data, context, className }: any) => {
+  if (!data || Object.keys(data).length === 0) {
+    return (
+      <div className={className}>
+        <CompactDataNotAvailable
+          message="Experimentation Analytics data not available"
+          onRetry={() => window.location.reload()}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className={className}>
+      <ExperimentationWidget data={data} className="experimentation-analytics-specialized" />
+    </div>
+  );
+};
+
+const PersonalizationAnalyticsWidget = ({ data, context, className }: any) => {
+  if (!data || Object.keys(data).length === 0) {
+    return (
+      <div className={className}>
+        <CompactDataNotAvailable
+          message="Personalization Analytics data not available"
+          onRetry={() => window.location.reload()}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className={className}>
+      <EngagementAnalyticsWidget data={data} className="personalization-analytics-specialized" />
+    </div>
+  );
+};
+
 const UXOptimizationWidget = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
     return (
@@ -339,19 +425,19 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
 
     // Agent source attribution
     agent_source: tierDataResult.tier1.metadata?.agent_source || tierDataResult.tier2.metadata?.agent_source || tierDataResult.tier3.metadata?.agent_source || 'unknown',
-    confidence_score: Math.max(
-      tierDataResult.tier1.metadata?.confidence_score || 0,
-      tierDataResult.tier2.metadata?.confidence_score || 0,
-      tierDataResult.tier3.metadata?.confidence_score || 0
-    ),
+    confidence_score: calculateConfidenceScore([
+      tierDataResult.tier1.metadata?.confidence_score,
+      tierDataResult.tier2.metadata?.confidence_score,
+      tierDataResult.tier3.metadata?.confidence_score
+    ]),
     timestamp: new Date().toISOString(),
 
     // Legacy data structure for widget compatibility
-    confidenceScore: Math.max(
-      tierDataResult.tier1.metadata?.confidence_score || 0,
-      tierDataResult.tier2.metadata?.confidence_score || 0,
-      tierDataResult.tier3.metadata?.confidence_score || 0
-    ),
+    confidenceScore: calculateConfidenceScore([
+      tierDataResult.tier1.metadata?.confidence_score,
+      tierDataResult.tier2.metadata?.confidence_score,
+      tierDataResult.tier3.metadata?.confidence_score
+    ]),
 
     // Merge actual data content
     ...tierDataResult.tier1.data,
@@ -523,19 +609,19 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     // Strategy Plans tier-2 containers
     if (pathMatchers.isStrategyPlans(path)) {
       if (pathMatchers.isPhases(path)) {
-        return <PhasesWidget data={mergedData} context={context} className="phases-container" />;
+        return <PhasesEnhancedWidget data={mergedData} context={context} className="phases-container" />;
       }
       if (path.includes('osa')) {
-        return <OSAWidget data={mergedData} context={context} className="osa-container" />;
+        return <OSAWidgetContainer data={mergedData} context={context} className="osa-container" />;
       }
       if (path.includes('quick-wins')) {
-        return <QuickWinsWidget data={mergedData} context={context} className="quick-wins-container" />;
+        return <QuickWinsWidgetContainer data={mergedData} context={context} className="quick-wins-container" />;
       }
       if (path.includes('maturity')) {
-        return <MaturityWidget data={mergedData} context={context} className="maturity-container" />;
+        return <MaturityWidgetContainer data={mergedData} context={context} className="maturity-container" />;
       }
       if (path.includes('roadmap')) {
-        return <RoadmapWidget data={mergedData} context={context} className="roadmap-container" />;
+        return <RoadmapWidgetContainer data={mergedData} context={context} className="roadmap-container" />;
       }
       // Fallback to general strategy widget (already SOP-validated via HOC)
       return <StrategyPlansWidget data={mergedData} className={className} pageId={`${context.detection.tier1}-${context.detection.tier2 || 'plans'}-${context.detection.tier3 || 'main'}`} />;
@@ -564,6 +650,9 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
 
     // Analytics Insights tier-2 containers
     if (pathMatchers.isAnalyticsInsights(path)) {
+      if (path.includes('osa')) {
+        return <OSAWidgetContainer data={mergedData} context={context} className="analytics-osa-container" />;
+      }
       if (pathMatchers.isContent(path)) {
         return <ContentAnalyticsWidget data={mergedData} context={context} className="content-analytics-container" />;
       }
@@ -572,6 +661,15 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
       }
       if (path.includes('cx')) {
         return <CXAnalyticsWidget data={mergedData} context={context} className="cx-analytics-container" />;
+      }
+      if (path.includes('trends')) {
+        return <TrendsAnalyticsWidget data={mergedData} context={context} className="trends-analytics-container" />;
+      }
+      if (path.includes('experimentation')) {
+        return <ExperimentationAnalyticsWidget data={mergedData} context={context} className="experimentation-analytics-container" />;
+      }
+      if (path.includes('personalization')) {
+        return <PersonalizationAnalyticsWidget data={mergedData} context={context} className="personalization-analytics-container" />;
       }
       // Fallback to general analytics widget (already SOP-validated via HOC)
       return <EngagementAnalyticsWidget data={mergedData} className={className} pageId={`${context.detection.tier1}-${context.detection.tier2 || 'analytics'}-${context.detection.tier3 || 'main'}`} />;

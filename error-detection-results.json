@@ -1,12 +1,18 @@
 {
-  "timestamp": "2025-11-10T01:21:06.958Z",
+  "timestamp": "2025-11-15T14:13:52.894Z",
   "summary": {
-    "errors": 4,
-    "warnings": 292,
+    "errors": 5,
+    "warnings": 557,
     "fixed": 0,
     "status": "FAILED"
   },
   "errors": [
+    {
+      "type": "MISSING_IMPORT",
+      "file": "src/app/engine/admin/configurations/data-integrations/page.tsx",
+      "issue": "Missing lucide-react imports: PieChart",
+      "fix": "Add to import: { Activity, AlertTriangle, BarChart3, Brain, CheckCircle, Clock, Database, Eye, Network, PauseCircle, PieChart, PlayCircle, RefreshCw, Server, Target, TrendingDown, TrendingUp, Users, XCircle, Zap }"
+    },
     {
       "type": "MISSING_IMPORT",
       "file": "src/components/AnalyticsContentDashboard.tsx",
@@ -28,302 +34,260 @@
     {
       "type": "TYPESCRIPT_ERROR",
       "issue": "TypeScript compilation failed",
-      "details": "scripts/start-production-sdk-tools.ts(219,19): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(268,2): error TS1160: Unterminated template literal.\nsrc/app/api/analytics/route.ts(256,69): error TS1005: ')' expected.\nsrc/app/api/analytics/route.ts(256,77): error TS1128: Declaration or statement expected.\nsrc/app/api/services/knowledge/route.ts(642,23): error TS1005: ')' expected.\nsrc/app/api/services/knowledge/route.ts(642,31): error TS1128: Declaration or statement expected.\nsrc/app/api/services/knowledge/route.ts(643,23): error TS1005: ')' expected.\nsrc/app/api/services/knowledge/route.ts(643,30): error TS1128: Declaration or statement expected.\nsrc/app/api/services/knowledge/route.ts(748,26): error TS1005: ':' expected.\nsrc/app/api/services/preferences/route.ts(598,86): error TS1005: ')' expected.\nsrc/app/api/services/preferences/route.ts(598,98): error TS1128: Declaration or statement expected.\nsrc/app/api/tools/odp/statistics/route.ts(389,33): error TS1005: ')' expected.\nsrc/app/api/tools/odp/statistics/route.ts(389,43): error TS1128: Declaration or statement expected.\nsrc/app/api/tools/odp/statistics/route.ts(392,35): error TS1005: ')' expected.\nsrc/app/api/tools/odp/statistics/route.ts(392,45): error TS1005: ';' expected.\nsrc/app/api/tools/odp/statistics/route.ts(395,35): error TS1005: ')' expected.\nsrc/app/api/tools/odp/statistics/route.ts(395,44): error TS1005: ';' expected.\nsrc/components/ABTestBlueprintGenerator.tsx(175,79): error TS1005: ',' expected.\nsrc/components/ABTestBlueprintGenerator.tsx(175,85): error TS1005: ':' expected.\nsrc/components/DateRangePicker.tsx(84,23): error TS1005: ';' expected.\nsrc/components/DateRangePicker.tsx(84,32): error TS1109: Expression expected.\nsrc/components/DateRangePicker.tsx(84,59): error TS1005: ';' expected.\nsrc/components/DateRangePicker.tsx(84,68): error TS1109: Expression expected.\nsrc/components/ImpactEffortMatrix.tsx(210,16): error TS1005: ')' expected.\nsrc/components/ImpactEffortMatrix.tsx(210,24): error TS1109: Expression expected.\nsrc/components/ImpactEffortMatrix.tsx(210,38): error TS1005: ';' expected.\nsrc/components/OSAWorkflowForm.tsx(236,53): error TS1005: ')' expected.\nsrc/components/OSAWorkflowForm.tsx(236,60): error TS1128: Declaration or statement expected.\nsrc/components/StrategyDashboard.tsx(356,20): error TS1005: ')' expected.\nsrc/components/StrategyDashboard.tsx(356,27): error TS1128: Declaration or statement expected.\nsrc/components/StrategyDashboard.tsx(357,20): error TS1005: ')' expected.\nsrc/components/StrategyDashboard.tsx(357,28): error TS1128: Declaration or statement expected.\nsrc/components/StrategyDashboard.tsx(2999,114): error TS1005: '}' expected.\nsrc/components/StrategyDashboard.tsx(2999,115): error TS1005: '...' expected.\nsrc/components/StrategyDashboard.tsx(2999,121): error TS1003: Identifier expected.\nsrc/components/StrategyDashboard.tsx(2999,159): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/StrategyDashboard.tsx(2999,161): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/StrategyDashboard.tsx(2999,162): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/StrategyDashboard.tsx(3001,25): error TS17002: Expected corresponding JSX closing tag for 'div'.\nsrc/components/StrategyDashboard.tsx(3011,21): error TS17002: Expected corresponding JSX closing tag for 'CardContent'.\nsrc/components/StrategyDashboard.tsx(3012,19): error TS17002: Expected corresponding JSX closing tag for 'Card'.\nsrc/components/StrategyDashboard.tsx(3013,17): error TS17002: Expected corresponding JSX closing tag for 'div'.\nsrc/components/StrategyDashboard.tsx(3045,13): error TS17002: Expected corresponding JSX closing tag for 'CardContent'.\nsrc/components/StrategyDashboard.tsx(3046,11): error TS17002: Expected corresponding JSX closing tag for 'Card'.\nsrc/components/StrategyDashboard.tsx(3047,9): error TS17002: Expected corresponding JSX closing tag for 'div'.\nsrc/components/StrategyDashboard.tsx(3049,7): error TS1005: ')' expected.\nsrc/components/StrategyDashboard.tsx(3119,5): error TS1128: Declaration or statement expected.\nsrc/components/StrategyDashboard.tsx(3120,3): error TS1109: Expression expected.\nsrc/components/StrategyDashboard.tsx(4155,22): error TS1005: ')' expected.\nsrc/components/StrategyDashboard.tsx(4155,32): error TS1005: ';' expected.\nsrc/components/StrategyDashboard.tsx(4155,49): error TS1005: ';' expected.\nsrc/components/StrategyDashboard.tsx(4156,22): error TS1005: ')' expected.\nsrc/components/StrategyDashboard.tsx(4156,32): error TS1005: ';' expected.\nsrc/components/StrategyDashboard.tsx(9042,28): error TS1005: '}' expected.\nsrc/components/StrategyDashboard.tsx(9042,100): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/WebhookStatusIndicator.tsx(73,31): error TS1005: ',' expected.\nsrc/components/WebhookStatusIndicator.tsx(73,41): error TS1005: ':' expected.\nsrc/lib/auth/jwt.ts(15,21): error TS1005: ')' expected.\nsrc/lib/auth/jwt.ts(15,29): error TS1128: Declaration or statement expected.\nsrc/lib/config/env-config.ts(148,31): error TS1005: ')' expected.\nsrc/lib/config/env-config.ts(148,39): error TS1128: Declaration or statement expected.\nsrc/lib/config/env-config.ts(159,27): error TS1005: ')' expected.\nsrc/lib/config/env-config.ts(159,35): error TS1128: Declaration or statement expected.\nsrc/lib/config/env-config.ts(172,26): error TS1005: ')' expected.\nsrc/lib/config/env-config.ts(172,34): error TS1128: Declaration or statement expected.\nsrc/lib/config/env-config.ts(183,26): error TS1005: ')' expected.\nsrc/lib/config/env-config.ts(183,34): error TS1128: Declaration or statement expected.\nsrc/lib/hooks/useAnalytics.ts(61,33): error TS1005: ')' expected.\nsrc/lib/hooks/useAnalytics.ts(61,41): error TS1005: ':' expected.\nsrc/lib/hooks/useAnalytics.ts(61,74): error TS1005: ',' expected.\nsrc/lib/hooks/useAnalytics.ts(61,83): error TS1005: ':' expected.\nsrc/lib/hooks/useAnalytics.ts(62,15): error TS1005: ',' expected.\nsrc/lib/hooks/useAnalytics.ts(63,11): error TS1005: ':' expected.\nsrc/lib/hooks/useAnalytics.ts(64,20): error TS1005: ',' expected.\nsrc/lib/hooks/useAnalytics.ts(65,17): error TS1005: ',' expected.\nsrc/lib/hooks/useAnalytics.ts(66,9): error TS1005: ',' expected.\nsrc/lib/hooks/useAnalytics.ts(66,10): error TS1472: 'catch' or 'finally' expected.\nsrc/lib/hooks/useAnalytics.ts(67,8): error TS1128: Declaration or statement expected.\nsrc/lib/hooks/useAnalytics.ts(72,5): error TS1128: Declaration or statement expected.\nsrc/lib/hooks/useAnalytics.ts(72,7): error TS1005: 'try' expected.\nsrc/lib/hooks/useAnalytics.ts(75,3): error TS1128: Declaration or statement expected.\nsrc/lib/hooks/useAnalytics.ts(75,4): error TS1128: Declaration or statement expected.\nsrc/lib/hooks/useAnalytics.ts(75,61): error TS1005: ';' expected.\nsrc/lib/hooks/useAnalytics.ts(251,1): error TS1128: Declaration or statement expected.\nsrc/lib/integrations/salesforce-client.ts(299,86): error TS1005: ',' expected.\nsrc/lib/integrations/salesforce-client.ts(299,92): error TS1005: ':' expected.\nsrc/lib/middleware/rate-limiter.ts(306,47): error TS1005: ')' expected.\nsrc/lib/middleware/rate-limiter.ts(306,56): error TS1128: Declaration or statement expected.\nsrc/lib/middleware/rate-limiter.ts(308,11): error TS1128: Declaration or statement expected.\nsrc/lib/opal/data-store.ts(47,35): error TS1005: ';' expected.\nsrc/lib/opal/opal-utils.ts(173,32): error TS1005: ',' expected.\nsrc/lib/opal/opal-utils.ts(173,39): error TS1005: ':' expected.\nsrc/lib/opal/opal-utils.ts(178,67): error TS1005: ',' expected.\nsrc/lib/opal/opal-utils.ts(178,74): error TS1005: ':' expected.\nsrc/lib/opal/opal-utils.ts(216,78): error TS1005: ')' expected.\nsrc/lib/opal/opal-utils.ts(216,86): error TS1109: Expression expected.\nsrc/lib/opal/opal-utils.ts(216,117): error TS1005: ';' expected.\nsrc/lib/resilience/circuit-breaker.ts(205,61): error TS1005: ';' expected.\nsrc/lib/security/webhook-auth.ts(56,52): error TS1005: ')' expected.\nsrc/lib/security/webhook-auth.ts(56,60): error TS1128: Declaration or statement expected.\nsrc/lib/security/webhook-auth.ts(264,31): error TS1005: ')' expected.\nsrc/lib/security/webhook-auth.ts(264,39): error TS1128: Declaration or statement expected.\nsrc/lib/security/webhook-auth.ts(266,5): error TS1128: Declaration or statement expected.\nsrc/lib/security/webhook-auth.ts(272,32): error TS1005: ')' expected.\nsrc/lib/security/webhook-auth.ts(272,40): error TS1128: Declaration or statement expected.\n",
+      "details": "scripts/start-production-sdk-tools.ts(114,31): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,38): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,39): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,48): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(130,28): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(130,33): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(130,51): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(130,53): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(143,22): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,28): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,32): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,38): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,46): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,54): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,57): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,62): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(144,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(147,6): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,3): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,5): error TS1005: 'try' expected.\nscripts/start-production-sdk-tools.ts(153,1): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(175,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(175,43): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(187,17): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(187,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(187,46): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,31): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,37): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,63): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,61): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(201,34): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,41): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(201,57): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(211,21): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(211,39): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(219,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(219,20): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(219,32): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(219,47): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,56): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,62): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,21): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,22): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,34): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,42): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(223,58): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(223,60): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(268,2): error TS1160: Unterminated template literal.\nsrc/components/DiagnosticsPanel.tsx(68,20): error TS17008: JSX element 'T' has no corresponding closing tag.\nsrc/components/DiagnosticsPanel.tsx(68,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(68,61): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(69,5): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(70,7): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(71,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(72,7): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(73,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(74,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(76,38): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(77,5): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(78,25): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(86,33): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(87,7): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(88,83): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(89,7): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(90,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(91,78): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(92,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(93,26): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(94,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(95,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(97,34): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(98,5): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(99,33): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(103,15): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(105,25): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(106,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(108,19): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(110,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(111,7): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(119,17): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(120,7): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(121,79): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(122,7): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(123,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(124,84): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(125,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(126,34): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(127,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(128,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(130,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(131,23): error TS1005: '}' expected.\nsrc/components/DiagnosticsPanel.tsx(135,16): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(136,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(138,63): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(139,5): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(140,7): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(145,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(147,7): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(152,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(154,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(156,71): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?\nsrc/components/DiagnosticsPanel.tsx(157,5): error TS1109: Expression expected.\nsrc/components/DiagnosticsPanel.tsx(161,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(350,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?\nsrc/components/DiagnosticsPanel.tsx(352,33): error TS1005: '</' expected.\n",
       "fix": "Fix TypeScript errors before proceeding"
     }
   ],
   "warnings": [
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/admin/page.tsx",
-      "line": 950,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/admin/page.tsx",
+      "file": "src/app/admin/opal-monitoring/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/admin/opal-monitoring/page.tsx",
+      "line": 172,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/dev/logs/page.tsx",
+      "line": 227,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/dev/logs/page.tsx",
+      "line": 452,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/configurations/data-integrations/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/data-mapping/page.tsx",
+      "line": 115,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/data-mapping/page.tsx",
+      "line": 151,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/governance/page.tsx",
+      "line": 175,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/governance/page.tsx",
+      "line": 193,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/governance/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/governance/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/governance/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/logs/page.tsx",
+      "line": 227,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/logs/page.tsx",
+      "line": 452,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/monitoring/confidence-scores/page.tsx",
+      "line": 242,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/monitoring/confidence-scores/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/opal-monitoring/system-logs/page.tsx",
+      "line": 184,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/opal-monitoring/system-logs/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
+      "file": "src/app/engine/admin/opal-monitoring/system-logs/page.tsx",
+      "line": 433,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/opal-monitoring/system-logs/page.tsx",
+      "line": 437,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/strategy-ai/influence-factors/page.tsx",
+      "line": 160,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/engine/admin/widgets/page.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/admin/widgets/page.tsx",
+      "line": 209,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase2-dashboard/page.tsx",
+      "line": 233,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/dxptools/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase2-dashboard/page.tsx",
+      "line": 249,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 139,
+      "file": "src/app/engine/phase2-dashboard/page.tsx",
+      "line": 267,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase2-dashboard/page.tsx",
+      "line": 296,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 258,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 722,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 290,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 309,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 1209,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 328,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 347,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 362,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 577,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
+      "file": "src/app/engine/phase3-dashboard/page.tsx",
+      "line": 612,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 496,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 1387,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "line": 1391,
+      "file": "src/app/engine/results/[tier1]/page.tsx",
+      "line": 229,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -372,21 +336,42 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/app/how-it-works/page.tsx",
-      "line": 165,
+      "line": 173,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/app/how-it-works/page.tsx",
-      "line": 174,
+      "line": 182,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/app/layout.tsx",
-      "line": 33,
+      "line": 34,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/test-retry-fetch/page.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/test-status-badge/page.tsx",
+      "line": 75,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/app/test-status-badge/page.tsx",
+      "line": 75,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -420,6 +405,55 @@
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 111,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 126,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 127,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 446,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ContentPerformanceScoring.tsx",
       "line": 533,
       "issue": "Dynamic Tailwind class may be purged in production",
@@ -443,6 +477,20 @@
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/DetailedMaturityMatrix.tsx",
       "line": 121,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/DiagnosticsPanel.tsx",
+      "line": 164,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/DiagnosticsPanel.tsx",
+      "line": 200,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -504,6 +552,104 @@
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 590,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 597,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 626,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 748,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 804,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 813,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 848,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 864,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 880,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 896,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "line": 1192,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/EnhancedResultsPage.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
@@ -526,14 +672,14 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ForceSyncButton.tsx",
-      "line": 140,
+      "line": 84,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ForceSyncButton.tsx",
-      "line": 268,
+      "line": 252,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -555,6 +701,13 @@
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ImpactEffortMatrix.tsx",
       "line": 441,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/InsightsPageExample.tsx",
+      "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -735,6 +888,111 @@
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 525,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 539,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 592,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 635,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 683,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 539,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 978,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 1074,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/RecentDataComponent.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsNavigation.tsx",
       "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
@@ -806,7 +1064,28 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsSidebar.tsx",
-      "line": 97,
+      "line": 116,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ResultsSidebar.tsx",
+      "line": 118,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ResultsSidebar.tsx",
+      "line": 121,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ResultsSidebar.tsx",
+      "line": 167,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -820,28 +1099,21 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsSidebar.tsx",
-      "line": 183,
+      "line": 177,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsSidebar.tsx",
-      "line": 186,
+      "line": 182,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsSidebar.tsx",
-      "line": 0,
-      "issue": "Dynamic Tailwind class may be purged in production",
-      "fix": "Use explicit conditional logic instead of template literals"
-    },
-    {
-      "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/components/ResultsSidebar.tsx",
-      "line": 218,
+      "line": 197,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -849,6 +1121,13 @@
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ResultsSidebar.tsx",
       "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ResultsSidebar.tsx",
+      "line": 224,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -1548,7 +1827,21 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/TalkToYourData.tsx",
-      "line": 172,
+      "line": 182,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/TierDataDemo.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/TierDataDemo.tsx",
+      "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -1576,28 +1869,266 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/WebhookStatusIndicator.tsx",
-      "line": 78,
+      "line": 79,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/WebhookStatusIndicator.tsx",
-      "line": 87,
+      "line": 88,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/WebhookStatusIndicator.tsx",
-      "line": 103,
+      "line": 106,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/WebhookStatusIndicator.tsx",
-      "line": 103,
+      "line": 106,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/AuditSummary.tsx",
+      "line": 53,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/AuditSummary.tsx",
+      "line": 76,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/AuditSummary.tsx",
+      "line": 84,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/ContentBlueprint.tsx",
+      "line": 213,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/ContentBlueprint.tsx",
+      "line": 249,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/CrossDomainCoordination.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/DownloadFixedMappingButton.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/DownloadFixedMappingButton.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/DownloadFixedMappingButton.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 97,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 102,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 107,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 149,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 200,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/MappingSchemaViewer.tsx",
+      "line": 238,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/OpalAgentStatus.tsx",
+      "line": 229,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/OpalAgentStatus.tsx",
+      "line": 265,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/OpalAgentStatus.tsx",
+      "line": 318,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/OpalAgentStatus.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/PollingToggle.tsx",
+      "line": 47,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/PollingToggle.tsx",
+      "line": 47,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/RealTimeMonitoringPanel.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/ResultsRoadmap.tsx",
+      "line": 178,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/ResultsRoadmap.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/ResultsRoadmap.tsx",
+      "line": 195,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/StrategyAssistantTrigger.tsx",
+      "line": 251,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/StrategyAssistantTrigger.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/admin/StrategyAssistantTrigger.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/agent-monitoring/AgentDataSummaryPanel.tsx",
+      "line": 114,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/agent-monitoring/AgentDataSummaryPanel.tsx",
+      "line": 338,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/agent-monitoring/ReplayWorkflowPanel.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/agent-monitoring/ReplayWorkflowPanel.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/agent-monitoring/ValidatePayloadPanel.tsx",
+      "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -1605,6 +2136,20 @@
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/charts/ChartIntegration.tsx",
       "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/HeatMap.tsx",
+      "line": 26,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/HeatMap.tsx",
+      "line": 35,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -1637,9 +2182,738 @@
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/LineChart.tsx",
+      "line": 26,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/LineChart.tsx",
+      "line": 33,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/TrendChart.tsx",
+      "line": 28,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/charts/TrendChart.tsx",
+      "line": 35,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "line": 105,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "line": 106,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "line": 114,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/IntegrationHealth.tsx",
+      "line": 147,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/KPISummaryWidget.tsx",
+      "line": 70,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/KPISummaryWidget.tsx",
+      "line": 86,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/opal/WorkflowProgress.tsx",
+      "line": 146,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/BreadcrumbSearchHeader.tsx",
+      "line": 127,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/BreadcrumbSearchHeader.tsx",
+      "line": 144,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 103,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 113,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 119,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 122,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 148,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 222,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/HealthStatusDisplay.tsx",
+      "line": 231,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/ImprovedHealthDisplay.tsx",
+      "line": 87,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/ImprovedHealthDisplay.tsx",
+      "line": 103,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/ImprovedHealthDisplay.tsx",
+      "line": 112,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/ImprovedHealthDisplay.tsx",
+      "line": 120,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/MegaMenuDropdown.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/MegaMenuDropdown.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/MegaMenuDropdown.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/MegaMenuDropdown.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/SafeDate.tsx",
+      "line": 70,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/shared/Tier2SubNavigation.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ui/data-not-available.tsx",
+      "line": 130,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ui/data-not-available.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ui/data-not-available.tsx",
+      "line": 306,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/ui/widget-skeleton.tsx",
+      "line": 36,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/EngagementAnalyticsWidget.tsx",
+      "line": 38,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/ExperimentationWidget.tsx",
+      "line": 70,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/IntegrationHealthWidget.tsx",
+      "line": 62,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/StrategyPlansWidget.tsx",
+      "line": 36,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 557,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 557,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 557,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 589,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 798,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 557,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 557,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/analytics/TopicAnalysis.tsx",
+      "line": 45,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/analytics/TopicAnalysis.tsx",
+      "line": 145,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/analytics/TopicAnalysis.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "line": 49,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "line": 149,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "line": 219,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityScoreCard.tsx",
+      "line": 42,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityScoreCard.tsx",
+      "line": 138,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityScoreCard.tsx",
+      "line": 451,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityScoreCard.tsx",
+      "line": 464,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityWidget.tsx",
+      "line": 187,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/MaturityWidget.tsx",
+      "line": 430,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/OSAWidget.tsx",
+      "line": 115,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/OSAWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/OSAWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/PhasesEnhancedWidget.tsx",
+      "line": 281,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/PhasesEnhancedWidget.tsx",
+      "line": 304,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/QuickWinsWidget.tsx",
+      "line": 132,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/RoadmapEnhancedWidget.tsx",
+      "line": 261,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/RoadmapTimeline.tsx",
+      "line": 42,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/RoadmapTimeline.tsx",
+      "line": 140,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/RoadmapTimeline.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/strategy/RoadmapTimeline.tsx",
+      "line": 268,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/MaturitySpecializedWidget.tsx",
+      "line": 199,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/MaturitySpecializedWidget.tsx",
+      "line": 212,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/MaturitySpecializedWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/MaturitySpecializedWidget.tsx",
+      "line": 275,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/PhasesWidget.tsx",
+      "line": 78,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/PhasesWidget.tsx",
+      "line": 196,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/PhasesWidget.tsx",
+      "line": 249,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/RoadmapSpecializedWidget.tsx",
+      "line": 203,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/RoadmapSpecializedWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/RoadmapSpecializedWidget.tsx",
+      "line": 254,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/RoadmapSpecializedWidget.tsx",
+      "line": 349,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/WEBXWidget.tsx",
+      "line": 77,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/WEBXWidget.tsx",
+      "line": 168,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/tier2/WEBXWidget.tsx",
+      "line": 237,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
       "type": "UNUSED_IMPORT",
-      "file": "src/app/engine/admin/page.tsx",
-      "issue": "Unused lucide-react imports: AlertCircle, Save, RefreshCw, Webhook, CheckCircle, XCircle, TestTube, Key, BarChart, Map, Cog, Layers",
+      "file": "src/app/admin/layout.tsx",
+      "issue": "Unused lucide-react imports: Monitor, Shield",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/admin/opal-monitoring/page.tsx",
+      "issue": "Unused lucide-react imports: RefreshCw, Play, Pause, Download, Clock, CheckCircle2, XCircle, AlertTriangle, Network, Terminal, TestTube, Monitor, Workflow",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/dev/logs/page.tsx",
+      "issue": "Unused lucide-react imports: Terminal, RefreshCw, Play, Pause, Download, Filter, Clock, Server, CheckCircle, XCircle, AlertTriangle, Info, Bug, Zap",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/configurations/data-integrations/page.tsx",
+      "issue": "Unused lucide-react imports: Database, AlertTriangle, CheckCircle, XCircle, RefreshCw, Users, Zap, TrendingUp, TrendingDown, Clock, Network, Server, PlayCircle, PauseCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/configurations/layout.tsx",
+      "issue": "Unused lucide-react imports: Database, Webhook, Layers, Cog",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/configurations/settings/page.tsx",
+      "issue": "Unused lucide-react imports: Cog",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/configurations/webhooks/page.tsx",
+      "issue": "Unused lucide-react imports: Webhook",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/data-mapping/page.tsx",
+      "issue": "Unused lucide-react imports: Map, RefreshCw, AlertTriangle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/governance/page.tsx",
+      "issue": "Unused lucide-react imports: Shield, AlertTriangle, CheckCircle, XCircle, Clock, Users, Settings, RefreshCw",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/logs/page.tsx",
+      "issue": "Unused lucide-react imports: Terminal, RefreshCw, Download, Filter, Clock, Server, CheckCircle, XCircle, AlertTriangle, Info, Bug, Zap, Play, Pause",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/monitoring/confidence-scores/page.tsx",
+      "issue": "Unused lucide-react imports: AlertTriangle, CheckCircle, RefreshCw, TrendingDown, TrendingUp, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/agent-data/[agent]/page.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle2, ArrowRight, Download, Edit3, Save, X, Clock, ExternalLink",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/layout.tsx",
+      "issue": "Unused lucide-react imports: FileText, Search, Users, TestTube, Heart, Route, Map, FolderOpen",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/page.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle2, AlertTriangle, Clock, Server, ArrowRight, ExternalLink",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/performance/page.tsx",
+      "issue": "Unused lucide-react imports: BarChart",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/system-logs/page.tsx",
+      "issue": "Unused lucide-react imports: Terminal, Download, Settings, RefreshCw, AlertTriangle, CheckCircle, XCircle, Filter, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/testing-tools/page.tsx",
+      "issue": "Unused lucide-react imports: TestTube",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/opal-monitoring/webhook-events/page.tsx",
+      "issue": "Unused lucide-react imports: Network, CheckCircle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/recommendation-engine/layout.tsx",
+      "issue": "Unused lucide-react imports: FileText, Users, Sparkles, TrendingUp, Target, Brain",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/recommendation-engine/personalization-recommendations/page.tsx",
+      "issue": "Unused lucide-react imports: Sparkles",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/app/engine/admin/strategy-ai/layout.tsx",
+      "issue": "Unused lucide-react imports: Users, Settings, Calendar",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1650,32 +2924,26 @@
     },
     {
       "type": "UNUSED_IMPORT",
-      "file": "src/app/engine/results/dxptools/page.tsx",
-      "issue": "Unused lucide-react imports: ArrowLeft, Mail, BookOpen, TrendingUp, MessageSquare",
+      "file": "src/app/engine/results/[tier1]/[tier2]/[tier3]/page.tsx",
+      "issue": "Unused lucide-react imports: ArrowLeft, Activity, Settings, TrendingUp, Target",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
       "type": "UNUSED_IMPORT",
-      "file": "src/app/engine/results/insights/page.tsx",
-      "issue": "Unused lucide-react imports: ArrowLeft, MessageSquare, Calendar",
+      "file": "src/app/engine/results/[tier1]/[tier2]/page.tsx",
+      "issue": "Unused lucide-react imports: ArrowLeft, Target, Settings, TrendingUp, Activity, ExternalLink, ChevronDown, ChevronUp",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
       "type": "UNUSED_IMPORT",
-      "file": "src/app/engine/results/optimization/page.tsx",
-      "issue": "Unused lucide-react imports: ArrowLeft, TestTube, Server, Cpu, Shield, MonitorSpeaker",
+      "file": "src/app/engine/results/[tier1]/page.tsx",
+      "issue": "Unused lucide-react imports: ArrowLeft, BarChart3, Target, Settings, TrendingUp, Activity, ExternalLink, Users, Eye, Heart",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
       "type": "UNUSED_IMPORT",
       "file": "src/app/engine/results/page.tsx",
       "issue": "Unused lucide-react imports: Sparkles, CheckCircle, ArrowRight, ArrowLeft, Settings",
-      "fix": "Remove unused imports to optimize bundle size"
-    },
-    {
-      "type": "UNUSED_IMPORT",
-      "file": "src/app/engine/results/strategy/page.tsx",
-      "issue": "Unused lucide-react imports: CheckCircle2, Clock, AlertTriangle, Star, Lightbulb, ArrowUp, Rocket",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1716,6 +2984,24 @@
     },
     {
       "type": "UNUSED_IMPORT",
+      "file": "src/components/AdminHeader.tsx",
+      "issue": "Unused lucide-react imports: BarChart",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/AdminNavigation.tsx",
+      "issue": "Unused lucide-react imports: Monitor, TrendingUp, Settings, Map, BarChart, Activity, Shield",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/AgentMonitoringDashboard.tsx",
+      "issue": "Unused lucide-react imports: Clock, CheckCircle2, XCircle, AlertTriangle, RotateCcw, Pause, Play, TrendingUp, Timer, Users, BarChart3, Settings, MapPin, FileText, Route, Shield, Workflow, User",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
       "file": "src/components/AnalyticsContentDashboard.tsx",
       "issue": "Unused lucide-react imports: Clock, MapPin, RefreshCw, Users, Filter, Download, MoreHorizontal, ArrowUp, ArrowDown, Minus",
       "fix": "Remove unused imports to optimize bundle size"
@@ -1740,6 +3026,18 @@
     },
     {
       "type": "UNUSED_IMPORT",
+      "file": "src/components/DiagnosticsPanel.tsx",
+      "issue": "Unused lucide-react imports: Bug, PlayCircle, RefreshCw, CheckCircle2, XCircle, AlertCircle, Clock, Network",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/EngineActionsSummary.tsx",
+      "issue": "Unused lucide-react imports: Database, Cpu, Cog, Bot, Code, Target, Save, RotateCcw, Lightbulb, Workflow, GitBranch, Filter",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
       "file": "src/components/EnhancedAnalyticsDashboard.tsx",
       "issue": "Unused lucide-react imports: Download, Globe, PieChart as PieChartIcon, RefreshCw, AlertTriangle, Info",
       "fix": "Remove unused imports to optimize bundle size"
@@ -1748,6 +3046,12 @@
       "type": "UNUSED_IMPORT",
       "file": "src/components/EnhancedOpalMonitoringDashboard.tsx",
       "issue": "Unused lucide-react imports: AlertCircle, CheckCircle2, Clock, RefreshCw, Zap, AlertTriangle, Server, Database, Webhook, Cpu, HardDrive, Timer, Globe, Shield",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/EnhancedRecentDataComponent.tsx",
+      "issue": "Unused lucide-react imports: RefreshCw, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube, Eye, Wifi, WifiOff, Clock, Shield, Server, Loader2, PlayCircle, StopCircle",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1765,7 +3069,7 @@
     {
       "type": "UNUSED_IMPORT",
       "file": "src/components/ForceSyncButton.tsx",
-      "issue": "Unused lucide-react imports: RefreshCw, CheckCircle, AlertCircle, Clock",
+      "issue": "Unused lucide-react imports: RefreshCw, CheckCircle, AlertCircle, Clock, XCircle, RotateCcw",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1778,6 +3082,12 @@
       "type": "UNUSED_IMPORT",
       "file": "src/components/ImpactEffortMatrix.tsx",
       "issue": "Unused lucide-react imports: Star, Clock, Target, AlertCircle, CheckCircle, Filter",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/InsightsPageExample.tsx",
+      "issue": "Unused lucide-react imports: Users, TrendingUp, Eye, Heart, Brain, Zap, MessageSquare, Activity, Award, Calendar, PieChart, Settings",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1830,6 +3140,12 @@
     },
     {
       "type": "UNUSED_IMPORT",
+      "file": "src/components/RecentDataComponent.tsx",
+      "issue": "Unused lucide-react imports: RefreshCw, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
       "file": "src/components/ResultsNavigation.tsx",
       "issue": "Unused lucide-react imports: ChevronLeft, ChevronRight, Menu, X, CheckCircle, Clock, AlertCircle, Search, Filter, Download, Share2",
       "fix": "Remove unused imports to optimize bundle size"
@@ -1843,7 +3159,7 @@
     {
       "type": "UNUSED_IMPORT",
       "file": "src/components/ResultsSidebar.tsx",
-      "issue": "Unused lucide-react imports: Target, Settings, BarChart3, TrendingUp, ArrowRight, Clock, AlertCircle, CheckCircle2, ExternalLink, X",
+      "issue": "Unused lucide-react imports: Target, Settings, BarChart3, TrendingUp, ArrowRight, ExternalLink, PanelLeftClose, PanelLeftOpen, ChevronDown, ChevronRight, Shield, RefreshCw, LogOut",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1861,7 +3177,13 @@
     {
       "type": "UNUSED_IMPORT",
       "file": "src/components/TalkToYourData.tsx",
-      "issue": "Unused lucide-react imports: Sparkles, Users, Zap, Lightbulb, TrendingUp, BarChart3, PieChart, Award",
+      "issue": "Unused lucide-react imports: Sparkles, Users, Zap, Lightbulb, TrendingUp, BarChart3, PieChart, Award, Mic",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/TierDataDemo.tsx",
+      "issue": "Unused lucide-react imports: RefreshCw, Clock, Server",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1878,6 +3200,162 @@
     },
     {
       "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/AuditSummary.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertTriangle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/ContentBlueprint.tsx",
+      "issue": "Unused lucide-react imports: ChevronDown, ChevronRight, Layers, Cpu, Gauge",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/CrossDomainCoordination.tsx",
+      "issue": "Unused lucide-react imports: ArrowRight, Settings, Share2, Clock, CheckCircle, AlertCircle, RefreshCw, Network",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/DataMappingDashboard.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertCircle, Clock, Users, RefreshCw, Edit, Save",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/DownloadFixedMappingButton.tsx",
+      "issue": "Unused lucide-react imports: Download, Loader2, CheckCircle, AlertTriangle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/IntegrationStatus.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, XCircle, AlertTriangle, RefreshCw, Key, Webhook, Radio, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/MappingSchemaViewer.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertCircle, Eye, Edit, Save, Download, Upload, RefreshCw, Code, FileJson",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/MappingTable.tsx",
+      "issue": "Unused lucide-react imports: ArrowUpDown, Search, CheckCircle, AlertTriangle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/OpalAgentStatus.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, XCircle, AlertTriangle, RefreshCw, Server, Clock, ExternalLink, Webhook, Radio",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/PersonalizationRulesEditor.tsx",
+      "issue": "Unused lucide-react imports: Plus, Edit, Trash2, Save, PlayCircle, PauseCircle, AlertCircle, CheckCircle, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/PollingToggle.tsx",
+      "issue": "Unused lucide-react imports: Square, Play",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/RealTimeMonitoringPanel.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertCircle, Clock, RefreshCw, PlayCircle, PauseCircle, TrendingDown, Minus",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/ResultsRoadmap.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertTriangle, Clock, MapPin, ArrowRight",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/admin/StrategyAssistantTrigger.tsx",
+      "issue": "Unused lucide-react imports: Webhook, RefreshCw, CheckCircle, AlertTriangle, XCircle, Clock, Play, ExternalLink",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/agent-monitoring/AgentDataSummaryPanel.tsx",
+      "issue": "Unused lucide-react imports: ChevronDown, ChevronUp, RefreshCw, Lightbulb, ArrowRight, Clock, AlertCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/agent-monitoring/ReplayWorkflowPanel.tsx",
+      "issue": "Unused lucide-react imports: ChevronDown, ChevronUp, RotateCcw, CheckCircle, XCircle, AlertCircle, RefreshCw, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/agent-monitoring/ValidatePayloadPanel.tsx",
+      "issue": "Unused lucide-react imports: ChevronDown, ChevronUp, CheckCircle, XCircle, AlertCircle, RefreshCw",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/opal/ConfidenceGauge.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertTriangle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/opal/ContentRenderer.tsx",
+      "issue": "Unused lucide-react imports: CheckSquare, Square, ArrowRight, MapPin, ChevronDown, ChevronUp, TestTube, Tag, Search, Network, RefreshCw",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/opal/IntegrationHealth.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertTriangle, XCircle, Clock, Wifi, WifiOff, RefreshCw, ExternalLink",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/opal/KPISummaryWidget.tsx",
+      "issue": "Unused lucide-react imports: TrendingDown, Minus, Activity",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/opal/WorkflowProgress.tsx",
+      "issue": "Unused lucide-react imports: Play, Pause, CheckCircle, Clock, AlertTriangle, XCircle, RefreshCw",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/shared/BreadcrumbSearchHeader.tsx",
+      "issue": "Unused lucide-react imports: Search, ChevronRight",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/shared/ContentRendererErrorBoundary.tsx",
+      "issue": "Unused lucide-react imports: AlertTriangle, RefreshCw, Home",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/shared/MegaMenuDropdown.tsx",
+      "issue": "Unused lucide-react imports: ChevronDown, Menu, X",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/shared/Tier2SubNavigation.tsx",
+      "issue": "Unused lucide-react imports: BarChart3, Target, TrendingUp, CheckCircle, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
       "file": "src/components/ui/accordion.tsx",
       "issue": "Unused lucide-react imports: ChevronDown",
       "fix": "Remove unused imports to optimize bundle size"
@@ -1886,6 +3364,12 @@
       "type": "UNUSED_IMPORT",
       "file": "src/components/ui/checkbox.tsx",
       "issue": "Unused lucide-react imports: Check",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/ui/data-not-available.tsx",
+      "issue": "Unused lucide-react imports: AlertCircle, RefreshCw, ExternalLink, Info, WifiOff, Clock, FileX",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -1913,8 +3397,188 @@
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/ui/widget-skeleton.tsx",
+      "issue": "Unused lucide-react imports: Loader2, AlertCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/EngagementAnalyticsWidget.tsx",
+      "issue": "Unused lucide-react imports: Clock, MapPin, Search, BarChart3, Brain",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/ExperimentationWidget.tsx",
+      "issue": "Unused lucide-react imports: Beaker, Brain",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/IntegrationHealthWidget.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, AlertCircle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/StrategyPlansWidget.tsx",
+      "issue": "Unused lucide-react imports: Target, TrendingUp, Users, Calendar",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "issue": "Unused lucide-react imports: AlertCircle, Loader2",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/analytics/TopicAnalysis.tsx",
+      "issue": "Unused lucide-react imports: Network, Search, Tag, BarChart3, Clock, Eye, Filter, ArrowUp, ArrowDown",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/optimization/PersonalizationWidget.tsx",
+      "issue": "Unused lucide-react imports: Target, Eye, MousePointer, Clock, Settings, Filter, BarChart3, UserCheck, Layers, MessageSquare, Star, ArrowUp, ArrowDown",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/MaturityScoreCard.tsx",
+      "issue": "Unused lucide-react imports: Target, CheckCircle2, AlertTriangle, ArrowUp, ArrowDown, BarChart3, Users, Zap, Shield, Settings, Lightbulb, ChevronRight",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/MaturityWidget.tsx",
+      "issue": "Unused lucide-react imports: Users, Database, Settings, Award, ArrowUp, ArrowDown, Minus, CheckCircle, AlertTriangle, ExternalLink, Layers, Compass, Zap",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/OSAWidget.tsx",
+      "issue": "Unused lucide-react imports: Clock, ShieldCheck, Workflow, AlertCircle, CheckCircle, ExternalLink, Users",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/PhasesEnhancedWidget.tsx",
+      "issue": "Unused lucide-react imports: Settings, TrendingUp, Zap, Shield, AlertTriangle, CheckCircle, Clock, ArrowRight, Layers, Network, ExternalLink, PlayCircle, PauseCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/QuickWinsWidget.tsx",
+      "issue": "Unused lucide-react imports: Clock, DollarSign, CheckCircle, ArrowRight, AlertTriangle, Star, ExternalLink",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/RoadmapEnhancedWidget.tsx",
+      "issue": "Unused lucide-react imports: Clock, DollarSign, AlertTriangle, CheckCircle, BarChart3, Layers, Shield, ExternalLink, Filter, Zap, PlayCircle, PauseCircle, Settings",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/strategy/RoadmapTimeline.tsx",
+      "issue": "Unused lucide-react imports: Clock, CheckCircle2, AlertCircle, DollarSign, ChevronDown, ChevronUp",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/tier2/MaturitySpecializedWidget.tsx",
+      "issue": "Unused lucide-react imports: Users, Settings, Lightbulb, CheckCircle, ArrowRight, AlertCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/tier2/PhasesWidget.tsx",
+      "issue": "Unused lucide-react imports: Clock, CheckCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/tier2/RoadmapSpecializedWidget.tsx",
+      "issue": "Unused lucide-react imports: CheckCircle, Clock, AlertTriangle, DollarSign",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/tier2/WEBXWidget.tsx",
+      "issue": "Unused lucide-react imports: AlertCircle, CheckCircle, Clock",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/health/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/logs/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/mapping-status/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/monitoring/agent-performance/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/monitoring/confidence-metrics/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/monitoring/fallback-stats/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/admin/pii-scan/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/analytics/agent-performance/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
       "type": "DB_RESILIENCE",
       "file": "src/app/api/analytics/ga4/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/analytics/insights/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/analytics/kafka-metrics/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/analytics/recommendations/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
     },
@@ -1926,7 +3590,31 @@
     },
     {
       "type": "DB_RESILIENCE",
+      "file": "src/app/api/analytics/system-health/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "MISSING_ERROR_HANDLING",
+      "file": "src/app/api/diagnostics/last-webhook/route.ts",
+      "issue": "API route lacks error handling",
+      "fix": "Add try-catch blocks around async operations"
+    },
+    {
+      "type": "MISSING_ERROR_HANDLING",
+      "file": "src/app/api/example/users/route.ts",
+      "issue": "API route lacks error handling",
+      "fix": "Add try-catch blocks around async operations"
+    },
+    {
+      "type": "DB_RESILIENCE",
       "file": "src/app/api/gateway/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/monitoring/agent-logs/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
     },
@@ -1944,7 +3632,37 @@
     },
     {
       "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/enhanced-tools/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
       "file": "src/app/api/opal/status/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/tier1/[tier1]/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/tier2/[tier1]/[tier2]/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/tier3/[tier1]/[tier2]/[tier3]/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/workflow-data-status/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
     },
@@ -1956,9 +3674,39 @@
     },
     {
       "type": "DB_RESILIENCE",
+      "file": "src/app/api/opal/workflows/[agent]/output/route-original.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/orchestrations/trigger/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
       "file": "src/app/api/osa/workflow/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/phase1/health/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/phase2/health/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "MISSING_ERROR_HANDLING",
+      "file": "src/app/api/recommendations/route.ts",
+      "issue": "API route lacks error handling",
+      "fix": "Add try-catch blocks around async operations"
     },
     {
       "type": "DB_RESILIENCE",
@@ -1986,7 +3734,25 @@
     },
     {
       "type": "DB_RESILIENCE",
+      "file": "src/app/api/tools/contentrecs/cache-refresh/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
       "file": "src/app/api/tools/experiments/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/tools/odp/discovery/route.ts",
+      "issue": "Missing database error resilience",
+      "fix": "Add fallback mechanisms for database failures"
+    },
+    {
+      "type": "DB_RESILIENCE",
+      "file": "src/app/api/webhook-events/stats/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
     },
@@ -1999,12 +3765,6 @@
     {
       "type": "DB_RESILIENCE",
       "file": "src/app/api/webhooks/management/route.ts",
-      "issue": "Missing database error resilience",
-      "fix": "Add fallback mechanisms for database failures"
-    },
-    {
-      "type": "DB_RESILIENCE",
-      "file": "src/app/api/webhooks/opal-workflow/route.ts",
       "issue": "Missing database error resilience",
       "fix": "Add fallback mechanisms for database failures"
     },

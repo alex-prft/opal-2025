@@ -225,10 +225,10 @@ export const opalMapping = {
         ]
       }
     },
-    "Other": {
+    "Trends": {
       "navigation_structure": {
         "tier1": "Analytics Insights",
-        "tier2": "Other",
+        "tier2": "Trends",
         "tier3": [
           "Engagement",
           "Topics",

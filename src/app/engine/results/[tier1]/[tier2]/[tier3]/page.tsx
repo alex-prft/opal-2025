@@ -10,6 +10,7 @@ import ServiceStatusFooter from '@/components/ServiceStatusFooter';
 import { ServiceStatusProvider } from '@/components/ServiceStatusProvider';
 import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
 import MegaMenuDropdown from '@/components/shared/MegaMenuDropdown';
+import Tier2SubNavigation from '@/components/shared/Tier2SubNavigation';
 import ContentRenderer from '@/components/opal/ContentRenderer';
 import { ArrowLeft, BarChart3, Activity, Settings, TrendingUp, Target } from 'lucide-react';
 import { notFound } from 'next/navigation';
@@ -98,31 +99,14 @@ function Tier3PageContent() {
               currentTier3Url={tier3.toLowerCase()}
             />
 
-            {/* Tier 3 Sub-Navigation */}
-            <div id="tier3-sub-navigation" className="bg-white shadow-sm border-b">
-              <div className="max-w-7xl mx-auto p-4">
-                <nav className="flex flex-wrap gap-2" role="tablist">
-                  {tier3Items.map((tier3Item, index) => {
-                    const isCurrentItem = tier3Item.toLowerCase().replace(/\s+/g, '-') === tier3.toLowerCase();
-                    const tier3Url = `/engine/results/${tier1.toLowerCase()}/${tier2.toLowerCase()}/${encodeURIComponent(tier3Item.toLowerCase().replace(/\s+/g, '-'))}`;
-
-                    return (
-                      <Link
-                        key={index}
-                        href={tier3Url}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                          isCurrentItem
-                            ? 'bg-blue-100 text-blue-700 border border-blue-200 shadow-sm'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-gray-200'
-                        }`}
-                      >
-                        {tier3Item}
-                      </Link>
-                    );
-                  })}
-                </nav>
-              </div>
-            </div>
+            {/* Sub Navigation for Tier 3 Items */}
+            <Tier2SubNavigation
+              tier1Name={tier1Name}
+              tier2Name={tier2Name}
+              currentTier1Url={tier1.toLowerCase()}
+              currentTier2Url={tier2.toLowerCase()}
+              currentTier3Url={tier3.toLowerCase().replace(/[()]/g, '')}
+            />
 
             <div className="max-w-7xl mx-auto p-6">
 

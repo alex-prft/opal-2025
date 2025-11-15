@@ -164,19 +164,57 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const [agentTestLoading, setAgentTestLoading] = useState(false);
   const [testResult, setTestResult] = useState<AgentTestResult | null>(null);
 
+  // Helper function to safely parse JSON responses and handle errors
+  const safeJsonFetch = async (url: string, options?: RequestInit): Promise<any> => {
+    try {
+      const response = await fetch(url, options);
+
+      // Check if response is ok (status 200-299)
+      if (!response.ok) {
+        // For non-ok responses, try to get error details
+        const contentType = response.headers.get('content-type');
+
+        if (contentType?.includes('application/json')) {
+          // If it's JSON, parse it for error details
+          try {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+          } catch (jsonError) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+        } else {
+          // If it's not JSON (likely HTML error page), don't try to parse
+          throw new Error(`HTTP ${response.status}: ${response.statusText} - Server returned non-JSON response`);
+        }
+      }
+
+      // Check content type for successful responses
+      const contentType = response.headers.get('content-type');
+      if (!contentType?.includes('application/json')) {
+        throw new Error('Server returned non-JSON response');
+      }
+
+      // Safe to parse JSON
+      return await response.json();
+    } catch (error) {
+      // Re-throw with more context
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Network error occurred');
+    }
+  };
+
   // Fetch webhook statistics and agent statuses
   const fetchDashboardData = async () => {
     try {
       setError(null);
 
-      // Fetch webhook stats and agent error patterns in parallel
-      const [statsResponse, logsResponse] = await Promise.all([
-        fetch('/api/webhook-events/stats?hours=24'),
-        fetch('/api/monitoring/agent-logs?level=error&hours=24&limit=100')
+      // Fetch webhook stats and agent error patterns in parallel using safe JSON fetch
+      const [statsData, logsData] = await Promise.all([
+        safeJsonFetch('/api/webhook-events/stats?hours=24'),
+        safeJsonFetch('/api/monitoring/agent-logs?level=error&hours=24&limit=100')
       ]);
-
-      const statsData = await statsResponse.json();
-      const logsData = await logsResponse.json();
 
       if (statsData.success) {
         // Update last webhook trigger time and status
@@ -241,8 +279,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const fetchWebhookEvents = async () => {
     try {
       setWebhookEventsLoading(true);
-      const response = await fetch('/api/diagnostics/last-webhook?limit=10&status=all&hours=24');
-      const data = await response.json();
+      const data = await safeJsonFetch('/api/diagnostics/last-webhook?limit=10&status=all&hours=24');
 
       if (data.success && data.events) {
         setWebhookEvents(data.events);
@@ -262,11 +299,10 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const fetchHealthData = async () => {
     try {
       setHealthLoading(true);
-      const response = await fetch('/api/opal/health-with-fallback');
-      const data = await response.json();
+      const data = await safeJsonFetch('/api/opal/health-with-fallback');
 
-      // Health-with-fallback always returns 200, so we can handle the response directly
-      if (response.ok) {
+      // Health-with-fallback always returns 200, and safeJsonFetch ensures we get valid data
+      if (data) {
         setHealthData({
           overall_status: data.overall_status || 'red',
           signature_valid_rate: data.signature_valid_rate || 0,
@@ -302,12 +338,11 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const validatePayload = async () => {
     try {
       setPayloadLoading(true);
-      const response = await fetch('/api/opal/test-payload', {
+      const data = await safeJsonFetch('/api/opal/test-payload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ test_mode: true })
       });
-      const data = await response.json();
 
       setPayloadResult({
         success: data.success || false,
@@ -334,7 +369,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
       setAgentTestLoading(true);
       const startTime = Date.now();
 
-      const response = await fetch('/api/opal/enhanced-tools', {
+      const data = await safeJsonFetch('/api/opal/enhanced-tools', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -347,8 +382,6 @@ export default function RecentDataComponent({ className = '', compact = false }:
           }
         })
       });
-
-      const data = await response.json();
       const responseTime = Date.now() - startTime;
 
       setTestResult({

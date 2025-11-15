@@ -70,7 +70,7 @@ const resultAreas = [
       { id: 'content-analytics', title: 'Content', icon: BookOpen },
       { id: 'audience-analytics', title: 'Audiences', icon: Users },
       { id: 'customer-experience', title: 'Customer Experience', icon: Eye },
-      { id: 'other-analytics', title: 'Other', icon: TrendingUp }
+      { id: 'trends-analytics', title: 'Trends', icon: TrendingUp }
     ]
   },
   {

@@ -324,6 +324,91 @@
           }
         }
       }
+    },
+
+    "Quick Wins": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "quick_wins_analyzer"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Quick Wins",
+        "tier3": [
+          "Immediate Opportunities",
+          "Quick Win Analysis",
+          "Implementation Roadmap",
+          "Impact Assessment",
+          "Resource Requirements"
+        ]
+      },
+      "tier_mapping": {
+        "Immediate Opportunities": {
+          "url_pattern": "/engine/results/strategy-plans/quick-wins/immediate-opportunities",
+          "static_url": "/engine/results/strategy-plans/quick-wins",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Quick Wins",
+            "tier3": "Immediate Opportunities"
+          },
+          "widgets": {
+            "primary": "QuickWinsWidget",
+            "secondary": ["ConfidenceGauge", "KPISummaryWidget"],
+            "layout": "cards"
+          },
+          "data_props": {
+            "quickWinsData": "quick_wins",
+            "confidenceScore": "confidence_score",
+            "summaryData": "summary",
+            "implementationTimeline": "timeline"
+          },
+          "content_focus": {
+            "title": "Immediate Quick Wins",
+            "description": "Low-effort, high-impact optimization opportunities that can be implemented within 30 days"
+          }
+        },
+        "Quick Win Analysis": {
+          "url_pattern": "/engine/results/strategy-plans/quick-wins/analysis",
+          "static_url": "/engine/results/strategy-plans/quick-wins",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Quick Wins",
+            "tier3": "Quick Win Analysis"
+          },
+          "widgets": {
+            "primary": "QuickWinsWidget",
+            "secondary": ["AnalyticsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "analysisData": "analysis",
+            "quickWinsData": "quick_wins",
+            "confidenceScore": "confidence_score"
+          },
+          "content_focus": {
+            "title": "Quick Win Analysis",
+            "description": "Detailed analysis of quick win opportunities with effort vs impact scoring"
+          }
+        }
+      },
+      "base_url_patterns": [
+        "/engine/results/strategy-plans/quick-wins",
+        "/engine/results/strategy/quick-wins"
+      ],
+      "url_validation_regex": "^/engine/results/strategy(-plans)?/quick-wins(/.*)?$"
     }
   },
 

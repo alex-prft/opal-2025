@@ -86,35 +86,156 @@ export class SimpleOpalDataService {
   }
 
   /**
-   * Fetch data from OPAL agent workflow
+   * Fetch data from OPAL agent workflow with robust error handling
    */
   private async fetchFromOPALAgent(pageId: string, tierLevel: string): Promise<CachedOutput> {
     const agentSource = this.getAgentSourceForPage(pageId);
+    const maxRetries = 3;
+    const retryDelay = 1000; // 1 second
 
-    try {
-      const response = await fetch(`/api/opal/workflows/${agentSource}/output`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Page-ID': pageId
-        },
-        body: JSON.stringify({
-          page_id: pageId,
-          tier_level: tierLevel,
-          agent_source: agentSource
-        })
-      });
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[OPAL Agent Fetch] Attempt ${attempt}/${maxRetries} - Fetching ${agentSource} for page: ${pageId}`);
 
-      if (response.ok) {
-        const workflowOutput = await response.json();
-        return this.createAgentOutput(agentSource, workflowOutput, workflowOutput.confidence_score || 85);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+        const response = await fetch(`/api/opal/workflows/${agentSource}/output`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Page-ID': pageId,
+            'X-Tier-Level': tierLevel,
+            'X-Request-Attempt': attempt.toString(),
+            'X-Request-ID': `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+          },
+          body: JSON.stringify({
+            page_id: pageId,
+            tier_level: tierLevel,
+            force_refresh: attempt > 1, // Force refresh on retry attempts
+            use_cache: attempt === 1, // Only use cache on first attempt
+            timeout: 120000,
+            retry_attempt: attempt
+          }),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        // Enhanced response handling with detailed error information
+        if (response.ok) {
+          const apiResponse = await response.json();
+
+          // Validate response structure
+          if (apiResponse && typeof apiResponse === 'object') {
+            if (apiResponse.success && apiResponse.data) {
+              console.log(`[OPAL Agent Fetch] SUCCESS: ${agentSource} confidence: ${apiResponse.confidence_score}`);
+
+              return this.createAgentOutput(
+                agentSource,
+                apiResponse.data,
+                apiResponse.confidence_score || 0.75
+              );
+            } else if (apiResponse.success === false) {
+              // API explicitly returned failure
+              const errorMsg = apiResponse.error || 'Agent execution failed';
+              console.warn(`[OPAL Agent Fetch] API returned failure: ${errorMsg}`);
+
+              if (attempt < maxRetries && this.isRetryableError(errorMsg)) {
+                console.log(`[OPAL Agent Fetch] Retrying in ${retryDelay}ms due to retryable error: ${errorMsg}`);
+                await this.delay(retryDelay * attempt); // Exponential backoff
+                continue;
+              }
+
+              throw new Error(errorMsg);
+            } else {
+              // Malformed response structure
+              throw new Error('Invalid API response structure');
+            }
+          } else {
+            throw new Error('Invalid API response format');
+          }
+        }
+
+        // Handle HTTP error status codes
+        const errorBody = await response.text().catch(() => 'Unable to read error response');
+        const errorMsg = `OPAL API returned ${response.status}: ${response.statusText}`;
+        console.warn(`[OPAL Agent Fetch] HTTP Error: ${errorMsg}, Body: ${errorBody}`);
+
+        // Determine if this is a retryable HTTP error
+        if (attempt < maxRetries && this.isRetryableHttpStatus(response.status)) {
+          console.log(`[OPAL Agent Fetch] Retrying in ${retryDelay}ms due to retryable HTTP status: ${response.status}`);
+          await this.delay(retryDelay * attempt);
+          continue;
+        }
+
+        throw new Error(`${errorMsg} - ${errorBody}`);
+
+      } catch (error) {
+        console.error(`[OPAL Agent Fetch] Attempt ${attempt} failed for ${agentSource}:`, error);
+
+        // Don't retry on the final attempt or for non-retryable errors
+        if (attempt === maxRetries || !this.isRetryableError(error)) {
+          // Enhance error information for debugging
+          const enhancedError = error instanceof Error
+            ? new Error(`${error.message} (after ${attempt} attempts)`)
+            : new Error(`Unknown error occurred (after ${attempt} attempts)`);
+
+          console.error(`[OPAL Agent Fetch] Final failure for ${agentSource} after ${attempt} attempts:`, enhancedError);
+          throw enhancedError;
+        }
+
+        // Wait before retry with exponential backoff
+        await this.delay(retryDelay * attempt);
       }
-
-      throw new Error(`OPAL API returned ${response.status}: ${response.statusText}`);
-    } catch (error) {
-      console.error(`[OPAL Agent Fetch] Failed to fetch from ${agentSource}:`, error);
-      throw error;
     }
+
+    // This should never be reached, but included for type safety
+    throw new Error(`Maximum retry attempts (${maxRetries}) exceeded`);
+  }
+
+  /**
+   * Determine if an error is retryable
+   */
+  private isRetryableError(error: any): boolean {
+    if (typeof error === 'string') {
+      const retryableMessages = [
+        'timeout',
+        'network error',
+        'connection',
+        'unavailable',
+        'service temporarily',
+        'rate limit',
+        'redis',
+        'database connection'
+      ];
+      const errorLower = error.toLowerCase();
+      return retryableMessages.some(msg => errorLower.includes(msg));
+    }
+
+    if (error instanceof Error) {
+      const errorLower = error.message.toLowerCase();
+      return this.isRetryableError(errorLower) ||
+             error.name === 'AbortError' ||
+             error.name === 'TimeoutError';
+    }
+
+    return false;
+  }
+
+  /**
+   * Determine if HTTP status code is retryable
+   */
+  private isRetryableHttpStatus(status: number): boolean {
+    // Retry on 5xx server errors and specific 4xx errors
+    return status >= 500 || status === 408 || status === 429;
+  }
+
+  /**
+   * Utility function for delays
+   */
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
@@ -131,14 +252,39 @@ export class SimpleOpalDataService {
   }
 
   /**
-   * Get agent source for a page (simplified mapping)
+   * Get agent source for a page (Strategy Plans mapping)
    */
   private getAgentSourceForPage(pageId: string): string {
-    if (pageId.includes('strategy')) return 'strategy_workflow';
+    // Strategy Plans specific mappings
+    if (pageId.includes('strategy-plans')) {
+      // OSA section
+      if (pageId.includes('osa')) return 'strategy_workflow';
+
+      // Roadmap section - use roadmap generator
+      if (pageId.includes('roadmap')) return 'roadmap_generator';
+
+      // Maturity section - use maturity assessment
+      if (pageId.includes('maturity')) return 'maturity_assessment';
+
+      // Quick wins section - use quick wins analyzer
+      if (pageId.includes('quick-wins')) return 'quick_wins_analyzer';
+
+      // Phases section - use strategy workflow for phases
+      if (pageId.includes('phases')) return 'strategy_workflow';
+
+      // Default for strategy plans
+      return 'strategy_workflow';
+    }
+
+    // Other page mappings
     if (pageId.includes('insights')) return 'content_review';
-    if (pageId.includes('optimization')) return 'experiment_blueprinter';
-    if (pageId.includes('dxptools')) return 'integration_health';
-    return 'strategy_workflow'; // default
+    if (pageId.includes('optimization')) return 'content_review';
+    if (pageId.includes('analytics-insights')) return 'content_review';
+    if (pageId.includes('dxptools')) return 'strategy_workflow';
+    if (pageId.includes('experience-optimization')) return 'content_review';
+
+    // Default fallback
+    return 'strategy_workflow';
   }
 
   /**

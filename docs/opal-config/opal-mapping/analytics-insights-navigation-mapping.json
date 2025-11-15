@@ -38,7 +38,7 @@
         "microservice_primary": "UX Design Service"
       },
       {
-        "name": "Other",
+        "name": "Trends",
         "display_name": "Extended Analytics",
         "description": "Specialized analytics for custom business metrics and advanced insights",
         "priority": 5,
@@ -594,7 +594,7 @@
       }
     },
     {
-      "name": "Other",
+      "name": "Trends",
       "display_name": "Extended Analytics",
       "sub_navigation": [
         "Custom Metrics Dashboard",
@@ -733,7 +733,7 @@
       "instruction": "business_objectives_framework",
       "purpose": "Define strategic business objectives and success criteria for analytics alignment",
       "priority": "high",
-      "affects_sections": ["OSA", "CX", "Other"],
+      "affects_sections": ["OSA", "CX", "Trends"],
       "implementation_timeline": "Q1 2025"
     },
     {
@@ -754,7 +754,7 @@
       "instruction": "advanced_analytics_framework",
       "purpose": "Framework for specialized and custom analytics implementation",
       "priority": "medium",
-      "affects_sections": ["Other"],
+      "affects_sections": ["Trends"],
       "implementation_timeline": "Q2 2025"
     }
   ],
@@ -953,7 +953,7 @@
     ],
     "business_strategy": "data_driven_analytics_with_ai_powered_insights_and_microservice_integration",
     "marketing_calendar_sync": true,
-    "notes": "Comprehensive Analytics Insights navigation structure provides integrated view of all analytical capabilities with 7-dimension framework applied consistently across OSA, Content, Audiences, CX, and Other sections. AI-driven optimization recommendations with personalized insights based on business context, analytics maturity, and strategic objectives.",
+    "notes": "Comprehensive Analytics Insights navigation structure provides integrated view of all analytical capabilities with 7-dimension framework applied consistently across OSA, Content, Audiences, CX, and Trends sections. AI-driven optimization recommendations with personalized insights based on business context, analytics maturity, and strategic objectives.",
     "admin_customization_path": "/engine/admin/data-mapping/analytics-insights",
     "microservice_dependencies": [
       "All 10 OSA microservices integrated with specific dimension mappings",

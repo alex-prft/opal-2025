@@ -9,7 +9,7 @@
 
 ## Overview
 
-This checklist ensures all Results page content meets the quality standards defined in the OSA Content Generation SOP. Use this for pre-deployment validation, ongoing monitoring, and quality issue resolution.
+This checklist ensures all Results page content meets the quality standards defined in the OSA Content Generation process. Use this for pre-deployment validation, ongoing monitoring, and quality issue resolution.
 
 ---
 
@@ -307,4 +307,3 @@ This checklist ensures all Results page content meets the quality standards defi
 **Owner**: Quality Assurance Team
 **Reviewers**: Development Team, Product Team, Platform Team
 **Update Schedule**: Monthly or after significant system changes
-**Related Documents**: OSA_CONTENT_GENERATION_SOP.md, RESULTS_CONTENT_FINALIZATION_ROADMAP.md

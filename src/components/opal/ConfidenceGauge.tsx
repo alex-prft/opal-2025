@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Activity, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { safeRound, makeSafeForChildren } from '@/lib/utils/number-formatting';
 
 interface ConfidenceGaugeProps {
   title: string;
@@ -28,7 +29,7 @@ export default function ConfidenceGauge({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAnimatedScore(score);
+      setAnimatedScore(makeSafeForChildren(score, 0));
     }, 300);
     return () => clearTimeout(timer);
   }, [score]);
@@ -96,7 +97,7 @@ export default function ConfidenceGauge({
                   strokeWidth="8"
                   fill="none"
                   strokeLinecap="round"
-                  strokeDasharray={`${(animatedScore / 100) * 314} 314`}
+                  strokeDasharray={`${safeRound((makeSafeForChildren(animatedScore, 0) / 100) * 314, 0)} 314`}
                   className="transition-all duration-1000 ease-out"
                 />
                 <defs>
@@ -111,7 +112,7 @@ export default function ConfidenceGauge({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className={`text-3xl font-bold ${getScoreColor(score)}`}>
-                    {Math.round(animatedScore)}
+                    {safeRound(animatedScore, 0)}
                   </div>
                   <div className="text-xs text-gray-500 font-medium">
                     SCORE
@@ -146,11 +147,11 @@ export default function ConfidenceGauge({
                               factor.score >= 60 ? 'bg-yellow-500' :
                               factor.score >= 40 ? 'bg-orange-500' : 'bg-red-500'
                             }`}
-                            style={{ width: `${factor.score}%` }}
+                            style={{ width: `${safeRound(factor.score, 0)}%` }}
                           ></div>
                         </div>
                         <span className="text-xs text-gray-500 w-8">
-                          {factor.score}%
+                          {safeRound(factor.score, 0)}%
                         </span>
                       </div>
                     </div>

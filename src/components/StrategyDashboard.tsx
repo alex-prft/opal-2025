@@ -134,7 +134,7 @@ const navigationAreas = [
       { id: 'content', title: 'Content', description: 'Performance charts' },
       { id: 'audiences', title: 'Audiences', description: 'Segmentation graphs' },
       { id: 'customer-experience', title: 'CX', description: 'Journey maps' },
-      { id: 'other', title: 'Other', description: 'Miscellaneous metrics' }
+      { id: 'trends', title: 'Trends', description: 'Trend analysis and insights' }
     ]
   },
   {
@@ -11186,8 +11186,8 @@ function EngineActionsSummary({ areaId, tabId, actionTabId }: EngineActionsSumma
         ]
       },
 
-      'analytics-insights-other': {
-        title: 'Analytics Insights → Other Metrics Analysis',
+      'analytics-insights-trends': {
+        title: 'Analytics Insights → Trends Analysis',
         opalAgents: ['geo_audit'],
         opalInstructions: ['7-data-governance-privacy.md', '9-technical-implementation-guidelines.md'],
         opalTools: ['workflow_data_sharing'],

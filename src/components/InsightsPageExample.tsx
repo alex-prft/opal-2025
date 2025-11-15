@@ -43,7 +43,7 @@ export default function InsightsPageExample() {
     'Content': Eye,
     'Audiences': Users,
     'CX': Heart,
-    'Other': Settings
+    'Trends': Settings
   } as const;
 
   useEffect(() => {
