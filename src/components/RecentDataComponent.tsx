@@ -1,12 +1,20 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, AlertTriangle, ChevronDown, ChevronUp, TestTube, Eye, Heart, Database } from 'lucide-react';
 import { SafeDate } from '@/lib/utils/date-formatter';
 import { useOPALStatusPolling } from '@/hooks/useOPALStatusPolling';
+import { useWebhookStream } from '@/hooks/useWebhookStream';
+import {
+  RecentDataSkeleton,
+  ConnectionStatus,
+  DataFetchingIndicator,
+  ErrorState,
+  OPALStatusIndicator
+} from '@/components/ui/loading-states';
 
 interface AgentErrorPattern {
   agent_id: string;
@@ -82,6 +90,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const [lastWebhookTrigger, setLastWebhookTrigger] = useState<string | null>(null);
   const [webhookStatus, setWebhookStatus] = useState<'success' | 'failed' | 'processing' | 'none'>('none');
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingOperation, setLoadingOperation] = useState<string>('Initializing...');
+  const [usingMockData, setUsingMockData] = useState<boolean>(false);
+  const [mockDataNotice, setMockDataNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [workflowAnalysis, setWorkflowAnalysis] = useState<any>(null);
   const [agentStatuses, setAgentStatuses] = useState<{[key: string]: 'unknown' | 'success' | 'failed'}>({
@@ -104,6 +115,13 @@ export default function RecentDataComponent({ className = '', compact = false }:
   // Polling control state
   const [isPollingEnabled, setIsPollingEnabled] = useState(false);
 
+  // Event deduplication and throttling state
+  const lastFetchTimeRef = useRef<number>(0);
+  const fetchThrottleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const processedEventIdsRef = useRef<Set<string>>(new Set());
+  const FETCH_THROTTLE_DELAY = 10000; // 10 seconds between fetches (reduced from 2s for performance)
+  const EVENT_DEDUP_TTL = 30000; // 30 seconds event deduplication window
+
   // Load polling preference from localStorage
   useEffect(() => {
     const savedState = localStorage.getItem('opal-polling-enabled');
@@ -125,17 +143,17 @@ export default function RecentDataComponent({ className = '', compact = false }:
     forceSyncData?.opalCorrelationId || null,
     {
       enabled: isPollingEnabled, // Control via toggle
-      maxPollDuration: 90 * 1000, // 90 seconds max duration
-      pollInterval: 3000, // 3 second intervals
+      maxPollDuration: 60 * 1000, // 60 seconds max duration (reduced from 90s)
+      pollInterval: 10000, // 10 second intervals (reduced from 3s for performance)
       onCompleted: (status) => {
         console.log('🎉 [RecentData] OPAL workflow completed:', status);
-        // Refresh dashboard data when OPAL completes
-        fetchDashboardData();
+        // Refresh dashboard data when OPAL completes (throttled)
+        throttledFetchDashboardData();
       },
       onFailed: (status, error) => {
         console.error('❌ [RecentData] OPAL workflow failed:', status, error);
-        // Refresh dashboard data when OPAL fails
-        fetchDashboardData();
+        // Refresh dashboard data when OPAL fails (throttled)
+        throttledFetchDashboardData();
       },
       onStatusUpdate: (status) => {
         console.log('📊 [RecentData] OPAL status update:', status);
@@ -147,9 +165,63 @@ export default function RecentDataComponent({ className = '', compact = false }:
             opalProgress: status.progress_percentage
           });
         }
+        // Only fetch dashboard data on significant status changes (not on progress updates)
+        if (status.status === 'completed' || status.status === 'failed') {
+          throttledFetchDashboardData();
+        }
       }
     }
   );
+
+  // Real-time webhook stream with proper correlation logic
+  const webhookStream = useWebhookStream({
+    enabled: true,
+    maxEvents: 100,
+    // Ensure we ALWAYS provide either sessionId or workflowId (SSE endpoint requires one)
+    sessionId: forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget',
+    workflowId: forceSyncData?.forceSyncWorkflowId || null,
+    onEvent: (event) => {
+      console.log('📡 [RecentData] New webhook event received:', event);
+
+      // Skip heartbeat events to prevent performance cascade
+      if (!event.event_type || event.event_type === 'heartbeat') {
+        console.log('📡 [RecentData] Skipping heartbeat/empty event (performance optimization)');
+        return;
+      }
+
+      // Event deduplication check
+      const eventId = event.id || `${event.workflow_id}_${event.timestamp}`;
+      if (isDuplicateEvent(eventId)) {
+        return; // Skip duplicate event
+      }
+
+      // Only refresh if event is relevant to current workflow
+      const isRelevantEvent =
+        event.workflow_id === forceSyncData?.forceSyncWorkflowId ||
+        event.correlation_id === forceSyncData?.opalCorrelationId ||
+        !forceSyncData; // If no specific workflow, process all events
+
+      if (isRelevantEvent) {
+        console.log('📡 [RecentData] Processing relevant webhook event:', eventId);
+        throttledFetchDashboardData();
+      } else {
+        console.log('📡 [RecentData] Skipping irrelevant webhook event:', eventId);
+      }
+    },
+    onConnect: () => {
+      const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
+      const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
+      console.log(`📡 [RecentData] Webhook stream connected successfully (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      // Skip initial fetch on connect to reduce API call frequency
+      // Data will be fetched when actual events arrive or via manual refresh
+    },
+    onError: (error) => {
+      const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
+      const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
+      console.error(`📡 [RecentData] Webhook stream error: ${error} (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      // Note: Component will fall back to manual refresh button when stream fails
+    }
+  });
 
   // New state variables for OSA integration enhancements
   const [webhookEvents, setWebhookEvents] = useState<WebhookEvent[]>([]);
@@ -164,10 +236,83 @@ export default function RecentDataComponent({ className = '', compact = false }:
   const [agentTestLoading, setAgentTestLoading] = useState(false);
   const [testResult, setTestResult] = useState<AgentTestResult | null>(null);
 
+  // Throttled fetch dashboard data with event deduplication
+  const throttledFetchDashboardData = useCallback(() => {
+    const now = Date.now();
+    const timeSinceLastFetch = now - lastFetchTimeRef.current;
+
+    // Clear existing timeout if any
+    if (fetchThrottleTimeoutRef.current) {
+      clearTimeout(fetchThrottleTimeoutRef.current);
+    }
+
+    if (timeSinceLastFetch >= FETCH_THROTTLE_DELAY) {
+      // Execute immediately if enough time has passed
+      console.log('🔄 [RecentData] Executing immediate fetch (throttle satisfied)');
+      lastFetchTimeRef.current = now;
+      fetchDashboardData();
+    } else {
+      // Schedule for later if too recent
+      const delay = FETCH_THROTTLE_DELAY - timeSinceLastFetch;
+      console.log(`⏰ [RecentData] Scheduling throttled fetch in ${delay}ms`);
+      fetchThrottleTimeoutRef.current = setTimeout(() => {
+        lastFetchTimeRef.current = Date.now();
+        fetchDashboardData();
+      }, delay);
+    }
+  }, []);
+
+  // Event deduplication helper
+  const isDuplicateEvent = useCallback((eventId: string): boolean => {
+    const eventKey = `${eventId}_${Date.now()}`;
+
+    if (processedEventIdsRef.current.has(eventId)) {
+      console.log(`🔄 [RecentData] Skipping duplicate event: ${eventId}`);
+      return true;
+    }
+
+    // Add to processed events
+    processedEventIdsRef.current.add(eventId);
+
+    // Clean up old events (TTL cleanup)
+    if (processedEventIdsRef.current.size > 100) {
+      const eventsArray = Array.from(processedEventIdsRef.current);
+      const keepEvents = eventsArray.slice(-50); // Keep last 50 events
+      processedEventIdsRef.current = new Set(keepEvents);
+      console.log(`🧹 [RecentData] Cleaned up event deduplication cache (kept ${keepEvents.length} events)`);
+    }
+
+    return false;
+  }, []);
+
   // Helper function to safely parse JSON responses and handle errors
   const safeJsonFetch = async (url: string, options?: RequestInit): Promise<any> => {
+    const fetchId = Math.random().toString(36).substr(2, 9);
+    console.log(`🔍 [FETCH-${fetchId}] Starting request to:`, url);
+    console.log(`🔍 [FETCH-${fetchId}] Request options:`, options || 'default');
+
     try {
-      const response = await fetch(url, options);
+      // Use normal caching instead of cache-busting for better performance
+      const enhancedOptions: RequestInit = {
+        ...options,
+        headers: {
+          'Cache-Control': 'max-age=10', // Allow 10-second cache for performance
+          ...options?.headers
+        }
+      };
+
+      console.log(`🔍 [FETCH-${fetchId}] Enhanced headers:`, enhancedOptions.headers);
+      const startTime = Date.now();
+      const response = await fetch(url, enhancedOptions);
+      const responseTime = Date.now() - startTime;
+
+      console.log(`🔍 [FETCH-${fetchId}] Response received:`, {
+        status: response.status,
+        statusText: response.statusText,
+        responseTime: `${responseTime}ms`,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
+      });
 
       // Check if response is ok (status 200-299)
       if (!response.ok) {
@@ -207,8 +352,14 @@ export default function RecentDataComponent({ className = '', compact = false }:
 
   // Fetch webhook statistics and agent statuses
   const fetchDashboardData = async () => {
+    const requestId = Math.random().toString(36).substr(2, 9);
+    console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData called at:`, new Date().toISOString());
+    console.log(`🔍 [DEBUG-${requestId}] Component mounted, sidebar visible:`, true);
+
     try {
       setError(null);
+      setLoadingOperation('Fetching webhook statistics and agent logs...');
+      console.log(`🔍 [DEBUG-${requestId}] Starting API requests...`);
 
       // Fetch webhook stats and agent error patterns in parallel using safe JSON fetch
       const [statsData, logsData] = await Promise.all([
@@ -216,33 +367,66 @@ export default function RecentDataComponent({ className = '', compact = false }:
         safeJsonFetch('/api/monitoring/agent-logs?level=error&hours=24&limit=100')
       ]);
 
+      console.log(`🔍 [DEBUG-${requestId}] API responses received:`, {
+        statsSuccess: statsData.success,
+        logsSuccess: logsData.success,
+        statsLastTriggerTime: statsData.lastTriggerTime,
+        statsWorkflowStatus: statsData.workflowStatus,
+        statsTimestamp: statsData.timestamp,
+        responseTime: new Date().toISOString()
+      });
+
       if (statsData.success) {
+        setLoadingOperation('Processing webhook data and agent statuses...');
+        console.log(`🔍 [DEBUG-${requestId}] Processing successful API response...`);
+
+        // Check if we're using mock data and update UI accordingly
+        if (statsData._isMockData || statsData.stats?._isMockData) {
+          setUsingMockData(true);
+          setMockDataNotice(statsData._mockDataNotice || statsData.stats?._mockDataNotice ||
+            'Database unavailable - showing simulated data for demonstration');
+          console.log('⚠️ [RecentData] Using mock/fallback data due to database unavailability');
+        } else {
+          setUsingMockData(false);
+          setMockDataNotice(null);
+        }
+
         // Update last webhook trigger time and status
         if (statsData.lastTriggerTime) {
+          console.log(`🔍 [DEBUG-${requestId}] Setting lastWebhookTrigger:`, {
+            oldValue: lastWebhookTrigger,
+            newValue: statsData.lastTriggerTime,
+            changed: lastWebhookTrigger !== statsData.lastTriggerTime
+          });
           setLastWebhookTrigger(statsData.lastTriggerTime);
           setWebhookStatus(statsData.workflowStatus || 'success');
         } else {
+          console.log(`🔍 [DEBUG-${requestId}] No lastTriggerTime in response, setting to null`);
           setLastWebhookTrigger(null);
           setWebhookStatus('none');
         }
 
         // Update workflow analysis data
         if (statsData.workflowAnalysis) {
+          console.log(`🔍 [DEBUG-${requestId}] Updating workflow analysis:`, statsData.workflowAnalysis);
           setWorkflowAnalysis(statsData.workflowAnalysis);
         }
 
         // Update agent statuses
         if (statsData.agentStatuses) {
+          console.log(`🔍 [DEBUG-${requestId}] Updating agent statuses:`, statsData.agentStatuses);
           setAgentStatuses(statsData.agentStatuses);
         }
 
         // Update enhanced OPAL force sync data
         if (statsData.forceSync) {
+          console.log(`🔍 [DEBUG-${requestId}] Updating force sync data:`, statsData.forceSync);
           setForceSyncData(statsData.forceSync);
         }
 
         // Update OSA Workflow Data Tools data
         if (statsData.osaWorkflowData) {
+          console.log(`🔍 [DEBUG-${requestId}] Updating OSA workflow data:`, statsData.osaWorkflowData);
           setOSAWorkflowData(statsData.osaWorkflowData);
         }
 
@@ -254,7 +438,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
           osaWorkflowData: statsData.osaWorkflowData
         });
       } else {
-        console.error('Failed to fetch recent data:', statsData.error);
+        console.error(`🔍 [DEBUG-${requestId}] API returned failure:`, statsData.error);
         setWebhookStatus('failed');
         setError(statsData.error || 'Failed to fetch recent data');
       }
@@ -265,10 +449,13 @@ export default function RecentDataComponent({ className = '', compact = false }:
       }
 
     } catch (error) {
-      console.error('Error fetching recent data:', error);
+      console.error(`🔍 [DEBUG-${requestId}] Error fetching recent data:`, error);
+      console.error(`🔍 [DEBUG-${requestId}] Error type:`, error instanceof Error ? 'Error' : typeof error);
+      console.error(`🔍 [DEBUG-${requestId}] Error message:`, error instanceof Error ? error.message : error);
       setWebhookStatus('failed');
       setError(error instanceof Error ? error.message : 'Network error occurred');
     } finally {
+      console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData completed at:`, new Date().toISOString());
       setIsLoading(false);
     }
   };
@@ -406,19 +593,41 @@ export default function RecentDataComponent({ className = '', compact = false }:
   };
 
   useEffect(() => {
-    // Initial fetch
-    fetchDashboardData();
+    const componentId = Math.random().toString(36).substr(2, 9);
+    console.log(`🔍 [STREAM-${componentId}] Component mounted, using real-time webhook stream at:`, new Date().toISOString());
+
+    // Initial fetch only for health data (webhook data comes via stream)
+    console.log(`🔍 [STREAM-${componentId}] Calling initial fetchHealthData`);
     fetchHealthData();
 
-    // Auto-refresh every 30 seconds for dashboard data
-    const dashboardInterval = setInterval(fetchDashboardData, 30000);
+    // Health check every 5 minutes (reduced from 60s for performance)
+    console.log(`🔍 [STREAM-${componentId}] Setting up health interval (5m)`);
+    const healthInterval = setInterval(() => {
+      console.log(`🔍 [STREAM-${componentId}] Health timer fired at:`, new Date().toISOString());
+      fetchHealthData();
+    }, 300000);
 
-    // Health check every 60 seconds
-    const healthInterval = setInterval(fetchHealthData, 60000);
+    console.log(`🔍 [STREAM-${componentId}] Configuration:`, {
+      streamEnabled: true,
+      healthInterval: healthInterval,
+      nextHealthFire: new Date(Date.now() + 60000).toISOString(),
+      streamEvents: webhookStream.eventCount
+    });
 
     return () => {
-      clearInterval(dashboardInterval);
+      console.log(`🔍 [STREAM-${componentId}] Component unmounting, clearing health timer at:`, new Date().toISOString());
       clearInterval(healthInterval);
+    };
+  }, [webhookStream.eventCount]); // React to stream event changes
+
+  // Cleanup throttle timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (fetchThrottleTimeoutRef.current) {
+        console.log('🧹 [RecentData] Cleaning up throttle timeout on unmount');
+        clearTimeout(fetchThrottleTimeoutRef.current);
+        fetchThrottleTimeoutRef.current = null;
+      }
     };
   }, []);
 
@@ -521,13 +730,54 @@ export default function RecentDataComponent({ className = '', compact = false }:
   };
 
   if (compact) {
+    if (isLoading) {
+      return (
+        <Card id="recent-data" className={`${className}`}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Activity className="h-4 w-4 text-gray-300" />
+              <span className="text-sm font-semibold text-gray-500">Recent Data</span>
+              <ConnectionStatus status="connecting" showIcon={false} />
+            </div>
+            <DataFetchingIndicator
+              operation={loadingOperation}
+              details="Loading webhook data and agent status"
+            />
+          </CardContent>
+        </Card>
+      );
+    }
+
     return (
       <Card id="recent-data" className={`${className}`}>
+        {/* Mock Data Notice Banner */}
+        {usingMockData && mockDataNotice && (
+          <div className="bg-amber-50 border-b border-amber-200 px-4 py-2">
+            <div className="flex items-center gap-2 text-amber-800 text-xs">
+              <Database className="h-3 w-3" />
+              <span className="font-medium">Demo Mode:</span>
+              <span>{mockDataNotice}</span>
+            </div>
+          </div>
+        )}
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Activity className="h-4 w-4 text-blue-600" />
               <span className="text-sm font-semibold">Recent Data</span>
+              {/* Stream Status Indicator */}
+              <ConnectionStatus
+                status={
+                  webhookStream.isConnected ? 'connected' :
+                  webhookStream.error ? 'error' :
+                  'connecting'
+                }
+                message={
+                  webhookStream.isConnected ? `Live (${webhookStream.eventCount} events)` :
+                  webhookStream.error ? 'Stream Error' :
+                  'Connecting...'
+                }
+              />
             </div>
             <Button
               variant="ghost"
@@ -621,8 +871,21 @@ export default function RecentDataComponent({ className = '', compact = false }:
           )}
 
           {error && (
-            <div className="mt-3 p-2 bg-red-50 rounded text-xs text-red-700">
-              {error}
+            <div className="mt-3">
+              <ErrorState
+                title="Connection Error"
+                message={error}
+                canRetry={true}
+                onRetry={() => {
+                  setError(null);
+                  fetchDashboardData();
+                }}
+                suggestions={[
+                  "Check your internet connection",
+                  "Verify API endpoints are accessible",
+                  "Try refreshing the page"
+                ]}
+              />
             </div>
           )}
         </CardContent>
@@ -631,8 +894,38 @@ export default function RecentDataComponent({ className = '', compact = false }:
   }
 
   // Full version (non-compact)
+  if (isLoading) {
+    return (
+      <div id="recent-data" className={`space-y-6 ${className}`}>
+        <DataFetchingIndicator
+          operation={loadingOperation}
+          details="Connecting to real-time webhook stream and fetching latest data"
+        />
+        <RecentDataSkeleton compact={false} />
+      </div>
+    );
+  }
+
   return (
     <div id="recent-data" className={`space-y-6 ${className}`}>
+      {/* Mock Data Notice Banner */}
+      {usingMockData && mockDataNotice && (
+        <Card className="border-amber-200 bg-amber-50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 text-amber-800">
+              <Database className="h-5 w-5" />
+              <div>
+                <p className="font-medium text-sm">Demo Mode Active</p>
+                <p className="text-xs text-amber-700">{mockDataNotice}</p>
+                <p className="text-xs text-amber-600 mt-1">
+                  Data shown is simulated with current timestamps for demonstration purposes.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Webhook Trigger Status */}
       <Card>
         <CardHeader>
@@ -828,10 +1121,24 @@ export default function RecentDataComponent({ className = '', compact = false }:
           )}
 
           {error && (
-            <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
-              <div className="text-sm text-red-700">
-                <strong>Error loading recent data:</strong> {error}
-              </div>
+            <div className="mt-4">
+              <ErrorState
+                title="Error Loading Recent Data"
+                message={error}
+                errorId={`RDC_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`}
+                canRetry={true}
+                onRetry={() => {
+                  setError(null);
+                  fetchDashboardData();
+                }}
+                suggestions={[
+                  "Check your internet connection",
+                  "Verify webhook endpoints are accessible",
+                  "Check system status page",
+                  "Try refreshing the page",
+                  "Contact support if the issue persists"
+                ]}
+              />
             </div>
           )}
         </CardContent>

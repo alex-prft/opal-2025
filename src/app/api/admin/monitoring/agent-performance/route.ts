@@ -5,17 +5,29 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createSupabaseAdmin, isDatabaseAvailable } from '@/lib/database/supabase-client';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     console.log('[Admin API] Fetching agent performance metrics...');
+
+    // Check if database is available, provide fallback if not
+    if (!isDatabaseAvailable()) {
+      console.log('[Admin API] Database not available, returning mock data');
+      return NextResponse.json({
+        agents: [],
+        total_agents: 0,
+        active_agents: 0,
+        degraded_agents: 0,
+        failed_agents: 0,
+        last_updated: new Date().toISOString(),
+        database_status: 'unavailable',
+        note: 'Database not configured, returning empty metrics'
+      });
+    }
+
+    // Initialize admin client for secure database operations
+    const supabase = createSupabaseAdmin();
 
     // Fetch agent coordination data from the last 24 hours
     const { data: coordinationData, error: coordinationError } = await supabase
@@ -123,7 +135,9 @@ export async function GET(request: NextRequest) {
       active_agents: agentPerformance.filter(a => a.status === 'active').length,
       degraded_agents: agentPerformance.filter(a => a.status === 'degraded').length,
       failed_agents: agentPerformance.filter(a => a.status === 'failed').length,
-      last_updated: new Date().toISOString()
+      last_updated: new Date().toISOString(),
+      database_status: 'available',
+      guardrails_enabled: true
     });
 
   } catch (error) {

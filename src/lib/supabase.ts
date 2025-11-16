@@ -1,11 +1,11 @@
 /**
- * Supabase Client Re-export for Microservices
+ * OSA Supabase Client
  *
- * Provides a consistent import path for all OSA services to access the Supabase client.
- * Re-exports the existing supabase client and admin utilities.
+ * This module provides database access for the OSA application.
+ * Simplified for production deployment compatibility.
  */
 
-// Re-export the existing Supabase client and utilities
+// Export working client components
 export {
   supabase,
   createSupabaseAdmin,
@@ -14,6 +14,9 @@ export {
   isDatabaseAvailable
 } from '@/lib/database/supabase-client';
 
-// Additional exports for microservices architecture
+// Export types
 export { createClient } from '@supabase/supabase-js';
 export type { Database } from '@/lib/types/database';
+
+// Default export for convenience
+export { supabase as default } from '@/lib/database/supabase-client';

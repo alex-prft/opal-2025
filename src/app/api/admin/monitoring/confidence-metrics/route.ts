@@ -7,15 +7,40 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+// Lazy initialization of Supabase client
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase configuration');
+  }
+
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 export async function GET(request: NextRequest) {
   try {
     console.log('[Admin API] Fetching confidence metrics...');
+
+    // Get Supabase client with error handling
+    let supabase;
+    try {
+      supabase = getSupabaseClient();
+    } catch (configError) {
+      console.warn('[Admin API] Supabase configuration not available, returning fallback metrics');
+      // Return fallback metrics when Supabase is not configured
+      return NextResponse.json({
+        overall_health: 'warning' as const,
+        average_confidence: 0.75,
+        agents_below_threshold: 0,
+        fallback_usage_rate: 0,
+        total_requests: 0,
+        fallback_count: 0,
+        last_updated: new Date().toISOString(),
+        note: 'Using fallback metrics - Supabase not configured'
+      });
+    }
 
     // Fetch recent confidence scores
     const { data: confidenceScores, error: confidenceError } = await supabase

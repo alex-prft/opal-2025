@@ -19,16 +19,38 @@ export async function GET(request: NextRequest) {
 
   const stream = new ReadableStream({
     start(controller) {
+      let isControllerClosed = false;
+
+      // Helper function to safely enqueue data
+      const safeEnqueue = (data: string) => {
+        if (!isControllerClosed) {
+          try {
+            controller.enqueue(encoder.encode(data));
+          } catch (error) {
+            if (error instanceof TypeError && error.message.includes('Controller is already closed')) {
+              isControllerClosed = true;
+            } else {
+              console.error('SSE enqueue error:', error);
+            }
+          }
+        }
+      };
+
       // Send initial connection message
       const initialData = `data: ${JSON.stringify({
         type: 'connection',
         message: 'Connected to webhook events stream',
         timestamp: new Date().toISOString()
       })}\n\n`;
-      controller.enqueue(encoder.encode(initialData));
+      safeEnqueue(initialData);
 
       // Set up polling interval for new webhook events
       const pollInterval = setInterval(async () => {
+        if (isControllerClosed) {
+          clearInterval(pollInterval);
+          return;
+        }
+
         try {
           // Get recent webhook events for this session/workflow
           const query: any = {
@@ -45,9 +67,11 @@ export async function GET(request: NextRequest) {
 
           const events = await webhookEventOperations.getWebhookEvents(query);
 
-          if (events.length > 0) {
+          if (events.length > 0 && !isControllerClosed) {
             // Send the latest events
             for (const event of events) {
+              if (isControllerClosed) break;
+
               const eventData = `data: ${JSON.stringify({
                 type: 'webhook_event',
                 event: {
@@ -64,34 +88,43 @@ export async function GET(request: NextRequest) {
                 },
                 timestamp: new Date().toISOString()
               })}\n\n`;
-              controller.enqueue(encoder.encode(eventData));
+              safeEnqueue(eventData);
             }
           }
 
           // Send periodic heartbeat
-          const heartbeat = `data: ${JSON.stringify({
-            type: 'heartbeat',
-            timestamp: new Date().toISOString()
-          })}\n\n`;
-          controller.enqueue(encoder.encode(heartbeat));
+          if (!isControllerClosed) {
+            const heartbeat = `data: ${JSON.stringify({
+              type: 'heartbeat',
+              timestamp: new Date().toISOString()
+            })}\n\n`;
+            safeEnqueue(heartbeat);
+          }
 
         } catch (error) {
           console.error('SSE polling error:', error);
 
           // Send error message to client
-          const errorData = `data: ${JSON.stringify({
-            type: 'error',
-            message: error instanceof Error ? error.message : 'Unknown error',
-            timestamp: new Date().toISOString()
-          })}\n\n`;
-          controller.enqueue(encoder.encode(errorData));
+          if (!isControllerClosed) {
+            const errorData = `data: ${JSON.stringify({
+              type: 'error',
+              message: error instanceof Error ? error.message : 'Unknown error',
+              timestamp: new Date().toISOString()
+            })}\n\n`;
+            safeEnqueue(errorData);
+          }
         }
-      }, 2000); // Poll every 2 seconds
+      }, 10000); // Poll every 10 seconds (reduced from 2s for performance)
 
       // Clean up on client disconnect
       request.signal.addEventListener('abort', () => {
+        isControllerClosed = true;
         clearInterval(pollInterval);
-        controller.close();
+        try {
+          controller.close();
+        } catch (error) {
+          // Controller might already be closed, ignore the error
+        }
       });
     }
   });

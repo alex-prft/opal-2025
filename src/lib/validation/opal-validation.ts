@@ -484,7 +484,7 @@ export function validateOSAWorkflowData(workflowData: any): WorkflowValidationRe
 
   if (!isValidArray(workflowData?.agent_data, 1)) {
     errors.push('agent_data must be an array with at least one agent');
-    return { is_valid: false, errors, warnings, agent_results };
+    return { is_valid: false, errors, warnings, agent_results: agentResults };
   }
 
   // Optional fields validation
@@ -562,7 +562,7 @@ export function validateOSAWorkflowData(workflowData: any): WorkflowValidationRe
     is_valid: isValid,
     errors,
     warnings,
-    agent_results,
+    agent_results: agentResults,
     validated_data: isValid ? workflowData as OSAWorkflowParameters : undefined
   };
 }

@@ -60,7 +60,20 @@
     "governance:status": "curl -s http://localhost:3000/api/admin/governance | jq '.overall_status'",
     "governance:pii-scan": "curl -s http://localhost:3000/api/admin/pii-scan | jq",
     "governance:purge-check": "curl -s http://localhost:3000/api/admin/governance?metric=purge-status | jq '.purge_metrics.records_eligible_for_purge'",
-    "governance:validate-all": "npm run governance:health && npm run governance:pii-scan && npm run governance:purge-check"
+    "governance:validate-all": "npm run governance:health && npm run governance:pii-scan && npm run governance:purge-check",
+    "guardrails:init": "npx tsx scripts/test-guardrails-integration.ts",
+    "guardrails:test": "npx tsx scripts/test-guardrails-integration.ts",
+    "guardrails:health": "curl -s http://localhost:3000/api/admin/guardrails-health | jq",
+    "guardrails:health-detailed": "curl -s http://localhost:3000/api/admin/guardrails-health?detailed=true | jq",
+    "guardrails:test-api": "curl -X POST -H 'Content-Type: application/json' -d '{\"action\": \"test_all\"}' http://localhost:3000/api/admin/test-guardrails | jq",
+    "guardrails:migrate": "npx tsx scripts/migrate-to-secure-supabase.ts",
+    "supabase:setup": "node scripts/apply-supabase-migrations.js",
+    "supabase:setup-and-test": "npm run supabase:setup && npm run guardrails:test",
+    "guardrails:migrate-analyze": "npx tsx scripts/migrate-to-secure-supabase.ts analyze",
+    "guardrails:migrate-execute": "npx tsx scripts/migrate-to-secure-supabase.ts migrate --confirm",
+    "guardrails:retention-status": "curl -s http://localhost:3000/api/admin/guardrails-health?detailed=true | jq '.detailed.retention_status'",
+    "guardrails:run-retention": "curl -X POST -H 'Content-Type: application/json' -d '{\"action\": \"retention\", \"dryRun\": true}' http://localhost:3000/api/admin/guardrails-health | jq",
+    "guardrails:compliance-report": "curl -X POST -H 'Content-Type: application/json' -d '{\"action\": \"compliance_report\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-12-31\"}' http://localhost:3000/api/admin/guardrails-health | jq"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.1",

@@ -6,9 +6,9 @@ import { intelligentCache } from '@/lib/cache/intelligent-cache-system';
 import { phase1Pipeline } from '@/lib/validation/phase1-integration';
 import type {
   BackgroundJob,
-  DEFAULT_BACKGROUND_JOB_CONFIG,
   BackgroundJobConfig
 } from '@/lib/types/phase2-database';
+import { DEFAULT_BACKGROUND_JOB_CONFIG } from '@/lib/types/phase2-database';
 
 export interface JobExecutionResult {
   job_id: string;

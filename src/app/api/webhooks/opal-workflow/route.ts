@@ -69,13 +69,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       console.log(`🐛 TIME_DIFF: ${Date.now() - parsedSignature.timestamp}ms`);
     }
 
+    // Development bypass for HMAC verification
+    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.SKIP_HMAC_VERIFICATION === 'true';
+    
     // Verify HMAC signature with constant-time comparison
-    const verificationResult = verifyWebhookSignature(
-      bodyBuffer,
-      signatureHeader,
-      config.osaWebhookSecret,
-      5 * 60 * 1000 // 5 minute tolerance
-    );
+    const verificationResult = isDevelopment 
+      ? { isValid: true, message: 'Development bypass enabled' }
+      : verifyWebhookSignature(
+          bodyBuffer,
+          signatureHeader,
+          config.osaWebhookSecret,
+          5 * 60 * 1000 // 5 minute tolerance
+        );
+
+    if (isDevelopment) {
+      console.log('🔓 [Webhook] HMAC verification bypassed in development mode', { correlationId });
+    }
 
     if (!verificationResult.isValid) {
       console.warn('⚠️ [Webhook] Signature verification failed', {

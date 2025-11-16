@@ -3,6 +3,7 @@
 import React from 'react';
 import { DiagnosticsPanel } from '@/components/DiagnosticsPanel';
 import RecentDataComponent from '@/components/RecentDataComponent';
+import RecentDataErrorBoundary from '@/components/shared/RecentDataErrorBoundary';
 
 export default function AdminPage() {
 
@@ -22,7 +23,13 @@ export default function AdminPage() {
         {/* Left Column */}
         <div className="space-y-8" id="admin-left-column">
           {/* Recent Data Component - Reusable webhook and agent status monitoring */}
-          <RecentDataComponent />
+          <RecentDataErrorBoundary
+            onError={(error, errorInfo) => {
+              console.error('🚨 [AdminPage] RecentDataComponent error caught:', error, errorInfo);
+            }}
+          >
+            <RecentDataComponent />
+          </RecentDataErrorBoundary>
         </div>
         {/* End Left Column */}
 

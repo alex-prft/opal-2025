@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
       error_details: event.error_details,
       payload_size_bytes: event.payload_size_bytes,
       http_status: event.http_status,
-      dedup_hash: event.dedup_hash.substring(0, 12) + '...', // Truncated for display
+      dedup_hash: event.dedup_hash ? event.dedup_hash.substring(0, 12) + '...' : 'N/A', // Truncated for display
       payload_preview: truncatePayloadForPreview(event.payload_json, 150)
     }));
 

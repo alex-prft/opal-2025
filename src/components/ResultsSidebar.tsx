@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import RecentDataComponent from '@/components/RecentDataComponent';
+import RecentDataErrorBoundary from '@/components/shared/RecentDataErrorBoundary';
 import { opalMapping } from '@/data/opal-mapping';
 import {
   Target,
@@ -318,7 +319,13 @@ export default function ResultsSidebar({ }: ResultsSidebarProps) {
       {/* Recent Data Component - Only show when not collapsed */}
       {!isCollapsed && (
         <div className="p-4 flex-shrink-0">
-          <RecentDataComponent compact={true} />
+          <RecentDataErrorBoundary
+            onError={(error, errorInfo) => {
+              console.error('🚨 [ResultsSidebar] RecentDataComponent error caught:', error, errorInfo);
+            }}
+          >
+            <RecentDataComponent compact={true} />
+          </RecentDataErrorBoundary>
         </div>
       )}
 

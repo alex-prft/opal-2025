@@ -1,0 +1,982 @@
+[
+  {
+    "id": "workflow-completed-1763232725378",
+    "event_type": "workflow.completed",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:52:05.378Z",
+    "success": true,
+    "processing_time_ms": 5000,
+    "metadata": {
+      "total_agents": 9,
+      "successful_agents": 0,
+      "total_duration_ms": 30000,
+      "orchestrator": "strategy_workflow",
+      "simulation": true
+    }
+  },
+  {
+    "id": "agent-event-1763232423892-8",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "cmp_organizer",
+    "agent_name": "CMP Organizer",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:47:02.892Z",
+    "success": true,
+    "processing_time_ms": 2497.4773753552045
+  },
+  {
+    "id": "agent-event-1763232423689-7",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "roadmap_generator",
+    "agent_name": "Roadmap Generator",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:47:01.689Z",
+    "success": true,
+    "processing_time_ms": 1455.0154611939643
+  },
+  {
+    "id": "agent-event-1763232423470-6",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "customer_journey",
+    "agent_name": "Customer Journey",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:47:00.470Z",
+    "success": true,
+    "processing_time_ms": 1233.1582759262876
+  },
+  {
+    "id": "agent-event-1763232423265-5",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "personalization_idea_generator",
+    "agent_name": "Personalization Ideas",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:59.265Z",
+    "success": false,
+    "processing_time_ms": 1676.031426992053
+  },
+  {
+    "id": "agent-event-1763232423063-4",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "experiment_blueprinter",
+    "agent_name": "Experiment Blueprinter",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:58.063Z",
+    "success": true,
+    "processing_time_ms": 1300.6746116461145
+  },
+  {
+    "id": "agent-event-1763232422857-3",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "audience_suggester",
+    "agent_name": "Audience Suggester",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:56.857Z",
+    "success": true,
+    "processing_time_ms": 2284.547307542247
+  },
+  {
+    "id": "agent-event-1763232422651-2",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "geo_audit",
+    "agent_name": "Geographic Audit",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:55.651Z",
+    "success": true,
+    "processing_time_ms": 1457.8789248933863
+  },
+  {
+    "id": "agent-event-1763232422447-1",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "content_review",
+    "agent_name": "Content Review",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:54.447Z",
+    "success": true,
+    "processing_time_ms": 1071.8438634573558
+  },
+  {
+    "id": "agent-event-1763232422244-0",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "integration_health",
+    "agent_name": "Integration Health",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:46:53.244Z",
+    "success": true,
+    "processing_time_ms": 1402.0872075244708
+  },
+  {
+    "id": "workflow-trigger-1763232422218",
+    "event_type": "workflow.triggered",
+    "workflow_id": "strategy-simulation-1763232422209",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-qgx5cd7vr",
+    "received_at": "2025-11-15T18:47:02.218Z",
+    "success": true,
+    "processing_time_ms": 450,
+    "metadata": {
+      "orchestrator": "strategy_workflow",
+      "agent_count": 9,
+      "simulation": true
+    }
+  },
+  {
+    "id": "workflow-completed-1763232088936",
+    "event_type": "workflow.completed",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:41:28.936Z",
+    "success": true,
+    "processing_time_ms": 5000,
+    "metadata": {
+      "total_agents": 9,
+      "successful_agents": 0,
+      "total_duration_ms": 30000,
+      "orchestrator": "strategy_workflow",
+      "simulation": true
+    }
+  },
+  {
+    "id": "agent-event-1763232045437-8",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "cmp_organizer",
+    "agent_name": "CMP Organizer",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:44.437Z",
+    "success": true,
+    "processing_time_ms": 1688.8667587211469
+  },
+  {
+    "id": "agent-event-1763232045233-7",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "roadmap_generator",
+    "agent_name": "Roadmap Generator",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:43.233Z",
+    "success": true,
+    "processing_time_ms": 634.0282493846496
+  },
+  {
+    "id": "agent-event-1763232045031-6",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "customer_journey",
+    "agent_name": "Customer Journey",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:42.031Z",
+    "success": true,
+    "processing_time_ms": 773.4300813594368
+  },
+  {
+    "id": "agent-event-1763232044828-5",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "personalization_idea_generator",
+    "agent_name": "Personalization Ideas",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:40.828Z",
+    "success": true,
+    "processing_time_ms": 1465.8701571010097
+  },
+  {
+    "id": "agent-event-1763232044624-4",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "experiment_blueprinter",
+    "agent_name": "Experiment Blueprinter",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:39.624Z",
+    "success": true,
+    "processing_time_ms": 2426.386627727141
+  },
+  {
+    "id": "agent-event-1763232044421-3",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "audience_suggester",
+    "agent_name": "Audience Suggester",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:38.421Z",
+    "success": true,
+    "processing_time_ms": 1047.1796247301609
+  },
+  {
+    "id": "agent-event-1763232044213-2",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "geo_audit",
+    "agent_name": "Geographic Audit",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:37.213Z",
+    "success": true,
+    "processing_time_ms": 912.1573983054602
+  },
+  {
+    "id": "agent-event-1763232043992-1",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "content_review",
+    "agent_name": "Content Review",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:35.992Z",
+    "success": true,
+    "processing_time_ms": 1494.9412709118128
+  },
+  {
+    "id": "agent-event-1763232043788-0",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "integration_health",
+    "agent_name": "Integration Health",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:34.788Z",
+    "success": true,
+    "processing_time_ms": 2304.266065452497
+  },
+  {
+    "id": "workflow-trigger-1763232043777",
+    "event_type": "workflow.triggered",
+    "workflow_id": "strategy-simulation-1763232043769",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-qz3rfgpx3",
+    "received_at": "2025-11-15T18:40:43.777Z",
+    "success": true,
+    "processing_time_ms": 450,
+    "metadata": {
+      "orchestrator": "strategy_workflow",
+      "agent_count": 9,
+      "simulation": true
+    }
+  },
+  {
+    "id": "workflow-completed-1763231981309",
+    "event_type": "workflow.completed",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:41.309Z",
+    "success": true,
+    "processing_time_ms": 5000,
+    "metadata": {
+      "total_agents": 9,
+      "successful_agents": 8,
+      "total_duration_ms": 30000,
+      "orchestrator": "strategy_workflow",
+      "simulation": true
+    }
+  },
+  {
+    "id": "agent-event-1763231980938-8",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "cmp_organizer",
+    "agent_name": "CMP Organizer",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:39.938Z",
+    "success": true,
+    "processing_time_ms": 1519.007335164844
+  },
+  {
+    "id": "agent-event-1763231980722-7",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "roadmap_generator",
+    "agent_name": "Roadmap Generator",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:38.722Z",
+    "success": false,
+    "processing_time_ms": 1980.9932087175528
+  },
+  {
+    "id": "agent-event-1763231980496-6",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "customer_journey",
+    "agent_name": "Customer Journey",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:37.496Z",
+    "success": true,
+    "processing_time_ms": 1828.4132530174077
+  },
+  {
+    "id": "agent-event-1763231980293-5",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "personalization_idea_generator",
+    "agent_name": "Personalization Ideas",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:36.293Z",
+    "success": true,
+    "processing_time_ms": 955.9704158019442
+  },
+  {
+    "id": "agent-event-1763231980090-4",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "experiment_blueprinter",
+    "agent_name": "Experiment Blueprinter",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:35.090Z",
+    "success": true,
+    "processing_time_ms": 1152.2769100584433
+  },
+  {
+    "id": "agent-event-1763231979887-3",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "audience_suggester",
+    "agent_name": "Audience Suggester",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:33.887Z",
+    "success": true,
+    "processing_time_ms": 1838.7545757411244
+  },
+  {
+    "id": "agent-event-1763231979666-2",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "geo_audit",
+    "agent_name": "Geographic Audit",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:32.666Z",
+    "success": true,
+    "processing_time_ms": 2409.863731627905
+  },
+  {
+    "id": "agent-event-1763231979445-1",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "content_review",
+    "agent_name": "Content Review",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:31.445Z",
+    "success": true,
+    "processing_time_ms": 1488.1817686409922
+  },
+  {
+    "id": "agent-event-1763231979240-0",
+    "event_type": "agent.execution",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "integration_health",
+    "agent_name": "Integration Health",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:30.240Z",
+    "success": true,
+    "processing_time_ms": 606.2268529144727
+  },
+  {
+    "id": "workflow-trigger-1763231979228",
+    "event_type": "workflow.triggered",
+    "workflow_id": "strategy-simulation-1763231979223",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "sim-session-u28oe17sz",
+    "received_at": "2025-11-15T18:39:39.228Z",
+    "success": true,
+    "processing_time_ms": 450,
+    "metadata": {
+      "orchestrator": "strategy_workflow",
+      "agent_count": 9,
+      "simulation": true
+    }
+  },
+  {
+    "id": "agent-event-1763230813453-0",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "integration_health",
+    "agent_name": "integration_health",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:13.453Z",
+    "success": true,
+    "processing_time_ms": 625
+  },
+  {
+    "id": "agent-event-1763230813516-1",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "content_review",
+    "agent_name": "content_review",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:12.453Z",
+    "success": true,
+    "processing_time_ms": 2043
+  },
+  {
+    "id": "agent-event-1763230813516-2",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "geo_audit",
+    "agent_name": "geo_audit",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:11.453Z",
+    "success": true,
+    "processing_time_ms": 576
+  },
+  {
+    "id": "agent-event-1763230813516-3",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "audience_suggester",
+    "agent_name": "audience_suggester",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:10.453Z",
+    "success": true,
+    "processing_time_ms": 2277
+  },
+  {
+    "id": "agent-event-1763230813516-4",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "experiment_blueprinter",
+    "agent_name": "experiment_blueprinter",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:09.453Z",
+    "success": true,
+    "processing_time_ms": 758
+  },
+  {
+    "id": "agent-event-1763230813516-5",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "personalization_idea_generator",
+    "agent_name": "personalization_idea_generator",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:08.453Z",
+    "success": true,
+    "processing_time_ms": 818
+  },
+  {
+    "id": "force-sync-1763230813516",
+    "event_type": "opal.force_sync",
+    "workflow_id": "force-sync-1763230813516",
+    "workflow_name": "OPAL Force Sync",
+    "session_id": "force-sync-session",
+    "correlation_id": "force-sync-1763230813516-correlation",
+    "received_at": "2025-11-15T18:20:08.453Z",
+    "success": true,
+    "processing_time_ms": 1200
+  },
+  {
+    "id": "agent-event-1763230813516-6",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "customer_journey",
+    "agent_name": "customer_journey",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:07.453Z",
+    "success": true,
+    "processing_time_ms": 1879
+  },
+  {
+    "id": "agent-event-1763230813516-7",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "roadmap_generator",
+    "agent_name": "roadmap_generator",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:06.453Z",
+    "success": true,
+    "processing_time_ms": 2340
+  },
+  {
+    "id": "agent-event-1763230813516-8",
+    "event_type": "agent.execution",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "agent_id": "cmp_organizer",
+    "agent_name": "cmp_organizer",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:05.453Z",
+    "success": true,
+    "processing_time_ms": 623
+  },
+  {
+    "id": "workflow-trigger-1763230813516",
+    "event_type": "workflow.triggered",
+    "workflow_id": "workflow-1763230813453-agent-status",
+    "workflow_name": "OPAL Strategy Assistant Workflow",
+    "session_id": "recent-data-widget",
+    "received_at": "2025-11-15T18:20:03.453Z",
+    "success": true,
+    "processing_time_ms": 450
+  },
+  {
+    "id": "event-1763234598880-m0b3e",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": false,
+    "received_at": "2025-11-15T19:23:18.880Z",
+    "processing_time_ms": 6,
+    "error_details": "Signature verification failed: Signature verification failed",
+    "payload_size_bytes": 2,
+    "dedup_hash": "invalid-webhook-1763234598874-flnccx",
+    "http_status": 401,
+    "payload_json": {}
+  },
+  {
+    "id": "event-1763234608237-0kp61",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": false,
+    "received_at": "2025-11-15T19:23:28.237Z",
+    "processing_time_ms": 7,
+    "error_details": "Signature verification failed: Signature length mismatch",
+    "payload_size_bytes": 2,
+    "dedup_hash": "invalid-webhook-1763234608230-ddwiu9",
+    "http_status": 401,
+    "payload_json": {}
+  },
+  {
+    "id": "event-1763234621727-bmvfbh",
+    "workflow_id": "debug-test-123",
+    "agent_id": "integration_health",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:23:41.727Z",
+    "processing_time_ms": 12,
+    "error_details": null,
+    "payload_size_bytes": 244,
+    "dedup_hash": "44f3ecff7f4ff85eec5e0da13177ee5886ca56f3702d3546243f8a46936adb4a",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "debug-test-123",
+      "agent_id": "integration_health",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "execution_time_ms": 2000
+      },
+      "execution_status": "success",
+      "offset": 1,
+      "timestamp": "2025-11-15T19:23:41.622Z",
+      "metadata": {
+        "test": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234637909-8iw01p",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "integration_health",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:23:57.909Z",
+    "processing_time_ms": 35,
+    "error_details": null,
+    "payload_size_bytes": 453,
+    "dedup_hash": "620e7ad0f8a021c28c8fe119aa1e630d66a24f3bec2b6b74d904f82af445c947",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "integration_health",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "integration_health executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from integration_health"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 3129
+      },
+      "execution_status": "success",
+      "offset": 30,
+      "timestamp": "2025-11-15T19:23:57.597Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234638481-g127v",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "content_review",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:23:58.481Z",
+    "processing_time_ms": 9,
+    "error_details": null,
+    "payload_size_bytes": 441,
+    "dedup_hash": "b177f9551fa9f6129b2f1791119d5b361e745f5fcc32d975b55c7ef5eb461ca1",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "content_review",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "content_review executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from content_review"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 5598
+      },
+      "execution_status": "success",
+      "offset": 37,
+      "timestamp": "2025-11-15T19:23:58.436Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234639059-x5zn0q",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "geo_audit",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:23:59.059Z",
+    "processing_time_ms": 48,
+    "error_details": null,
+    "payload_size_bytes": 425,
+    "dedup_hash": "226cc7f625d8fc363c36c5b837af0558ece750dfa3404f7b7605672175e119f4",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "geo_audit",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "geo_audit executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from geo_audit"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 2925
+      },
+      "execution_status": "success",
+      "offset": 9,
+      "timestamp": "2025-11-15T19:23:58.994Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234639607-sr2uq",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "audience_suggester",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:23:59.607Z",
+    "processing_time_ms": 18,
+    "error_details": null,
+    "payload_size_bytes": 453,
+    "dedup_hash": "c2d18485d9b45723d4cae36ec68ddc5bee76d315edd4186065766eb82960a19e",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "audience_suggester",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "audience_suggester executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from audience_suggester"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 2447
+      },
+      "execution_status": "success",
+      "offset": 43,
+      "timestamp": "2025-11-15T19:23:59.575Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234640158-r5eslh",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "experiment_blueprinter",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:00.158Z",
+    "processing_time_ms": 24,
+    "error_details": null,
+    "payload_size_bytes": 465,
+    "dedup_hash": "5dabd5a166ed184b2a094fc1e6bbcf183d40758bd857ed6343aa11f4c6195463",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "experiment_blueprinter",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "experiment_blueprinter executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from experiment_blueprinter"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 5674
+      },
+      "execution_status": "success",
+      "offset": 50,
+      "timestamp": "2025-11-15T19:24:00.119Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234640708-cz25l7",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "personalization_idea_generator",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:00.708Z",
+    "processing_time_ms": 25,
+    "error_details": null,
+    "payload_size_bytes": 489,
+    "dedup_hash": "ac4a7bc81073043e2eddd09d655345b344b714d892d60829117b220dfe817509",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "personalization_idea_generator",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "personalization_idea_generator executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from personalization_idea_generator"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 4998
+      },
+      "execution_status": "success",
+      "offset": 31,
+      "timestamp": "2025-11-15T19:24:00.668Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234641272-2uw6pt",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "customer_journey",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:01.272Z",
+    "processing_time_ms": 13,
+    "error_details": null,
+    "payload_size_bytes": 447,
+    "dedup_hash": "d5d8586283ad143b7f29637135a85a3b89cbfa7a55013f765ac23590391e2765",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "customer_journey",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "customer_journey executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from customer_journey"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 2706
+      },
+      "execution_status": "success",
+      "offset": 47,
+      "timestamp": "2025-11-15T19:24:01.217Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234641484-1t71ov",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:01.484Z",
+    "processing_time_ms": 5,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"agent_id\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"array\",\n    \"path\": [\n      \"agent_data\"\n    ],\n    \"message\": \"Expected object, received array\"\n  },\n  {\n    \"expected\": \"'success' | 'failure' | 'pending' | 'timeout'\",\n    \"received\": \"undefined\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"execution_status\"\n    ],\n    \"message\": \"Required\"\n  }\n]",
+    "payload_size_bytes": 197,
+    "dedup_hash": "parse-error-webhook-1763234641479-wnltq",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\": \"test-workflow-fix\", \"agent_data\": [{\"agent_id\": \"content_review\", \"execution_results\": {\"summary\": \"Test execution\"}, \"metadata\": {\"success\": true}}]}"
+    }
+  },
+  {
+    "id": "event-1763234641816-kme7q",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "roadmap_generator",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:01.816Z",
+    "processing_time_ms": 7,
+    "error_details": null,
+    "payload_size_bytes": 450,
+    "dedup_hash": "8be0feb005ee0434181a845ac792abc9b28efd77f0e4a9f9e591f7248ba06ed4",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "roadmap_generator",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "roadmap_generator executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from roadmap_generator"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 2365
+      },
+      "execution_status": "success",
+      "offset": 99,
+      "timestamp": "2025-11-15T19:24:01.782Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234642355-wljhdr",
+    "workflow_id": "test-corrected-flow-1763234637597",
+    "agent_id": "cmp_organizer",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:24:02.355Z",
+    "processing_time_ms": 20,
+    "error_details": null,
+    "payload_size_bytes": 438,
+    "dedup_hash": "ccd57f469ec7c5a64e1743f68d7799341e42c4aa4844f4163045b9629630bed7",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-corrected-flow-1763234637597",
+      "agent_id": "cmp_organizer",
+      "agent_data": {
+        "status": "completed",
+        "success": true,
+        "insights": [
+          "cmp_organizer executed successfully"
+        ],
+        "recommendations": [
+          "Recommendation from cmp_organizer"
+        ],
+        "data_quality_score": 0.95,
+        "execution_time_ms": 1474
+      },
+      "execution_status": "success",
+      "offset": 18,
+      "timestamp": "2025-11-15T19:24:02.324Z",
+      "metadata": {
+        "agent_version": "1.0.0",
+        "simulation": true,
+        "test_run": true
+      }
+    }
+  },
+  {
+    "id": "event-1763234816442-dbd14b",
+    "workflow_id": "test-workflow-fix",
+    "agent_id": "content_review",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-15T19:26:56.442Z",
+    "processing_time_ms": 7,
+    "error_details": null,
+    "payload_size_bytes": 184,
+    "dedup_hash": "155e5fe87304c87c182cd14419361047806a0bce8ac4123e2ea39ab78e9dc880",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-workflow-fix",
+      "agent_id": "content_review",
+      "agent_data": {
+        "execution_results": {
+          "summary": "Test execution"
+        },
+        "metadata": {
+          "success": true
+        }
+      },
+      "execution_status": "success"
+    }
+  }
+]

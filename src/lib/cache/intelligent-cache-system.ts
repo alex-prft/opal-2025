@@ -6,9 +6,9 @@ import { claudeIntegration } from '@/lib/claude/claude-api-integration';
 import { pageValidator } from '@/lib/validation/page-validation-core';
 import type {
   CacheManagement,
-  DEFAULT_CACHE_CONFIG,
   CacheConfig
 } from '@/lib/types/phase2-database';
+import { DEFAULT_CACHE_CONFIG } from '@/lib/types/phase2-database';
 import crypto from 'crypto';
 
 export interface CacheEntry {

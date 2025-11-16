@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    // Performance optimizations
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    // Performance optimizations for development
+    "preserveWatchOutput": true,
+    "assumeChangesOnlyAffectDirectDependencies": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -32,5 +36,15 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "tests"]
+  "exclude": [
+    "node_modules",
+    "tests",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "coverage",
+    "dist",
+    "build",
+    "data/**/*.json",
+    "logs/**/*"
+  ]
 }

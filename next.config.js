@@ -1,5 +1,105 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ============================================================================
+  // PERFORMANCE OPTIMIZATIONS
+  // ============================================================================
+  
+  // Next.js 16.0.1 compatible optimizations
+  experimental: {
+    optimizeCss: true,
+    // Reduce compilation overhead
+    webVitalsAttribution: ['CLS', 'LCP'],
+    // Optimize import resolution
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'date-fns'
+    ]
+  },
+
+  // Server external packages (updated from deprecated serverComponentsExternalPackages)
+  serverExternalPackages: [
+    'sharp',
+    'ioredis',
+    '@supabase/supabase-js',
+    'kafkajs'
+  ],
+
+  // Compiler optimizations
+  compiler: {
+    // Remove console.logs in production, keep in development
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn']
+    } : false,
+    // React optimizations
+    reactRemoveProperties: process.env.NODE_ENV === 'production',
+    // Optimize styled-components if used
+    styledComponents: true
+  },
+
+  // Bundle analyzer and optimization
+  webpack: (config, { dev, isServer }) => {
+    // Development optimizations
+    if (dev) {
+      // Faster source maps in development
+      config.devtool = 'eval-source-map';
+      
+      // Reduce bundle size in development
+      config.optimization = {
+        ...config.optimization,
+        providedExports: false,
+        usedExports: false,
+        sideEffects: false,
+      };
+    }
+
+    // Optimize imports and reduce compilation time
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // Optimize common library imports
+      'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+      'react/jsx-dev-runtime': require.resolve('react/jsx-dev-runtime'),
+    };
+
+    // Optimize external dependencies
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      };
+    }
+
+    return config;
+  },
+
+  // Image optimizations (updated for Next.js 16.0.1)
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**',
+      },
+    ],
+    deviceSizes: [640, 768, 1024, 1280, 1600],
+    imageSizes: [16, 32, 48, 64, 96],
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
+  },
+
+  // Output optimization for production
+  output: 'standalone',
+  
+  // Disable unnecessary features to reduce compilation time
+  poweredByHeader: false,
+  compress: true,
+  
+  // React strict mode for better development experience
+  reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },

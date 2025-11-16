@@ -1,0 +1,136 @@
+{
+  "created_at": "2025-11-15T18:01:55.423Z",
+  "last_updated": "2025-11-15T18:01:55.423Z",
+  "events": [
+    {
+      "id": "agent-event-1763229715424-0",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "integration_health",
+      "agent_name": "integration_health",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:55.423Z",
+      "success": true,
+      "processing_time_ms": 1440
+    },
+    {
+      "id": "agent-event-1763229715430-1",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "content_review",
+      "agent_name": "content_review",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:54.423Z",
+      "success": true,
+      "processing_time_ms": 2257
+    },
+    {
+      "id": "agent-event-1763229715430-2",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "geo_audit",
+      "agent_name": "geo_audit",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:53.423Z",
+      "success": true,
+      "processing_time_ms": 727
+    },
+    {
+      "id": "agent-event-1763229715430-3",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "audience_suggester",
+      "agent_name": "audience_suggester",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:52.423Z",
+      "success": false,
+      "processing_time_ms": 2053
+    },
+    {
+      "id": "agent-event-1763229715430-4",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "experiment_blueprinter",
+      "agent_name": "experiment_blueprinter",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:51.423Z",
+      "success": true,
+      "processing_time_ms": 586
+    },
+    {
+      "id": "agent-event-1763229715430-5",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "personalization_idea_generator",
+      "agent_name": "personalization_idea_generator",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:50.423Z",
+      "success": false,
+      "processing_time_ms": 2292
+    },
+    {
+      "id": "force-sync-1763229715430",
+      "event_type": "opal.force_sync",
+      "workflow_id": "force-sync-1763229715430",
+      "workflow_name": "OPAL Force Sync",
+      "session_id": "force-sync-session",
+      "correlation_id": "force-sync-1763229715430-correlation",
+      "received_at": "2025-11-15T18:01:50.423Z",
+      "success": true,
+      "processing_time_ms": 1200
+    },
+    {
+      "id": "agent-event-1763229715430-6",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "customer_journey",
+      "agent_name": "customer_journey",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:49.423Z",
+      "success": true,
+      "processing_time_ms": 844
+    },
+    {
+      "id": "agent-event-1763229715430-7",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "roadmap_generator",
+      "agent_name": "roadmap_generator",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:48.423Z",
+      "success": true,
+      "processing_time_ms": 1695
+    },
+    {
+      "id": "agent-event-1763229715430-8",
+      "event_type": "agent.execution",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "agent_id": "cmp_organizer",
+      "agent_name": "cmp_organizer",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:47.423Z",
+      "success": true,
+      "processing_time_ms": 1924
+    },
+    {
+      "id": "workflow-trigger-1763229715430",
+      "event_type": "workflow.triggered",
+      "workflow_id": "workflow-1763229715423-agent-status",
+      "workflow_name": "OPAL Strategy Assistant Workflow",
+      "session_id": "recent-data-widget",
+      "received_at": "2025-11-15T18:01:45.423Z",
+      "success": true,
+      "processing_time_ms": 450
+    }
+  ],
+  "count": 11
+}

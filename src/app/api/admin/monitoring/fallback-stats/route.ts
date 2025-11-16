@@ -7,15 +7,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+// Lazy initialization of Supabase client
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase configuration');
+  }
+
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 export async function GET(request: NextRequest) {
   try {
     console.log('[Admin API] Fetching fallback statistics...');
+
+    // Get Supabase client with error handling
+    let supabase;
+    try {
+      supabase = getSupabaseClient();
+    } catch (configError) {
+      console.warn('[Admin API] Supabase configuration not available, returning fallback stats');
+      // Return fallback stats when Supabase is not configured
+      return NextResponse.json({
+        total_fallback_requests: 0,
+        by_agent: [],
+        by_day: [],
+        fallback_rate: 0,
+        last_updated: new Date().toISOString(),
+        note: 'Using fallback stats - Supabase not configured'
+      });
+    }
 
     // Fetch fallback usage from the last 7 days
     const { data: fallbackData, error: fallbackError } = await supabase

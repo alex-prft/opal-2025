@@ -78,7 +78,7 @@ export function useOPALStatusPolling(
   const pollStartTimeRef = useRef<number | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const attemptCountRef = useRef<number>(0);
-  const maxAttempts = 20; // Maximum 20 attempts to prevent infinite loops
+  const maxAttempts = 5; // Maximum 5 attempts to prevent infinite loops
 
   // Circuit breaker state
   const [circuitBreakerOpen, setCircuitBreakerOpen] = useState(false);
@@ -105,6 +105,32 @@ export function useOPALStatusPolling(
       setError('Service temporarily unavailable - too many failures');
     }
   }, [maxFailures]);
+
+  // Validate workflow exists before starting polling
+  const validateWorkflowExists = useCallback(async (workflowId: string): Promise<boolean> => {
+    if (!workflowId) return false;
+
+    try {
+      console.log(`🔍 [OPAL Polling] Validating workflow exists: ${workflowId}`);
+
+      const response = await fetch(`/api/opal/workflow-status/${workflowId}`, {
+        method: 'HEAD', // Use HEAD request for validation to avoid full response
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+
+      const exists = response.ok;
+
+      if (!exists && response.status === 404) {
+        console.log(`❌ [OPAL Polling] Workflow does not exist: ${workflowId}`);
+        setError(`Workflow ${workflowId} does not exist or is no longer active`);
+      }
+
+      return exists;
+    } catch (error) {
+      console.error(`❌ [OPAL Polling] Validation error for ${workflowId}:`, error);
+      return false; // Assume doesn't exist on validation error
+    }
+  }, []);
 
   // Fetch OPAL status with circuit breaker protection
   const fetchStatus = useCallback(async (workflowId: string): Promise<OPALStatusResponse | null> => {
@@ -186,7 +212,7 @@ export function useOPALStatusPolling(
   }, [circuitBreakerOpen, resetCircuitBreaker, handleFailure]);
 
   // Start polling with enhanced safety mechanisms
-  const startPolling = useCallback((workflowId: string) => {
+  const startPolling = useCallback(async (workflowId: string) => {
     if (isPolling || !workflowId || circuitBreakerOpen) {
       if (circuitBreakerOpen) {
         console.log('🚫 [OPAL Polling] Cannot start - circuit breaker is open');
@@ -195,7 +221,14 @@ export function useOPALStatusPolling(
       return;
     }
 
-    console.log(`🔄 [OPAL Polling] Starting polling for workflow: ${workflowId}`);
+    // Validate workflow exists before starting polling
+    const workflowExists = await validateWorkflowExists(workflowId);
+    if (!workflowExists) {
+      console.log(`❌ [OPAL Polling] Skipping polling - workflow does not exist: ${workflowId}`);
+      return;
+    }
+
+    console.log(`🔄 [OPAL Polling] Starting polling for validated workflow: ${workflowId}`);
     setIsPolling(true);
     setError(null);
     pollStartTimeRef.current = Date.now();
@@ -339,9 +372,12 @@ export function useOPALStatusPolling(
 
     console.log(`🔄 [OPAL Polling] Effect: workflowId=${workflowId}, enabled=${enabled}, circuit=${circuitBreakerOpen ? 'OPEN' : 'CLOSED'}`);
 
-    // Auto-start polling if not already polling
+    // Auto-start polling if not already polling (async call)
     if (!isPolling) {
-      startPolling(workflowId);
+      startPolling(workflowId).catch((error) => {
+        console.error('❌ [OPAL Polling] Error starting polling:', error);
+        setError('Failed to start polling: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      });
     }
 
     return () => {

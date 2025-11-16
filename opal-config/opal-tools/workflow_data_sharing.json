@@ -67,32 +67,47 @@
       "input_schema": {
         "type": "object",
         "properties": {
-          "agent_id": {
+          "agent_name": {
             "type": "string",
-            "description": "ID of the agent sending data"
+            "description": "Name of the agent sending data (matches OSA endpoint schema)"
           },
-          "agent_data": {
+          "execution_results": {
             "type": "object",
-            "description": "Agent execution results and insights"
+            "description": "Agent execution results and insights (matches OSA endpoint schema)"
           },
           "workflow_id": {
             "type": "string",
             "description": "Unique workflow execution identifier"
           },
-          "execution_status": {
-            "type": "string",
-            "description": "Current execution status (in_progress, completed, failed, or partial)"
-          },
-          "progress_percentage": {
-            "type": "number",
-            "description": "Workflow completion percentage (0-100)"
+          "metadata": {
+            "type": "object",
+            "description": "Agent execution metadata including timestamps, success status, and quality metrics",
+            "properties": {
+              "execution_status": {
+                "type": "string",
+                "description": "Current execution status (in_progress, completed, failed, or partial)"
+              },
+              "execution_time_ms": {
+                "type": "number",
+                "description": "Agent execution time in milliseconds"
+              },
+              "timestamp": {
+                "type": "string",
+                "description": "ISO timestamp of execution"
+              },
+              "success": {
+                "type": "boolean",
+                "description": "Whether the agent execution was successful"
+              }
+            }
           },
           "webhook_endpoint": {
             "type": "string",
-            "description": "OSA webhook endpoint (agent-data or workflow-results)"
+            "description": "OSA webhook endpoint (webhooks/opal-workflow or opal/workflow-results)",
+            "default": "webhooks/opal-workflow"
           }
         },
-        "required": ["agent_id", "agent_data", "workflow_id", "execution_status"]
+        "required": ["agent_name", "execution_results", "workflow_id", "metadata"]
       }
     },
     {
@@ -145,14 +160,31 @@
     }
   ],
   "authentication": {
-    "type": "header",
-    "header_name": "Authorization",
-    "header_value": "Bearer ${OPAL_WORKFLOW_TOKEN}"
+    "type": "hmac_signature",
+    "signature_algorithm": "sha256",
+    "signature_header": "X-OSA-Signature",
+    "timestamp_included": true,
+    "secret_env_var": "OPAL_WEBHOOK_HMAC_SECRET",
+    "fallback_auth": {
+      "type": "header",
+      "header_name": "Authorization",
+      "header_value": "Bearer ${OPAL_WORKFLOW_TOKEN}"
+    }
   },
   "integration_endpoints": {
-    "data_storage": "https://opal-2025.vercel.app/api/opal/workflow-data",
-    "osa_webhook_agent": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
-    "osa_webhook_results": "https://opal-2025.vercel.app/api/opal/workflow-results",
-    "validation_service": "https://opal-2025.vercel.app/api/opal/validate"
+    "data_storage": "${OSA_BASE_URL}/api/opal/workflow-data",
+    "osa_webhook_agent": "${OSA_BASE_URL}/api/webhooks/opal-workflow",
+    "osa_webhook_results": "${OSA_BASE_URL}/api/opal/workflow-results",
+    "validation_service": "${OSA_BASE_URL}/api/opal/validate"
+  },
+  "environment_config": {
+    "development": {
+      "base_url": "http://localhost:3000",
+      "timeout_ms": 10000
+    },
+    "production": {
+      "base_url": "https://opal-2025.vercel.app",
+      "timeout_ms": 30000
+    }
   }
 }

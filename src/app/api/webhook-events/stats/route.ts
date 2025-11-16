@@ -18,21 +18,17 @@ function detectForceSync(events: any[]) {
   const opalCorrelationId = forceSyncEvent?.correlation_id ||
     (forceSyncEvent?.workflow_id?.startsWith('force-sync-') ? forceSyncEvent.workflow_id : null);
 
-  // For testing, use a recent active workflow correlation ID
-  // In production, this would come from the actual Force Sync response
-  const testCorrelationId = 'force-sync-1763058306856-98zafy3p7bu';
-
   return {
     lastForceSync: forceSyncEvent?.received_at || new Date().toISOString(),
-    forceSyncWorkflowId: forceSyncEvent?.workflow_id || 'test-workflow-' + Date.now(),
+    forceSyncWorkflowId: forceSyncEvent?.workflow_id || null,
     forceSyncSuccess: forceSyncEvent?.success ?? true,
     forceSyncAgentCount: forceSyncEvent ?
-      events.filter(e => e.workflow_id === forceSyncEvent.workflow_id && e.agent_id).length : 3,
-    // OPAL integration fields
-    opalCorrelationId: opalCorrelationId || testCorrelationId,
+      events.filter(e => e.workflow_id === forceSyncEvent.workflow_id && e.agent_id).length : 0,
+    // OPAL integration fields - only return if actual workflow exists
+    opalCorrelationId: opalCorrelationId || null,
     opalWorkflowId: forceSyncEvent?.opal_workflow_id || null,
-    opalStatus: 'in_progress', // Will be updated by UI polling
-    opalProgress: 50 // Will be updated by UI polling
+    opalStatus: forceSyncEvent ? 'in_progress' : null,
+    opalProgress: forceSyncEvent ? 50 : null
   };
 }
 

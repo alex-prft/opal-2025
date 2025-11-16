@@ -1,0 +1,242 @@
+-- OSA OPAL Webhook Events Table
+-- This migration creates the opal_webhook_events table for tracking OPAL workflow events
+
+-- Create OPAL webhook events table
+CREATE TABLE IF NOT EXISTS opal_webhook_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    
+    -- Webhook identification
+    webhook_id TEXT NOT NULL,
+    workflow_id TEXT NOT NULL,
+    agent_id TEXT,
+    
+    -- Event details
+    event_type TEXT NOT NULL CHECK (event_type IN (
+        'workflow_started',
+        'workflow_completed', 
+        'workflow_failed',
+        'agent_execution_started',
+        'agent_execution_completed',
+        'agent_execution_failed',
+        'content_generated',
+        'content_reviewed',
+        'strategy_generated'
+    )),
+    
+    -- Status tracking
+    status TEXT NOT NULL DEFAULT 'received' CHECK (status IN (
+        'received',
+        'processing', 
+        'completed',
+        'failed',
+        'retrying'
+    )),
+    
+    -- Event data
+    event_data JSONB NOT NULL DEFAULT '{}',
+    request_headers JSONB DEFAULT '{}',
+    response_data JSONB DEFAULT '{}',
+    
+    -- Metadata
+    source_ip TEXT,
+    user_agent TEXT,
+    
+    -- Timing information  
+    received_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    processed_at TIMESTAMP WITH TIME ZONE,
+    completed_at TIMESTAMP WITH TIME ZONE,
+    
+    -- Error handling
+    error_message TEXT,
+    retry_count INTEGER DEFAULT 0,
+    max_retries INTEGER DEFAULT 3,
+    
+    -- Audit fields
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create indexes for efficient querying
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_webhook_id ON opal_webhook_events(webhook_id);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_workflow_id ON opal_webhook_events(workflow_id);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_agent_id ON opal_webhook_events(agent_id);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_event_type ON opal_webhook_events(event_type);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_status ON opal_webhook_events(status);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_created_at ON opal_webhook_events(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_processed_at ON opal_webhook_events(processed_at);
+
+-- GIN index for JSONB fields
+CREATE INDEX IF NOT EXISTS idx_opal_webhook_events_event_data ON opal_webhook_events USING gin(event_data);
+
+-- Create updated_at trigger function
+CREATE OR REPLACE FUNCTION update_opal_webhook_events_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger for updated_at
+CREATE TRIGGER trigger_opal_webhook_events_updated_at
+    BEFORE UPDATE ON opal_webhook_events
+    FOR EACH ROW
+    EXECUTE FUNCTION update_opal_webhook_events_updated_at();
+
+-- Note: Audit triggers will be added in future migrations when audit_trigger() function is available
+
+-- Create view for recent webhook events
+CREATE OR REPLACE VIEW opal_webhook_events_recent AS
+SELECT 
+    id,
+    webhook_id,
+    workflow_id,
+    agent_id,
+    event_type,
+    status,
+    event_data->>'summary' as summary,
+    event_data->>'confidence_score' as confidence_score,
+    received_at,
+    processed_at,
+    completed_at,
+    error_message,
+    retry_count,
+    created_at
+FROM opal_webhook_events
+WHERE created_at >= NOW() - INTERVAL '7 days'
+ORDER BY created_at DESC;
+
+-- Create view for webhook event statistics
+CREATE OR REPLACE VIEW opal_webhook_events_stats AS
+SELECT 
+    DATE_TRUNC('hour', created_at) as hour,
+    event_type,
+    status,
+    COUNT(*) as event_count,
+    AVG(retry_count) as avg_retry_count,
+    COUNT(CASE WHEN status = 'completed' THEN 1 END) as successful_events,
+    COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_events,
+    ROUND(
+        (COUNT(CASE WHEN status = 'completed' THEN 1 END)::DECIMAL / COUNT(*)) * 100, 2
+    ) as success_rate_percent
+FROM opal_webhook_events
+WHERE created_at >= NOW() - INTERVAL '24 hours'
+GROUP BY DATE_TRUNC('hour', created_at), event_type, status
+ORDER BY hour DESC, event_count DESC;
+
+-- Function to clean up old webhook events
+CREATE OR REPLACE FUNCTION cleanup_old_webhook_events(retention_days INTEGER DEFAULT 30)
+RETURNS INTEGER AS $$
+DECLARE
+    deleted_count INTEGER;
+BEGIN
+    DELETE FROM opal_webhook_events 
+    WHERE created_at < NOW() - INTERVAL '1 day' * retention_days
+      AND status IN ('completed', 'failed');
+    
+    GET DIAGNOSTICS deleted_count = ROW_COUNT;
+    
+    -- Log cleanup operation
+    INSERT INTO supabase_audit_log (
+        event_type,
+        table_name,
+        operation,
+        details,
+        severity,
+        status
+    ) VALUES (
+        'DATA_CLEANUP',
+        'opal_webhook_events',
+        'cleanup_old_events',
+        jsonb_build_object(
+            'deleted_count', deleted_count,
+            'retention_days', retention_days,
+            'cleanup_timestamp', NOW()
+        ),
+        'low',
+        'success'
+    );
+    
+    RETURN deleted_count;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to get webhook event health metrics
+CREATE OR REPLACE FUNCTION get_webhook_health_metrics()
+RETURNS JSONB AS $$
+DECLARE
+    result JSONB;
+BEGIN
+    SELECT jsonb_build_object(
+        'total_events_24h', (
+            SELECT COUNT(*) FROM opal_webhook_events
+            WHERE created_at >= NOW() - INTERVAL '24 hours'
+        ),
+        'failed_events_24h', (
+            SELECT COUNT(*) FROM opal_webhook_events
+            WHERE created_at >= NOW() - INTERVAL '24 hours'
+              AND status = 'failed'
+        ),
+        'average_processing_time', (
+            SELECT EXTRACT(EPOCH FROM AVG(processed_at - received_at))
+            FROM opal_webhook_events
+            WHERE processed_at IS NOT NULL
+              AND received_at IS NOT NULL
+              AND created_at >= NOW() - INTERVAL '24 hours'
+        ),
+        'pending_events', (
+            SELECT COUNT(*) FROM opal_webhook_events
+            WHERE status IN ('received', 'processing', 'retrying')
+        ),
+        'success_rate_24h', (
+            SELECT ROUND(
+                (COUNT(CASE WHEN status = 'completed' THEN 1 END)::DECIMAL / COUNT(*)) * 100, 2
+            )
+            FROM opal_webhook_events
+            WHERE created_at >= NOW() - INTERVAL '24 hours'
+        )
+    ) INTO result;
+    
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Grant necessary permissions
+GRANT SELECT, INSERT, UPDATE ON opal_webhook_events TO authenticated;
+GRANT SELECT ON opal_webhook_events_recent TO authenticated;
+GRANT SELECT ON opal_webhook_events_stats TO authenticated;
+GRANT EXECUTE ON FUNCTION cleanup_old_webhook_events(INTEGER) TO service_role;
+GRANT EXECUTE ON FUNCTION get_webhook_health_metrics() TO authenticated;
+
+-- Insert sample webhook event for testing
+INSERT INTO opal_webhook_events (
+    webhook_id,
+    workflow_id,
+    agent_id,
+    event_type,
+    status,
+    event_data,
+    source_ip,
+    user_agent
+) VALUES (
+    'sample-webhook-' || gen_random_uuid(),
+    'sample-workflow-' || gen_random_uuid(), 
+    'strategy_workflow',
+    'workflow_completed',
+    'completed',
+    jsonb_build_object(
+        'summary', 'Sample workflow completion event',
+        'confidence_score', 0.85,
+        'processing_time_ms', 1200,
+        'generated_sections', array['summary', 'recommendations', 'timeline']
+    ),
+    '127.0.0.1',
+    'OSA-Webhook-Client/1.0'
+) ON CONFLICT DO NOTHING;
+
+-- Comments for documentation
+COMMENT ON TABLE opal_webhook_events IS 'Stores OPAL workflow webhook events for tracking and monitoring';
+COMMENT ON COLUMN opal_webhook_events.event_data IS 'JSONB field containing workflow execution details and metadata';
+COMMENT ON COLUMN opal_webhook_events.retry_count IS 'Number of retry attempts for failed webhook processing';
+COMMENT ON FUNCTION get_webhook_health_metrics IS 'Returns health metrics for webhook event processing system';
+COMMENT ON VIEW opal_webhook_events_stats IS 'Provides hourly statistics for webhook event monitoring';

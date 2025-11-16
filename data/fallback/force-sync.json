@@ -6,8 +6,8 @@
   "allForceSyncEvents": [],
   "forceSyncHistory": [],
   "data_source": "database",
-  "events_analyzed": 2,
+  "events_analyzed": 1,
   "time_range_hours": 24,
-  "generated_at": "2025-11-13T14:41:05.782Z",
-  "timestamp": "2025-11-13T14:41:05.784Z"
+  "generated_at": "2025-11-15T18:20:32.890Z",
+  "timestamp": "2025-11-15T18:20:33.023Z"
 }

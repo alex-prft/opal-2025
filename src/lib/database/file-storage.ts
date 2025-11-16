@@ -1,6 +1,9 @@
+'use server';
+
 // File-Based Storage for Webhook Events
 // Fallback storage when database is unavailable
 // Uses JSON files with 30-day retention and rotation
+// NOTE: This module uses Node.js 'fs' and must run server-side only
 
 import { promises as fs } from 'fs';
 import path from 'path';

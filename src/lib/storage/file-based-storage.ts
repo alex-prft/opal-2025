@@ -275,7 +275,18 @@ export class FileBasedStorage {
   private static async loadEventsFromFile(filePath: string): Promise<any[]> {
     try {
       const data = await fs.readFile(filePath, 'utf-8');
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      
+      // Handle both array format [events] and object format {events: [events]}
+      if (Array.isArray(parsed)) {
+        return parsed; // Direct array format
+      } else if (parsed && Array.isArray(parsed.events)) {
+        return parsed.events; // Object format with events property
+      } else {
+        // Fallback: return empty array for unexpected formats
+        console.warn('⚠️ [FileStorage] Unexpected file format, returning empty array:', filePath);
+        return [];
+      }
     } catch (error: any) {
       if (error.code === 'ENOENT') {
         // File doesn't exist, return empty array

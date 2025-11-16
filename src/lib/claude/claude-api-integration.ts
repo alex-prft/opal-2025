@@ -4,9 +4,9 @@
 import { supabase, isDatabaseAvailable } from '@/lib/database/supabase-client';
 import type {
   ClaudeEnhancementLifecycle,
-  ClaudeConfig,
-  DEFAULT_CLAUDE_CONFIG
+  ClaudeConfig
 } from '@/lib/types/phase2-database';
+import { DEFAULT_CLAUDE_CONFIG } from '@/lib/types/phase2-database';
 import crypto from 'crypto';
 
 export interface ClaudeEnhancementRequest {
