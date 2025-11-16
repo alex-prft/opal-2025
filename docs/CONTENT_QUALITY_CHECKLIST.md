@@ -11,6 +11,38 @@
 
 This checklist ensures all Results page content meets the quality standards defined in the OSA Content Generation process. Use this for pre-deployment validation, ongoing monitoring, and quality issue resolution.
 
+## 🔄 OPAL Mapping Architecture (November 2025 Update)
+
+### Current Implementation Architecture
+
+The OPAL mapping system uses a sophisticated 3-tier architecture for content organization and delivery:
+
+#### **Data Service Layer**
+- **SimpleOpalDataService** (`src/lib/simple-opal-data-service.ts`): Main data orchestration service
+- **Multi-tier Data Fetching**: Parallel fetching of tier1 (summary), tier2 (KPIs), tier3 (detailed content)
+- **Intelligent Caching**: 5min (tier1), 10min (tier2), 15min (tier3) cache TTLs with Redis fallback
+- **Agent-to-Page Mapping**: Dynamic agent selection based on URL path detection
+
+#### **Widget Rendering System**  
+- **WidgetRenderer** (`src/components/widgets/WidgetRenderer.tsx`): Central widget orchestration
+- **Conditional Rendering**: Path-based widget selection using `useConditionalRenderingContext()`
+- **Specialized Widgets**: 15+ specialized widgets (StrategyPlansWidget, IntegrationHealthWidget, etc.)
+- **Fallback Handling**: Comprehensive error boundaries and "data not available" states
+
+#### **Mapping Configuration Files**
+- **Basic Mapping** (`src/data/opal-mapping.json`): Navigation structures and agent bindings
+- **Enhanced Mapping** (`src/data/enhanced-opal-mapping.json`): Detailed tier mappings with URL patterns
+- **Agent Configurations** (`opal-config/opal-agents/*.json`): Individual agent specifications
+- **Tool Mappings** (`opal-config/opal-mapping/*.json`): Tool integration configurations
+
+#### **Current Data Flow**
+1. **URL Path Detection**: Extract tier1/tier2/tier3 from current pathname
+2. **Agent Selection**: Map page path to appropriate OPAL agent (strategy_workflow, content_review, etc.)
+3. **Data Fetching**: Parallel API calls to `/api/opal/tier1/`, `/tier2/`, `/tier3/` endpoints
+4. **Data Merging**: Combine tier data with confidence scoring and metadata
+5. **Widget Selection**: Conditional rendering based on path matching and widget availability
+6. **Content Rendering**: Specialized widgets render with fallback to generic or skeleton states
+
 ---
 
 ## Pre-Deployment Quality Checklist
@@ -47,12 +79,52 @@ This checklist ensures all Results page content meets the quality standards defi
 - [ ] **PageID Indexing**: Format follows `${tier1}-${tier2}-${tier3}` pattern for unique identification
 - [ ] **Data Freshness**: Tier 1 (<5 min), Tier 2 (<10 min), Tier 3 (<15 min) from agent execution
 
-#### 2.2 OPAL Mapping Integration
+#### 2.2 OPAL Mapping Integration (UPDATED with Implementation Details)
 - [ ] **Agent-to-Widget Binding**: All agent outputs correctly mapped to specific widgets per page
-- [ ] **Enhanced OPAL Mapping**: Leverages existing 25+ mapping files appropriately
+  - ✅ **SimpleOpalDataService** (`src/lib/simple-opal-data-service.ts`) provides unified data fetching
+  - ✅ **WidgetRenderer** (`src/components/widgets/WidgetRenderer.tsx`) handles conditional widget placement
+  - ⚠️ **Agent Source Detection**: `getAgentSourceForPage()` maps pageIds to specific agents (strategy_workflow, content_review, etc.)
+  - ❌ **Missing Integration**: `integration_health` agent not properly bound to DXP Tools pages
+  
+- [ ] **Enhanced OPAL Mapping**: Leverages existing mapping files appropriately
+  - ✅ **Basic Mapping** (`src/data/opal-mapping.json`) - 25+ navigation structures defined
+  - ✅ **Enhanced Mapping** (`src/data/enhanced-opal-mapping.json`) - includes tier_mapping with URL patterns
+  - ⚠️ **Inconsistent Mapping**: Some tier2 sections missing specialized widget implementations
+  - ❌ **Agent Configuration Gap**: Several agents (quick_wins_analyzer, maturity_assessment) not in basic mapping
+  
 - [ ] **Dynamic Mapping Resolution**: Correct mapping selection based on page context (`pageId`)
+  - ✅ **Path Detection**: `useConditionalRenderingContext()` provides tier1/tier2/tier3 detection
+  - ✅ **URL Pattern Matching**: Enhanced mapping includes `url_pattern` for each tier3 page
+  - ⚠️ **Widget Selection Logic**: Complex conditional rendering in `renderTier2WidgetContainer()`
+  - ❌ **Static URL Issue**: Enhanced mapping has duplicate `/engine/results/strategy` static URLs
+  
 - [ ] **Cross-Agent Correlation**: Related agent outputs properly linked (e.g., audience + personalization)
+  - ⚠️ **Partial Implementation**: Some widgets use multiple data sources (tier1Summary, tier2KPIs, tier3Content)
+  - ❌ **Missing Correlation**: No explicit correlation mapping between related agents
+  - ❌ **Data Merging Issues**: `calculateConfidenceScore()` function may produce inconsistent results
+  
 - [ ] **Mapping Validation**: All widget inputs receive expected data structure from agents
+  - ✅ **Type Safety**: TypeScript interfaces defined for widget props and data structures
+  - ⚠️ **Mock Data Fallback**: Production uses `generateTier3MockData()` when OPAL API unavailable
+  - ❌ **Schema Validation**: No runtime validation of agent output against expected widget input schema
+  - ❌ **Data Quality Issues**: Some agents return data that doesn't match widget expectations
+
+#### 2.3 Current Implementation Status & Issues
+- [ ] **API Endpoint Health**: Core OPAL API integration endpoints functional
+  - ✅ **Tier Data APIs**: `/api/opal/tier1/[tier1]`, `/api/opal/tier2/[tier1]/[tier2]`, `/api/opal/tier3/[tier1]/[tier2]/[tier3]` working
+  - ❌ **Health Checks Failing**: Database, webhooks, workflow_engine health checks returning errors
+  - ⚠️ **OPAL API Status**: Network timeouts on `/api/opal/discovery` - likely production API not configured
+  
+- [ ] **Build & Runtime Issues**: Critical errors preventing production deployment
+  - ❌ **React Key Warnings**: Multiple instances of missing key props in lists causing build warnings
+  - ❌ **Prerender Errors**: `/_global-error` page failing with "Cannot read properties of null (reading 'useContext')"
+  - ❌ **TypeScript Errors**: Syntax errors in `scripts/start-production-sdk-tools.ts` (lines 114, 130, 143+)
+  - ⚠️ **Build Process**: Next.js build completes but with errors that could affect production stability
+  
+- [ ] **Widget Implementation Gaps**: Several widget containers using fallback implementations
+  - ⚠️ **Fallback Widgets**: Many specialized widgets show "data not available" messages with retry options
+  - ❌ **Missing Specialized Logic**: Generic widgets used instead of agent-specific rendering
+  - ✅ **Error Handling**: Comprehensive fallback and error boundary systems in place
 
 ### 3. Personalization Quality ✅
 

@@ -8,6 +8,9 @@ import { Activity, RefreshCw, Calendar, Zap, AlertCircle, CheckCircle, XCircle, 
 import { SafeDate } from '@/lib/utils/date-formatter';
 import { useOPALStatusPolling } from '@/hooks/useOPALStatusPolling';
 import { useWebhookStream } from '@/hooks/useWebhookStream';
+import { useRecentOsaStatus } from '@/hooks/useRecentOsaStatus';
+import { useForceSyncUnified } from '@/hooks/useForceSyncUnified';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   RecentDataSkeleton,
   ConnectionStatus,
@@ -87,8 +90,20 @@ interface OSAWorkflowData {
 }
 
 export default function RecentDataComponent({ className = '', compact = false }: RecentDataComponentProps) {
-  const [lastWebhookTrigger, setLastWebhookTrigger] = useState<string | null>(null);
-  const [webhookStatus, setWebhookStatus] = useState<'success' | 'failed' | 'processing' | 'none'>('none');
+  // Use new lightweight OSA status hook instead of complex streaming
+  const {
+    data: osaStatus,
+    isLoading: osaLoading,
+    error: osaError,
+    refetch: refetchOsaStatus
+  } = useRecentOsaStatus();
+
+  // Force Sync state management for controlling webhook streaming
+  const { syncStatus, isActive: forceSyncActive } = useForceSyncUnified();
+
+  // Query client for invalidating cache when Force Sync completes
+  const queryClient = useQueryClient();
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadingOperation, setLoadingOperation] = useState<string>('Initializing...');
   const [usingMockData, setUsingMockData] = useState<boolean>(false);
@@ -146,17 +161,23 @@ export default function RecentDataComponent({ className = '', compact = false }:
       maxPollDuration: 60 * 1000, // 60 seconds max duration (reduced from 90s)
       pollInterval: 10000, // 10 second intervals (reduced from 3s for performance)
       onCompleted: (status) => {
-        console.log('🎉 [RecentData] OPAL workflow completed:', status);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('🎉 [RecentData] OPAL workflow completed:', status);
+        }
         // Refresh dashboard data when OPAL completes (throttled)
         throttledFetchDashboardData();
       },
       onFailed: (status, error) => {
-        console.error('❌ [RecentData] OPAL workflow failed:', status, error);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.error('❌ [RecentData] OPAL workflow failed:', status, error);
+        }
         // Refresh dashboard data when OPAL fails (throttled)
         throttledFetchDashboardData();
       },
       onStatusUpdate: (status) => {
-        console.log('📊 [RecentData] OPAL status update:', status);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('📊 [RecentData] OPAL status update:', status);
+        }
         // Update local force sync data with latest OPAL status
         if (forceSyncData) {
           setForceSyncData({
@@ -173,19 +194,94 @@ export default function RecentDataComponent({ className = '', compact = false }:
     }
   );
 
-  // Real-time webhook stream with proper correlation logic
+  // Real-time webhook stream - only enabled during Force Sync workflows
+  const streamingEnabled =
+    forceSyncActive && // Only when Force Sync is running (loading/polling)
+    (
+      process.env.NODE_ENV === 'production' ||
+      process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true'
+    );
+
+  // Debug logging for streaming control
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log('📡 [RecentData] Streaming control:', {
+        forceSyncActive,
+        forceSyncStatus: syncStatus.status,
+        streamingEnabled,
+        environment: process.env.NODE_ENV
+      });
+    }
+  }, [forceSyncActive, syncStatus.status, streamingEnabled]);
+
+  // Handle SSE messages to detect workflow completion
+  const handleStreamMessage = useCallback((evt: MessageEvent) => {
+    try {
+      const data = JSON.parse(evt.data);
+
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log('📡 [RecentData] SSE message received:', data);
+      }
+
+      // Detect workflow completion signals
+      const isWorkflowCompleted =
+        data.type === 'workflow_completed' ||
+        data.workflowStatus === 'completed' ||
+        data.event_type === 'force_sync_completed' ||
+        (data.event && data.event.type === 'workflow_completed') ||
+        (data.message && data.message.includes('completed'));
+
+      const isWorkflowFailed =
+        data.type === 'workflow_failed' ||
+        data.workflowStatus === 'failed' ||
+        data.event_type === 'force_sync_failed' ||
+        (data.event && data.event.type === 'workflow_failed') ||
+        (data.message && data.message.includes('failed'));
+
+      if (isWorkflowCompleted || isWorkflowFailed) {
+        const finalStatus = isWorkflowCompleted ? 'completed' : 'failed';
+
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log(`📡 [RecentData] Workflow ${finalStatus} detected, refreshing Recent Data...`);
+        }
+
+        // Invalidate the React Query cache to refresh Recent Data timestamps
+        queryClient.invalidateQueries({
+          queryKey: ['osa-recent-status'],
+          exact: true
+        });
+
+        // Note: Force Sync state is managed by useForceSyncUnified hook
+        // Streaming will automatically turn off when forceSyncActive becomes false
+      }
+
+    } catch (error) {
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.warn('📡 [RecentData] Failed to parse SSE message:', error);
+      }
+    }
+  }, [queryClient]);
+
   const webhookStream = useWebhookStream({
-    enabled: true,
+    enabled: streamingEnabled,
     maxEvents: 100,
+    maxAttempts: process.env.NODE_ENV === 'development' ? 1 : 5,
+    reconnectDelayMs: 4000,
     // Ensure we ALWAYS provide either sessionId or workflowId (SSE endpoint requires one)
     sessionId: forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget',
     workflowId: forceSyncData?.forceSyncWorkflowId || null,
+    // Handle raw SSE messages to detect workflow completion
+    onMessage: handleStreamMessage,
     onEvent: (event) => {
-      console.log('📡 [RecentData] New webhook event received:', event);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log('📡 [RecentData] New webhook event received:', event);
+      }
 
       // Skip heartbeat events to prevent performance cascade
       if (!event.event_type || event.event_type === 'heartbeat') {
-        console.log('📡 [RecentData] Skipping heartbeat/empty event (performance optimization)');
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('📡 [RecentData] Skipping heartbeat/empty event (performance optimization)');
+        }
         return;
       }
 
@@ -202,23 +298,31 @@ export default function RecentDataComponent({ className = '', compact = false }:
         !forceSyncData; // If no specific workflow, process all events
 
       if (isRelevantEvent) {
-        console.log('📡 [RecentData] Processing relevant webhook event:', eventId);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('📡 [RecentData] Processing relevant webhook event:', eventId);
+        }
         throttledFetchDashboardData();
       } else {
-        console.log('📡 [RecentData] Skipping irrelevant webhook event:', eventId);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('📡 [RecentData] Skipping irrelevant webhook event:', eventId);
+        }
       }
     },
     onConnect: () => {
-      const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
-      const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
-      console.log(`📡 [RecentData] Webhook stream connected successfully (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
+        const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
+        console.log(`📡 [RecentData] Webhook stream connected successfully (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      }
       // Skip initial fetch on connect to reduce API call frequency
       // Data will be fetched when actual events arrive or via manual refresh
     },
     onError: (error) => {
-      const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
-      const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
-      console.error(`📡 [RecentData] Webhook stream error: ${error} (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        const sessionInfo = forceSyncData?.opalCorrelationId || forceSyncData?.forceSyncWorkflowId || 'recent-data-widget';
+        const workflowInfo = forceSyncData?.forceSyncWorkflowId || 'none';
+        console.error(`📡 [RecentData] Webhook stream error: ${error} (session: ${sessionInfo}, workflow: ${workflowInfo})`);
+      }
       // Note: Component will fall back to manual refresh button when stream fails
     }
   });
@@ -248,13 +352,17 @@ export default function RecentDataComponent({ className = '', compact = false }:
 
     if (timeSinceLastFetch >= FETCH_THROTTLE_DELAY) {
       // Execute immediately if enough time has passed
-      console.log('🔄 [RecentData] Executing immediate fetch (throttle satisfied)');
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log('🔄 [RecentData] Executing immediate fetch (throttle satisfied)');
+      }
       lastFetchTimeRef.current = now;
       fetchDashboardData();
     } else {
       // Schedule for later if too recent
       const delay = FETCH_THROTTLE_DELAY - timeSinceLastFetch;
-      console.log(`⏰ [RecentData] Scheduling throttled fetch in ${delay}ms`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`⏰ [RecentData] Scheduling throttled fetch in ${delay}ms`);
+      }
       fetchThrottleTimeoutRef.current = setTimeout(() => {
         lastFetchTimeRef.current = Date.now();
         fetchDashboardData();
@@ -267,7 +375,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
     const eventKey = `${eventId}_${Date.now()}`;
 
     if (processedEventIdsRef.current.has(eventId)) {
-      console.log(`🔄 [RecentData] Skipping duplicate event: ${eventId}`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔄 [RecentData] Skipping duplicate event: ${eventId}`);
+      }
       return true;
     }
 
@@ -279,7 +389,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
       const eventsArray = Array.from(processedEventIdsRef.current);
       const keepEvents = eventsArray.slice(-50); // Keep last 50 events
       processedEventIdsRef.current = new Set(keepEvents);
-      console.log(`🧹 [RecentData] Cleaned up event deduplication cache (kept ${keepEvents.length} events)`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🧹 [RecentData] Cleaned up event deduplication cache (kept ${keepEvents.length} events)`);
+      }
     }
 
     return false;
@@ -288,8 +400,10 @@ export default function RecentDataComponent({ className = '', compact = false }:
   // Helper function to safely parse JSON responses and handle errors
   const safeJsonFetch = async (url: string, options?: RequestInit): Promise<any> => {
     const fetchId = Math.random().toString(36).substr(2, 9);
-    console.log(`🔍 [FETCH-${fetchId}] Starting request to:`, url);
-    console.log(`🔍 [FETCH-${fetchId}] Request options:`, options || 'default');
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log(`🔍 [FETCH-${fetchId}] Starting request to:`, url);
+      console.log(`🔍 [FETCH-${fetchId}] Request options:`, options || 'default');
+    }
 
     try {
       // Use normal caching instead of cache-busting for better performance
@@ -301,18 +415,22 @@ export default function RecentDataComponent({ className = '', compact = false }:
         }
       };
 
-      console.log(`🔍 [FETCH-${fetchId}] Enhanced headers:`, enhancedOptions.headers);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [FETCH-${fetchId}] Enhanced headers:`, enhancedOptions.headers);
+      }
       const startTime = Date.now();
       const response = await fetch(url, enhancedOptions);
       const responseTime = Date.now() - startTime;
 
-      console.log(`🔍 [FETCH-${fetchId}] Response received:`, {
-        status: response.status,
-        statusText: response.statusText,
-        responseTime: `${responseTime}ms`,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      });
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [FETCH-${fetchId}] Response received:`, {
+          status: response.status,
+          statusText: response.statusText,
+          responseTime: `${responseTime}ms`,
+          headers: Object.fromEntries(response.headers.entries()),
+          url: response.url
+        });
+      }
 
       // Check if response is ok (status 200-299)
       if (!response.ok) {
@@ -353,13 +471,17 @@ export default function RecentDataComponent({ className = '', compact = false }:
   // Fetch webhook statistics and agent statuses
   const fetchDashboardData = async () => {
     const requestId = Math.random().toString(36).substr(2, 9);
-    console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData called at:`, new Date().toISOString());
-    console.log(`🔍 [DEBUG-${requestId}] Component mounted, sidebar visible:`, true);
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData called at:`, new Date().toISOString());
+      console.log(`🔍 [DEBUG-${requestId}] Component mounted, sidebar visible:`, true);
+    }
 
     try {
       setError(null);
       setLoadingOperation('Fetching webhook statistics and agent logs...');
-      console.log(`🔍 [DEBUG-${requestId}] Starting API requests...`);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [DEBUG-${requestId}] Starting API requests...`);
+      }
 
       // Fetch webhook stats and agent error patterns in parallel using safe JSON fetch
       const [statsData, logsData] = await Promise.all([
@@ -367,79 +489,83 @@ export default function RecentDataComponent({ className = '', compact = false }:
         safeJsonFetch('/api/monitoring/agent-logs?level=error&hours=24&limit=100')
       ]);
 
-      console.log(`🔍 [DEBUG-${requestId}] API responses received:`, {
-        statsSuccess: statsData.success,
-        logsSuccess: logsData.success,
-        statsLastTriggerTime: statsData.lastTriggerTime,
-        statsWorkflowStatus: statsData.workflowStatus,
-        statsTimestamp: statsData.timestamp,
-        responseTime: new Date().toISOString()
-      });
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [DEBUG-${requestId}] API responses received:`, {
+          statsSuccess: statsData.success,
+          logsSuccess: logsData.success,
+          statsLastTriggerTime: statsData.lastTriggerTime,
+          statsWorkflowStatus: statsData.workflowStatus,
+          statsTimestamp: statsData.timestamp,
+          responseTime: new Date().toISOString()
+        });
+      }
 
       if (statsData.success) {
         setLoadingOperation('Processing webhook data and agent statuses...');
-        console.log(`🔍 [DEBUG-${requestId}] Processing successful API response...`);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log(`🔍 [DEBUG-${requestId}] Processing successful API response...`);
+        }
 
         // Check if we're using mock data and update UI accordingly
         if (statsData._isMockData || statsData.stats?._isMockData) {
           setUsingMockData(true);
           setMockDataNotice(statsData._mockDataNotice || statsData.stats?._mockDataNotice ||
             'Database unavailable - showing simulated data for demonstration');
-          console.log('⚠️ [RecentData] Using mock/fallback data due to database unavailability');
+          if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+            console.log('⚠️ [RecentData] Using mock/fallback data due to database unavailability');
+          }
         } else {
           setUsingMockData(false);
           setMockDataNotice(null);
         }
 
-        // Update last webhook trigger time and status
-        if (statsData.lastTriggerTime) {
-          console.log(`🔍 [DEBUG-${requestId}] Setting lastWebhookTrigger:`, {
-            oldValue: lastWebhookTrigger,
-            newValue: statsData.lastTriggerTime,
-            changed: lastWebhookTrigger !== statsData.lastTriggerTime
-          });
-          setLastWebhookTrigger(statsData.lastTriggerTime);
-          setWebhookStatus(statsData.workflowStatus || 'success');
-        } else {
-          console.log(`🔍 [DEBUG-${requestId}] No lastTriggerTime in response, setting to null`);
-          setLastWebhookTrigger(null);
-          setWebhookStatus('none');
-        }
+        // Note: Webhook trigger time and status now handled by useRecentOsaStatus hook
 
         // Update workflow analysis data
         if (statsData.workflowAnalysis) {
-          console.log(`🔍 [DEBUG-${requestId}] Updating workflow analysis:`, statsData.workflowAnalysis);
+          if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+            console.log(`🔍 [DEBUG-${requestId}] Updating workflow analysis:`, statsData.workflowAnalysis);
+          }
           setWorkflowAnalysis(statsData.workflowAnalysis);
         }
 
         // Update agent statuses
         if (statsData.agentStatuses) {
-          console.log(`🔍 [DEBUG-${requestId}] Updating agent statuses:`, statsData.agentStatuses);
+          if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+            console.log(`🔍 [DEBUG-${requestId}] Updating agent statuses:`, statsData.agentStatuses);
+          }
           setAgentStatuses(statsData.agentStatuses);
         }
 
         // Update enhanced OPAL force sync data
         if (statsData.forceSync) {
-          console.log(`🔍 [DEBUG-${requestId}] Updating force sync data:`, statsData.forceSync);
+          if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+            console.log(`🔍 [DEBUG-${requestId}] Updating force sync data:`, statsData.forceSync);
+          }
           setForceSyncData(statsData.forceSync);
         }
 
         // Update OSA Workflow Data Tools data
         if (statsData.osaWorkflowData) {
-          console.log(`🔍 [DEBUG-${requestId}] Updating OSA workflow data:`, statsData.osaWorkflowData);
+          if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+            console.log(`🔍 [DEBUG-${requestId}] Updating OSA workflow data:`, statsData.osaWorkflowData);
+          }
           setOSAWorkflowData(statsData.osaWorkflowData);
         }
 
-        console.log('📊 Recent data component updated:', {
-          lastTrigger: statsData.lastTriggerTime,
-          workflowStatus: statsData.workflowStatus,
-          agentStatuses: statsData.agentStatuses,
-          forceSync: statsData.forceSync,
-          osaWorkflowData: statsData.osaWorkflowData
-        });
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('📊 Recent data component updated:', {
+            lastTrigger: statsData.lastTriggerTime,
+            workflowStatus: statsData.workflowStatus,
+            agentStatuses: statsData.agentStatuses,
+            forceSync: statsData.forceSync,
+            osaWorkflowData: statsData.osaWorkflowData
+          });
+        }
       } else {
-        console.error(`🔍 [DEBUG-${requestId}] API returned failure:`, statsData.error);
-        setWebhookStatus('failed');
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.error(`🔍 [DEBUG-${requestId}] API returned failure:`, statsData.error);
+        }
         setError(statsData.error || 'Failed to fetch recent data');
       }
 
@@ -449,13 +575,16 @@ export default function RecentDataComponent({ className = '', compact = false }:
       }
 
     } catch (error) {
-      console.error(`🔍 [DEBUG-${requestId}] Error fetching recent data:`, error);
-      console.error(`🔍 [DEBUG-${requestId}] Error type:`, error instanceof Error ? 'Error' : typeof error);
-      console.error(`🔍 [DEBUG-${requestId}] Error message:`, error instanceof Error ? error.message : error);
-      setWebhookStatus('failed');
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.error(`🔍 [DEBUG-${requestId}] Error fetching recent data:`, error);
+        console.error(`🔍 [DEBUG-${requestId}] Error type:`, error instanceof Error ? 'Error' : typeof error);
+        console.error(`🔍 [DEBUG-${requestId}] Error message:`, error instanceof Error ? error.message : error);
+      }
       setError(error instanceof Error ? error.message : 'Network error occurred');
     } finally {
-      console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData completed at:`, new Date().toISOString());
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [DEBUG-${requestId}] fetchDashboardData completed at:`, new Date().toISOString());
+      }
       setIsLoading(false);
     }
   };
@@ -471,11 +600,15 @@ export default function RecentDataComponent({ className = '', compact = false }:
       if (data.success && data.events) {
         setWebhookEvents(data.events);
       } else {
-        console.warn('Failed to fetch webhook events:', data.error);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.warn('Failed to fetch webhook events:', data.error);
+        }
         setWebhookEvents([]);
       }
     } catch (error) {
-      console.error('Error fetching webhook events:', error);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.error('Error fetching webhook events:', error);
+      }
       setWebhookEvents([]);
     } finally {
       setWebhookEventsLoading(false);
@@ -499,7 +632,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
         });
       } else {
         // This should rarely happen with health-with-fallback endpoint
-        console.error('Unexpected health API error:', response.status, data);
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.error('Unexpected health API error:', response.status, data);
+        }
         setHealthData({
           overall_status: 'red',
           signature_valid_rate: 0,
@@ -509,7 +644,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
       }
     } catch (error) {
       // Only log network errors, not expected API responses
-      console.error('Network error fetching health data:', error);
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.error('Network error fetching health data:', error);
+      }
       setHealthData({
         overall_status: 'red',
         signature_valid_rate: 0,
@@ -594,28 +731,37 @@ export default function RecentDataComponent({ className = '', compact = false }:
 
   useEffect(() => {
     const componentId = Math.random().toString(36).substr(2, 9);
-    console.log(`🔍 [STREAM-${componentId}] Component mounted, using real-time webhook stream at:`, new Date().toISOString());
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log(`🔍 [STREAM-${componentId}] Component mounted, using real-time webhook stream at:`, new Date().toISOString());
+      console.log(`🔍 [STREAM-${componentId}] Calling initial fetchHealthData`);
+    }
 
-    // Initial fetch only for health data (webhook data comes via stream)
-    console.log(`🔍 [STREAM-${componentId}] Calling initial fetchHealthData`);
     fetchHealthData();
 
     // Health check every 5 minutes (reduced from 60s for performance)
-    console.log(`🔍 [STREAM-${componentId}] Setting up health interval (5m)`);
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log(`🔍 [STREAM-${componentId}] Setting up health interval (5m)`);
+    }
     const healthInterval = setInterval(() => {
-      console.log(`🔍 [STREAM-${componentId}] Health timer fired at:`, new Date().toISOString());
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [STREAM-${componentId}] Health timer fired at:`, new Date().toISOString());
+      }
       fetchHealthData();
     }, 300000);
 
-    console.log(`🔍 [STREAM-${componentId}] Configuration:`, {
-      streamEnabled: true,
-      healthInterval: healthInterval,
-      nextHealthFire: new Date(Date.now() + 60000).toISOString(),
-      streamEvents: webhookStream.eventCount
-    });
+    if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+      console.log(`🔍 [STREAM-${componentId}] Configuration:`, {
+        streamEnabled: true,
+        healthInterval: healthInterval,
+        nextHealthFire: new Date(Date.now() + 60000).toISOString(),
+        streamEvents: webhookStream.eventCount
+      });
+    }
 
     return () => {
-      console.log(`🔍 [STREAM-${componentId}] Component unmounting, clearing health timer at:`, new Date().toISOString());
+      if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+        console.log(`🔍 [STREAM-${componentId}] Component unmounting, clearing health timer at:`, new Date().toISOString());
+      }
       clearInterval(healthInterval);
     };
   }, [webhookStream.eventCount]); // React to stream event changes
@@ -624,7 +770,9 @@ export default function RecentDataComponent({ className = '', compact = false }:
   useEffect(() => {
     return () => {
       if (fetchThrottleTimeoutRef.current) {
-        console.log('🧹 [RecentData] Cleaning up throttle timeout on unmount');
+        if (process.env.NEXT_PUBLIC_OSA_STREAM_DEBUG === 'true') {
+          console.log('🧹 [RecentData] Cleaning up throttle timeout on unmount');
+        }
         clearTimeout(fetchThrottleTimeoutRef.current);
         fetchThrottleTimeoutRef.current = null;
       }
@@ -709,6 +857,48 @@ export default function RecentDataComponent({ className = '', compact = false }:
     return displayNames[agentId] || agentId;
   };
 
+  // Helper function to get the display status from osaStatus
+  const getDisplayStatus = () => {
+    if (osaError) return 'failed';
+    if (osaLoading) return 'processing';
+    if (!osaStatus) return 'none';
+
+    // Use the lastWorkflowStatus as primary indicator
+    switch (osaStatus.lastWorkflowStatus) {
+      case 'running':
+        return 'processing';
+      case 'completed':
+        return 'success';
+      case 'failed':
+        return 'failed';
+      case 'idle':
+      default:
+        // Check if we have recent data
+        if (osaStatus.lastWebhookAt || osaStatus.lastAgentDataAt) {
+          return 'success';
+        }
+        return 'none';
+    }
+  };
+
+  // Helper function to get the most recent activity timestamp
+  const getLastActivityTime = () => {
+    if (!osaStatus) return null;
+
+    // Return the most recent timestamp among all activities
+    const times = [
+      osaStatus.lastWebhookAt,
+      osaStatus.lastAgentDataAt,
+      osaStatus.lastForceSyncAt
+    ].filter(Boolean);
+
+    if (times.length === 0) return null;
+
+    // Sort and return the most recent
+    times.sort((a, b) => new Date(b!).getTime() - new Date(a!).getTime());
+    return times[0];
+  };
+
   const formatLastTriggerTime = (timestamp: string | null) => {
     if (!timestamp) return null;
 
@@ -730,7 +920,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
   };
 
   if (compact) {
-    if (isLoading) {
+    if (osaLoading) {
       return (
         <Card id="recent-data" className={`${className}`}>
           <CardContent className="p-4">
@@ -740,8 +930,8 @@ export default function RecentDataComponent({ className = '', compact = false }:
               <ConnectionStatus status="connecting" showIcon={false} />
             </div>
             <DataFetchingIndicator
-              operation={loadingOperation}
-              details="Loading webhook data and agent status"
+              operation="Loading OSA status"
+              details="Fetching recent webhook, agent, and workflow data"
             />
           </CardContent>
         </Card>
@@ -782,36 +972,44 @@ export default function RecentDataComponent({ className = '', compact = false }:
             <Button
               variant="ghost"
               size="sm"
-              onClick={fetchDashboardData}
+              onClick={() => refetchOsaStatus()}
               className="h-6 w-6 p-0"
-              disabled={isLoading}
+              disabled={osaLoading}
             >
-              <RefreshCw className={`h-3 w-3 ${isLoading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-3 w-3 ${osaLoading ? 'animate-spin' : ''}`} />
             </Button>
           </div>
 
-          {/* Webhook Status Indicator */}
+          {/* OSA Status Indicator */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              {webhookStatus === 'success' && <CheckCircle className="h-4 w-4 text-green-600" />}
-              {webhookStatus === 'processing' && <RefreshCw className="h-4 w-4 text-blue-600 animate-spin" />}
-              {webhookStatus === 'failed' && <XCircle className="h-4 w-4 text-red-600" />}
-              {webhookStatus === 'none' && <AlertCircle className="h-4 w-4 text-gray-400" />}
-              <span className="text-xs text-gray-600">
-                {webhookStatus === 'success' ? 'Workflow Active' :
-                 webhookStatus === 'processing' ? 'Processing...' :
-                 webhookStatus === 'failed' ? 'Connection Failed' :
-                 'No Recent Activity'}
-              </span>
+              {(() => {
+                const status = getDisplayStatus();
+                return (
+                  <>
+                    {status === 'success' && <CheckCircle className="h-4 w-4 text-green-600" />}
+                    {status === 'processing' && <RefreshCw className="h-4 w-4 text-blue-600 animate-spin" />}
+                    {status === 'failed' && <XCircle className="h-4 w-4 text-red-600" />}
+                    {status === 'none' && <AlertCircle className="h-4 w-4 text-gray-400" />}
+                    <span className="text-xs text-gray-600">
+                      {status === 'success' ? 'OSA Active' :
+                       status === 'processing' ? 'Processing...' :
+                       status === 'failed' ? 'Connection Failed' :
+                       'No Recent Activity'}
+                    </span>
+                  </>
+                );
+              })()}
             </div>
             <div className="flex items-center gap-1 text-xs text-gray-500">
               <Calendar className="h-3 w-3" />
               {(() => {
-                const formattedTime = formatLastTriggerTime(lastWebhookTrigger);
-                if (formattedTime && typeof formattedTime === 'string' && formattedTime !== lastWebhookTrigger) {
+                const lastActivity = getLastActivityTime();
+                const formattedTime = formatLastTriggerTime(lastActivity);
+                if (formattedTime && typeof formattedTime === 'string' && formattedTime !== lastActivity) {
                   return <span>{formattedTime}</span>;
-                } else if (formattedTime === lastWebhookTrigger) {
-                  return <SafeDate date={lastWebhookTrigger} format="time" fallback="Never" />;
+                } else if (formattedTime === lastActivity) {
+                  return <SafeDate date={lastActivity} format="time" fallback="Never" />;
                 } else {
                   return <span>Never</span>;
                 }
@@ -858,27 +1056,26 @@ export default function RecentDataComponent({ className = '', compact = false }:
           </div>
 
           {/* Status Messages */}
-          {webhookStatus === 'success' && workflowAnalysis && workflowAnalysis.agentResponseCount >= 9 && (
+          {getDisplayStatus() === 'success' && workflowAnalysis && workflowAnalysis.agentResponseCount >= 9 && (
             <div className="mt-3 p-2 bg-green-50 rounded text-xs text-green-800">
               All OPAL agents processing data
             </div>
           )}
 
-          {webhookStatus === 'failed' && (
+          {getDisplayStatus() === 'failed' && (
             <div className="mt-3 p-2 bg-red-50 rounded text-xs text-red-800">
               Connection issue detected
             </div>
           )}
 
-          {error && (
+          {osaError && (
             <div className="mt-3">
               <ErrorState
-                title="Connection Error"
-                message={error}
+                title="OSA Status Error"
+                message={osaError instanceof Error ? osaError.message : 'Failed to load OSA status'}
                 canRetry={true}
                 onRetry={() => {
-                  setError(null);
-                  fetchDashboardData();
+                  refetchOsaStatus();
                 }}
                 suggestions={[
                   "Check your internet connection",
@@ -941,25 +1138,26 @@ export default function RecentDataComponent({ className = '', compact = false }:
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                {webhookStatus === 'success' && <CheckCircle className="h-5 w-5 text-green-600" />}
-                {webhookStatus === 'processing' && <RefreshCw className="h-5 w-5 text-blue-600 animate-spin" />}
-                {webhookStatus === 'failed' && <XCircle className="h-5 w-5 text-red-600" />}
-                {webhookStatus === 'none' && <AlertCircle className="h-5 w-5 text-gray-400" />}
+                {getDisplayStatus() === 'success' && <CheckCircle className="h-5 w-5 text-green-600" />}
+                {getDisplayStatus() === 'processing' && <RefreshCw className="h-5 w-5 text-blue-600 animate-spin" />}
+                {getDisplayStatus() === 'failed' && <XCircle className="h-5 w-5 text-red-600" />}
+                {getDisplayStatus() === 'none' && <AlertCircle className="h-5 w-5 text-gray-400" />}
                 <span className="font-medium">
-                  {webhookStatus === 'success' && 'Last Successful Trigger:'}
-                  {webhookStatus === 'processing' && 'Workflow Processing:'}
-                  {webhookStatus === 'failed' && 'Connection Failed'}
-                  {webhookStatus === 'none' && 'No Recent Triggers'}
+                  {getDisplayStatus() === 'success' && 'Last Successful Trigger:'}
+                  {getDisplayStatus() === 'processing' && 'Workflow Processing:'}
+                  {getDisplayStatus() === 'failed' && 'Connection Failed'}
+                  {getDisplayStatus() === 'none' && 'No Recent Triggers'}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <Calendar className="h-4 w-4" />
                 {(() => {
-                  const formattedTime = formatLastTriggerTime(lastWebhookTrigger);
-                  if (formattedTime && typeof formattedTime === 'string' && formattedTime !== lastWebhookTrigger) {
+                  const lastActivity = getLastActivityTime();
+                  const formattedTime = formatLastTriggerTime(lastActivity);
+                  if (formattedTime && typeof formattedTime === 'string' && formattedTime !== lastActivity) {
                     return <span>{formattedTime}</span>;
-                  } else if (formattedTime === lastWebhookTrigger) {
-                    return <SafeDate date={lastWebhookTrigger} format="datetime" fallback="Never" />;
+                  } else if (formattedTime === lastActivity) {
+                    return <SafeDate date={lastActivity} format="datetime" fallback="Never" />;
                   } else {
                     return <span>Never</span>;
                   }
@@ -1095,7 +1293,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
             </div>
           )}
 
-          {webhookStatus === 'success' && lastWebhookTrigger && workflowAnalysis && (
+          {getDisplayStatus() === 'success' && getLastActivityTime() && workflowAnalysis && (
             <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
               <div className="text-sm text-green-800">
                 <strong>Strategy Assistant workflow triggered successfully</strong>
@@ -1110,7 +1308,7 @@ export default function RecentDataComponent({ className = '', compact = false }:
             </div>
           )}
 
-          {webhookStatus === 'processing' && lastWebhookTrigger && (
+          {getDisplayStatus() === 'processing' && getLastActivityTime() && (
             <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
               <div className="text-sm text-blue-800">
                 <strong>Workflow is currently processing</strong>

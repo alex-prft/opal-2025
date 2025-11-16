@@ -1,0 +1,52 @@
+Micro Service,"Strategy Intake Service** (""Engine Form"")","Ingestion & Orchestration Service** (""Opal Connector"")","Ingestion & Orchestration Service** (""Opal Connector"")2","Ingestion & Orchestration Service** (""Opal Connector"")3","Ingestion & Orchestration Service** (""Opal Connector"")4","Preferences & Policy Service** (""Personal Configurator"")","Recommendation Service** (""Decision Layer"")","Knowledge & Retrieval Service** (""RAG Brain"")","UX Design Service** (""Artist"")"
+,,,,,,,,,
+OSA Data Flow,User Submits Form,Opal Webhook > startegy_workflow ,"Opal Webhook > startegy_workflow >
+9 Opal agents run","startegy_workflow >
+9 Opal agents run > Custom tool send_data_to_osa_webhook sends data to OSA","Custom tool send_data_to_osa_webhook sends data to OSA >
+Admin dashboard and recent data show Agents successfully connected to OSA",Admin,Opal Mapping,Ongoing Learning,Presentation of UX and Content
+,,,,,,,,,
+OSA Service,Engine Form,Force Sync,startegy_workflow Tiggers,OSA Workflow Data Tools,Admin Dashboard and Recent  Data,Personal Configurator,,,
+,,,,,,,,,
+,,,,,,,,,
+How,/engine/,Manually clicking the Force Sync Button,Opal Webhook,"Opal Custom Tool named:
+send_data_to_osa_webhook",,,,Powers all admin interfaces with contextual knowledge,
+,,,,,,,,,
+Details,Business context collection and validation,Opal Webhook is only triggered when clicking Force Sync,"Opal Agents are dependant on the Opal Instructions
+List of OPAL Instructions here:
+
+Brand & Tone Guidelines
+Company Overview
+Marketing Strategy
+Personalization Maturity Rubric
+Data Governance & ID Strategy
+Technical Implementation Guidelines
+KPI & Experimentation Definitions
+Personas
+Content Guidelines","The 9 Opal Agents are:
+Integration Health Agent
+Roadmap Generator Agent
+Customer Journey Agent
+Experiment Blueprinter Agent
+CMP Organizer Agent
+Personalization Idea Generator Agent
+Audience Suggester Agent
+GEO Audit Agent
+Content Review Agent",,User preference management and policy enforcement,Central AI intelligence engine for strategy generation,Foundation knowledge layer with semantic search capabilities,Frontend experience layer and admin dashboard
+,,,,,,,,,
+Key Features,"Dynamic form generation based on business needs
+     - Enhanced validation and workflow coordination
+     - Integration with OPAL agent trigger system",Start strategy_workflow opal workflow agent,,,,"     - Configurable business rules and constraints
+     - Risk tolerance and compliance management
+     - Integration settings and API configurations",,"  - Supabase with pgvector for semantic search
+     - Continuous learning from user interactions
+     - File storage and knowledge base management
+     - Contextual insight generation","     - shadcn/ui + Tailwind CSS component library
+     - Responsive design with accessibility compliance
+     - Real-time dashboard with monitoring widgets
+     - Interactive data visualizations"
+,,,,,,,,,
+,,,,,,,,,
+Admin Interface,/engine/admin/strategy-ai,,,,,/engine/admin/configurations,,,
+,,,,,,,,,
+,,,,,,,,,
+Issues,,,,,,,,,

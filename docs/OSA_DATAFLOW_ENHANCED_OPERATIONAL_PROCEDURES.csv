@@ -1,0 +1,94 @@
+Procedure Category,Procedure Name,Step Number,Action Description,Responsible Role,Estimated Time,Success Criteria,Failure Response
+Pre-Deployment Validation,Code Quality Checks,1,Run full test suite (npm run test),Developer,5 minutes,All tests pass (>95% coverage),Fix failing tests before proceeding
+Pre-Deployment Validation,Code Quality Checks,2,Validate production build (npm run build),Developer,3 minutes,Build completes without errors,Review and fix compilation errors
+Pre-Deployment Validation,Code Quality Checks,3,Run security validation (npm run validate:security),Developer,2 minutes,34/35+ security checks pass,Address security vulnerabilities
+Pre-Deployment Validation,Environment Verification,4,Check all environment variables configured,DevOps,2 minutes,All required variables present and valid,Update environment configuration
+Pre-Deployment Validation,Environment Verification,5,Test OPAL integration endpoints,Developer,3 minutes,All webhook endpoints respond with 200,Fix OPAL connectivity issues
+Pre-Deployment Validation,Environment Verification,6,Validate database connectivity and migrations,DevOps,2 minutes,Database accessible and schema current,Run migrations or fix connectivity
+Pre-Deployment Validation,Performance Validation,7,Run performance benchmarks,Developer,5 minutes,Response times within SLA targets,Optimize performance bottlenecks
+Pre-Deployment Validation,Webhook Optimization Validation,8,Test React Query OSA status hook (npm run test:hooks),Developer,3 minutes,useRecentOsaStatus hook returns data within 5s,Debug React Query configuration
+Pre-Deployment Validation,Webhook Optimization Validation,9,Validate controlled SSE streaming activation,Developer,5 minutes,Streaming only activates during Force Sync workflows,Fix streaming control logic
+Pre-Deployment Validation,Webhook Optimization Validation,10,Test OSA status API endpoint performance,Developer,2 minutes,/api/admin/osa/recent-status responds <200ms,Optimize database queries
+Pre-Deployment Validation,Webhook Optimization Validation,11,Verify console spam reduction (NEXT_PUBLIC_OSA_STREAM_DEBUG=false),Developer,2 minutes,No debug logs in production build,Update debug flag configuration
+
+Production Deployment,Deployment Execution,1,Create deployment branch from main,DevOps,1 minute,Clean branch created with all changes,Resolve merge conflicts
+Production Deployment,Deployment Execution,2,Update version numbers and documentation,Developer,2 minutes,Version bumped and docs updated,Correct version inconsistencies
+Production Deployment,Deployment Execution,3,Execute automated deployment pipeline,DevOps,10 minutes,Pipeline completes successfully,Investigate pipeline failures
+Production Deployment,Deployment Execution,4,Run database migrations (if applicable),DevOps,5 minutes,Migrations complete without errors,Rollback migrations if needed
+Production Deployment,Deployment Execution,5,Warm up caches and validate services,DevOps,3 minutes,All caches populated and services healthy,Clear caches and restart services
+Production Deployment,Post-Deploy Validation,6,Execute post-deployment health checks,DevOps,5 minutes,All health endpoints return green status,Investigate failing health checks
+Production Deployment,Post-Deploy Validation,7,Monitor key metrics for 30 minutes,DevOps,30 minutes,No alerts fired and metrics within range,Consider rollback if metrics degrade
+Production Deployment,Communication,8,Update monitoring dashboards,DevOps,2 minutes,Dashboards reflect new deployment,Update dashboard configurations
+Production Deployment,Communication,9,Notify stakeholders of completion,Project Manager,1 minute,All stakeholders notified via agreed channels,Send follow-up notifications
+
+Rollback Procedures,Automatic Rollback,1,Health check failure triggers auto-rollback,System,<2 minutes,Previous version restored and healthy,Manual investigation required
+Rollback Procedures,Automatic Rollback,2,Load balancer redirects traffic to previous version,System,<1 minute,Traffic successfully redirected,Emergency manual failover
+Rollback Procedures,Manual Rollback,3,Emergency rollback via deployment dashboard,DevOps,<5 minutes,Rollback initiated and completing,Contact vendor support for dashboard issues
+Rollback Procedures,Manual Rollback,4,Database rollback (if backward compatible),DevOps,<10 minutes,Database restored to previous state,Use database backup restoration
+Rollback Procedures,Manual Rollback,5,Cache invalidation and rebuild,DevOps,<3 minutes,Caches cleared and rebuilding,Manual cache management if needed
+Rollback Procedures,Verification,6,Verify rollback success with health checks,DevOps,2 minutes,All systems healthy after rollback,Escalate to development team
+
+Monitoring Dashboard Setup,System Health Dashboard,1,Configure overall system status display,DevOps,15 minutes,Green/yellow/red status indicators working,Debug dashboard connectivity
+Monitoring Dashboard Setup,System Health Dashboard,2,Set up real-time workflow success rate,DevOps,10 minutes,Success rate updates every minute,Check data pipeline integrity
+Monitoring Dashboard Setup,System Health Dashboard,3,Configure OPAL agent execution monitoring,DevOps,15 minutes,Individual agent status visible,Verify OPAL webhook integration
+Monitoring Dashboard Setup,Performance Dashboard,4,Set up API response time charts,DevOps,10 minutes,P50 P95 P99 response times displayed,Validate metrics collection
+Monitoring Dashboard Setup,Performance Dashboard,5,Configure error rate trend analysis,DevOps,10 minutes,Error rates with 24-hour trends,Check error logging pipeline
+Monitoring Dashboard Setup,Business Dashboard,6,Set up daily workflow completion metrics,Product Manager,15 minutes,Business KPIs visible to stakeholders,Validate business metric calculations
+Monitoring Dashboard Setup,Business Dashboard,7,Configure user engagement tracking,Product Manager,10 minutes,User activity and feature usage visible,Check user analytics integration
+Monitoring Dashboard Setup,Optimization Monitoring,8,Set up React Query cache hit rate monitoring,DevOps,10 minutes,Cache hit ratios >80% visible on dashboard,Debug React Query configuration
+Monitoring Dashboard Setup,Optimization Monitoring,9,Configure OSA status API response time tracking,DevOps,5 minutes,API response times <200ms consistently,Investigate database performance
+Monitoring Dashboard Setup,Optimization Monitoring,10,Monitor SSE streaming connection efficiency,DevOps,15 minutes,Streaming connections only during Force Sync,Check streaming control logic
+
+Alert Configuration,Critical Alerts,1,Configure high error rate alerts (>5% in 5min),DevOps,5 minutes,Alerts fire correctly during test,Adjust thresholds or notification channels
+Alert Configuration,Critical Alerts,2,Set up OPAL agent timeout alerts (>300s),DevOps,5 minutes,PagerDuty integration working,Test escalation procedures
+Alert Configuration,Critical Alerts,3,Configure webhook failure alerts (3 consecutive),DevOps,5 minutes,Slack notifications immediate,Check webhook monitoring accuracy
+Alert Configuration,Performance Alerts,4,Set up response time degradation alerts,DevOps,5 minutes,Email notifications for P95 >5s,Validate response time measurement
+Alert Configuration,Performance Alerts,5,Configure availability monitoring (<99%),DevOps,5 minutes,SMS alerts for availability issues,Test availability calculation accuracy
+Alert Configuration,Security Alerts,6,Set up authentication failure alerts,Security Engineer,5 minutes,Security team notified immediately,Verify authentication monitoring
+Alert Configuration,Security Alerts,7,Configure PII exposure detection alerts,Security Engineer,10 minutes,Critical security alerts working,Test PII scanning accuracy
+
+Incident Response SEV-1,Initial Response (0-15min),1,Acknowledge incident in monitoring system,On-Call Engineer,<2 minutes,Incident acknowledged and timer started,Escalate to backup on-call
+Incident Response SEV-1,Initial Response (0-15min),2,Assess scope and impact of incident,On-Call Engineer,<5 minutes,Impact assessment documented,Request additional resources
+Incident Response SEV-1,Initial Response (0-15min),3,Create incident communication channel,On-Call Engineer,<1 minute,Slack channel created (#incident-timestamp),Use backup communication method
+Incident Response SEV-1,Initial Response (0-15min),4,Notify incident response team and stakeholders,On-Call Engineer,<2 minutes,All required personnel notified,Send escalation notifications
+Incident Response SEV-1,Initial Response (0-15min),5,Declare incident commander,Team Lead,<1 minute,Commander identified and leading response,Rotate to available team lead
+Incident Response SEV-1,Investigation (15-60min),6,Begin deep dive technical investigation,Incident Commander,<15 minutes,Root cause hypothesis formed,Engage vendor support if needed
+Incident Response SEV-1,Investigation (15-60min),7,Implement immediate mitigation measures,Development Team,<30 minutes,Mitigation deployed and tested,Prepare rollback if mitigation fails
+Incident Response SEV-1,Investigation (15-60min),8,Update stakeholders every 15 minutes,Incident Commander,Ongoing,Regular updates maintain transparency,Delegate updates if commander busy
+Incident Response SEV-1,Resolution (1-24hr),9,Implement permanent fix,Development Team,<4 hours,Permanent solution deployed,Schedule maintenance window if needed
+Incident Response SEV-1,Post-Incident,10,Conduct post-mortem meeting within 48hr,Incident Commander,2 hours,Lessons learned documented and shared,Schedule follow-up if needed
+
+Troubleshooting Playbooks,OPAL Agent Failures,1,Check agent execution logs at /api/admin/logs,Support Engineer,2 minutes,Logs accessed and error patterns identified,Escalate to development team
+Troubleshooting Playbooks,OPAL Agent Failures,2,Verify OPAL API connectivity and credentials,Support Engineer,3 minutes,Connectivity confirmed or issue identified,Update credentials or contact OPAL support
+Troubleshooting Playbooks,OPAL Agent Failures,3,Check webhook signature configuration,Support Engineer,2 minutes,HMAC signature validation working,Regenerate shared secret if needed
+Troubleshooting Playbooks,OPAL Agent Failures,4,Test with reduced agent scope if possible,Support Engineer,5 minutes,Subset of agents working correctly,Isolate problematic agent
+Troubleshooting Playbooks,Webhook Delivery Issues,5,Check webhook endpoint health and reachability,Support Engineer,2 minutes,Endpoint responding to health checks,Investigate network or server issues
+Troubleshooting Playbooks,Webhook Delivery Issues,6,Verify HMAC signature generation accuracy,Support Engineer,3 minutes,Signatures match expected values,Debug signature algorithm or secret
+Troubleshooting Playbooks,Webhook Delivery Issues,7,Review webhook delivery attempt logs,Support Engineer,5 minutes,Delivery patterns and failures identified,Analyze for systematic issues
+Troubleshooting Playbooks,Database Performance,8,Check active database connections,Support Engineer,1 minute,Connection count within normal range,Restart connection pool if needed
+Troubleshooting Playbooks,Database Performance,9,Review slow query log for bottlenecks,Support Engineer,5 minutes,Slow queries identified and analyzed,Optimize queries or add indexes
+Troubleshooting Playbooks,Database Performance,10,Validate connection pool configuration,Support Engineer,2 minutes,Pool settings appropriate for load,Adjust pool size based on usage
+Troubleshooting Playbooks,React Query Optimization,11,Check React Query cache status and invalidation,Support Engineer,3 minutes,Cache working with 5-minute stale time,Clear cache and check configuration
+Troubleshooting Playbooks,React Query Optimization,12,Verify useRecentOsaStatus hook performance,Support Engineer,2 minutes,Hook returns data within expected time,Debug query function or API endpoint
+Troubleshooting Playbooks,React Query Optimization,13,Validate cache invalidation on workflow completion,Support Engineer,5 minutes,Cache refreshes when Force Sync completes,Check SSE message parsing logic
+Troubleshooting Playbooks,SSE Streaming Issues,14,Verify controlled streaming activation logic,Support Engineer,3 minutes,Streaming only active during Force Sync,Debug streaming control conditions
+Troubleshooting Playbooks,SSE Streaming Issues,15,Check SSE connection stability and reconnection,Support Engineer,5 minutes,Connections stable with proper error handling,Review reconnection logic and timeouts
+Troubleshooting Playbooks,SSE Streaming Issues,16,Validate workflow completion detection,Support Engineer,3 minutes,SSE messages properly trigger cache updates,Debug message parsing and event handling
+Troubleshooting Playbooks,Performance Degradation,17,Compare pre/post optimization metrics,Support Engineer,10 minutes,93% performance improvement maintained,Identify performance regression causes
+Troubleshooting Playbooks,Performance Degradation,18,Check OSA status API response times,Support Engineer,2 minutes,API consistently responds <200ms,Optimize parallel database queries
+
+Maintenance Procedures,Scheduled Maintenance,1,Announce maintenance window 48hr advance,Operations Manager,5 minutes,All users notified via email and dashboard,Send reminder notifications
+Scheduled Maintenance,Routine Maintenance,2,Take database backup before maintenance,DevOps,15 minutes,Backup completed and verified,Do not proceed without valid backup
+Scheduled Maintenance,Routine Maintenance,3,Apply security patches and updates,DevOps,30 minutes,All patches applied successfully,Document any patch failures for review
+Scheduled Maintenance,Routine Maintenance,4,Run database maintenance tasks,DevOps,45 minutes,Index rebuilding and cleanup completed,Monitor for performance improvements
+Scheduled Maintenance,Routine Maintenance,5,Test all critical functions after maintenance,QA Engineer,30 minutes,All smoke tests pass successfully,Rollback changes if tests fail
+Scheduled Maintenance,Post-Maintenance,6,Monitor system stability for 2 hours,DevOps,2 hours,No degradation or alerts fired,Extended monitoring if any issues
+Scheduled Maintenance,Post-Maintenance,7,Communicate maintenance completion,Operations Manager,2 minutes,Users notified that maintenance complete,Include any known issues or changes
+
+Recovery Procedures,Database Recovery,1,Assess scope of data loss or corruption,Database Administrator,10 minutes,Impact assessment and timeline established,Activate disaster recovery if needed
+Database Recovery,Database Recovery,2,Restore from most recent valid backup,Database Administrator,30 minutes,Database restored to known good state,Use point-in-time recovery if available
+Database Recovery,Database Recovery,3,Validate data integrity post-recovery,Database Administrator,15 minutes,All critical data validated and consistent,Run extended validation procedures
+Database Recovery,Service Recovery,4,Restart application services in order,DevOps,10 minutes,All services healthy and accepting traffic,Investigate service startup failures
+Service Recovery,Service Recovery,5,Warm up caches and validate connectivity,DevOps,5 minutes,Caches populated and external APIs accessible,Clear caches and retry if needed
+Service Recovery,Validation,6,Run comprehensive health checks,DevOps,10 minutes,All health endpoints green and metrics normal,Extended monitoring period required
+Service Recovery,Communication,7,Update stakeholders on recovery status,Incident Commander,5 minutes,Clear communication on current system state,Provide timeline for full resolution

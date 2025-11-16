@@ -1,6 +1,6 @@
 **After completing any significant change:**
 
-Update CLAUDE.md with what we learned:
+Update CLAUDE.md and corresponding files in /docs with what we learned:
 Section: [Architecture | Patterns | Testing | Gotchas]
 Document:
 

@@ -5,6 +5,7 @@
 
 import { triggerOpalWorkflow } from '@/lib/opal/trigger-workflow';
 import { EventEmitter } from 'events';
+import { createSupabaseAdmin } from '@/lib/database/supabase-client';
 
 export interface ForceSyncOptions {
   sync_scope?: 'quick' | 'full' | 'priority_platforms' | 'all_platforms' | 'odp_only';
@@ -162,7 +163,7 @@ export class ForceSyncService extends EventEmitter {
         }
       }, 2000);
 
-      setTimeout(() => {
+      setTimeout(async () => {
         if (session.status.status === 'in_progress') {
           session.updateStatus({
             status: result.success ? 'completed' : 'failed',
@@ -173,6 +174,60 @@ export class ForceSyncService extends EventEmitter {
 
           if (result.success) {
             this.lastSyncTimestamp = new Date().toISOString();
+
+            // Write Force Sync event to database for recent-status API
+            try {
+              const supabase = createSupabaseAdmin();
+              console.log(`📊 [Force Sync] Attempting database write for correlation: ${correlationId}`);
+
+              const insertData = {
+                workflow_id: result.workflow_id || correlationId,
+                correlation_id: correlationId,
+                triggered_by: 'force_sync',
+                trigger_timestamp: this.lastSyncTimestamp,
+                status: 'completed',
+                session_id: session.id, // Add session_id at top level (required field)
+                client_name: options.client_context?.client_name || 'Force Sync Service', // Required field
+                metadata: {
+                  session_id: session.id,
+                  sync_scope: options.sync_scope || 'quick',
+                  dashboard_trigger: true,
+                  ...options.metadata
+                }
+              };
+
+              const { data, error } = await supabase
+                .from('opal_webhook_events')
+                .insert({
+                  webhook_id: correlationId,           // Use webhook_id instead of correlation_id
+                  workflow_id: correlationId,          // Also store as workflow_id for consistency
+                  event_type: 'force_sync_completed',
+                  agent_id: 'force_sync_service',
+                  status: 'completed',                 // Use status instead of execution_status
+                  event_data: {                        // Store all metadata in event_data JSONB
+                    triggered_by: 'force_sync',
+                    success: true,
+                    execution_status: 'success',
+                    session_id: session.id,
+                    client_name: insertData.client_name,
+                    correlation_id: correlationId,
+                    timestamp: this.lastSyncTimestamp,
+                    ...insertData.metadata
+                  }
+                })
+                .select('id, created_at, workflow_id');
+
+              if (error) {
+                console.error('❌ [Force Sync] Database insert error:', error);
+                console.error('❌ [Force Sync] Insert data was:', insertData);
+              } else {
+                console.log(`🚀 [Force Sync] Database event recorded successfully:`, data);
+              }
+            } catch (dbError) {
+              console.error('💥 [Force Sync] Database operation failed:', dbError);
+              // Don't fail the entire operation if database write fails
+            }
+
             this.emit('sync:completed', {
               session_id: session.id,
               correlation_id: correlationId,

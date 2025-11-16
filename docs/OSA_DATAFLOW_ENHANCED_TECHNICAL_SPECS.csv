@@ -1,0 +1,132 @@
+Component,Specification Type,Parameter,Value,Unit,Description,Environment,Validation Rule
+Strategy Intake API,Endpoint,URL,POST /api/strategy/intake,N/A,User form submission endpoint,All,Must use POST method
+Strategy Intake API,Authentication,Type,Bearer Token,N/A,JWT-based authentication required,Production,Valid JWT with appropriate scope
+Strategy Intake API,Request Schema,workflow_id,string (UUID),N/A,Unique workflow identifier,All,Must be valid UUID format
+Strategy Intake API,Request Schema,company_name,string (1-100 chars),characters,Business name for context,All,Required non-empty string
+Strategy Intake API,Request Schema,industry,enum (predefined list),N/A,Industry classification,All,Must match predefined industry list
+Strategy Intake API,Request Schema,goals,array[string] (1-10 items),items,Business objectives,All,1-10 non-empty strings required
+Strategy Intake API,Request Schema,optimizely_config,object,N/A,Optimizely integration settings,All,At least one API key required
+Strategy Intake API,Performance SLA,Response Time P50,500,milliseconds,50th percentile response time,Production,Must be <500ms
+Strategy Intake API,Performance SLA,Response Time P95,2000,milliseconds,95th percentile response time,Production,Must be <2000ms
+Strategy Intake API,Performance SLA,Availability,99.9,percentage,Service uptime requirement,Production,Monthly availability target
+Strategy Intake API,Performance SLA,Error Rate,0.5,percentage,Maximum acceptable error rate,Production,Rolling 24-hour window
+
+OPAL Webhook Handler,Endpoint,URL,POST /api/webhooks/opal-workflow,N/A,OPAL agent result receiver,All,Webhook endpoint for agent data
+OPAL Webhook Handler,Authentication,Type,HMAC-SHA256,N/A,Webhook signature validation,All,X-OSA-Signature header required
+OPAL Webhook Handler,Authentication,Secret Length,32,characters,Minimum secret length for security,Production,Must be >=32 characters
+OPAL Webhook Handler,Request Schema,workflow_id,string (UUID),N/A,Workflow correlation identifier,All,Must match existing workflow
+OPAL Webhook Handler,Request Schema,agent_id,enum (9 agents),N/A,Specific OPAL agent identifier,All,Must be valid agent from predefined list
+OPAL Webhook Handler,Request Schema,execution_status,enum (4 states),N/A,Agent execution status,All,"started|running|completed|failed"
+OPAL Webhook Handler,Request Schema,confidence_score,number (0-1),N/A,Agent result confidence level,All,Optional float between 0 and 1
+OPAL Webhook Handler,Performance SLA,Response Time P50,200,milliseconds,50th percentile response time,Production,Must be <200ms
+OPAL Webhook Handler,Performance SLA,Response Time P95,1000,milliseconds,95th percentile response time,Production,Must be <1000ms
+OPAL Webhook Handler,Performance SLA,Availability,99.95,percentage,Service uptime requirement,Production,Higher than intake API due to criticality
+OPAL Webhook Handler,Performance SLA,Throughput,300,requests/minute,Maximum processing capacity,Production,5 requests per second sustained
+
+OSA Workflow Processor,Processing SLA,Total Processing Time,1000,milliseconds,Agent data aggregation time,All,Must complete within 1 second
+OSA Workflow Processor,Processing SLA,Cross-Agent Analysis,2000,milliseconds,Synthesis and correlation analysis,All,Must complete within 2 seconds
+OSA Workflow Processor,Processing SLA,Confidence Score Minimum,0.8,ratio,Minimum acceptable confidence,Production,Warn if <0.8 fail if <0.6
+OSA Workflow Processor,Data Validation,Schema Compliance,100,percentage,All agent data must pass validation,All,Zero tolerance for schema violations
+OSA Workflow Processor,Data Validation,Completeness Threshold,70,percentage,Minimum data completeness required,All,Workflow fails if <70% complete
+OSA Workflow Processor,Error Handling,Retry Attempts,3,attempts,Maximum retries for failed operations,All,Exponential backoff between attempts
+OSA Workflow Processor,Error Handling,Timeout Limit,30000,milliseconds,Maximum processing time before timeout,All,Circuit breaker activation threshold
+
+OPAL Agent Specifications,Integration Health Agent,Max Execution Time,60000,milliseconds,Timeout threshold for agent,All,Must complete within 60 seconds
+OPAL Agent Specifications,Integration Health Agent,Confidence Threshold,0.95,ratio,Minimum confidence for success,All,High threshold due to critical nature
+OPAL Agent Specifications,Content Review Agent,Max Execution Time,120000,milliseconds,Timeout threshold for agent,All,Must complete within 120 seconds
+OPAL Agent Specifications,Content Review Agent,Confidence Threshold,0.8,ratio,Minimum confidence for success,All,Standard threshold for analysis agents
+OPAL Agent Specifications,Geo Audit Agent,Max Execution Time,150000,milliseconds,Timeout threshold for agent,All,Must complete within 150 seconds
+OPAL Agent Specifications,Geo Audit Agent,Confidence Threshold,0.85,ratio,Minimum confidence for success,All,Higher threshold for geographic data
+OPAL Agent Specifications,Audience Suggester Agent,Max Execution Time,180000,milliseconds,Timeout threshold for agent,All,Must complete within 180 seconds
+OPAL Agent Specifications,Audience Suggester Agent,Confidence Threshold,0.75,ratio,Minimum confidence for success,All,Lower threshold due to data complexity
+OPAL Agent Specifications,CMP Organizer Agent,Max Execution Time,180000,milliseconds,Timeout threshold for agent,All,Must complete within 180 seconds
+OPAL Agent Specifications,CMP Organizer Agent,Confidence Threshold,0.8,ratio,Minimum confidence for success,All,Standard threshold for optimization
+OPAL Agent Specifications,Personalization Generator Agent,Max Execution Time,240000,milliseconds,Timeout threshold for agent,All,Must complete within 240 seconds
+OPAL Agent Specifications,Personalization Generator Agent,Confidence Threshold,0.8,ratio,Minimum confidence for success,All,Standard threshold for idea generation
+OPAL Agent Specifications,Experiment Blueprinter Agent,Max Execution Time,300000,milliseconds,Timeout threshold for agent,All,Must complete within 300 seconds
+OPAL Agent Specifications,Experiment Blueprinter Agent,Confidence Threshold,0.85,ratio,Minimum confidence for success,All,Higher threshold for statistical rigor
+OPAL Agent Specifications,Customer Journey Agent,Max Execution Time,200000,milliseconds,Timeout threshold for agent,All,Must complete within 200 seconds
+OPAL Agent Specifications,Customer Journey Agent,Confidence Threshold,0.8,ratio,Minimum confidence for success,All,Standard threshold for journey mapping
+OPAL Agent Specifications,Roadmap Generator Agent,Max Execution Time,360000,milliseconds,Timeout threshold for agent,All,Must complete within 360 seconds (longest)
+OPAL Agent Specifications,Roadmap Generator Agent,Confidence Threshold,0.9,ratio,Minimum confidence for success,All,Highest threshold for strategic planning
+
+Database Performance,Connection Pool,Min Connections,5,connections,Minimum database connections,All,Always maintain minimum pool
+Database Performance,Connection Pool,Max Connections,20,connections,Maximum database connections,Production,Scale based on load
+Database Performance,Connection Pool,Connection Timeout,5000,milliseconds,Timeout for getting connection,All,Fail fast if pool exhausted
+Database Performance,Query Performance,Simple Query SLA,100,milliseconds,SELECT/INSERT operations,All,Most queries should be sub-100ms
+Database Performance,Query Performance,Complex Query SLA,1000,milliseconds,JOIN/aggregation operations,All,Analytics queries up to 1 second
+Database Performance,Query Performance,Slow Query Threshold,2000,milliseconds,Log queries exceeding threshold,All,Monitor and optimize slow queries
+
+Caching Strategy,Memory Cache,TTL,300,seconds,In-memory cache expiration,All,5 minute default for strategy insights
+Caching Strategy,Memory Cache,Max Size,100,items,Maximum cached items,All,LRU eviction when exceeded
+Caching Strategy,Redis Cache,TTL,3600,seconds,Redis cache expiration,All,1 hour for agent results
+Caching Strategy,Redis Cache,Max Memory,1024,MB,Maximum Redis memory usage,Production,Scale based on usage patterns
+Caching Strategy,Database Cache,TTL,86400,seconds,Persistent cache expiration,All,24 hour cache for agent data
+Caching Strategy,CDN Cache,TTL,3600,seconds,Static content cache,Production,1 hour for UI assets
+
+Security Requirements,HMAC Validation,Algorithm,SHA256,N/A,Hash algorithm for webhook signatures,All,Industry standard for webhook security
+Security Requirements,HMAC Validation,Timestamp Tolerance,300000,milliseconds,Replay attack prevention,All,5 minute window for valid requests
+Security Requirements,JWT Tokens,Algorithm,RS256,N/A,JWT signature algorithm,Production,Asymmetric encryption required
+Security Requirements,JWT Tokens,Expiration,3600,seconds,Token validity period,Production,1 hour default with refresh capability
+Security Requirements,API Rate Limiting,Requests Per Minute,60,requests/minute,Per-user rate limit,All,1 request per second sustained
+Security Requirements,API Rate Limiting,Burst Capacity,10,requests,Short burst allowance,All,Handle traffic spikes gracefully
+
+Monitoring Thresholds,Error Rate Alert,Threshold,5,percentage,Alert if error rate exceeds,All,5 minute evaluation window
+Monitoring Thresholds,Response Time Alert,P95 Threshold,5000,milliseconds,Alert if P95 response time exceeds,All,2 minute evaluation window
+Monitoring Thresholds,Agent Timeout Alert,Consecutive Failures,3,failures,Alert after consecutive timeouts,All,Per-agent monitoring
+Monitoring Thresholds,Webhook Failure Alert,Consecutive Failures,3,failures,Alert after consecutive webhook failures,All,Immediate escalation required
+Monitoring Thresholds,Memory Usage Alert,Threshold,85,percentage,Alert if memory usage exceeds,Production,Prevent OOM conditions
+Monitoring Thresholds,CPU Usage Alert,Threshold,80,percentage,Alert if CPU usage exceeds,Production,5 minute sustained usage
+
+7-Step Webhook Streaming Optimization (November 2025),Performance Achievement,Page Load Improvement,93,percentage,Total page load time improvement achieved,Production,11.1s reduced to 825ms
+7-Step Webhook Streaming Optimization (November 2025),Performance Achievement,Compilation Speed Improvement,94,percentage,Compilation time improvement achieved,Production,10.3s reduced to 612ms
+7-Step Webhook Streaming Optimization (November 2025),Performance Achievement,Render Performance Improvement,75,percentage,Render time improvement achieved,Production,865ms reduced to 213ms
+7-Step Webhook Streaming Optimization (November 2025),Performance Achievement,API Call Reduction,80,percentage,Reduction in server API calls via caching,Production,React Query intelligent caching implementation
+
+OSA Status API Endpoint,Endpoint,URL,GET /api/admin/osa/recent-status,N/A,Lightweight status endpoint with parallel queries,All,Optimized replacement for heavy streaming
+OSA Status API Endpoint,Performance SLA,Response Time,200,milliseconds,Target response time for status queries,Production,Must be <200ms for optimal UX
+OSA Status API Endpoint,Database Queries,Parallel Execution,3,concurrent queries,Promise.allSettled implementation,All,getLatestWebhookEvent + getLatestAgentData + getLatestForceSync
+OSA Status API Endpoint,Error Handling,Graceful Degradation,100,percentage,Individual query failures don't block response,All,Must return partial data if some queries fail
+OSA Status API Endpoint,Data Format,Response Schema,JSON,N/A,Structured status response with timestamps,All,"lastWebhookAt,lastAgentDataAt,lastForceSyncAt,lastWorkflowStatus"
+
+React Query Integration,Hook Name,useRecentOsaStatus,N/A,N/A,Main data fetching hook for OSA status,All,Replaces direct API polling mechanisms
+React Query Integration,Cache Configuration,Stale Time,300000,milliseconds,Data considered fresh for 5 minutes,All,Reduces server load by 80% during active usage
+React Query Integration,Cache Configuration,Garbage Collection Time,600000,milliseconds,Cache cleanup after 10 minutes,All,Memory management for long-running sessions
+React Query Integration,Performance,Background Refetch,Enabled,N/A,Keeps data fresh without blocking UI,All,User experience optimization
+React Query Integration,Error Handling,Retry Logic,3,attempts,Automatic retry for failed requests,All,Exponential backoff with intelligent failure classification
+React Query Integration,Cache Invalidation,Manual Trigger,queryClient.invalidateQueries,N/A,Force refresh mechanism,All,Triggered on workflow completion signals
+
+SSE Streaming Control,Stream Activation,Controlled Mode,Environment-aware,N/A,Streaming only during Force Sync workflows,All,Prevents unnecessary persistent connections
+SSE Streaming Control,Environment Configuration,Debug Flag,NEXT_PUBLIC_OSA_STREAM_DEBUG,N/A,Environment variable for debug logging,Development,Set to 'true' for development debugging
+SSE Streaming Control,Connection Management,Auto Reconnect,5,attempts,Maximum reconnection attempts,All,Exponential backoff delay: 4000ms base
+SSE Streaming Control,Event Processing,Heartbeat Filtering,Enabled,N/A,Skip heartbeat events for performance,All,Only process relevant workflow events
+SSE Streaming Control,Performance,Event Buffer,100,events,Maximum event history buffer size,All,Prevents memory leaks in long-running streams
+SSE Streaming Control,Cache Integration,Invalidation Trigger,Workflow completion,N/A,SSE messages trigger React Query cache refresh,All,Real-time data synchronization
+
+Force Sync Integration,Workflow Detection,Status Management,useForceSyncUnified,N/A,State management hook for Force Sync workflows,All,Controls streaming activation and monitoring
+Force Sync Integration,Session Correlation,ID Pattern,opalCorrelationId,N/A,Workflow-specific session identification,All,Replaces generic 'recent-data-widget' sessions
+Force Sync Integration,Event Correlation,Message Parsing,JSON.parse(event.data),N/A,Structured event parsing with error handling,All,Graceful handling of malformed messages
+Force Sync Integration,Completion Detection,Trigger Patterns,4,patterns,"workflow_completed,workflowStatus===completed,force_sync_completed,message contains 'completed'",All,Multiple completion signal recognition
+Force Sync Integration,Performance,Activation Overhead,Minimal,N/A,Streaming only when Force Sync active,Production,Resource conservation when idle
+
+Workflow Completion Detection,Signal Processing,Multi-Pattern Recognition,4,patterns,Comprehensive completion signal detection,All,Handles various OPAL agent completion formats
+Workflow Completion Detection,Cache Invalidation,Query Invalidation,queryClient.invalidateQueries,N/A,Automatic cache refresh on completion,All,Ensures fresh data after workflow completion
+Workflow Completion Detection,Error Handling,Parse Failure Tolerance,100,percentage,Silent handling of unparseable messages,Production,No errors for malformed SSE messages
+Workflow Completion Detection,Performance Impact,Processing Overhead,<5,milliseconds,Time to process completion signals,All,Minimal impact on streaming performance
+
+Console Debugging System,Production Configuration,Debug Logging,Disabled,N/A,Console spam elimination in production,Production,NEXT_PUBLIC_OSA_STREAM_DEBUG=false
+Console Debugging System,Development Configuration,Debug Logging,Enabled,N/A,Comprehensive debugging in development,Development,NEXT_PUBLIC_OSA_STREAM_DEBUG=true
+Console Debugging System,Logging Performance,Production Overhead,<1,milliseconds,Minimal logging overhead in production,Production,Only critical errors and warnings logged
+Console Debugging System,Message Categories,Debug Types,5,types,"📡 SSE messages,🔄 Cache operations,📊 Performance metrics,⚠️ Warnings,❌ Errors",Development,Structured logging with clear prefixes
+
+TypeScript Enhancement,Interface Definitions,OsaRecentStatus,TypeScript Interface,N/A,Structured API response typing,All,"lastWebhookAt,lastAgentDataAt,lastForceSyncAt,lastWorkflowStatus"
+TypeScript Enhancement,Hook Typing,UseRecentOsaStatusResult,TypeScript Interface,N/A,Complete hook return type definition,All,"data,isLoading,error,refetch with proper generics"
+TypeScript Enhancement,Configuration Typing,WebhookStreamConfig,TypeScript Interface,N/A,Comprehensive streaming configuration,All,"enabled,sessionId,workflowId,onMessage,onEvent callbacks"
+TypeScript Enhancement,Type Safety,Runtime Validation,Type Guards,N/A,Runtime type checking for API responses,All,Prevents runtime errors from API changes
+TypeScript Enhancement,Documentation,JSDoc Standards,100,percentage,All new functions include comprehensive JSDoc,All,Examples and usage patterns documented
+
+Performance Monitoring,Page Load Tracking,Compilation Monitoring,Time measurement,N/A,Real-time compilation performance tracking,Development,Measures Next.js build and startup times
+Performance Monitoring,API Response Monitoring,Response Time Tracking,<200,milliseconds,OSA status API response monitoring,Production,Alert if consistently above threshold
+Performance Monitoring,Cache Performance,Hit Rate Monitoring,>80,percentage,React Query cache hit ratio monitoring,Production,Optimal caching effectiveness indicator
+Performance Monitoring,Stream Health,Connection Monitoring,SSE connection stability,N/A,Real-time streaming health monitoring,All,Automatic reconnection and error recovery
+Performance Monitoring,Resource Usage,Memory Efficiency,70,percentage,Server resource conservation via optimization,Production,Fewer persistent connections and API calls

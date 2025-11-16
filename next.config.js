@@ -37,6 +37,9 @@ const nextConfig = {
     styledComponents: true
   },
 
+  // Turbopack configuration (Next.js 16 compatibility)
+  turbopack: {},
+
   // Bundle analyzer and optimization
   webpack: (config, { dev, isServer }) => {
     // Development optimizations

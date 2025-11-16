@@ -1,0 +1,75 @@
+Sequence Step,Service,Action,Input Data,Output Data,SLA Time,Error Handling,Success Criteria
+1,Strategy Intake Service,User Form Submission,Business context + Optimizely config + Analysis preferences,Validated workflow parameters + correlation ID,<2s,Form validation errors + user feedback,Valid schema + API credentials verified
+2,OPAL Integration Service,Webhook Trigger,Workflow parameters + correlation ID,strategy_workflow initiated + agent queue,<1s,Webhook signature validation + retry logic,200 response + workflow ID generated
+3.1,Integration Health Agent,System Health Check,Optimizely API credentials + project settings,Integration status + health metrics,<60s,API timeout + fallback to cached status,Confidence score >0.95 + connectivity confirmed
+3.2,Content Review Agent,Content Analysis,Website content + SEO data + engagement metrics,Content quality scores + improvement recommendations,<120s,Data access timeout + use sample analysis,Confidence score >0.8 + actionable insights
+3.3,Geo Audit Agent,Geographic Performance,Regional performance data + conversion metrics,Geographic insights + underperforming regions,<150s,Regional data unavailable + use aggregated data,Confidence score >0.85 + regional breakdown
+3.4,Audience Suggester Agent,Audience Analysis,ODP data + Salesforce segments + behavioral data,Audience segments + personalization opportunities,<180s,ODP connection timeout + use demographic fallback,Confidence score >0.75 + segment definitions
+3.5,CMP Organizer Agent,Campaign Analysis,Campaign data + performance metrics + ROI analysis,Campaign optimization + resource allocation,<180s,CMP API timeout + use historical patterns,Confidence score >0.8 + optimization recommendations
+3.6,Personalization Generator Agent,Idea Generation,Audience data + content analysis + experimentation history,Personalization concepts + implementation roadmap,<240s,Insufficient data + use best practice templates,Confidence score >0.8 + feasible concepts
+3.7,Experiment Blueprinter Agent,Experiment Design,Personalization ideas + statistical requirements + business goals,Experiment specifications + success metrics,<300s,Statistical calculation error + use simplified design,Confidence score >0.85 + statistical validity
+3.8,Customer Journey Agent,Journey Mapping,User behavior data + touchpoint analysis + conversion funnels,Journey maps + optimization opportunities,<200s,Behavioral data incomplete + use persona-based journey,Confidence score >0.8 + journey completeness
+3.9,Roadmap Generator Agent,Strategic Planning,All agent outputs + business priorities + resource constraints,Implementation roadmap + timeline + priorities,<360s,Agent data incomplete + use available insights,Confidence score >0.9 + realistic timeline
+4,OSA Workflow Processor,Data Aggregation,All agent results + metadata + execution status,Aggregated insights + cross-agent synthesis,<5s,Agent data validation failure + use available data,>7 successful agents + data consistency validated
+5,Recommendation Service,Insight Generation,Aggregated data + business context + priority matrix,Strategy recommendations + confidence scores + impact estimates,<3s,Insufficient data + generate basic recommendations,>85% confidence score + actionable recommendations
+6,Admin Dashboard Service,Real-Time Updates,Processing status + agent results + performance metrics,Live dashboard updates + status notifications,<1s,SSE connection failure + fallback to polling,User notification delivered + dashboard updated
+7,Knowledge Base Service,Learning Integration,Successful insights + user feedback + outcome tracking,Updated knowledge base + improved recommendations,<2s,Learning data incomplete + maintain existing patterns,Knowledge base updated + learning patterns identified
+8,UX Design Service,Results Presentation,Final insights + recommendations + supporting data,Formatted dashboard + exportable reports + user notifications,<1s,Rendering failure + use simplified layout,User interface updated + results accessible
+
+Error Recovery Scenarios,,,,,,,
+Agent Timeout Recovery,OPAL Agent,Timeout Detected,Agent execution >SLA time,Terminate + retry with reduced scope,Immediate,Log timeout + check cached results,Partial results available or retry successful
+Authentication Failure Recovery,External API,401/403 Response,Invalid or expired API credentials,Stop workflow + prompt credential refresh,Immediate,Validate credentials + user notification,Valid credentials provided + workflow resumed
+Webhook Delivery Failure Recovery,Webhook Service,Non-200 Response,OSA endpoint unavailable or error,Queue for retry with exponential backoff,5 attempts,Retry: 1s 2s 4s 8s 16s delays,Successful delivery or dead letter queue
+Data Validation Failure Recovery,OSA Processor,Schema Validation Error,Agent output fails schema validation,Log error + use fallback data + continue,<1s,Quarantine invalid data + use previous valid data,Workflow continues with warning + fallback data used
+Cache Miss Recovery,Caching Layer,Cache Unavailable,Requested data not in cache,Fetch from source + populate cache,<5s,Source unavailable + return cached (stale) data,Fresh data retrieved or stale data with warning
+
+Data Transformation Pipeline,,,,,,,
+Input Normalization,Strategy Intake,Raw Form Data,User form submission + file uploads,Standardized workflow parameters,<500ms,Validation error + user feedback,Schema compliant + business rules validated
+Agent Output Standardization,OSA Processor,Agent Results,Raw agent data + metadata,Normalized agent output with confidence scores,<1s,Normalization failure + use raw data with warning,Consistent format + confidence score calculated
+Cross-Agent Synthesis,Recommendation Service,Normalized Data,All standardized agent outputs,Synthesized insights + correlation analysis,<2s,Insufficient data + use individual agent insights,Cross-agent correlations identified + conflicts resolved
+Output Formatting,UX Service,Synthesized Insights,Strategy recommendations + supporting data,Dashboard-ready content + API responses,<500ms,Formatting error + use raw JSON,User-friendly format + exportable content
+
+Performance Benchmarks,,,,,,,
+Workflow Completion Time,End-to-End,Full Strategy Analysis,User submission to final results,Complete strategy recommendations,<30min target (<10min achieved),Timeout + partial results,All agents complete + high confidence recommendations
+Agent Execution Efficiency,Individual Agents,Single Agent Run,Agent input parameters,Agent-specific insights,Agent-specific SLA (60s-360s),Timeout + retry + fallback,Confidence score threshold met + execution within SLA
+API Response Performance,External Integrations,API Call,Request parameters + authentication,API response data,<5s per call,Circuit breaker + cached response,Successful response + data quality validated
+Real-Time Update Latency,SSE Streaming,Status Update,Workflow progress + agent completion,Live dashboard update,<1s,Connection failure + fallback polling,User sees live updates + no data loss
+
+7-Step Webhook Streaming Optimization Sequences (November 2025),,,,,,,
+Step 1 - OSA Status API,OSA Status Endpoint,Lightweight Status Query,No input parameters,OSA status with timestamps (lastWebhookAt + lastAgentDataAt + lastForceSyncAt),<200ms,Individual query failure + partial response,All 3 parallel queries complete + structured JSON response
+Step 1 - Database Queries,OSA Status Endpoint,Parallel Query Execution,3 concurrent database queries via Promise.allSettled,Latest webhook + agent + force sync data,<150ms,Single query failure + continue with available data,At least 2/3 queries successful + no blocking failures
+Step 1 - Graceful Degradation,OSA Status Endpoint,Error Handling,Failed database query,Partial response + warning flag,Immediate,Log warning + continue processing,Response delivered with available data + error logged
+
+Step 2 - React Query Hook,useRecentOsaStatus,Data Fetching,OSA status API endpoint call,Cached or fresh OSA status data,<100ms (cache) / <200ms (fresh),Network failure + use stale cache,Data available within 5-minute stale time + retry logic operational
+Step 2 - Cache Management,React Query,Intelligent Caching,API response + cache timestamp,5-minute cached response or fresh data request,<50ms cache hit,Cache corruption + force refresh,Cache hit ratio >80% + fresh data when needed
+Step 2 - Background Refresh,React Query,Background Refetch,Stale data detected + user active,Fresh data fetched in background + UI remains responsive,<200ms,Background fetch failure + continue with stale data,UI never blocks + fresh data eventually available
+
+Step 3 - SSE Stream Control,useWebhookStream Hook,Controlled Activation,Force Sync active status + session correlation ID,SSE connection established or skipped,<100ms,Stream connection failure + fallback to polling,Stream active only during Force Sync workflows
+Step 3 - Environment Awareness,SSE Streaming,Debug Configuration,NEXT_PUBLIC_OSA_STREAM_DEBUG environment variable,Debug logging enabled/disabled + console output control,Immediate,Invalid env config + default to production mode,Debug logging matches environment + no console spam in production
+Step 3 - Connection Management,SSE Streaming,Auto Reconnection,Connection failure detected + reconnection attempt,Reconnected stream or fallback mode,<4s + exponential backoff,Max attempts exceeded + permanent fallback,Connection restored within 5 attempts or graceful degradation
+
+Step 4 - Force Sync Integration,Force Sync Workflow,Streaming Activation,Force Sync initiated + correlation ID generated,SSE streaming enabled + session correlation active,<50ms,Force Sync detection failure + manual streaming,Streaming automatically activated + proper session correlation
+Step 4 - Session Correlation,Force Sync Integration,ID Management,opalCorrelationId from Force Sync workflow,Targeted SSE session + event filtering,Immediate,Correlation ID missing + use fallback session,Events properly correlated + no cross-workflow contamination
+Step 4 - Event Filtering,Force Sync Integration,Message Relevance,SSE event + workflow correlation check,Relevant events processed + irrelevant events filtered,<5ms per event,Event parsing failure + skip event,Only relevant events trigger cache invalidation
+
+Step 5 - Workflow Completion,Completion Detection,Multi-Pattern Recognition,"SSE event data with completion signals (workflow_completed, workflowStatus=completed, force_sync_completed, message contains 'completed')",Completion detected + cache invalidation triggered,<10ms,Pattern match failure + continue monitoring,Completion detected via any of 4 patterns + cache refresh initiated
+Step 5 - Cache Invalidation,Workflow Completion,React Query Refresh,Completion signal + queryClient.invalidateQueries call,Fresh OSA status data + UI updated with latest results,<200ms,Cache invalidation failure + manual refresh available,Cache cleared + fresh data requested + UI shows updated status
+Step 5 - State Synchronization,Workflow Completion,Force Sync Reset,Workflow completion + Force Sync state update,Force Sync marked complete + streaming deactivated,<50ms,State update failure + manual cleanup,Force Sync properly completed + streaming resources released
+
+Step 6 - Debug Optimization,Console Management,Production Logging,NEXT_PUBLIC_OSA_STREAM_DEBUG=false + log message,Console message suppressed or critical error logged,<1ms,Logging configuration error + default behavior,Zero console spam in production + critical errors still logged
+Step 6 - Development Debugging,Console Management,Debug Logging,NEXT_PUBLIC_OSA_STREAM_DEBUG=true + debug message,Detailed debug info with structured prefixes,<2ms,Debug logging overflow + rate limiting,Comprehensive debugging without performance impact
+Step 6 - Performance Impact,Console Optimization,Resource Conservation,Reduced console operations + optimized logging paths,Minimal performance overhead + clean console output,<1ms per operation,Logging system failure + silent fallback,Development debugging available + production performance optimal
+
+Step 7 - TypeScript Enhancement,Type Safety,Interface Validation,API response + TypeScript interface validation,Type-safe data access + compile-time error prevention,Compile-time,Type mismatch + compilation error,All interfaces properly typed + runtime type guards operational
+Step 7 - Documentation,JSDoc Integration,Comprehensive Documentation,"Function signatures + usage examples + parameter descriptions",Complete developer documentation + IntelliSense support,N/A,Documentation out of sync + developer confusion,100% JSDoc coverage + accurate examples + clear usage patterns
+Step 7 - Code Quality,TypeScript Optimization,Strict Type Checking,Enhanced type definitions + strict compilation,Robust type safety + improved developer experience,Compile-time,Type errors + development blocked,Zero type errors + enhanced development productivity
+
+Optimization Integration Sequences,,,,,,,
+Cache-Stream Integration,React Query + SSE,Hybrid Data Flow,Cache hit/miss + streaming status + Force Sync state,Optimal data freshness + minimal server load,Cache: <50ms / Stream: <200ms,Integration failure + fallback to individual systems,Cache serves most requests + streaming updates on demand + 80% API call reduction
+Performance Monitoring,System Optimization,Real-time Performance,Page load + compilation + render metrics,Performance dashboard + optimization alerts,Continuous monitoring,Monitoring failure + manual performance checks,93% performance improvement maintained + regression detection active
+Error Recovery Integration,Optimized System,Enhanced Error Handling,Any system failure + optimization components status,Graceful degradation + user notification + system recovery,<1s detection + <5s recovery,Multiple system failures + manual intervention,All optimization benefits preserved during failures + automatic recovery
+
+Legacy vs Optimized Comparison,,,,,,,
+Legacy Polling Approach,Direct API Polling,Aggressive Polling,Repeated API calls every 2-3 seconds,Fresh data + high server load,2-3s intervals,Server overload + polling storm,High server cost + poor performance + 11.1s page loads
+Optimized Approach,React Query + SSE,Intelligent Caching + Controlled Streaming,Cache first + streaming on demand + Force Sync controlled activation,Fresh data + minimal server load,Cache: <50ms / Fresh: <200ms,Graceful degradation to polling,93% performance improvement + 80% API call reduction + 825ms page loads
+Performance Differential,Optimization Impact,Direct Comparison,Legacy performance metrics vs optimized metrics,Performance improvement quantification,Measurement period: 1 week,Measurement inconsistency + manual verification,93% page load improvement + 80% server load reduction + maintained functionality
