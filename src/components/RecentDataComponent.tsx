@@ -1,6 +1,6 @@
 'use client';
 
-import { Activity, Calendar, RefreshCw, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Activity, Calendar, RefreshCw, CheckCircle, XCircle, AlertCircle, ExternalLink, Zap } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -90,10 +90,10 @@ export default function RecentDataComponent({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Activity className="h-5 w-5 text-blue-600" />
-            OSA Recent Activity
+            OSA Strategy Assistant Status
           </CardTitle>
           <CardDescription>
-            Last webhook, agent data, and Force Sync activity for the Opal Strategy Assistant
+            Real-time health monitoring for personalization workflows and content strategy
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -142,6 +142,54 @@ export default function RecentDataComponent({
               label="Last Force Sync"
               value={osaStatus?.lastForceSyncAt}
             />
+          </div>
+
+          {/* Marketing-focused status explanation */}
+          <div className="border-t border-gray-100 pt-4">
+            <div className="bg-gray-50 rounded-lg p-3">
+              <h4 className="text-sm font-medium text-gray-900 mb-2">
+                {getMarketingStatusTitle(displayStatus)}
+              </h4>
+              <p className="text-xs text-gray-600 mb-3">
+                {getMarketingStatusDescription(displayStatus)}
+              </p>
+
+              {/* Action buttons */}
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-xs"
+                  onClick={() => window.open('/engine/admin', '_blank')}
+                >
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  View OSA Logs
+                </Button>
+
+                {displayStatus === 'failed' || displayStatus === 'none' ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 text-xs text-blue-700 border-blue-200 hover:bg-blue-50"
+                    onClick={() => window.open('/engine/admin#force-sync', '_blank')}
+                  >
+                    <Zap className="h-3 w-3 mr-1" />
+                    Run Force Sync
+                  </Button>
+                ) : null}
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 text-xs text-gray-600"
+                  onClick={() => refetch()}
+                  disabled={isLoading}
+                >
+                  <RefreshCw className={`h-3 w-3 mr-1 ${isLoading ? 'animate-spin' : ''}`} />
+                  Refresh Status
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* Error block */}
@@ -307,4 +355,32 @@ function TimestampPill({ label, value }: { label: string; value: string | null |
       </div>
     </div>
   );
+}
+
+function getMarketingStatusTitle(status: DisplayStatus): string {
+  switch (status) {
+    case 'success':
+      return '✅ Personalization Engine Active';
+    case 'processing':
+      return '⚡ Strategy Updates in Progress';
+    case 'failed':
+      return '⚠️ Personalization System Needs Attention';
+    case 'none':
+    default:
+      return '💤 No Recent Strategy Activity';
+  }
+}
+
+function getMarketingStatusDescription(status: DisplayStatus): string {
+  switch (status) {
+    case 'success':
+      return 'Your personalization strategy is running smoothly. New content, experiments, and audience insights are flowing into the Strategy Assistant. Customer experiences are being optimized in real-time.';
+    case 'processing':
+      return 'The system is actively processing new data and generating fresh strategy recommendations. This typically takes a few minutes to complete.';
+    case 'failed':
+      return 'There\'s an issue with the personalization workflow. Customer data and strategy updates may be delayed. Use the Force Sync button or check logs to investigate.';
+    case 'none':
+    default:
+      return 'No recent personalization activity detected. This means new customer insights, content recommendations, and A/B test data aren\'t flowing into your strategy. Consider running a Force Sync to refresh the system.';
+  }
 }
