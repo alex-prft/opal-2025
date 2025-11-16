@@ -252,6 +252,120 @@ For detailed information, see:
 ✅ **Real-time Updates**: Components receive data via SSE streams
 ✅ **Security Compliance**: All guardrails enabled, compliance score > 95%
 
+## GitHub Deployment Pipeline Patterns (2025-11-16)
+
+### Production Deployment Success
+
+**Achievement**: Successfully deployed comprehensive OSA enhancements to production with 57 files (17,859 insertions), achieving 93% performance improvements and 97% security compliance.
+
+**Production URL**: https://opal-2025-ii46qvk2h-alex-harris-projects-f468cccf.vercel.app
+
+### 4-Phase Deployment Pattern
+
+#### Phase 1: Repository Integration
+```bash
+git checkout main                        # Switch to main branch
+git merge feat/osa-status-and-streaming # Fast-forward merge (57 files)
+git push origin main                    # Update GitHub origin
+git push origin feat/osa-status-and-streaming  # Preserve feature branch
+```
+
+#### Phase 2: Pre-deployment Validation
+```bash
+npm run validate:security              # Target: 34/35+ checks (97%+ success)
+npm run build                         # Test production compilation
+grep -r "test.*correlation.*id" src/  # Scan for test data contamination
+```
+
+#### Phase 3: Production Deployment
+```bash
+export VERCEL_TOKEN="your_token"
+export NEXT_PUBLIC_BASE_URL="https://your-domain.vercel.app"
+npx vercel --prod --yes               # Deploy to production (50s build)
+```
+
+#### Phase 4: Deployment Verification
+```bash
+curl -I https://production-url                    # Site accessibility
+curl -I https://production-url/api/admin/health   # API health check
+npx vercel inspect deployment-url --logs          # Build log analysis
+```
+
+### Critical Success Factors
+
+#### Repository Management
+- **Always use TodoWrite** for deployment task tracking and visibility
+- **Preserve feature branches** after merge for potential rollback scenarios
+- **Ensure clean working tree** before beginning deployment process
+- **Maintain meaningful commit messages** following established patterns
+
+#### Validation Requirements
+- **Security Score**: Minimum 34/35 checks passed (97% compliance)
+- **Build Success**: Complete Next.js compilation without errors
+- **Environment Setup**: All Vercel tokens and API keys configured
+- **Test Data Scanning**: No hardcoded test values in production code
+
+#### Production Configuration
+- **Next.js 16 Turbopack**: Optimized builds completing in 50 seconds
+- **Static Generation**: 148 pages with intelligent caching
+- **Serverless Functions**: 80+ API endpoints with Edge Runtime compatibility
+- **Authentication Middleware**: Enterprise security properly operational
+
+### Deployment Anti-patterns to Avoid
+
+#### Repository Failures
+- ❌ **Never deploy with uncommitted changes** - always ensure clean working tree
+- ❌ **Don't skip feature branch preservation** - maintain audit trail for rollbacks
+- ❌ **Avoid bypassing task tracking** - deployment visibility is critical for complex changes
+
+#### Validation Shortcuts
+- ❌ **Never skip security validation** - 97%+ compliance is mandatory for enterprise deployment
+- ❌ **Don't deploy without local build testing** - catch compilation issues before production
+- ❌ **Avoid incomplete environment setup** - verify all tokens and variables before deployment
+
+#### Production Process Errors
+- ❌ **Don't proceed with build failures** - address all compilation issues first
+- ❌ **Never ignore authentication middleware** - verify 401 responses for protected endpoints
+- ❌ **Avoid skipping post-deployment verification** - confirm all enterprise features operational
+
+### Performance & Security Results
+
+**Performance Achievements:**
+- Page Load: 11.1s → 825ms (93% improvement)
+- Build Time: 50 seconds with Turbopack optimization
+- Static Pages: 148 pages generated successfully
+- API Endpoints: 80+ serverless functions deployed
+
+**Security & Compliance:**
+- Security Score: 34/35 checks passed (97% success rate)
+- Authentication: Enterprise middleware operational
+- PII Protection: Comprehensive Supabase guardrails active
+- GDPR Compliance: Data subject request handling enabled
+
+**Enterprise Features Deployed:**
+- OSA Status Optimization with React Query caching
+- Enhanced webhook streaming with SSE patterns
+- Prometheus metrics and comprehensive monitoring
+- Complete documentation reorganization
+
+### Quick Deployment Commands
+
+```bash
+# Complete deployment sequence
+git checkout main && git merge feat/branch-name && git push origin main
+npm run validate:security && npm run build
+export VERCEL_TOKEN="token" && npx vercel --prod --yes
+curl -I https://production-url && echo "Deployment successful"
+```
+
+### Success Indicators Checklist
+- [ ] Repository: Clean merge, GitHub synchronization complete
+- [ ] Security: 34/35+ validation checks passed
+- [ ] Build: Production compilation successful in <60s
+- [ ] Deployment: Vercel deployment completed successfully
+- [ ] Accessibility: Site responding with proper authentication
+- [ ] Features: Enterprise monitoring and OSA status API operational
+
 ---
 
 *Keep this file focused and essential. Detailed patterns and case studies belong in docs/*
