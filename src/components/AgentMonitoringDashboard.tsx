@@ -224,6 +224,8 @@ function AgentCard({ agentInfo, agentConfig }: AgentCardProps) {
 }
 
 export default function AgentMonitoringDashboard({ className }: AgentMonitoringDashboardProps) {
+  // Guard against SSR
+  const [isClient, setIsClient] = useState(false);
   const [agentStatuses, setAgentStatuses] = useState<Map<string, AgentStatusInfo>>(new Map());
   const [workflowProgress, setWorkflowProgress] = useState<Map<string, WorkflowProgress>>(new Map());
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());

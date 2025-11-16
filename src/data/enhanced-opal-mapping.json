@@ -409,6 +409,334 @@
         "/engine/results/strategy/quick-wins"
       ],
       "url_validation_regex": "^/engine/results/strategy(-plans)?/quick-wins(/.*)?$"
+    },
+
+    "Maturity": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "maturity_assessment",
+        "strategy_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Maturity",
+        "tier3": [
+          "Current State Assessment",
+          "Maturity Framework",
+          "Gap Analysis",
+          "Improvement Pathway",
+          "Benchmarking Data"
+        ]
+      },
+      "tier_mapping": {
+        "Current State Assessment": {
+          "url_pattern": "/engine/results/strategy-plans/maturity/current-state-assessment",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Maturity",
+            "tier3": "Current State Assessment"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["MaturityAssessmentWidget", "PhaseIndicatorWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "maturityData": "currentMaturityState",
+            "assessmentResults": "maturityAssessment",
+            "phaseEvidence": "maturityEvidence",
+            "capabilityScores": "capabilityAssessment"
+          },
+          "content_focus": {
+            "title": "Current Maturity State Assessment",
+            "description": "Comprehensive evaluation of current optimization maturity across content, experimentation, personalization, UX, and technology",
+            "key_metrics": ["Current Phase", "Capability Scores", "Evidence Quality", "Assessment Confidence"],
+            "chart_types": ["maturity-radar", "capability-scores", "evidence-summary", "phase-indicator"]
+          }
+        },
+        "Maturity Framework": {
+          "url_pattern": "/engine/results/strategy-plans/maturity/maturity-framework",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Maturity",
+            "tier3": "Maturity Framework"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["MaturityFrameworkWidget", "PhaseDefinitionsWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "frameworkData": "maturityFramework",
+            "phaseDefinitions": "maturityPhases",
+            "criteriaMapping": "maturityCriteria",
+            "organizationContext": "orgMaturityContext"
+          },
+          "content_focus": {
+            "title": "Four-Phase Maturity Framework",
+            "description": "Crawl → Walk → Run → Fly framework with organization-specific definitions and advancement criteria",
+            "key_metrics": ["Framework Alignment", "Phase Clarity", "Advancement Criteria", "Organization Fit"],
+            "chart_types": ["maturity-stages", "criteria-matrix", "advancement-path", "capability-evolution"]
+          }
+        },
+        "Gap Analysis": {
+          "url_pattern": "/engine/results/strategy-plans/maturity/gap-analysis",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Maturity",
+            "tier3": "Gap Analysis"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["GapAnalysisWidget", "RequirementsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "gapAnalysis": "maturityGaps",
+            "missingCapabilities": "capabilityGaps",
+            "nextPhaseRequirements": "advancementRequirements",
+            "priorityGaps": "prioritizedGaps"
+          },
+          "content_focus": {
+            "title": "Maturity Gap Analysis",
+            "description": "Detailed analysis of gaps preventing advancement to next maturity phase",
+            "key_metrics": ["Gap Count", "Priority Level", "Effort Required", "Impact Potential"],
+            "chart_types": ["gap-matrix", "priority-heatmap", "effort-impact", "capability-gaps"]
+          }
+        },
+        "Improvement Pathway": {
+          "url_pattern": "/engine/results/strategy-plans/maturity/improvement-pathway",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Maturity",
+            "tier3": "Improvement Pathway"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["PathwayWidget", "ActionPlanWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "improvementPath": "maturityPathway",
+            "actionSequence": "improvementActions",
+            "milestoneMap": "pathwayMilestones",
+            "successMetrics": "advancementMetrics"
+          },
+          "content_focus": {
+            "title": "Step-by-Step Improvement Pathway",
+            "description": "Sequenced pathway from current state to next maturity phase with clear actions and milestones",
+            "key_metrics": ["Pathway Clarity", "Action Count", "Timeline Estimate", "Success Probability"],
+            "chart_types": ["improvement-roadmap", "action-sequence", "milestone-timeline", "success-tracking"]
+          }
+        },
+        "Benchmarking Data": {
+          "url_pattern": "/engine/results/strategy-plans/maturity/benchmarking-data",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Maturity",
+            "tier3": "Benchmarking Data"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["BenchmarkingWidget", "ComparisonWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "benchmarkData": "maturityBenchmarks",
+            "peerComparison": "peerMaturityData",
+            "industryStandards": "industryMaturityData",
+            "targetAlignment": "benchmarkAlignment"
+          },
+          "content_focus": {
+            "title": "Maturity Benchmarking Analysis",
+            "description": "Comparative maturity analysis using indexes and ratios versus peers and industry standards",
+            "key_metrics": ["Benchmark Index", "Peer Position", "Industry Alignment", "Target Gap"],
+            "chart_types": ["benchmark-comparison", "peer-positioning", "industry-standards", "target-alignment"]
+          }
+        }
+      }
+    },
+
+    "Roadmap": {
+      "opal_instructions": [
+        "company-overview",
+        "marketing-strategy"
+      ],
+      "opal_agents": [
+        "roadmap_generator",
+        "strategy_workflow"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP",
+        "WEBX",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Strategy Plans",
+        "tier2": "Roadmap",
+        "tier3": [
+          "Timeline View",
+          "Milestone Tracking",
+          "Resource Allocation",
+          "Risk Assessment",
+          "Progress Indicators"
+        ]
+      },
+      "tier_mapping": {
+        "Timeline View": {
+          "url_pattern": "/engine/results/strategy-plans/roadmap/timeline-view",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Roadmap",
+            "tier3": "Timeline View"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RoadmapTimelineWidget", "InitiativeTrackingWidget"],
+            "layout": "timeline"
+          },
+          "data_props": {
+            "timelineData": "roadmapTimeline",
+            "initiatives": "majorInitiatives",
+            "dependencies": "timelineDependencies",
+            "milestoneSequence": "timelineMilestones"
+          },
+          "content_focus": {
+            "title": "Strategic Roadmap Timeline",
+            "description": "Timeline visualization of major optimization initiatives with dependencies and sequencing",
+            "key_metrics": ["Initiative Count", "Timeline Span", "Dependency Complexity", "Completion Confidence"],
+            "chart_types": ["timeline-gantt", "initiative-sequence", "dependency-flow", "progress-timeline"]
+          }
+        },
+        "Milestone Tracking": {
+          "url_pattern": "/engine/results/strategy-plans/roadmap/milestone-tracking",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Roadmap",
+            "tier3": "Milestone Tracking"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["MilestoneTrackingWidget", "CompletionWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "milestoneData": "roadmapMilestones",
+            "completionStatus": "milestoneCompletion",
+            "upcomingMilestones": "nextMilestones",
+            "milestoneHealth": "milestoneProgress"
+          },
+          "content_focus": {
+            "title": "Milestone Tracking Dashboard",
+            "description": "Real-time tracking of roadmap milestone completion and upcoming deliverables",
+            "key_metrics": ["Completion Rate", "On-Track Milestones", "At-Risk Count", "Upcoming Priorities"],
+            "chart_types": ["milestone-progress", "completion-status", "risk-indicators", "priority-calendar"]
+          }
+        },
+        "Resource Allocation": {
+          "url_pattern": "/engine/results/strategy-plans/roadmap/resource-allocation",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Roadmap",
+            "tier3": "Resource Allocation"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["ResourceAllocationWidget", "CapacityWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "resourceData": "resourceAllocation",
+            "capacityAnalysis": "teamCapacity",
+            "allocationMap": "resourceMapping",
+            "utilizationMetrics": "resourceUtilization"
+          },
+          "content_focus": {
+            "title": "Strategic Resource Allocation",
+            "description": "Distribution of time, complexity, and focus areas across roadmap initiatives",
+            "key_metrics": ["Resource Distribution", "Capacity Utilization", "Focus Allocation", "Complexity Balance"],
+            "chart_types": ["resource-allocation", "capacity-planning", "focus-distribution", "utilization-trends"]
+          }
+        },
+        "Risk Assessment": {
+          "url_pattern": "/engine/results/strategy-plans/roadmap/risk-assessment",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Roadmap",
+            "tier3": "Risk Assessment"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["RiskAssessmentWidget", "MitigationWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "riskData": "roadmapRisks",
+            "riskLikelihoods": "riskProbabilities",
+            "mitigationPlans": "riskMitigation",
+            "riskImpacts": "riskAssessment"
+          },
+          "content_focus": {
+            "title": "Roadmap Risk Assessment",
+            "description": "Identification and analysis of top roadmap risks with likelihood assessment and mitigation strategies",
+            "key_metrics": ["Risk Count", "High Risk Items", "Mitigation Coverage", "Risk Likelihood"],
+            "chart_types": ["risk-matrix", "likelihood-impact", "mitigation-status", "risk-trends"]
+          }
+        },
+        "Progress Indicators": {
+          "url_pattern": "/engine/results/strategy-plans/roadmap/progress-indicators",
+          "static_url": "/engine/results/strategy",
+          "tier_level": {
+            "tier1": "Strategy Plans",
+            "tier2": "Roadmap",
+            "tier3": "Progress Indicators"
+          },
+          "widgets": {
+            "primary": "StrategyPlansWidget",
+            "secondary": ["ProgressIndicatorsWidget", "KPIDashboardWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "progressData": "roadmapProgress",
+            "kpiMetrics": "progressKPIs",
+            "indicatorTrends": "progressTrends",
+            "performanceIndexes": "progressIndexes"
+          },
+          "content_focus": {
+            "title": "Roadmap Progress Indicators",
+            "description": "Non-monetary KPIs tracking roadmap progress including completion, adoption, and engagement indexes",
+            "key_metrics": ["Progress Index", "Adoption Rate", "Engagement Score", "Completion Velocity"],
+            "chart_types": ["progress-dashboard", "kpi-trends", "adoption-curves", "velocity-tracking"]
+          }
+        }
+      }
     }
   },
 
@@ -420,7 +748,8 @@
       ],
       "opal_agents": [
         "content_review",
-        "audience_suggester"
+        "audience_suggester",
+        "content_recs_topic_performance"
       ],
       "opal_tools": [
         "osa_contentrecs_tools"
@@ -434,6 +763,7 @@
         "tier3": [
           "Visitor Analytics Dashboard",
           "Content Performance Metrics",
+          "Topic Performance",
           "Recommendation Algorithms",
           "A/B Testing Results",
           "Personalization Effectiveness"
@@ -466,13 +796,13 @@
             "chart_types": ["visitor-flow", "engagement-heatmap", "behavior-funnel", "recommendation-performance"]
           }
         },
-        "A/B Testing Results": {
+        "AB Testing Results": {
           "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/ab-testing-results",
           "static_url": "/engine/results/dxptools",
           "tier_level": {
             "tier1": "Optimizely DXP Tools",
             "tier2": "Content Recs",
-            "tier3": "A/B Testing Results"
+            "tier3": "AB Testing Results"
           },
           "widgets": {
             "primary": "IntegrationHealthWidget",
@@ -486,10 +816,518 @@
             "significanceData": "statisticalSignificance"
           },
           "content_focus": {
-            "title": "Content Recommendation A/B Testing",
-            "description": "Statistical analysis of content recommendation A/B testing performance",
+            "title": "Content Recommendation AB Testing",
+            "description": "Statistical analysis of content recommendation AB testing performance",
             "key_metrics": ["Test Significance", "Conversion Uplift", "Statistical Power", "Confidence Level"],
             "chart_types": ["ab-test-results", "statistical-significance", "conversion-comparison", "confidence-intervals"]
+          }
+        },
+        "Topic Performance": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/topic-performance",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "Content Recs",
+            "tier3": "Topic Performance"
+          },
+          "widgets": {
+            "primary": "ContentRecommendationsTopicPerformanceWidget",
+            "secondary": ["TopicAnalysisWidget", "ContentPerformanceWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "contentTopics": "contentTopics",
+            "topContent": "topContent",
+            "analyticsData": "analyticsData",
+            "userInteractions": "userInteractions"
+          },
+          "content_focus": {
+            "title": "Content Recommendations - Topic Performance Analysis",
+            "description": "Comprehensive topic performance analysis with content breakdown and engagement metrics",
+            "key_metrics": ["Topics Analyzed", "Total Interactions", "Top Topic Share", "Content Concentration"],
+            "chart_types": ["topic-performance", "content-breakdown", "engagement-analysis", "performance-trends"]
+          }
+        }
+      }
+    },
+
+    "CMS": {
+      "opal_instructions": [
+        "content-management-strategy",
+        "cms-optimization"
+      ],
+      "opal_agents": [
+        "cms_content_optimizer",
+        "integration_health"
+      ],
+      "opal_tools": [
+        "osa_cms_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "CMS"
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "CMS",
+        "tier3": [
+          "Content Management Dashboard",
+          "Content Performance Analytics",
+          "Publishing Workflow Optimization",
+          "Content Governance Metrics",
+          "Multi-site Content Strategy"
+        ]
+      },
+      "tier_mapping": {
+        "Content Management Dashboard": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cms/content-management-dashboard",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMS",
+            "tier3": "Content Management Dashboard"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["ContentManagementWidget", "WorkflowAnalyticsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "contentMetrics": "cmsContentMetrics",
+            "workflowData": "publishingWorkflowData",
+            "performanceData": "contentPerformanceData",
+            "governanceMetrics": "contentGovernanceMetrics"
+          },
+          "content_focus": {
+            "title": "CMS - Content Management Overview",
+            "description": "Comprehensive content management performance and workflow optimization insights",
+            "key_metrics": ["Content Volume", "Publishing Velocity", "Workflow Efficiency", "Governance Score"],
+            "chart_types": ["content-volume-trends", "publishing-velocity", "workflow-analytics", "governance-scorecard"]
+          }
+        },
+        "Content Performance Analytics": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cms/content-performance-analytics",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMS",
+            "tier3": "Content Performance Analytics"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["ContentPerformanceWidget", "EngagementAnalyticsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "performanceMetrics": "cmsPerformanceMetrics",
+            "engagementData": "contentEngagementData",
+            "analyticsData": "cmsAnalyticsData",
+            "benchmarkData": "contentBenchmarks"
+          },
+          "content_focus": {
+            "title": "Content Performance Analytics",
+            "description": "Detailed performance analysis and engagement tracking for CMS content",
+            "key_metrics": ["Content Performance Score", "Engagement Rate", "Content Velocity", "Quality Index"],
+            "chart_types": ["performance-trends", "engagement-analysis", "content-quality", "benchmark-comparison"]
+          }
+        },
+        "Publishing Workflow Optimization": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cms/publishing-workflow-optimization",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMS",
+            "tier3": "Publishing Workflow Optimization"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["WorkflowOptimizationWidget", "BottleneckAnalysisWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "workflowMetrics": "publishingWorkflowMetrics",
+            "bottleneckData": "workflowBottlenecks",
+            "optimizationData": "workflowOptimizationData",
+            "efficiencyMetrics": "workflowEfficiency"
+          },
+          "content_focus": {
+            "title": "Publishing Workflow Optimization",
+            "description": "Workflow efficiency analysis and bottleneck identification for content publishing",
+            "key_metrics": ["Workflow Efficiency", "Publishing Time", "Bottleneck Count", "Approval Velocity"],
+            "chart_types": ["workflow-analysis", "bottleneck-identification", "efficiency-tracking", "approval-flow"]
+          }
+        },
+        "Content Governance Metrics": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cms/content-governance-metrics",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMS",
+            "tier3": "Content Governance Metrics"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["GovernanceMetricsWidget", "ComplianceTrackingWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "governanceMetrics": "contentGovernanceMetrics",
+            "complianceData": "contentComplianceData",
+            "qualityScores": "contentQualityScores",
+            "auditData": "contentAuditData"
+          },
+          "content_focus": {
+            "title": "Content Governance & Compliance",
+            "description": "Content governance metrics and compliance tracking for enterprise content management",
+            "key_metrics": ["Governance Score", "Compliance Rate", "Quality Index", "Audit Frequency"],
+            "chart_types": ["governance-scorecard", "compliance-tracking", "quality-metrics", "audit-timeline"]
+          }
+        },
+        "Multi-site Content Strategy": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cms/multi-site-content-strategy",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMS",
+            "tier3": "Multi-site Content Strategy"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["MultiSiteStrategyWidget", "ContentSyncWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "multiSiteData": "multiSiteContentData",
+            "syncMetrics": "contentSyncMetrics",
+            "strategyData": "multiSiteStrategy",
+            "performanceComparison": "sitePerformanceComparison"
+          },
+          "content_focus": {
+            "title": "Multi-site Content Strategy",
+            "description": "Content strategy and synchronization management across multiple sites and channels",
+            "key_metrics": ["Site Count", "Sync Efficiency", "Content Consistency", "Performance Variance"],
+            "chart_types": ["multi-site-overview", "sync-status", "consistency-metrics", "performance-comparison"]
+          }
+        }
+      }
+    },
+
+    "ODP": {
+      "opal_instructions": [
+        "data-platform-strategy",
+        "audience-analysis"
+      ],
+      "opal_agents": [
+        "odp_data_optimizer",
+        "audience_suggester",
+        "integration_health"
+      ],
+      "opal_tools": [
+        "osa_odp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "ODP",
+        "tier3": [
+          "Data Platform Dashboard",
+          "Audience Segmentation Analytics",
+          "Customer Data Quality",
+          "Real-time Event Processing",
+          "Data Integration Health"
+        ]
+      },
+      "tier_mapping": {
+        "Data Platform Dashboard": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/odp/data-platform-dashboard",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "ODP",
+            "tier3": "Data Platform Dashboard"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["DataPlatformWidget", "DataHealthWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "platformMetrics": "odpPlatformMetrics",
+            "dataHealthData": "dataQualityMetrics",
+            "integrationStatus": "odpIntegrationStatus",
+            "performanceData": "platformPerformanceData"
+          },
+          "content_focus": {
+            "title": "ODP - Data Platform Overview",
+            "description": "Comprehensive data platform performance and integration health monitoring",
+            "key_metrics": ["Data Volume", "Integration Health", "Processing Speed", "Quality Score"],
+            "chart_types": ["platform-overview", "data-health", "integration-status", "performance-metrics"]
+          }
+        },
+        "Audience Segmentation Analytics": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/odp/audience-segmentation-analytics",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "ODP",
+            "tier3": "Audience Segmentation Analytics"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["AudienceSegmentationWidget", "SegmentPerformanceWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "segmentData": "audienceSegmentData",
+            "performanceMetrics": "segmentPerformanceMetrics",
+            "behaviorData": "audienceBehaviorData",
+            "targetingEffectiveness": "segmentTargetingData"
+          },
+          "content_focus": {
+            "title": "Audience Segmentation & Targeting",
+            "description": "Advanced audience segmentation analysis and targeting effectiveness metrics",
+            "key_metrics": ["Segment Count", "Targeting Accuracy", "Behavior Insights", "Conversion Rate"],
+            "chart_types": ["segment-analysis", "targeting-effectiveness", "behavior-patterns", "conversion-funnel"]
+          }
+        },
+        "Customer Data Quality": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/odp/customer-data-quality",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "ODP",
+            "tier3": "Customer Data Quality"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["DataQualityWidget", "DataGovernanceWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "qualityMetrics": "customerDataQuality",
+            "governanceData": "dataGovernanceMetrics",
+            "integrityScores": "dataIntegrityScores",
+            "validationResults": "dataValidationResults"
+          },
+          "content_focus": {
+            "title": "Customer Data Quality & Governance",
+            "description": "Customer data quality assessment and governance compliance monitoring",
+            "key_metrics": ["Data Quality Score", "Completeness Rate", "Accuracy Index", "Governance Compliance"],
+            "chart_types": ["quality-scorecard", "completeness-tracking", "accuracy-trends", "governance-status"]
+          }
+        },
+        "Real-time Event Processing": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/odp/real-time-event-processing",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "ODP",
+            "tier3": "Real-time Event Processing"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["EventProcessingWidget", "RealTimeAnalyticsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "eventMetrics": "realTimeEventMetrics",
+            "processingData": "eventProcessingData",
+            "throughputData": "eventThroughputData",
+            "latencyMetrics": "processingLatencyMetrics"
+          },
+          "content_focus": {
+            "title": "Real-time Event Processing",
+            "description": "Real-time event processing performance and throughput analysis",
+            "key_metrics": ["Event Volume", "Processing Latency", "Throughput Rate", "Error Rate"],
+            "chart_types": ["event-volume", "latency-tracking", "throughput-analysis", "error-monitoring"]
+          }
+        },
+        "Data Integration Health": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/odp/data-integration-health",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "ODP",
+            "tier3": "Data Integration Health"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["IntegrationMonitoringWidget", "DataFlowWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "integrationHealth": "dataIntegrationHealth",
+            "connectionStatus": "integrationConnectionStatus",
+            "dataFlowMetrics": "dataFlowMetrics",
+            "syncStatus": "dataSyncStatus"
+          },
+          "content_focus": {
+            "title": "Data Integration Health Monitoring",
+            "description": "Comprehensive monitoring of data integration health and connection status",
+            "key_metrics": ["Integration Status", "Connection Health", "Data Flow Rate", "Sync Accuracy"],
+            "chart_types": ["integration-health", "connection-monitoring", "data-flow", "sync-status"]
+          }
+        }
+      }
+    },
+
+    "CMP": {
+      "opal_instructions": [
+        "campaign-management-strategy",
+        "marketing-automation"
+      ],
+      "opal_agents": [
+        "cmp_campaign_optimizer",
+        "marketing_automation",
+        "integration_health"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Optimizely DXP Tools",
+        "tier2": "CMP",
+        "tier3": [
+          "Campaign Management Dashboard",
+          "Marketing Automation Analytics",
+          "Lead Scoring & Nurturing",
+          "Multi-channel Campaign Performance",
+          "Attribution & Conversion Tracking"
+        ]
+      },
+      "tier_mapping": {
+        "Campaign Management Dashboard": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cmp/campaign-management-dashboard",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMP",
+            "tier3": "Campaign Management Dashboard"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["CampaignManagementWidget", "CampaignPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "campaignMetrics": "cmpCampaignMetrics",
+            "performanceData": "campaignPerformanceData",
+            "managementData": "campaignManagementData",
+            "overviewData": "campaignOverviewData"
+          },
+          "content_focus": {
+            "title": "CMP - Campaign Management Overview",
+            "description": "Comprehensive campaign management and performance tracking dashboard",
+            "key_metrics": ["Active Campaigns", "Performance Score", "Engagement Rate", "Conversion Rate"],
+            "chart_types": ["campaign-overview", "performance-tracking", "engagement-analysis", "conversion-funnel"]
+          }
+        },
+        "Marketing Automation Analytics": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cmp/marketing-automation-analytics",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMP",
+            "tier3": "Marketing Automation Analytics"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["MarketingAutomationWidget", "WorkflowAnalyticsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "automationMetrics": "marketingAutomationMetrics",
+            "workflowData": "automationWorkflowData",
+            "performanceData": "automationPerformanceData",
+            "efficiencyMetrics": "automationEfficiencyMetrics"
+          },
+          "content_focus": {
+            "title": "Marketing Automation Performance",
+            "description": "Marketing automation workflow performance and efficiency analysis",
+            "key_metrics": ["Workflow Efficiency", "Automation Score", "Trigger Success Rate", "Lead Progression"],
+            "chart_types": ["automation-performance", "workflow-efficiency", "trigger-analysis", "lead-progression"]
+          }
+        },
+        "Lead Scoring & Nurturing": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cmp/lead-scoring-nurturing",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMP",
+            "tier3": "Lead Scoring & Nurturing"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["LeadScoringWidget", "NurturingAnalyticsWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "leadScoringData": "leadScoringMetrics",
+            "nurturingData": "leadNurturingData",
+            "conversionData": "leadConversionData",
+            "qualityMetrics": "leadQualityMetrics"
+          },
+          "content_focus": {
+            "title": "Lead Scoring & Nurturing Analytics",
+            "description": "Lead scoring effectiveness and nurturing campaign performance analysis",
+            "key_metrics": ["Lead Score Distribution", "Nurturing Effectiveness", "Conversion Quality", "Engagement Depth"],
+            "chart_types": ["lead-scoring", "nurturing-performance", "conversion-analysis", "engagement-tracking"]
+          }
+        },
+        "Multi-channel Campaign Performance": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cmp/multi-channel-campaign-performance",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMP",
+            "tier3": "Multi-channel Campaign Performance"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["MultiChannelWidget", "ChannelPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "multiChannelData": "multiChannelCampaignData",
+            "channelPerformance": "channelPerformanceMetrics",
+            "crossChannelData": "crossChannelAnalytics",
+            "attributionData": "channelAttributionData"
+          },
+          "content_focus": {
+            "title": "Multi-channel Campaign Analytics",
+            "description": "Cross-channel campaign performance and attribution analysis",
+            "key_metrics": ["Channel Performance", "Cross-channel Impact", "Attribution Score", "Channel Synergy"],
+            "chart_types": ["channel-performance", "cross-channel-analysis", "attribution-modeling", "synergy-tracking"]
+          }
+        },
+        "Attribution & Conversion Tracking": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/cmp/attribution-conversion-tracking",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "CMP",
+            "tier3": "Attribution & Conversion Tracking"
+          },
+          "widgets": {
+            "primary": "IntegrationHealthWidget",
+            "secondary": ["AttributionAnalyticsWidget", "ConversionTrackingWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "attributionData": "campaignAttributionData",
+            "conversionMetrics": "conversionTrackingMetrics",
+            "touchpointData": "customerTouchpointData",
+            "journeyAnalytics": "customerJourneyAnalytics"
+          },
+          "content_focus": {
+            "title": "Attribution & Conversion Analytics",
+            "description": "Campaign attribution modeling and conversion tracking analysis",
+            "key_metrics": ["Attribution Accuracy", "Conversion Rate", "Touchpoint Value", "Journey Completion"],
+            "chart_types": ["attribution-modeling", "conversion-funnel", "touchpoint-analysis", "journey-mapping"]
           }
         }
       }
@@ -579,6 +1417,168 @@
   },
 
   "Analytics Insights": {
+    "OSA": {
+      "opal_instructions": [
+        "analytics-strategy",
+        "data-analysis"
+      ],
+      "opal_agents": [
+        "osa_analytics_agent",
+        "data_analyzer"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "WEBX",
+        "Content Recs"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "OSA",
+        "tier3": [
+          "OSA Performance Overview",
+          "Strategy Analytics Dashboard",
+          "Workflow Efficiency Metrics",
+          "AI Agent Performance",
+          "Cross-platform Integration Analytics"
+        ]
+      },
+      "tier_mapping": {
+        "OSA Performance Overview": {
+          "url_pattern": "/engine/results/analytics-insights/osa/performance-overview",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "OSA",
+            "tier3": "OSA Performance Overview"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["OSAPerformanceWidget", "WorkflowAnalyticsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "osaMetrics": "osaPerformanceMetrics",
+            "workflowData": "workflowAnalyticsData",
+            "agentPerformance": "aiAgentPerformance",
+            "integrationMetrics": "crossPlatformMetrics"
+          },
+          "content_focus": {
+            "title": "OSA Performance Analytics Overview",
+            "description": "Comprehensive OSA system performance and workflow analytics dashboard",
+            "key_metrics": ["System Performance", "Workflow Efficiency", "Agent Success Rate", "Integration Health"],
+            "chart_types": ["performance-dashboard", "workflow-efficiency", "agent-performance", "integration-health"]
+          }
+        },
+        "Strategy Analytics Dashboard": {
+          "url_pattern": "/engine/results/analytics-insights/osa/strategy-analytics-dashboard",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "OSA",
+            "tier3": "Strategy Analytics Dashboard"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["StrategyAnalyticsWidget", "InsightGenerationWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "strategyMetrics": "strategyAnalyticsMetrics",
+            "insightGeneration": "aiInsightGeneration",
+            "recommendationData": "strategyRecommendations",
+            "confidenceMetrics": "strategyConfidenceMetrics"
+          },
+          "content_focus": {
+            "title": "Strategy Analytics & Insights Generation",
+            "description": "AI-powered strategy analytics and insight generation performance tracking",
+            "key_metrics": ["Strategy Confidence", "Insight Generation Rate", "Recommendation Accuracy", "Decision Support"],
+            "chart_types": ["strategy-analytics", "insight-generation", "recommendation-tracking", "confidence-analysis"]
+          }
+        },
+        "Workflow Efficiency Metrics": {
+          "url_pattern": "/engine/results/analytics-insights/osa/workflow-efficiency-metrics",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "OSA",
+            "tier3": "Workflow Efficiency Metrics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["WorkflowEfficiencyWidget", "ProcessOptimizationWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "workflowMetrics": "workflowEfficiencyMetrics",
+            "processData": "processOptimizationData",
+            "bottleneckAnalysis": "workflowBottlenecks",
+            "optimizationOpportunities": "processOptimizations"
+          },
+          "content_focus": {
+            "title": "Workflow Efficiency & Process Optimization",
+            "description": "Workflow efficiency analysis and process optimization opportunities identification",
+            "key_metrics": ["Workflow Speed", "Process Efficiency", "Bottleneck Count", "Optimization Impact"],
+            "chart_types": ["workflow-analysis", "process-efficiency", "bottleneck-identification", "optimization-tracking"]
+          }
+        },
+        "AI Agent Performance": {
+          "url_pattern": "/engine/results/analytics-insights/osa/ai-agent-performance",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "OSA",
+            "tier3": "AI Agent Performance"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["AIAgentWidget", "AgentPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "agentMetrics": "aiAgentMetrics",
+            "performanceData": "agentPerformanceData",
+            "successRates": "agentSuccessRates",
+            "responseQuality": "agentResponseQuality"
+          },
+          "content_focus": {
+            "title": "AI Agent Performance Analytics",
+            "description": "Individual AI agent performance tracking and quality assessment",
+            "key_metrics": ["Agent Success Rate", "Response Quality", "Processing Speed", "Accuracy Score"],
+            "chart_types": ["agent-performance", "success-tracking", "quality-assessment", "response-analysis"]
+          }
+        },
+        "Cross-platform Integration Analytics": {
+          "url_pattern": "/engine/results/analytics-insights/osa/cross-platform-integration-analytics",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "OSA",
+            "tier3": "Cross-platform Integration Analytics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["IntegrationAnalyticsWidget", "CrossPlatformWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "integrationMetrics": "crossPlatformIntegrationMetrics",
+            "platformData": "platformAnalyticsData",
+            "syncEfficiency": "dataSyncEfficiency",
+            "interoperability": "platformInteroperability"
+          },
+          "content_focus": {
+            "title": "Cross-platform Integration Performance",
+            "description": "Cross-platform integration efficiency and data synchronization analytics",
+            "key_metrics": ["Integration Health", "Sync Efficiency", "Platform Interoperability", "Data Flow Rate"],
+            "chart_types": ["integration-health", "sync-efficiency", "interoperability-tracking", "data-flow-analysis"]
+          }
+        }
+      }
+    },
+
     "Content": {
       "opal_instructions": [
         "content-analysis",
@@ -663,10 +1663,738 @@
           }
         }
       }
+    },
+
+    "Audiences": {
+      "opal_instructions": [
+        "audience-analysis",
+        "segmentation-strategy"
+      ],
+      "opal_agents": [
+        "audience_suggester",
+        "segmentation_analyzer"
+      ],
+      "opal_tools": [
+        "osa_odp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "CMP"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Audiences",
+        "tier3": [
+          "Audience Segmentation Overview",
+          "Behavioral Analysis",
+          "Demographic Insights",
+          "Journey Analytics",
+          "Engagement Patterns"
+        ]
+      },
+      "tier_mapping": {
+        "Audience Segmentation Overview": {
+          "url_pattern": "/engine/results/analytics-insights/audiences/segmentation-overview",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Audiences",
+            "tier3": "Audience Segmentation Overview"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["AudienceSegmentationWidget", "SegmentOverviewWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "segmentationData": "audienceSegmentationData",
+            "segmentMetrics": "audienceSegmentMetrics",
+            "overviewData": "audienceOverviewData",
+            "performanceData": "segmentPerformanceData"
+          },
+          "content_focus": {
+            "title": "Audience Segmentation Overview",
+            "description": "Comprehensive audience segmentation analysis and segment performance overview",
+            "key_metrics": ["Total Segments", "Segment Size Distribution", "Engagement Variance", "Performance Index"],
+            "chart_types": ["segmentation-overview", "segment-distribution", "engagement-variance", "performance-comparison"]
+          }
+        },
+        "Behavioral Analysis": {
+          "url_pattern": "/engine/results/analytics-insights/audiences/behavioral-analysis",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Audiences",
+            "tier3": "Behavioral Analysis"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["BehavioralAnalysisWidget", "PatternRecognitionWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "behaviorData": "audienceBehaviorData",
+            "patternAnalysis": "behaviorPatterns",
+            "interactionData": "behaviorInteractions",
+            "trendData": "behaviorTrends"
+          },
+          "content_focus": {
+            "title": "Audience Behavioral Analysis",
+            "description": "Deep behavioral pattern analysis and interaction trend identification",
+            "key_metrics": ["Behavior Patterns", "Interaction Frequency", "Pattern Strength", "Trend Direction"],
+            "chart_types": ["behavior-patterns", "interaction-analysis", "pattern-strength", "trend-identification"]
+          }
+        },
+        "Demographic Insights": {
+          "url_pattern": "/engine/results/analytics-insights/audiences/demographic-insights",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Audiences",
+            "tier3": "Demographic Insights"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["DemographicInsightsWidget", "AudienceCompositionWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "demographicData": "audienceDemographicData",
+            "compositionMetrics": "audienceComposition",
+            "distributionData": "demographicDistribution",
+            "trendsData": "demographicTrends"
+          },
+          "content_focus": {
+            "title": "Demographic Insights & Composition",
+            "description": "Audience demographic composition analysis and distribution insights",
+            "key_metrics": ["Demographic Diversity", "Composition Balance", "Distribution Spread", "Trend Changes"],
+            "chart_types": ["demographic-composition", "distribution-analysis", "diversity-metrics", "trend-tracking"]
+          }
+        },
+        "Journey Analytics": {
+          "url_pattern": "/engine/results/analytics-insights/audiences/journey-analytics",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Audiences",
+            "tier3": "Journey Analytics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["JourneyAnalyticsWidget", "PathwayAnalysisWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "journeyData": "audienceJourneyData",
+            "pathwayAnalysis": "journeyPathways",
+            "touchpointData": "journeyTouchpoints",
+            "conversionData": "journeyConversions"
+          },
+          "content_focus": {
+            "title": "Customer Journey Analytics",
+            "description": "Customer journey pathway analysis and touchpoint optimization insights",
+            "key_metrics": ["Journey Completion", "Pathway Efficiency", "Touchpoint Effectiveness", "Conversion Rate"],
+            "chart_types": ["journey-mapping", "pathway-analysis", "touchpoint-optimization", "conversion-tracking"]
+          }
+        },
+        "Engagement Patterns": {
+          "url_pattern": "/engine/results/analytics-insights/audiences/engagement-patterns",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Audiences",
+            "tier3": "Engagement Patterns"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["EngagementPatternsWidget", "InteractionAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "engagementData": "audienceEngagementData",
+            "patternData": "engagementPatterns",
+            "interactionMetrics": "engagementInteractions",
+            "qualityScores": "engagementQuality"
+          },
+          "content_focus": {
+            "title": "Audience Engagement Patterns",
+            "description": "Audience engagement pattern analysis and interaction quality assessment",
+            "key_metrics": ["Engagement Quality", "Pattern Consistency", "Interaction Depth", "Loyalty Index"],
+            "chart_types": ["engagement-patterns", "interaction-depth", "quality-assessment", "loyalty-tracking"]
+          }
+        }
+      }
+    },
+
+    "CX": {
+      "opal_instructions": [
+        "customer-experience-analysis",
+        "cx-optimization"
+      ],
+      "opal_agents": [
+        "cx_analyzer",
+        "customer_journey"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "WEBX",
+        "Content Recs"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "CX",
+        "tier3": [
+          "Customer Experience Dashboard",
+          "Journey Optimization Analysis",
+          "Touchpoint Performance",
+          "Satisfaction Metrics",
+          "Experience Quality Index"
+        ]
+      },
+      "tier_mapping": {
+        "Customer Experience Dashboard": {
+          "url_pattern": "/engine/results/analytics-insights/cx/dashboard",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "CX",
+            "tier3": "Customer Experience Dashboard"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["CXDashboardWidget", "ExperienceOverviewWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "cxMetrics": "customerExperienceMetrics",
+            "dashboardData": "cxDashboardData",
+            "overviewData": "cxOverviewData",
+            "performanceData": "cxPerformanceData"
+          },
+          "content_focus": {
+            "title": "Customer Experience Dashboard",
+            "description": "Comprehensive customer experience metrics and performance overview",
+            "key_metrics": ["CX Score", "Experience Quality", "Journey Efficiency", "Satisfaction Rate"],
+            "chart_types": ["cx-dashboard", "experience-overview", "quality-metrics", "satisfaction-tracking"]
+          }
+        },
+        "Journey Optimization Analysis": {
+          "url_pattern": "/engine/results/analytics-insights/cx/journey-optimization",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "CX",
+            "tier3": "Journey Optimization Analysis"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["JourneyOptimizationWidget", "PathAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "journeyData": "customerJourneyData",
+            "optimizationData": "journeyOptimizationData",
+            "pathAnalysis": "journeyPathAnalysis",
+            "bottleneckData": "journeyBottlenecks"
+          },
+          "content_focus": {
+            "title": "Customer Journey Optimization",
+            "description": "Customer journey optimization analysis and pathway improvement opportunities",
+            "key_metrics": ["Journey Efficiency", "Optimization Opportunities", "Path Completion", "Bottleneck Impact"],
+            "chart_types": ["journey-optimization", "path-analysis", "bottleneck-identification", "completion-tracking"]
+          }
+        },
+        "Touchpoint Performance": {
+          "url_pattern": "/engine/results/analytics-insights/cx/touchpoint-performance",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "CX",
+            "tier3": "Touchpoint Performance"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["TouchpointWidget", "PerformanceAnalysisWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "touchpointData": "touchpointPerformanceData",
+            "performanceMetrics": "touchpointMetrics",
+            "effectivenessData": "touchpointEffectiveness",
+            "interactionData": "touchpointInteractions"
+          },
+          "content_focus": {
+            "title": "Touchpoint Performance Analysis",
+            "description": "Individual touchpoint performance analysis and effectiveness measurement",
+            "key_metrics": ["Touchpoint Effectiveness", "Interaction Quality", "Performance Score", "Impact Rating"],
+            "chart_types": ["touchpoint-performance", "effectiveness-analysis", "interaction-quality", "impact-assessment"]
+          }
+        },
+        "Satisfaction Metrics": {
+          "url_pattern": "/engine/results/analytics-insights/cx/satisfaction-metrics",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "CX",
+            "tier3": "Satisfaction Metrics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["SatisfactionMetricsWidget", "FeedbackAnalysisWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "satisfactionData": "customerSatisfactionData",
+            "metricsData": "satisfactionMetrics",
+            "feedbackData": "customerFeedbackData",
+            "trendData": "satisfactionTrends"
+          },
+          "content_focus": {
+            "title": "Customer Satisfaction Analytics",
+            "description": "Customer satisfaction metrics tracking and feedback analysis",
+            "key_metrics": ["Satisfaction Score", "Feedback Quality", "Trend Direction", "Response Rate"],
+            "chart_types": ["satisfaction-tracking", "feedback-analysis", "trend-monitoring", "response-analytics"]
+          }
+        },
+        "Experience Quality Index": {
+          "url_pattern": "/engine/results/analytics-insights/cx/experience-quality-index",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "CX",
+            "tier3": "Experience Quality Index"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["QualityIndexWidget", "ExperienceAssessmentWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "qualityIndex": "experienceQualityIndex",
+            "assessmentData": "experienceAssessment",
+            "benchmarkData": "qualityBenchmarks",
+            "improvementData": "qualityImprovements"
+          },
+          "content_focus": {
+            "title": "Experience Quality Index",
+            "description": "Experience quality measurement and benchmark comparison analysis",
+            "key_metrics": ["Quality Index", "Benchmark Position", "Improvement Rate", "Excellence Score"],
+            "chart_types": ["quality-index", "benchmark-comparison", "improvement-tracking", "excellence-assessment"]
+          }
+        }
+      }
+    },
+
+    "Experimentation": {
+      "opal_instructions": [
+        "experimentation-analytics",
+        "statistical-analysis"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter",
+        "statistical_analyzer"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "WEBX"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Experimentation",
+        "tier3": [
+          "Experiment Analytics Dashboard",
+          "Test Performance Insights",
+          "Statistical Analysis Results",
+          "Conversion Impact Analysis",
+          "Experimentation Program Health"
+        ]
+      },
+      "tier_mapping": {
+        "Experiment Analytics Dashboard": {
+          "url_pattern": "/engine/results/analytics-insights/experimentation/dashboard",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Experimentation",
+            "tier3": "Experiment Analytics Dashboard"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["ExperimentAnalyticsWidget", "TestingDashboardWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "experimentMetrics": "experimentAnalyticsMetrics",
+            "dashboardData": "experimentDashboardData",
+            "testingData": "experimentTestingData",
+            "performanceData": "experimentPerformanceData"
+          },
+          "content_focus": {
+            "title": "Experiment Analytics Dashboard",
+            "description": "Comprehensive experimentation analytics and testing program performance overview",
+            "key_metrics": ["Experiment Volume", "Success Rate", "Performance Impact", "Program Health"],
+            "chart_types": ["experiment-overview", "success-tracking", "impact-analysis", "program-health"]
+          }
+        },
+        "Test Performance Insights": {
+          "url_pattern": "/engine/results/analytics-insights/experimentation/test-performance",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Experimentation",
+            "tier3": "Test Performance Insights"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["TestPerformanceWidget", "ExperimentInsightsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "testPerformance": "testPerformanceData",
+            "insightsData": "experimentInsightsData",
+            "performanceMetrics": "testPerformanceMetrics",
+            "resultsData": "experimentResultsData"
+          },
+          "content_focus": {
+            "title": "Test Performance & Insights",
+            "description": "Individual test performance analysis and experiment insights generation",
+            "key_metrics": ["Test Effectiveness", "Performance Variance", "Insight Quality", "Result Confidence"],
+            "chart_types": ["test-performance", "variance-analysis", "insight-generation", "confidence-tracking"]
+          }
+        },
+        "Statistical Analysis Results": {
+          "url_pattern": "/engine/results/analytics-insights/experimentation/statistical-analysis",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Experimentation",
+            "tier3": "Statistical Analysis Results"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["StatisticalAnalysisWidget", "SignificanceTestingWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "statisticalData": "experimentStatisticalData",
+            "analysisResults": "statisticalAnalysisResults",
+            "significanceData": "statisticalSignificance",
+            "confidenceIntervals": "statisticalConfidence"
+          },
+          "content_focus": {
+            "title": "Statistical Analysis & Significance",
+            "description": "Comprehensive statistical analysis and significance testing for experiments",
+            "key_metrics": ["Statistical Significance", "Confidence Level", "Effect Size", "Power Analysis"],
+            "chart_types": ["statistical-analysis", "significance-testing", "effect-size-analysis", "power-curves"]
+          }
+        },
+        "Conversion Impact Analysis": {
+          "url_pattern": "/engine/results/analytics-insights/experimentation/conversion-impact",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Experimentation",
+            "tier3": "Conversion Impact Analysis"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["ConversionImpactWidget", "ImpactAnalysisWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "conversionData": "experimentConversionData",
+            "impactAnalysis": "conversionImpactAnalysis",
+            "impactMetrics": "conversionImpactMetrics",
+            "upliftData": "conversionUpliftData"
+          },
+          "content_focus": {
+            "title": "Conversion Impact & Uplift Analysis",
+            "description": "Conversion impact measurement and uplift analysis for experimental results",
+            "key_metrics": ["Conversion Impact", "Uplift Percentage", "Impact Significance", "Value Generation"],
+            "chart_types": ["conversion-impact", "uplift-analysis", "impact-measurement", "value-tracking"]
+          }
+        },
+        "Experimentation Program Health": {
+          "url_pattern": "/engine/results/analytics-insights/experimentation/program-health",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Experimentation",
+            "tier3": "Experimentation Program Health"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["ProgramHealthWidget", "MaturityAssessmentWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "programHealth": "experimentationProgramHealth",
+            "maturityData": "programMaturityData",
+            "healthMetrics": "programHealthMetrics",
+            "improvementData": "programImprovements"
+          },
+          "content_focus": {
+            "title": "Experimentation Program Health Assessment",
+            "description": "Overall experimentation program health and maturity assessment",
+            "key_metrics": ["Program Health", "Maturity Score", "Velocity Index", "Quality Rating"],
+            "chart_types": ["program-health", "maturity-assessment", "velocity-tracking", "quality-monitoring"]
+          }
+        }
+      }
+    },
+
+    "Personalization": {
+      "opal_instructions": [
+        "personalization-analytics",
+        "audience-analysis"
+      ],
+      "opal_agents": [
+        "personalization_idea_generator",
+        "audience_suggester"
+      ],
+      "opal_tools": [
+        "osa_cmp_tools",
+        "osa_odp_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "CMP",
+        "Content Recs"
+      ],
+      "navigation_structure": {
+        "tier1": "Analytics Insights",
+        "tier2": "Personalization",
+        "tier3": [
+          "Personalization Analytics Overview",
+          "Campaign Performance Analysis",
+          "Audience Targeting Effectiveness",
+          "Content Personalization Insights",
+          "Real-time Optimization Analytics"
+        ]
+      },
+      "tier_mapping": {
+        "Personalization Analytics Overview": {
+          "url_pattern": "/engine/results/analytics-insights/personalization/overview",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Personalization",
+            "tier3": "Personalization Analytics Overview"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["PersonalizationAnalyticsWidget", "PersonalizationOverviewWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "personalizationMetrics": "personalizationAnalyticsMetrics",
+            "overviewData": "personalizationOverviewData",
+            "performanceData": "personalizationPerformanceData",
+            "effectivenessData": "personalizationEffectiveness"
+          },
+          "content_focus": {
+            "title": "Personalization Analytics Overview",
+            "description": "Comprehensive personalization program analytics and performance overview",
+            "key_metrics": ["Personalization Score", "Campaign Effectiveness", "Audience Targeting", "Content Performance"],
+            "chart_types": ["personalization-overview", "campaign-effectiveness", "targeting-analysis", "content-performance"]
+          }
+        },
+        "Campaign Performance Analysis": {
+          "url_pattern": "/engine/results/analytics-insights/personalization/campaign-performance",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Personalization",
+            "tier3": "Campaign Performance Analysis"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["PersonalizationCampaignWidget", "CampaignAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "campaignData": "personalizationCampaignData",
+            "performanceMetrics": "campaignPerformanceMetrics",
+            "analysisData": "campaignAnalysisData",
+            "resultsData": "campaignResultsData"
+          },
+          "content_focus": {
+            "title": "Personalized Campaign Performance",
+            "description": "Detailed performance analysis of personalized campaigns and their effectiveness",
+            "key_metrics": ["Campaign Performance", "Engagement Rate", "Conversion Uplift", "Audience Response"],
+            "chart_types": ["campaign-performance", "engagement-tracking", "conversion-analysis", "audience-response"]
+          }
+        },
+        "Audience Targeting Effectiveness": {
+          "url_pattern": "/engine/results/analytics-insights/personalization/targeting-effectiveness",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Personalization",
+            "tier3": "Audience Targeting Effectiveness"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["TargetingEffectivenessWidget", "AudienceAnalysisWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "targetingData": "audienceTargetingData",
+            "effectivenessMetrics": "targetingEffectivenessMetrics",
+            "audienceAnalysis": "targetingAudienceAnalysis",
+            "accuracyData": "targetingAccuracyData"
+          },
+          "content_focus": {
+            "title": "Audience Targeting Effectiveness",
+            "description": "Audience targeting accuracy and effectiveness measurement for personalization",
+            "key_metrics": ["Targeting Accuracy", "Audience Match", "Effectiveness Score", "Precision Rate"],
+            "chart_types": ["targeting-effectiveness", "audience-matching", "accuracy-analysis", "precision-tracking"]
+          }
+        },
+        "Content Personalization Insights": {
+          "url_pattern": "/engine/results/analytics-insights/personalization/content-insights",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Personalization",
+            "tier3": "Content Personalization Insights"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["ContentPersonalizationWidget", "PersonalizationInsightsWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "contentPersonalization": "contentPersonalizationData",
+            "insightsData": "personalizationInsightsData",
+            "contentMetrics": "personalizedContentMetrics",
+            "performanceData": "contentPersonalizationPerformance"
+          },
+          "content_focus": {
+            "title": "Content Personalization Performance",
+            "description": "Content personalization effectiveness and performance insights analysis",
+            "key_metrics": ["Content Relevance", "Personalization Impact", "Engagement Uplift", "Content Performance"],
+            "chart_types": ["content-personalization", "relevance-tracking", "impact-analysis", "performance-uplift"]
+          }
+        },
+        "Real-time Optimization Analytics": {
+          "url_pattern": "/engine/results/analytics-insights/personalization/real-time-optimization",
+          "static_url": "/engine/results/insights",
+          "tier_level": {
+            "tier1": "Analytics Insights",
+            "tier2": "Personalization",
+            "tier3": "Real-time Optimization Analytics"
+          },
+          "widgets": {
+            "primary": "EngagementAnalyticsWidget",
+            "secondary": ["RealTimeOptimizationWidget", "OptimizationAnalyticsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "realTimeData": "realTimeOptimizationData",
+            "optimizationMetrics": "optimizationAnalyticsMetrics",
+            "performanceData": "realTimePerformanceData",
+            "adaptationData": "optimizationAdaptationData"
+          },
+          "content_focus": {
+            "title": "Real-time Optimization Analytics",
+            "description": "Real-time personalization optimization performance and adaptation analytics",
+            "key_metrics": ["Optimization Speed", "Adaptation Rate", "Real-time Performance", "Response Time"],
+            "chart_types": ["real-time-optimization", "adaptation-tracking", "performance-monitoring", "response-analytics"]
+          }
+        }
+      }
     }
   },
 
   "Experience Optimization": {
+    "Content": {
+      "opal_instructions": [
+        "content-strategy",
+        "audience-analysis"
+      ],
+      "opal_agents": [
+        "content_next_best_topics"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "Content Recs",
+        "CMS",
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Content",
+        "tier3": [
+          "Content Strategy",
+          "Next Best Ideas",
+          "Content Performance",
+          "Persona Coverage"
+        ]
+      },
+      "tier_mapping": {
+        "Content Strategy": {
+          "url_pattern": "/engine/results/experience-optimization/content/content-strategy",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Content Strategy"
+          },
+          "widgets": {
+            "primary": "ContentNextBestIdeasWidget",
+            "secondary": ["ContentStrategyWidget", "PerformanceAnalysisWidget"],
+            "layout": "cards"
+          },
+          "data_props": {
+            "contentTopics": "contentTopics",
+            "analyticsData": "analyticsData",
+            "userInteractions": "userInteractions",
+            "maturityData": "maturityData"
+          },
+          "content_focus": {
+            "title": "Content Strategy: What to Write Next",
+            "description": "AI-powered content recommendations with content idea lanes and performance insights",
+            "key_metrics": ["Recommended Ideas", "Persona Coverage", "Idea Confidence Index", "Quick Win Opportunities"],
+            "chart_types": ["content-lanes", "idea-matrix", "confidence-scoring", "performance-analysis"]
+          }
+        },
+        "Next Best Ideas": {
+          "url_pattern": "/engine/results/experience-optimization/content/next-best-ideas",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Next Best Ideas"
+          },
+          "widgets": {
+            "primary": "ContentNextBestIdeasWidget",
+            "secondary": ["ContentIdeasWidget", "PersonaCoverageWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "contentTopics": "contentTopics",
+            "topContent": "topContent",
+            "analyticsData": "analyticsData",
+            "maturityData": "maturityData"
+          },
+          "content_focus": {
+            "title": "Content Next Best Ideas",
+            "description": "Prioritized content recommendations across quick wins, strategic bets, and persona gaps",
+            "key_metrics": ["Quick Wins", "Strategic Bets", "Persona Gaps", "Implementation Priority"],
+            "chart_types": ["idea-lanes", "priority-matrix", "persona-coverage", "impact-effort"]
+          }
+        }
+      }
+    },
+
     "Experimentation": {
       "opal_instructions": [
         "experimentation-strategy",
@@ -831,6 +2559,490 @@
             "description": "Advanced audience segmentation with behavioral analysis and targeting optimization",
             "key_metrics": ["Segment Size", "Behavioral Patterns", "Engagement Score", "Conversion Potential"],
             "chart_types": ["segment-analysis", "behavior-clustering", "engagement-matrix", "conversion-funnel"]
+          }
+        }
+      }
+    },
+
+    "Experimentation": {
+      "opal_instructions": [
+        "experimentation-strategy",
+        "statistical-analysis"
+      ],
+      "opal_agents": [
+        "experiment_blueprinter",
+        "customer_journey"
+      ],
+      "opal_tools": [
+        "osa_webx_tools"
+      ],
+      "optimizely_dxp_tools": [
+        "WEBX",
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Experimentation",
+        "tier3": [
+          "Experiment Design Framework",
+          "Statistical Testing Results",
+          "Hypothesis Validation",
+          "Test Impact Assessment",
+          "Experimentation Roadmap"
+        ]
+      },
+      "tier_mapping": {
+        "Experiment Design Framework": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/experiment-design-framework",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Experiment Design Framework"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["ExperimentDesignWidget", "HypothesisValidationWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "experimentDesigns": "experimentDesignData",
+            "hypothesesData": "hypothesisValidation",
+            "designPrinciples": "designFramework",
+            "validationMetrics": "validationCriteria"
+          },
+          "content_focus": {
+            "title": "Experiment Design Framework",
+            "description": "Systematic approach to designing statistically valid and business-relevant experiments",
+            "key_metrics": ["Design Quality", "Statistical Rigor", "Business Relevance", "Implementation Feasibility"],
+            "chart_types": ["design-framework", "statistical-power", "hypothesis-tree", "feasibility-matrix"]
+          }
+        },
+        "Statistical Testing Results": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/statistical-testing-results",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Statistical Testing Results"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["StatisticalResultsWidget", "SignificanceAnalysisWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "testResults": "statisticalTestResults",
+            "significanceData": "statisticalSignificance",
+            "effectSizes": "experimentEffectSizes",
+            "confidenceIntervals": "resultConfidenceIntervals"
+          },
+          "content_focus": {
+            "title": "Statistical Testing Results",
+            "description": "Comprehensive statistical analysis and results interpretation for experiments",
+            "key_metrics": ["Statistical Significance", "Effect Size", "Confidence Level", "Power Analysis"],
+            "chart_types": ["statistical-results", "significance-testing", "effect-size-analysis", "power-curves"]
+          }
+        },
+        "Hypothesis Validation": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/hypothesis-validation",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Hypothesis Validation"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["HypothesisValidationWidget", "ValidationAnalysisWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "hypothesisData": "hypothesisValidationData",
+            "validationResults": "hypothesisValidationResults",
+            "testingData": "hypothesisTestingData",
+            "outcomeAnalysis": "hypothesisOutcomes"
+          },
+          "content_focus": {
+            "title": "Hypothesis Validation & Testing",
+            "description": "Hypothesis validation methodology and testing outcome analysis",
+            "key_metrics": ["Validation Success Rate", "Hypothesis Accuracy", "Testing Quality", "Outcome Confidence"],
+            "chart_types": ["hypothesis-validation", "testing-outcomes", "accuracy-tracking", "confidence-analysis"]
+          }
+        },
+        "Test Impact Assessment": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/test-impact-assessment",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Test Impact Assessment"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["ImpactAssessmentWidget", "TestImpactWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "impactData": "testImpactData",
+            "assessmentResults": "impactAssessmentResults",
+            "businessImpact": "testBusinessImpact",
+            "performanceImpact": "testPerformanceImpact"
+          },
+          "content_focus": {
+            "title": "Test Impact & Business Value Assessment",
+            "description": "Comprehensive assessment of test impact on business metrics and user experience",
+            "key_metrics": ["Business Impact", "User Experience Impact", "Performance Change", "Value Generation"],
+            "chart_types": ["impact-assessment", "business-value", "performance-impact", "value-tracking"]
+          }
+        },
+        "Experimentation Roadmap": {
+          "url_pattern": "/engine/results/experience-optimization/experimentation/roadmap",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Experimentation",
+            "tier3": "Experimentation Roadmap"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["ExperimentationRoadmapWidget", "TestPlanningWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "roadmapData": "experimentationRoadmapData",
+            "planningData": "testPlanningData",
+            "priorityMatrix": "experimentPriorityMatrix",
+            "resourceAllocation": "experimentResourceAllocation"
+          },
+          "content_focus": {
+            "title": "Experimentation Roadmap & Planning",
+            "description": "Strategic experimentation roadmap and test planning optimization",
+            "key_metrics": ["Roadmap Progress", "Test Priority", "Resource Efficiency", "Planning Quality"],
+            "chart_types": ["experimentation-roadmap", "test-planning", "priority-matrix", "resource-allocation"]
+          }
+        }
+      }
+    },
+
+    "UX": {
+      "opal_instructions": [
+        "ux-optimization",
+        "user-experience-analysis"
+      ],
+      "opal_agents": [
+        "ux_optimizer",
+        "customer_journey"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "WEBX",
+        "ODP"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "UX",
+        "tier3": [
+          "User Experience Analytics",
+          "Usability Assessment",
+          "Journey Optimization",
+          "Interface Performance",
+          "Accessibility & Compliance"
+        ]
+      },
+      "tier_mapping": {
+        "User Experience Analytics": {
+          "url_pattern": "/engine/results/experience-optimization/ux/analytics",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "UX",
+            "tier3": "User Experience Analytics"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["UXAnalyticsWidget", "UserExperienceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "uxAnalytics": "userExperienceAnalytics",
+            "userBehavior": "uxUserBehaviorData",
+            "interactionData": "uxInteractionData",
+            "performanceMetrics": "uxPerformanceMetrics"
+          },
+          "content_focus": {
+            "title": "User Experience Analytics Dashboard",
+            "description": "Comprehensive user experience analytics and behavior pattern analysis",
+            "key_metrics": ["UX Score", "User Satisfaction", "Interaction Quality", "Experience Efficiency"],
+            "chart_types": ["ux-analytics", "user-behavior", "interaction-analysis", "satisfaction-tracking"]
+          }
+        },
+        "Usability Assessment": {
+          "url_pattern": "/engine/results/experience-optimization/ux/usability-assessment",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "UX",
+            "tier3": "Usability Assessment"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["UsabilityAssessmentWidget", "UsabilityMetricsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "usabilityData": "usabilityAssessmentData",
+            "assessmentMetrics": "usabilityMetrics",
+            "usabilityScore": "usabilityScoreData",
+            "improvementAreas": "usabilityImprovements"
+          },
+          "content_focus": {
+            "title": "Usability Assessment & Scoring",
+            "description": "Comprehensive usability assessment and improvement opportunity identification",
+            "key_metrics": ["Usability Score", "Task Completion Rate", "Error Rate", "Efficiency Index"],
+            "chart_types": ["usability-assessment", "completion-rates", "error-analysis", "efficiency-tracking"]
+          }
+        },
+        "Journey Optimization": {
+          "url_pattern": "/engine/results/experience-optimization/ux/journey-optimization",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "UX",
+            "tier3": "Journey Optimization"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["JourneyOptimizationWidget", "PathwayAnalysisWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "journeyData": "uxJourneyData",
+            "optimizationOpportunities": "journeyOptimizationOpportunities",
+            "pathwayAnalysis": "journeyPathwayAnalysis",
+            "conversionFunnels": "journeyConversionFunnels"
+          },
+          "content_focus": {
+            "title": "User Journey Optimization",
+            "description": "User journey optimization and pathway improvement analysis",
+            "key_metrics": ["Journey Efficiency", "Path Completion", "Conversion Rate", "Drop-off Points"],
+            "chart_types": ["journey-optimization", "pathway-analysis", "conversion-funnels", "drop-off-analysis"]
+          }
+        },
+        "Interface Performance": {
+          "url_pattern": "/engine/results/experience-optimization/ux/interface-performance",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "UX",
+            "tier3": "Interface Performance"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["InterfacePerformanceWidget", "UIPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "interfaceMetrics": "interfacePerformanceMetrics",
+            "performanceData": "uiPerformanceData",
+            "responsiveness": "interfaceResponsiveness",
+            "loadTimes": "interfaceLoadTimes"
+          },
+          "content_focus": {
+            "title": "Interface Performance & Responsiveness",
+            "description": "User interface performance analysis and responsiveness optimization",
+            "key_metrics": ["Load Time", "Responsiveness", "Interface Speed", "Performance Score"],
+            "chart_types": ["interface-performance", "responsiveness-analysis", "load-time-tracking", "performance-optimization"]
+          }
+        },
+        "Accessibility & Compliance": {
+          "url_pattern": "/engine/results/experience-optimization/ux/accessibility-compliance",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "UX",
+            "tier3": "Accessibility & Compliance"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["AccessibilityWidget", "ComplianceTrackingWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "accessibilityData": "accessibilityAssessmentData",
+            "complianceMetrics": "accessibilityComplianceMetrics",
+            "auditResults": "accessibilityAuditResults",
+            "improvementPlan": "accessibilityImprovements"
+          },
+          "content_focus": {
+            "title": "Accessibility & Compliance Assessment",
+            "description": "Accessibility compliance assessment and improvement planning",
+            "key_metrics": ["Compliance Score", "Accessibility Rating", "Audit Status", "Improvement Progress"],
+            "chart_types": ["accessibility-compliance", "audit-results", "compliance-tracking", "improvement-planning"]
+          }
+        }
+      }
+    },
+
+    "Technology": {
+      "opal_instructions": [
+        "technology-optimization",
+        "technical-performance-analysis"
+      ],
+      "opal_agents": [
+        "tech_optimizer",
+        "performance_analyzer"
+      ],
+      "opal_tools": [
+        "workflow_data_sharing"
+      ],
+      "optimizely_dxp_tools": [
+        "ODP",
+        "WEBX",
+        "CMS"
+      ],
+      "navigation_structure": {
+        "tier1": "Experience Optimization",
+        "tier2": "Technology",
+        "tier3": [
+          "Technical Performance Dashboard",
+          "Infrastructure Optimization",
+          "Integration Health Monitoring",
+          "Security & Performance Analysis",
+          "Technology Roadmap & Planning"
+        ]
+      },
+      "tier_mapping": {
+        "Technical Performance Dashboard": {
+          "url_pattern": "/engine/results/experience-optimization/technology/performance-dashboard",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Technology",
+            "tier3": "Technical Performance Dashboard"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["TechPerformanceWidget", "PerformanceDashboardWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "performanceMetrics": "technicalPerformanceMetrics",
+            "dashboardData": "techDashboardData",
+            "systemHealth": "systemHealthMetrics",
+            "performanceKPIs": "performanceKPIData"
+          },
+          "content_focus": {
+            "title": "Technical Performance Dashboard",
+            "description": "Comprehensive technical performance monitoring and system health analytics",
+            "key_metrics": ["System Performance", "Response Time", "Uptime", "Error Rate"],
+            "chart_types": ["performance-dashboard", "system-health", "response-time-tracking", "error-monitoring"]
+          }
+        },
+        "Infrastructure Optimization": {
+          "url_pattern": "/engine/results/experience-optimization/technology/infrastructure-optimization",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Technology",
+            "tier3": "Infrastructure Optimization"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["InfrastructureOptimizationWidget", "ResourceOptimizationWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "infrastructureMetrics": "infrastructureOptimizationMetrics",
+            "resourceUtilization": "resourceUtilizationData",
+            "optimizationOpportunities": "infrastructureOptimizations",
+            "capacityPlanning": "capacityPlanningData"
+          },
+          "content_focus": {
+            "title": "Infrastructure Optimization & Resource Management",
+            "description": "Infrastructure optimization analysis and resource utilization improvement",
+            "key_metrics": ["Resource Utilization", "Optimization Impact", "Capacity Efficiency", "Cost Optimization"],
+            "chart_types": ["infrastructure-optimization", "resource-utilization", "capacity-planning", "optimization-impact"]
+          }
+        },
+        "Integration Health Monitoring": {
+          "url_pattern": "/engine/results/experience-optimization/technology/integration-health",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Technology",
+            "tier3": "Integration Health Monitoring"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["IntegrationHealthWidget", "HealthMonitoringWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "integrationHealth": "integrationHealthMetrics",
+            "healthMonitoring": "healthMonitoringData",
+            "connectionStatus": "integrationConnectionStatus",
+            "healthAlerts": "integrationHealthAlerts"
+          },
+          "content_focus": {
+            "title": "Integration Health & Monitoring",
+            "description": "Integration health monitoring and connection status analysis",
+            "key_metrics": ["Integration Health Score", "Connection Stability", "Data Flow Rate", "Alert Frequency"],
+            "chart_types": ["integration-health", "connection-monitoring", "data-flow-analysis", "alert-tracking"]
+          }
+        },
+        "Security & Performance Analysis": {
+          "url_pattern": "/engine/results/experience-optimization/technology/security-performance",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Technology",
+            "tier3": "Security & Performance Analysis"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["SecurityAnalysisWidget", "SecurityPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "securityMetrics": "securityAnalysisMetrics",
+            "performanceData": "securityPerformanceData",
+            "vulnerabilityData": "securityVulnerabilityData",
+            "complianceStatus": "securityComplianceStatus"
+          },
+          "content_focus": {
+            "title": "Security & Performance Analysis",
+            "description": "Security analysis and performance impact assessment",
+            "key_metrics": ["Security Score", "Vulnerability Count", "Performance Impact", "Compliance Status"],
+            "chart_types": ["security-analysis", "vulnerability-assessment", "performance-impact", "compliance-monitoring"]
+          }
+        },
+        "Technology Roadmap & Planning": {
+          "url_pattern": "/engine/results/experience-optimization/technology/roadmap-planning",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Technology",
+            "tier3": "Technology Roadmap & Planning"
+          },
+          "widgets": {
+            "primary": "ExperimentationWidget",
+            "secondary": ["TechnologyRoadmapWidget", "TechPlanningWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "roadmapData": "technologyRoadmapData",
+            "planningData": "technologyPlanningData",
+            "roadmapProgress": "techRoadmapProgress",
+            "futureRequirements": "techFutureRequirements"
+          },
+          "content_focus": {
+            "title": "Technology Roadmap & Strategic Planning",
+            "description": "Technology roadmap planning and strategic technology advancement tracking",
+            "key_metrics": ["Roadmap Progress", "Technology Maturity", "Planning Accuracy", "Innovation Index"],
+            "chart_types": ["technology-roadmap", "strategic-planning", "maturity-tracking", "innovation-analysis"]
           }
         }
       }

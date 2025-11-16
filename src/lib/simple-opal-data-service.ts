@@ -252,7 +252,7 @@ export class SimpleOpalDataService {
   }
 
   /**
-   * Get agent source for a page (Strategy Plans mapping)
+   * Get agent source for a page with enhanced content page mappings
    */
   private getAgentSourceForPage(pageId: string): string {
     // Strategy Plans specific mappings
@@ -276,12 +276,39 @@ export class SimpleOpalDataService {
       return 'strategy_workflow';
     }
 
+    // DXP Tools specific mappings
+    if (pageId.includes('dxptools')) {
+      // Content Recommendations → Topic Performance
+      if (pageId.includes('content-recs') && pageId.includes('topic-performance')) {
+        return 'content_recs_topic_performance';
+      }
+
+      // Other Content Recs mappings
+      if (pageId.includes('content-recs')) return 'content_review';
+
+      // Default DXP Tools
+      return 'strategy_workflow';
+    }
+
+    // Experience Optimization specific mappings
+    if (pageId.includes('experience-optimization')) {
+      // Content page for Experience Optimization
+      if (pageId.includes('content')) return 'content_next_best_topics';
+
+      // Experimentation pages
+      if (pageId.includes('experimentation')) return 'experiment_blueprinter';
+
+      // Personalization pages
+      if (pageId.includes('personalization')) return 'personalization_idea_generator';
+
+      // Default Experience Optimization
+      return 'content_review';
+    }
+
     // Other page mappings
     if (pageId.includes('insights')) return 'content_review';
     if (pageId.includes('optimization')) return 'content_review';
     if (pageId.includes('analytics-insights')) return 'content_review';
-    if (pageId.includes('dxptools')) return 'strategy_workflow';
-    if (pageId.includes('experience-optimization')) return 'content_review';
 
     // Default fallback
     return 'strategy_workflow';
