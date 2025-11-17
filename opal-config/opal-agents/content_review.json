@@ -36,7 +36,12 @@
     "osa_contentrecs_tools_generate_content_recommendations",
     "osa_contentrecs_tools_assess_content_performance",
     "workflow_data_sharing_osa_store_workflow_data",
-    "workflow_data_sharing_osa_send_data_to_osa_webhook"
+    "workflow_data_sharing_osa_send_data_to_osa_webhook",
+    "workflow_data_sharing_osa_retrieve_workflow_context",
+    "workflow_data_sharing_osa_generate_content_insights",
+    "osa_cmspaas_tools_osa_audit_content_structure",
+    "osa_cmspaas_tools_osa_optimize_existing_content",
+    "osa_cmspaas_tools_osa_measure_content_performance"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

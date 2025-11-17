@@ -167,6 +167,136 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
       ],
       endpoint: "/tools/osa_compile_final_results",
       http_method: "POST"
+    },
+    {
+      name: "osa_track_strategy_progress",
+      description: "Monitor strategy implementation progress across phases with milestone tracking and confidence scoring",
+      parameters: [
+        {
+          name: "phase_data",
+          type: "object",
+          description: "Implementation phase progress and completion metrics",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_track_strategy_progress",
+      http_method: "POST"
+    },
+    {
+      name: "osa_validate_maturity_level",
+      description: "Assess organizational personalization maturity and readiness for advanced strategies",
+      parameters: [
+        {
+          name: "maturity_indicators",
+          type: "object",
+          description: "Technical, content, and organizational maturity metrics",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_validate_maturity_level",
+      http_method: "POST"
+    },
+    {
+      name: "osa_generate_roadmap_insights",
+      description: "Create strategic roadmap with timeline, priorities, and implementation guidance",
+      parameters: [
+        {
+          name: "timeline_data",
+          type: "object",
+          description: "Implementation timeline with phases and dependencies",
+          required: true
+        },
+        {
+          name: "priority_analysis",
+          type: "object",
+          description: "Priority scoring and rationale for initiatives",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_generate_roadmap_insights",
+      http_method: "POST"
+    },
+    {
+      name: "osa_monitor_workflow_health",
+      description: "Monitor real-time workflow execution health with performance metrics and alerts",
+      parameters: [
+        {
+          name: "health_metrics",
+          type: "object",
+          description: "Real-time workflow health indicators and performance data",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_monitor_workflow_health",
+      http_method: "POST"
+    },
+    {
+      name: "osa_track_agent_performance",
+      description: "Track individual OPAL agent performance metrics and optimization opportunities",
+      parameters: [
+        {
+          name: "agent_metrics",
+          type: "object",
+          description: "Performance metrics for individual agents",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_track_agent_performance",
+      http_method: "POST"
+    },
+    {
+      name: "osa_analyze_data_insights",
+      description: "Analyze aggregated workflow data to generate strategic insights and recommendations",
+      parameters: [
+        {
+          name: "analytics_scope",
+          type: "object",
+          description: "Scope and parameters for data analysis",
+          required: true
+        },
+        {
+          name: "insight_categories",
+          type: "array",
+          description: "Categories of insights to generate (content, audience, technical, etc.)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_analyze_data_insights",
+      http_method: "POST"
+    },
+    {
+      name: "osa_calculate_impact_metrics",
+      description: "Calculate business impact metrics and performance improvements from personalization strategies",
+      parameters: [
+        {
+          name: "impact_categories",
+          type: "array",
+          description: "Categories of impact to measure (engagement, conversion, performance, etc.)",
+          required: true
+        },
+        {
+          name: "baseline_data",
+          type: "object",
+          description: "Baseline metrics for comparison",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_calculate_impact_metrics",
+      http_method: "POST"
+    },
+    {
+      name: "osa_generate_content_insights",
+      description: "Generate insights about content performance, gaps, and optimization opportunities across topics",
+      parameters: [
+        {
+          name: "content_analysis",
+          type: "object",
+          description: "Content performance and topic analysis data",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_generate_content_insights",
+      http_method: "POST"
     }
   ]
 };

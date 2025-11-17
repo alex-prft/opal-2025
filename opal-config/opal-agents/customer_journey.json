@@ -39,7 +39,12 @@
     "workflow_data_sharing_osa_store_workflow_data",
     "workflow_data_sharing_osa_retrieve_workflow_context",
     "workflow_data_sharing_osa_send_data_to_osa_webhook",
-    "workflow_data_sharing_osa_validate_workflow_data"
+    "workflow_data_sharing_osa_validate_workflow_data",
+    "osa_cmspaas_tools_osa_analyze_user_journey",
+    "osa_cmspaas_tools_osa_optimize_user_flows",
+    "osa_cmspaas_tools_osa_conduct_ux_research",
+    "osa_cmspaas_tools_osa_design_personalized_interfaces",
+    "osa_cmspaas_tools_osa_validate_ux_improvements"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

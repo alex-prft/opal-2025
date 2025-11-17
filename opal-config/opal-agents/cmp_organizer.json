@@ -48,7 +48,10 @@
     "workflow_data_sharing_osa_retrieve_workflow_context",
     "workflow_data_sharing_osa_send_data_to_osa_webhook",
     "workflow_data_sharing_osa_validate_workflow_data",
-    "workflow_data_sharing_osa_compile_final_results"
+    "workflow_data_sharing_osa_compile_final_results",
+    "workflow_data_sharing_osa_track_strategy_progress",
+    "workflow_data_sharing_osa_generate_roadmap_insights",
+    "workflow_data_sharing_osa_calculate_impact_metrics"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

@@ -93,6 +93,86 @@ const WEBX_TOOLS_CONFIG = {
       ],
       endpoint: "/tools/osa_generate_performance_baseline",
       http_method: "POST"
+    },
+    {
+      name: "osa_design_experiments",
+      description: "Design comprehensive A/B tests and multivariate experiments with statistical power analysis",
+      parameters: [
+        {
+          name: "experiment_type",
+          type: "string",
+          description: "Type of experiment to design (ab_test, multivariate, split_url, feature_flag)",
+          required: true
+        },
+        {
+          name: "hypothesis_data",
+          type: "object",
+          description: "Hypothesis formulation and expected outcomes",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_design_experiments",
+      http_method: "POST"
+    },
+    {
+      name: "osa_calculate_statistical_power",
+      description: "Calculate statistical power, sample sizes, and experiment duration for reliable results",
+      parameters: [
+        {
+          name: "effect_size",
+          type: "number",
+          description: "Minimum detectable effect size",
+          required: true
+        },
+        {
+          name: "baseline_conversion",
+          type: "number",
+          description: "Current baseline conversion rate",
+          required: true
+        },
+        {
+          name: "traffic_volume",
+          type: "number",
+          description: "Daily traffic volume for experiment",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_calculate_statistical_power",
+      http_method: "POST"
+    },
+    {
+      name: "osa_analyze_experiment_results",
+      description: "Analyze experiment results with statistical significance testing and confidence intervals",
+      parameters: [
+        {
+          name: "experiment_data",
+          type: "object",
+          description: "Raw experiment data including conversions, visitors, and segments",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_analyze_experiment_results",
+      http_method: "POST"
+    },
+    {
+      name: "osa_monitor_experiment_health",
+      description: "Monitor running experiments for statistical validity, sample ratio mismatch, and data quality",
+      parameters: [
+        {
+          name: "experiment_id",
+          type: "string",
+          description: "Unique experiment identifier",
+          required: true
+        },
+        {
+          name: "health_metrics",
+          type: "array",
+          description: "Health metrics to monitor (sample_ratio, data_quality, statistical_validity, traffic_allocation)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_monitor_experiment_health",
+      http_method: "POST"
     }
   ]
 };

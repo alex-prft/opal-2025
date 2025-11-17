@@ -157,6 +157,178 @@
         },
         "required": ["workflow_id"]
       }
+    },
+    {
+      "name": "osa_track_strategy_progress",
+      "description": "Monitor strategy implementation progress across phases with milestone tracking and confidence scoring",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "phase_data": {
+            "type": "object",
+            "description": "Implementation phase progress and completion metrics"
+          },
+          "milestone_status": {
+            "type": "array",
+            "description": "Status of key implementation milestones"
+          },
+          "confidence_metrics": {
+            "type": "object",
+            "description": "Confidence scores for strategy execution"
+          }
+        },
+        "required": ["phase_data"]
+      }
+    },
+    {
+      "name": "osa_validate_maturity_level",
+      "description": "Assess organizational personalization maturity and readiness for advanced strategies",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "maturity_indicators": {
+            "type": "object",
+            "description": "Technical, content, and organizational maturity metrics"
+          },
+          "readiness_assessment": {
+            "type": "object",
+            "description": "Assessment of readiness for personalization advancement"
+          }
+        },
+        "required": ["maturity_indicators"]
+      }
+    },
+    {
+      "name": "osa_generate_roadmap_insights",
+      "description": "Create strategic roadmap with timeline, priorities, and implementation guidance",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "timeline_data": {
+            "type": "object",
+            "description": "Implementation timeline with phases and dependencies"
+          },
+          "priority_analysis": {
+            "type": "object",
+            "description": "Priority scoring and rationale for initiatives"
+          },
+          "resource_requirements": {
+            "type": "object",
+            "description": "Resource needs and implementation guidance"
+          }
+        },
+        "required": ["timeline_data", "priority_analysis"]
+      }
+    },
+    {
+      "name": "osa_monitor_workflow_health",
+      "description": "Monitor real-time workflow execution health with performance metrics and alerts",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "health_metrics": {
+            "type": "object",
+            "description": "Real-time workflow health indicators and performance data"
+          },
+          "alert_thresholds": {
+            "type": "object",
+            "description": "Configurable alert thresholds for monitoring"
+          },
+          "diagnostic_data": {
+            "type": "object",
+            "description": "Diagnostic information for troubleshooting"
+          }
+        },
+        "required": ["health_metrics"]
+      }
+    },
+    {
+      "name": "osa_track_agent_performance",
+      "description": "Track individual OPAL agent performance metrics and optimization opportunities",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_metrics": {
+            "type": "object",
+            "description": "Performance metrics for individual agents"
+          },
+          "execution_analytics": {
+            "type": "object",
+            "description": "Agent execution patterns and optimization insights"
+          },
+          "performance_trends": {
+            "type": "object",
+            "description": "Historical performance trends and patterns"
+          }
+        },
+        "required": ["agent_metrics"]
+      }
+    },
+    {
+      "name": "osa_analyze_data_insights",
+      "description": "Analyze aggregated workflow data to generate strategic insights and recommendations",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "analytics_scope": {
+            "type": "object",
+            "description": "Scope and parameters for data analysis"
+          },
+          "insight_categories": {
+            "type": "array",
+            "description": "Categories of insights to generate (content, audience, technical, etc.)"
+          },
+          "trend_analysis": {
+            "type": "object",
+            "description": "Trend analysis parameters and timeframes"
+          }
+        },
+        "required": ["analytics_scope", "insight_categories"]
+      }
+    },
+    {
+      "name": "osa_calculate_impact_metrics",
+      "description": "Calculate business impact metrics and performance improvements from personalization strategies",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "impact_categories": {
+            "type": "array",
+            "description": "Categories of impact to measure (engagement, conversion, performance, etc.)"
+          },
+          "baseline_data": {
+            "type": "object",
+            "description": "Baseline metrics for comparison"
+          },
+          "measurement_period": {
+            "type": "object",
+            "description": "Time period for impact measurement"
+          }
+        },
+        "required": ["impact_categories", "baseline_data"]
+      }
+    },
+    {
+      "name": "osa_generate_content_insights",
+      "description": "Generate insights about content performance, gaps, and optimization opportunities across topics",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "content_analysis": {
+            "type": "object",
+            "description": "Content performance and topic analysis data"
+          },
+          "gap_analysis": {
+            "type": "object",
+            "description": "Content gaps and opportunity identification"
+          },
+          "optimization_recommendations": {
+            "type": "array",
+            "description": "Specific content optimization recommendations"
+          }
+        },
+        "required": ["content_analysis"]
+      }
     }
   ],
   "authentication": {

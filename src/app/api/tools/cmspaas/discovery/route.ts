@@ -79,6 +79,132 @@ const CMSPAAS_TOOLS_CONFIG = {
       ],
       endpoint: "/tools/optimize_existing_content",
       http_method: "POST"
+    },
+    {
+      name: "osa_measure_content_performance",
+      description: "Implement comprehensive content performance measurement for personalization effectiveness",
+      parameters: [
+        {
+          name: "performance_metrics",
+          type: "array",
+          description: "Performance metrics to track",
+          required: true
+        },
+        {
+          name: "measurement_framework",
+          type: "object",
+          description: "Framework for performance measurement",
+          required: true
+        }
+      ],
+      endpoint: "/tools/measure_content_performance",
+      http_method: "POST"
+    },
+    {
+      name: "osa_analyze_user_journey",
+      description: "Analyze user journey patterns and identify personalization opportunities across touchpoints",
+      parameters: [
+        {
+          name: "journey_data",
+          type: "object",
+          description: "User journey data including touchpoints, conversion paths, and behavior patterns",
+          required: true
+        },
+        {
+          name: "analysis_scope",
+          type: "array",
+          description: "Journey stages to analyze (awareness, consideration, conversion, retention, advocacy)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_analyze_user_journey",
+      http_method: "POST"
+    },
+    {
+      name: "osa_optimize_user_flows",
+      description: "Optimize user flows and navigation paths for improved personalization and conversion",
+      parameters: [
+        {
+          name: "current_flows",
+          type: "object",
+          description: "Current user flow configurations and analytics data",
+          required: true
+        },
+        {
+          name: "optimization_goals",
+          type: "array",
+          description: "Primary optimization objectives (reduce_friction, increase_engagement, improve_conversion, enhance_personalization)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_optimize_user_flows",
+      http_method: "POST"
+    },
+    {
+      name: "osa_conduct_ux_research",
+      description: "Conduct comprehensive UX research to inform personalization strategies and content optimization",
+      parameters: [
+        {
+          name: "research_methods",
+          type: "array",
+          description: "Research methods to employ (user_interviews, surveys, usability_testing, heatmap_analysis, a_b_testing, card_sorting)",
+          required: true
+        },
+        {
+          name: "research_objectives",
+          type: "object",
+          description: "Specific research objectives and questions to answer",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_conduct_ux_research",
+      http_method: "POST"
+    },
+    {
+      name: "osa_design_personalized_interfaces",
+      description: "Design personalized user interfaces and interaction patterns for different audience segments",
+      parameters: [
+        {
+          name: "design_requirements",
+          type: "object",
+          description: "Design requirements including brand guidelines, accessibility standards, and technical constraints",
+          required: true
+        },
+        {
+          name: "personalization_variables",
+          type: "array",
+          description: "Variables that will drive personalization (user type, behavior, preferences, etc.)",
+          required: true
+        },
+        {
+          name: "interface_components",
+          type: "array",
+          description: "Interface components to personalize (navigation, homepage, product_pages, forms, checkout, dashboard)",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_design_personalized_interfaces",
+      http_method: "POST"
+    },
+    {
+      name: "osa_validate_ux_improvements",
+      description: "Validate UX improvements and personalization changes through testing and measurement",
+      parameters: [
+        {
+          name: "validation_methods",
+          type: "array",
+          description: "Methods to validate UX improvements (usability_testing, a_b_testing, multivariate_testing, user_feedback, analytics_analysis)",
+          required: true
+        },
+        {
+          name: "success_metrics",
+          type: "array",
+          description: "Key metrics to measure improvement success",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_validate_ux_improvements",
+      http_method: "POST"
     }
   ]
 };

@@ -53,7 +53,11 @@
     "workflow_data_sharing_osa_store_workflow_data",
     "workflow_data_sharing_osa_retrieve_workflow_context",
     "workflow_data_sharing_osa_send_data_to_osa_webhook",
-    "workflow_data_sharing_osa_validate_workflow_data"
+    "workflow_data_sharing_osa_validate_workflow_data",
+    "osa_webx_tools_osa_design_experiments",
+    "osa_webx_tools_osa_calculate_statistical_power",
+    "osa_webx_tools_osa_analyze_experiment_results",
+    "osa_webx_tools_osa_monitor_experiment_health"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

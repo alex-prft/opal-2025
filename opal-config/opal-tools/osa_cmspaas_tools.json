@@ -305,6 +305,163 @@
         },
         "required": ["performance_metrics", "measurement_framework"]
       }
+    },
+    {
+      "name": "osa_analyze_user_journey",
+      "description": "Analyze user journey patterns and identify personalization opportunities across touchpoints",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "journey_data": {
+            "type": "object",
+            "description": "User journey data including touchpoints, conversion paths, and behavior patterns"
+          },
+          "analysis_scope": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["awareness", "consideration", "conversion", "retention", "advocacy"]
+            },
+            "description": "Journey stages to analyze"
+          },
+          "personalization_opportunities": {
+            "type": "boolean",
+            "default": true,
+            "description": "Identify personalization opportunities in journey"
+          },
+          "pain_point_detection": {
+            "type": "boolean",
+            "default": true,
+            "description": "Detect friction points and abandonment triggers"
+          }
+        },
+        "required": ["journey_data", "analysis_scope"]
+      }
+    },
+    {
+      "name": "osa_optimize_user_flows",
+      "description": "Optimize user flows and navigation paths for improved personalization and conversion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "current_flows": {
+            "type": "object",
+            "description": "Current user flow configurations and analytics data"
+          },
+          "optimization_goals": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["reduce_friction", "increase_engagement", "improve_conversion", "enhance_personalization"]
+            },
+            "description": "Primary optimization objectives"
+          },
+          "target_segments": {
+            "type": "array",
+            "description": "User segments to optimize flows for"
+          },
+          "technical_constraints": {
+            "type": "object",
+            "description": "Technical limitations and platform constraints"
+          }
+        },
+        "required": ["current_flows", "optimization_goals"]
+      }
+    },
+    {
+      "name": "osa_conduct_ux_research",
+      "description": "Conduct comprehensive UX research to inform personalization strategies and content optimization",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "research_methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["user_interviews", "surveys", "usability_testing", "heatmap_analysis", "a_b_testing", "card_sorting"]
+            },
+            "description": "Research methods to employ"
+          },
+          "research_objectives": {
+            "type": "object",
+            "description": "Specific research objectives and questions to answer"
+          },
+          "target_participants": {
+            "type": "object",
+            "description": "Target participant criteria and recruitment strategy"
+          },
+          "deliverables": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["personas", "journey_maps", "wireframes", "recommendations", "research_report"]
+            },
+            "description": "Expected research deliverables"
+          }
+        },
+        "required": ["research_methods", "research_objectives"]
+      }
+    },
+    {
+      "name": "osa_design_personalized_interfaces",
+      "description": "Design personalized user interfaces and interaction patterns for different audience segments",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "design_requirements": {
+            "type": "object",
+            "description": "Design requirements including brand guidelines, accessibility standards, and technical constraints"
+          },
+          "personalization_variables": {
+            "type": "array",
+            "description": "Variables that will drive personalization (user type, behavior, preferences, etc.)"
+          },
+          "interface_components": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["navigation", "homepage", "product_pages", "forms", "checkout", "dashboard"]
+            },
+            "description": "Interface components to personalize"
+          },
+          "design_system_integration": {
+            "type": "boolean",
+            "default": true,
+            "description": "Integrate with existing design system and component library"
+          }
+        },
+        "required": ["design_requirements", "personalization_variables", "interface_components"]
+      }
+    },
+    {
+      "name": "osa_validate_ux_improvements",
+      "description": "Validate UX improvements and personalization changes through testing and measurement",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "validation_methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["usability_testing", "a_b_testing", "multivariate_testing", "user_feedback", "analytics_analysis"]
+            },
+            "description": "Methods to validate UX improvements"
+          },
+          "success_metrics": {
+            "type": "array",
+            "description": "Key metrics to measure improvement success"
+          },
+          "testing_scenarios": {
+            "type": "object",
+            "description": "Specific testing scenarios and user tasks"
+          },
+          "baseline_measurements": {
+            "type": "object",
+            "description": "Baseline metrics for comparison"
+          }
+        },
+        "required": ["validation_methods", "success_metrics"]
+      }
     }
   ],
   "authentication": {

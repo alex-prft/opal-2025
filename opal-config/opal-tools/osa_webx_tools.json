@@ -184,6 +184,121 @@
         },
         "required": ["baseline_metrics"]
       }
+    },
+    {
+      "name": "osa_design_experiments",
+      "description": "Design comprehensive A/B tests and multivariate experiments with statistical power analysis",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "experiment_type": {
+            "type": "string",
+            "enum": ["ab_test", "multivariate", "split_url", "feature_flag"],
+            "description": "Type of experiment to design"
+          },
+          "hypothesis_data": {
+            "type": "object",
+            "description": "Hypothesis formulation and expected outcomes"
+          },
+          "statistical_requirements": {
+            "type": "object",
+            "description": "Statistical power, confidence level, and sample size requirements"
+          },
+          "audience_targeting": {
+            "type": "object",
+            "description": "Target audience segmentation and allocation strategy"
+          }
+        },
+        "required": ["experiment_type", "hypothesis_data"]
+      }
+    },
+    {
+      "name": "osa_calculate_statistical_power",
+      "description": "Calculate statistical power, sample sizes, and experiment duration for reliable results",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "effect_size": {
+            "type": "number",
+            "description": "Minimum detectable effect size"
+          },
+          "statistical_power": {
+            "type": "number",
+            "default": 0.8,
+            "description": "Desired statistical power (0.8 = 80%)"
+          },
+          "confidence_level": {
+            "type": "number",
+            "default": 0.95,
+            "description": "Statistical confidence level (0.95 = 95%)"
+          },
+          "baseline_conversion": {
+            "type": "number",
+            "description": "Current baseline conversion rate"
+          },
+          "traffic_volume": {
+            "type": "number",
+            "description": "Daily traffic volume for experiment"
+          }
+        },
+        "required": ["effect_size", "baseline_conversion", "traffic_volume"]
+      }
+    },
+    {
+      "name": "osa_analyze_experiment_results",
+      "description": "Analyze experiment results with statistical significance testing and confidence intervals",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "experiment_data": {
+            "type": "object",
+            "description": "Raw experiment data including conversions, visitors, and segments"
+          },
+          "analysis_type": {
+            "type": "string",
+            "enum": ["frequentist", "bayesian", "both"],
+            "default": "both",
+            "description": "Statistical analysis approach"
+          },
+          "segment_analysis": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include segment-specific analysis"
+          },
+          "confidence_intervals": {
+            "type": "boolean",
+            "default": true,
+            "description": "Calculate confidence intervals for results"
+          }
+        },
+        "required": ["experiment_data"]
+      }
+    },
+    {
+      "name": "osa_monitor_experiment_health",
+      "description": "Monitor running experiments for statistical validity, sample ratio mismatch, and data quality",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "experiment_id": {
+            "type": "string",
+            "description": "Unique experiment identifier"
+          },
+          "health_metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["sample_ratio", "data_quality", "statistical_validity", "traffic_allocation"]
+            },
+            "description": "Health metrics to monitor"
+          },
+          "alert_thresholds": {
+            "type": "object",
+            "description": "Threshold values for experiment health alerts"
+          }
+        },
+        "required": ["experiment_id", "health_metrics"]
+      }
     }
   ],
   "authentication": {
