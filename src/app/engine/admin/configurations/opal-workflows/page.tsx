@@ -1,3 +1,11 @@
+import { generatePageMetadata } from '@/lib/utils/page-titles';
+
+export const metadata = generatePageMetadata({
+  pageTitle: 'OPAL Workflows',
+  section: 'Engine',
+  description: 'Configure and manage OPAL workflow templates.'
+});
+
 export default function OpalWorkflowsPage() {
   return (
     <div className="space-y-6 p-6">

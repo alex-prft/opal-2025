@@ -1,11 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import { DiagnosticsPanel } from '@/components/DiagnosticsPanel';
 import RecentDataComponent from '@/components/RecentDataComponent';
 import RecentDataErrorBoundary from '@/components/shared/RecentDataErrorBoundary';
 
 export default function AdminPage() {
+  // Set page title
+  useEffect(() => {
+    const pageTitle = generatePageTitle({
+      pageTitle: 'Administration',
+      section: 'Engine'
+    });
+    updateDocumentTitle(pageTitle);
+  }, []);
 
   return (
     <div className="space-y-8" id="admin-dashboard">

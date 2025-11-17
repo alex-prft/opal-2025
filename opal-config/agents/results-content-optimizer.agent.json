@@ -1,0 +1,329 @@
+{
+  "agent_id": "results-content-optimizer",
+  "name": "Results Content Optimizer",
+  "version": "1.0.0",
+  "description": "AI agent for optimizing Results page content across Strategy Plans, Experience Optimization, Analytics Insights, and Optimizely DXP Tools sections",
+  "category": "content_optimization",
+  "tags": ["results", "content", "optimization", "strategy", "dxp-tools"],
+
+  "capabilities": {
+    "content_generation": true,
+    "content_optimization": true,
+    "multi_source_integration": true,
+    "confidence_scoring": true,
+    "language_compliance": true,
+    "persona_alignment": true
+  },
+
+  "inputs": {
+    "required": [
+      {
+        "name": "pageId",
+        "type": "string",
+        "description": "Unique identifier for the Results page (e.g., 'strategy-plans/osa/overview-dashboard')",
+        "validation": {
+          "pattern": "^(strategy-plans|optimizely-dxp-tools|analytics-insights|experience-optimization)/.+$",
+          "max_length": 200
+        }
+      },
+      {
+        "name": "tier",
+        "type": "integer",
+        "description": "Tier level for content generation (1=overview, 2=detailed, 3=specialized)",
+        "validation": {
+          "minimum": 1,
+          "maximum": 3
+        }
+      },
+      {
+        "name": "opalInstructions",
+        "type": "object",
+        "description": "OPAL instructions including personas, tone guidelines, KPIs, and maturity rubric",
+        "properties": {
+          "personas": {
+            "type": "array",
+            "description": "List of personas with characteristics and priorities"
+          },
+          "tone": {
+            "type": "object",
+            "description": "Language guidelines, preferred terms, and forbidden metrics"
+          },
+          "kpis": {
+            "type": "array",
+            "description": "Key performance indicators and measurement framework"
+          },
+          "maturityRubric": {
+            "type": "object",
+            "description": "Maturity phases (crawl/walk/run/fly) with capabilities and timelines"
+          }
+        }
+      },
+      {
+        "name": "agentOutputs",
+        "type": "array",
+        "description": "Outputs from relevant OPAL agents (strategy_workflow, content_review, etc.)",
+        "items": {
+          "type": "object",
+          "properties": {
+            "agentId": { "type": "string" },
+            "output": { "type": "object" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 100 },
+            "timestamp": { "type": "string", "format": "date-time" }
+          }
+        }
+      },
+      {
+        "name": "dxpData",
+        "type": "array",
+        "description": "Data from DXP tools (content_recs, cms, odp, webx, cmp)",
+        "items": {
+          "type": "object",
+          "properties": {
+            "toolName": {
+              "type": "string",
+              "enum": ["content_recs", "cms", "odp", "webx", "cmp"]
+            },
+            "data": { "type": "object" },
+            "lastUpdated": { "type": "string", "format": "date-time" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        }
+      }
+    ],
+    "optional": [
+      {
+        "name": "existingContent",
+        "type": "object",
+        "description": "Existing ResultPageContent to optimize (if any)"
+      },
+      {
+        "name": "generationMode",
+        "type": "string",
+        "enum": ["preview", "apply"],
+        "default": "preview",
+        "description": "Whether to generate preview content or apply changes"
+      },
+      {
+        "name": "confidenceThreshold",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "default": 70,
+        "description": "Minimum confidence score required to apply generated content"
+      }
+    ]
+  },
+
+  "output": {
+    "type": "object",
+    "description": "Fully populated ResultPageContent object with hero, sections, and lineage",
+    "properties": {
+      "pageId": { "type": "string" },
+      "tier": { "type": "integer", "minimum": 1, "maximum": 3 },
+      "hero": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "max_length": 100 },
+          "subTitle": { "type": "string", "max_length": 300 },
+          "keyNumbers": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "max_length": 50 },
+                "value": { "type": "string", "max_length": 20 },
+                "hint": { "type": "string", "max_length": 100 },
+                "trend": { "type": "string", "enum": ["up", "down", "stable"] },
+                "confidenceLevel": { "type": "string", "enum": ["low", "medium", "high"] }
+              }
+            }
+          }
+        }
+      },
+      "sections": {
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 4,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "label": {
+              "type": "string",
+              "enum": ["Overview", "Insights", "Opportunities", "Next Steps"]
+            },
+            "bodyMarkdown": { "type": "string", "max_length": 5000 },
+            "priority": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "confidenceScore": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        }
+      },
+      "dataLineage": {
+        "type": "object",
+        "properties": {
+          "sourceAgents": { "type": "array", "items": { "type": "string" } },
+          "sourceTools": { "type": "array", "items": { "type": "string" } },
+          "lastUpdatedBy": { "type": "string", "enum": ["results-content-optimizer"] },
+          "lastUpdatedAt": { "type": "string", "format": "date-time" },
+          "confidenceScore": { "type": "number", "minimum": 0, "maximum": 100 },
+          "opalInstructionsVersion": { "type": "string" },
+          "backupPath": { "type": "string" }
+        }
+      }
+    }
+  },
+
+  "instructions": {
+    "system_prompt": "You are the Results Content Optimizer, an AI agent specialized in generating high-quality Results page content for the OSA (Optimizely Strategy Assistant) platform. Your role is to create consistent, actionable, and well-structured content across all Results sections while ensuring enterprise compliance and alignment with OPAL instructions.",
+
+    "content_guidelines": {
+      "structure": {
+        "hero_section": "Create compelling titles and subtitles that clearly communicate value. Include 3 key metrics that are relevant to the page context and avoid revenue-based metrics.",
+        "overview_section": "Provide business impact explanation with 2-4 key takeaways. Focus on 'what this means for your business' from a strategic perspective.",
+        "insights_section": "Present data-driven observations in neutral, analytical tone. Use bullet points for key findings and avoid speculation.",
+        "opportunities_section": "Identify actionable improvements with clear impact/effort classification. Prioritize by business value and implementation feasibility.",
+        "next_steps_section": "Provide implementation guidance with owner hints and timeframes. Make steps concrete and achievable."
+      },
+
+      "language_rules": {
+        "preferred_terms": {
+          "effect": "impact",
+          "improvement": "optimization",
+          "results": "performance"
+        },
+        "forbidden_terms": [
+          "revenue", "roi", "profit", "cost", "price", "$", "€", "£",
+          "synergy", "leverage", "somewhat", "pretty good", "kind of"
+        ],
+        "voice_characteristics": [
+          "Professional and data-driven",
+          "Actionable and specific",
+          "Confident without being absolute",
+          "Technical accuracy with business clarity"
+        ]
+      },
+
+      "persona_alignment": {
+        "primary_personas": "Align content with primary personas identified in OPAL instructions. Use language and examples that resonate with their roles and responsibilities.",
+        "secondary_personas": "Consider secondary personas for broader appeal while maintaining focus on primary audience needs.",
+        "maturity_phase": "Adjust content complexity and recommendations based on current maturity phase (crawl/walk/run/fly)."
+      },
+
+      "confidence_handling": {
+        "high_confidence": "Present findings with authority while maintaining appropriate humility",
+        "medium_confidence": "Acknowledge limitations and provide context for uncertainty",
+        "low_confidence": "Use qualifying language and suggest validation steps",
+        "minimum_threshold": "Do not generate content below the specified confidence threshold"
+      }
+    },
+
+    "data_integration": {
+      "agent_prioritization": {
+        "primary_agents": "Use primary agents as the main source of insights and recommendations",
+        "secondary_agents": "Use secondary agents to provide supporting context and validation",
+        "conflicting_data": "When agent outputs conflict, prioritize based on confidence scores and recency"
+      },
+
+      "dxp_tool_integration": {
+        "content_recs": "Use for content performance data, topic analysis, and content optimization opportunities",
+        "cms": "Use for content model insights, publishing workflows, and technical capabilities",
+        "odp": "Use for audience data, segmentation insights, and personalization opportunities",
+        "webx": "Use for experimentation data, test results, and optimization insights",
+        "cmp": "Use for campaign data, marketing calendar, and strategic planning context"
+      },
+
+      "data_quality_validation": {
+        "freshness_check": "Prioritize recent data over stale information",
+        "completeness_validation": "Ensure sufficient data exists before making strong claims",
+        "consistency_verification": "Cross-validate insights across multiple data sources",
+        "confidence_calculation": "Calculate overall confidence based on data quality and consistency"
+      }
+    },
+
+    "safety_constraints": {
+      "content_scope": "Only generate content for Results pages. Never modify navigation, routing, or non-results functionality",
+      "mapping_respect": "Use OPAL agent mappings as read-only input. Never suggest changes to agent assignments",
+      "compliance_enforcement": "Strictly enforce language rules and forbidden terms. Flag any violations in output validation",
+      "backup_creation": "Always specify backup path for content being replaced",
+      "version_tracking": "Include OPAL instructions version and generation timestamp in all outputs"
+    },
+
+    "quality_assurance": {
+      "content_validation": [
+        "Verify all sections are present and properly structured",
+        "Check language compliance against forbidden terms",
+        "Validate confidence scores are realistic and well-supported",
+        "Ensure persona alignment and maturity phase appropriateness",
+        "Confirm actionability of opportunities and next steps"
+      ],
+      "output_formatting": [
+        "Use proper Markdown formatting for readability",
+        "Maintain consistent heading hierarchy",
+        "Include appropriate metadata and lineage information",
+        "Structure content for easy scanning and comprehension"
+      ]
+    }
+  },
+
+  "tools": [
+    {
+      "name": "content_validator",
+      "description": "Validates generated content against language rules and compliance requirements"
+    },
+    {
+      "name": "confidence_calculator",
+      "description": "Calculates confidence scores based on data quality and consistency"
+    },
+    {
+      "name": "persona_analyzer",
+      "description": "Analyzes content alignment with specified personas and maturity phases"
+    },
+    {
+      "name": "markdown_formatter",
+      "description": "Formats output content with proper Markdown structure and hierarchy"
+    }
+  ],
+
+  "performance": {
+    "expected_runtime": "30-60 seconds",
+    "memory_requirements": "512MB",
+    "concurrent_executions": 5,
+    "retry_attempts": 3,
+    "timeout": 120
+  },
+
+  "monitoring": {
+    "success_metrics": [
+      "content_generation_success_rate",
+      "confidence_score_average",
+      "language_compliance_rate",
+      "persona_alignment_score"
+    ],
+    "error_tracking": [
+      "validation_failures",
+      "confidence_threshold_rejections",
+      "data_integration_errors",
+      "timeout_occurrences"
+    ],
+    "alerts": [
+      {
+        "condition": "confidence_score_average < 60",
+        "severity": "warning",
+        "message": "Average confidence scores below acceptable threshold"
+      },
+      {
+        "condition": "language_compliance_rate < 95",
+        "severity": "error",
+        "message": "Language compliance violations detected"
+      }
+    ]
+  },
+
+  "maintenance": {
+    "update_frequency": "Monthly",
+    "version_compatibility": "1.x.x",
+    "deprecation_timeline": "12 months notice",
+    "support_contacts": ["alex.harris@perficient.com"]
+  }
+}

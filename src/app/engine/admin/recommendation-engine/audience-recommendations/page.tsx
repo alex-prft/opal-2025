@@ -1,5 +1,12 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Users } from 'lucide-react';
+import { generatePageMetadata } from '@/lib/utils/page-titles';
+
+export const metadata = generatePageMetadata({
+  pageTitle: 'Audience Recommendations',
+  section: 'Engine',
+  description: 'AI-powered audience targeting and segmentation recommendations.'
+});
 
 export default function AudienceRecommendationsPage() {
   return (

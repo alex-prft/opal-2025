@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -19,6 +19,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 
 export default function EnginePage() {
   const [workflowResult, setWorkflowResult] = useState<OSAWorkflowOutput | null>(null);
@@ -26,6 +27,14 @@ export default function EnginePage() {
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+
+  // Set page title
+  useEffect(() => {
+    const pageTitle = generatePageTitle({
+      pageTitle: 'Strategy Engine'
+    });
+    updateDocumentTitle(pageTitle);
+  }, []);
 
   const handleWorkflowComplete = (result: OSAWorkflowOutput) => {
     // Save result to sessionStorage for the results page

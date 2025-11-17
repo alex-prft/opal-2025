@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,6 +19,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function HowItWorksPage() {
+  // Set page title
+  useEffect(() => {
+    const pageTitle = generatePageTitle({
+      pageTitle: 'How It Works'
+    });
+    updateDocumentTitle(pageTitle);
+  }, []);
+
   const cookingSteps = [
     {
       step: "01",

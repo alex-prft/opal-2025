@@ -749,7 +749,8 @@
       "opal_agents": [
         "content_review",
         "audience_suggester",
-        "content_recs_topic_performance"
+        "content_recs_topic_performance",
+        "content_performance_metrics"
       ],
       "opal_tools": [
         "osa_contentrecs_tools"
@@ -820,6 +821,33 @@
             "description": "Statistical analysis of content recommendation AB testing performance",
             "key_metrics": ["Test Significance", "Conversion Uplift", "Statistical Power", "Confidence Level"],
             "chart_types": ["ab-test-results", "statistical-significance", "conversion-comparison", "confidence-intervals"]
+          }
+        },
+        "Content Performance Metrics": {
+          "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/content-performance-metrics",
+          "static_url": "/engine/results/dxptools",
+          "tier_level": {
+            "tier1": "Optimizely DXP Tools",
+            "tier2": "Content Recs",
+            "tier3": "Content Performance Metrics"
+          },
+          "widgets": {
+            "primary": "ContentPerformanceMetricsWidget",
+            "secondary": ["ContentMetricsWidget", "PersonaAnalysisWidget"],
+            "layout": "accordion"
+          },
+          "data_props": {
+            "contentTopics": "contentTopics",
+            "topContent": "topContent",
+            "analyticsData": "analyticsData",
+            "userInteractions": "userInteractions",
+            "personaData": "personaData"
+          },
+          "content_focus": {
+            "title": "Content Recommendations - Content Performance Metrics",
+            "description": "Comprehensive content performance analysis showing how recommended content performs across topics, assets, and personas",
+            "key_metrics": ["Total Interactions", "Unique Visitors", "Active Topics", "Top Topic Share"],
+            "chart_types": ["content-performance", "topic-analysis", "persona-breakdown", "performance-trends"]
           }
         },
         "Topic Performance": {
@@ -2336,7 +2364,8 @@
           "Content Strategy",
           "Next Best Ideas",
           "Content Performance",
-          "Persona Coverage"
+          "Persona Coverage",
+          "Content Suggestions"
         ]
       },
       "tier_mapping": {
@@ -2390,6 +2419,33 @@
             "description": "Prioritized content recommendations across quick wins, strategic bets, and persona gaps",
             "key_metrics": ["Quick Wins", "Strategic Bets", "Persona Gaps", "Implementation Priority"],
             "chart_types": ["idea-lanes", "priority-matrix", "persona-coverage", "impact-effort"]
+          }
+        },
+        "Content Suggestions": {
+          "url_pattern": "/engine/results/experience-optimization/content/content-suggestions",
+          "static_url": "/engine/results/optimization",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Content Suggestions"
+          },
+          "widgets": {
+            "primary": "ContentSuggestionsWidget",
+            "secondary": ["ContentIdeasWidget", "PersonaCoverageWidget"],
+            "layout": "lanes"
+          },
+          "data_props": {
+            "contentTopics": "contentTopics",
+            "analyticsData": "analyticsData",
+            "userInteractions": "userInteractions",
+            "personaData": "personaData",
+            "maturityData": "maturityData"
+          },
+          "content_focus": {
+            "title": "Content Suggestions: What to Publish Next",
+            "description": "Prioritized content ideas based on current performance, personas, and marketing focus",
+            "key_metrics": ["Content Suggestions", "Personas Covered", "Quick Win Opportunities", "Strategic Investments"],
+            "chart_types": ["suggestion-lanes", "persona-coverage", "confidence-scoring", "format-distribution"]
           }
         }
       }

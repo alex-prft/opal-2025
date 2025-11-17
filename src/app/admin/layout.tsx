@@ -5,7 +5,10 @@ import {
   Database,
   Activity,
   Shield,
-  ArrowLeft
+  ArrowLeft,
+  Bot,
+  TestTube,
+  BarChart3
 } from 'lucide-react';
 
 export default function AdminLayout({
@@ -47,10 +50,31 @@ export default function AdminLayout({
           <div className="flex space-x-8">
             <Link
               href="/admin/opal-monitoring"
-              className="flex items-center gap-2 px-1 py-4 border-b-2 border-blue-500 text-blue-600 text-sm font-medium"
+              className="flex items-center gap-2 px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-medium"
             >
               <Monitor className="h-4 w-4" />
               OPAL Monitoring
+            </Link>
+            <Link
+              href="/admin/integration-dashboard"
+              className="flex items-center gap-2 px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-medium"
+            >
+              <BarChart3 className="h-4 w-4" />
+              Integration Dashboard
+            </Link>
+            <Link
+              href="/admin/sub-agents"
+              className="flex items-center gap-2 px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-medium"
+            >
+              <Bot className="h-4 w-4" />
+              Sub Agents
+            </Link>
+            <Link
+              href="/admin/opal-integration-test"
+              className="flex items-center gap-2 px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-medium"
+            >
+              <TestTube className="h-4 w-4" />
+              Integration Testing
             </Link>
             <Link
               href="/admin/system-settings"

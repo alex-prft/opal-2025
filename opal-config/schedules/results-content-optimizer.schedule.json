@@ -1,0 +1,125 @@
+{
+  "schedule_id": "results-content-optimizer-daily",
+  "name": "Results Content Optimizer Daily Schedule",
+  "version": "1.0.0",
+  "description": "Daily scheduled execution of results-content-optimizer workflow",
+
+  "target_workflow": "results-content-optimizer",
+  "enabled": true,
+
+  "schedule": {
+    "type": "cron",
+    "expression": "0 7,15 * * *",
+    "timezone": "UTC",
+    "description": "Twice daily at 2:00 AM and 10:00 AM Eastern Time (7:00 AM and 3:00 PM UTC)"
+  },
+
+  "execution_parameters": {
+    "execution_mode": {
+      "source": "environment_variable",
+      "variable": "RESULTS_CONTENT_OPTIMIZER_MODE",
+      "default": "preview",
+      "allowed_values": ["preview", "apply"]
+    },
+    "confidence_threshold": {
+      "source": "config",
+      "value": 70
+    },
+    "force_regeneration": {
+      "source": "config",
+      "value": false
+    },
+    "priority_filter": {
+      "source": "config",
+      "value": 1,
+      "description": "Only process high-priority pages in daily run"
+    }
+  },
+
+  "conditions": {
+    "pre_execution": [
+      {
+        "name": "check_opal_health",
+        "type": "health_check",
+        "endpoint": "/api/opal/health",
+        "required": true,
+        "timeout": 10000
+      },
+      {
+        "name": "verify_agent_availability",
+        "type": "agent_check",
+        "agent_id": "results-content-optimizer",
+        "required": true
+      },
+      {
+        "name": "check_system_load",
+        "type": "system_check",
+        "max_cpu_usage": 80,
+        "max_memory_usage": 85,
+        "required": false
+      }
+    ],
+    "skip_conditions": [
+      {
+        "name": "recent_manual_execution",
+        "type": "execution_history",
+        "condition": "manual_execution_within_hours < 6",
+        "message": "Skipping due to recent manual execution"
+      },
+      {
+        "name": "high_error_rate",
+        "type": "metric_check",
+        "metric": "workflow_error_rate_24h",
+        "threshold": 50,
+        "message": "Skipping due to high error rate in last 24 hours"
+      }
+    ]
+  },
+
+  "notifications": {
+    "on_success": {
+      "enabled": true,
+      "recipients": ["alex.harris@perficient.com"],
+      "template": "daily_execution_success",
+      "include_summary": true,
+      "conditions": [
+        "pages_updated > 0",
+        "average_confidence >= 70"
+      ]
+    },
+    "on_failure": {
+      "enabled": true,
+      "recipients": ["alex.harris@perficient.com"],
+      "template": "daily_execution_failure",
+      "include_error_details": true,
+      "severity": "warning"
+    },
+    "on_low_confidence": {
+      "enabled": true,
+      "recipients": ["alex.harris@perficient.com"],
+      "template": "low_confidence_alert",
+      "conditions": [
+        "average_confidence < 60"
+      ]
+    }
+  },
+
+  "monitoring": {
+    "track_metrics": [
+      "execution_duration",
+      "pages_processed",
+      "pages_updated",
+      "average_confidence_score",
+      "error_count"
+    ],
+    "create_alerts": true,
+    "retention_period": "30 days"
+  },
+
+  "maintenance": {
+    "max_execution_time": "2 hours",
+    "cleanup_old_backups": true,
+    "backup_retention_days": 7,
+    "log_retention_days": 30
+  }
+}

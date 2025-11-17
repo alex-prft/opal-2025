@@ -1,5 +1,12 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { FileText } from 'lucide-react';
+import { generatePageMetadata } from '@/lib/utils/page-titles';
+
+export const metadata = generatePageMetadata({
+  pageTitle: 'Content Recommendations',
+  section: 'Engine',
+  description: 'AI-powered content recommendation engine configuration.'
+});
 
 export default function ContentRecommendationsPage() {
   return (

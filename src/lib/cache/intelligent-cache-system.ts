@@ -624,17 +624,27 @@ export class IntelligentCacheSystem {
     if (!isDatabaseAvailable()) return;
 
     try {
+      // First get current values
+      const { data: currentCache } = await supabase
+        .from('cache_management')
+        .select('hit_count, average_retrieval_time_ms')
+        .eq('cache_key', cacheKey)
+        .single();
+
+      const currentHitCount = currentCache?.hit_count || 0;
+      const currentAvgRetrievalTime = currentCache?.average_retrieval_time_ms || 0;
+
+      const newHitCount = currentHitCount + 1;
+      const newAvgRetrievalTime = currentHitCount === 0
+        ? retrievalTime
+        : Math.round((currentAvgRetrievalTime * currentHitCount + retrievalTime) / newHitCount);
+
       await supabase
         .from('cache_management')
         .update({
-          hit_count: supabase.sql`hit_count + 1`,
+          hit_count: newHitCount,
           last_hit_at: new Date().toISOString(),
-          average_retrieval_time_ms: supabase.sql`
-            CASE
-              WHEN hit_count = 0 THEN ${retrievalTime}
-              ELSE (average_retrieval_time_ms * hit_count + ${retrievalTime}) / (hit_count + 1)
-            END
-          `
+          average_retrieval_time_ms: newAvgRetrievalTime
         })
         .eq('cache_key', cacheKey);
     } catch (error) {
@@ -647,10 +657,19 @@ export class IntelligentCacheSystem {
     if (!isDatabaseAvailable()) return;
 
     try {
+      // First get current miss count
+      const { data: currentCache } = await supabase
+        .from('cache_management')
+        .select('miss_count')
+        .eq('cache_key', cacheKey)
+        .single();
+
+      const currentMissCount = currentCache?.miss_count || 0;
+
       await supabase
         .from('cache_management')
         .update({
-          miss_count: supabase.sql`miss_count + 1`
+          miss_count: currentMissCount + 1
         })
         .eq('cache_key', cacheKey);
     } catch (error) {

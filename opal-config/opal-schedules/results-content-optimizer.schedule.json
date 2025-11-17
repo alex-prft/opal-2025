@@ -1,0 +1,294 @@
+{
+  "schema_version": "1.0",
+  "schedule_id": "results_content_optimizer_schedule",
+  "name": "Daily Results Content Optimization",
+  "description": "Automated daily optimization of Results page content across all 88+ pages with preview/apply modes and comprehensive logging",
+  "version": "1.0.0",
+  "is_active": false,
+  "schedule_type": "cron",
+  "cron_expression": "0 2 * * *",
+  "timezone": "UTC",
+  "target_workflow": {
+    "workflow_id": "results_content_optimizer_workflow",
+    "workflow_path": "opal-config/opal-workflows/results-content-optimizer.workflow.json"
+  },
+  "execution_configuration": {
+    "mode": "preview",
+    "execution_types": {
+      "preview": {
+        "description": "Dry-run mode that analyzes content and logs potential changes without applying updates",
+        "actions": {
+          "scan_pages": true,
+          "analyze_content": true,
+          "identify_changes": true,
+          "validate_language_rules": true,
+          "generate_diff_report": true,
+          "apply_changes": false,
+          "update_content_json": false,
+          "notify_osa_dashboard": false
+        },
+        "logging_level": "detailed"
+      },
+      "apply": {
+        "description": "Production mode that applies content optimizations and updates live content",
+        "actions": {
+          "scan_pages": true,
+          "analyze_content": true,
+          "identify_changes": true,
+          "validate_language_rules": true,
+          "generate_diff_report": true,
+          "apply_changes": true,
+          "update_content_json": true,
+          "notify_osa_dashboard": true
+        },
+        "logging_level": "standard"
+      }
+    }
+  },
+  "schedule_parameters": {
+    "workflow_scope": "all_results_pages",
+    "batch_size": 25,
+    "timeout_per_batch": 3600,
+    "max_concurrent_optimizations": 3,
+    "retry_failed_pages": true,
+    "max_retries": 2,
+    "confidence_threshold": 35,
+    "skip_low_confidence": false
+  },
+  "logging_configuration": {
+    "log_destination": "opal-logs/results-content-optimizer",
+    "log_format": "json",
+    "log_rotation": "daily",
+    "retention_days": 30,
+    "log_components": {
+      "execution_summary": {
+        "enabled": true,
+        "fields": [
+          "schedule_execution_id",
+          "execution_start_time",
+          "execution_end_time",
+          "execution_duration_ms",
+          "mode",
+          "total_pages_scanned",
+          "pages_requiring_changes",
+          "pages_successfully_optimized",
+          "pages_skipped",
+          "pages_failed",
+          "language_rule_violations_found",
+          "language_rule_violations_fixed",
+          "confidence_improvements"
+        ]
+      },
+      "page_scan_details": {
+        "enabled": true,
+        "fields": [
+          "page_id",
+          "tier",
+          "scan_timestamp",
+          "current_content_confidence",
+          "optimization_required",
+          "language_violations_detected",
+          "never_blank_violations_detected",
+          "tier_alignment_score",
+          "optimization_confidence_improvement"
+        ]
+      },
+      "page_change_details": {
+        "enabled": true,
+        "fields": [
+          "page_id",
+          "change_type",
+          "change_category",
+          "before_content",
+          "after_content",
+          "change_reason",
+          "confidence_before",
+          "confidence_after",
+          "language_rule_fix",
+          "never_blank_improvement"
+        ]
+      },
+      "error_details": {
+        "enabled": true,
+        "fields": [
+          "page_id",
+          "error_type",
+          "error_message",
+          "error_timestamp",
+          "retry_count",
+          "fallback_applied",
+          "manual_intervention_required"
+        ]
+      },
+      "diff_reports": {
+        "enabled": true,
+        "format": "unified_diff",
+        "include_context_lines": 3,
+        "highlight_language_fixes": true,
+        "highlight_confidence_improvements": true
+      }
+    }
+  },
+  "notification_configuration": {
+    "execution_start": {
+      "enabled": true,
+      "recipients": ["admin", "content_team"],
+      "channels": ["webhook", "osa_dashboard"],
+      "message_template": "Results content optimization started - Mode: {mode}, Pages: {total_pages}"
+    },
+    "execution_complete": {
+      "enabled": true,
+      "recipients": ["admin", "content_team"],
+      "channels": ["webhook", "osa_dashboard"],
+      "message_template": "Results content optimization completed - Duration: {duration}, Changes: {changes_applied}, Errors: {errors}"
+    },
+    "high_error_rate": {
+      "enabled": true,
+      "threshold_percentage": 10,
+      "recipients": ["admin"],
+      "channels": ["webhook", "email"],
+      "message_template": "High error rate detected in Results content optimization: {error_percentage}% - Manual review required"
+    },
+    "language_violations_found": {
+      "enabled": true,
+      "threshold_count": 5,
+      "recipients": ["content_team"],
+      "channels": ["osa_dashboard"],
+      "message_template": "Language rule violations detected: {violation_count} instances found and {fixed_count} fixed"
+    }
+  },
+  "error_handling": {
+    "strategy": "continue_with_logging",
+    "page_failure_action": "skip_and_log",
+    "batch_failure_action": "continue_next_batch",
+    "critical_failure_action": "abort_and_notify",
+    "fallback_content_strategy": "use_tier_defaults",
+    "manual_review_triggers": {
+      "high_error_rate": true,
+      "confidence_degradation": true,
+      "structural_changes_detected": true,
+      "agent_binding_conflicts": true
+    }
+  },
+  "performance_monitoring": {
+    "metrics_collection": {
+      "enabled": true,
+      "metrics": [
+        "execution_duration_total",
+        "execution_duration_per_page",
+        "pages_processed_per_minute",
+        "optimization_success_rate",
+        "language_rule_compliance_rate",
+        "confidence_improvement_average",
+        "error_rate_by_tier",
+        "memory_usage_peak",
+        "cpu_usage_average"
+      ]
+    },
+    "performance_alerts": {
+      "execution_timeout": {
+        "enabled": true,
+        "threshold_minutes": 120,
+        "action": "abort_and_notify"
+      },
+      "low_success_rate": {
+        "enabled": true,
+        "threshold_percentage": 90,
+        "action": "alert_admin"
+      },
+      "high_memory_usage": {
+        "enabled": true,
+        "threshold_mb": 2048,
+        "action": "optimize_batch_size"
+      }
+    }
+  },
+  "content_validation": {
+    "pre_execution_checks": {
+      "opal_agents_healthy": true,
+      "content_structures_valid": true,
+      "workflow_dependencies_available": true,
+      "confidence_thresholds_configured": true
+    },
+    "post_execution_validation": {
+      "language_rule_compliance": {
+        "enabled": true,
+        "target_compliance_rate": 100
+      },
+      "never_blank_coverage": {
+        "enabled": true,
+        "target_coverage_rate": 100
+      },
+      "tier_alignment_validation": {
+        "enabled": true,
+        "target_alignment_rate": 95
+      },
+      "content_structure_integrity": {
+        "enabled": true,
+        "validate_json_schema": true,
+        "validate_required_fields": true
+      },
+      "confidence_improvement_validation": {
+        "enabled": true,
+        "minimum_improvement_threshold": 5
+      }
+    }
+  },
+  "rollback_configuration": {
+    "enabled": true,
+    "automatic_rollback_triggers": {
+      "high_error_rate": {
+        "threshold_percentage": 20,
+        "enabled": true
+      },
+      "confidence_degradation": {
+        "threshold_percentage": 15,
+        "enabled": true
+      },
+      "structural_integrity_violation": {
+        "enabled": true
+      }
+    },
+    "rollback_strategy": "restore_previous_content",
+    "backup_retention": {
+      "pre_execution_snapshots": 7,
+      "incremental_backups": 30
+    }
+  },
+  "admin_controls": {
+    "emergency_stop": {
+      "enabled": true,
+      "stop_signal_file": "opal-config/emergency-stop.flag",
+      "check_interval_seconds": 30
+    },
+    "manual_approval_mode": {
+      "enabled": false,
+      "approval_required_for": [
+        "structural_changes",
+        "agent_binding_modifications",
+        "high_confidence_degradation"
+      ],
+      "approval_timeout_minutes": 60
+    },
+    "execution_controls": {
+      "pause_execution": false,
+      "skip_tiers": [],
+      "limit_to_pages": [],
+      "force_confidence_threshold": null,
+      "override_mode": null
+    }
+  },
+  "testing_configuration": {
+    "dry_run_validation": {
+      "enabled": true,
+      "sample_pages_per_tier": 3,
+      "validate_before_full_execution": true
+    },
+    "canary_deployment": {
+      "enabled": false,
+      "canary_percentage": 10,
+      "success_threshold": 95,
+      "rollout_strategy": "gradual"
+    }
+  }
+}

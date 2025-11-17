@@ -534,19 +534,31 @@ export class BackgroundJobSystem implements JobScheduler {
     if (!isDatabaseAvailable()) return;
 
     try {
+      // First get current counts to calculate new values
+      const { data: currentJob } = await supabase
+        .from('background_jobs')
+        .select('success_count, run_count, average_duration_ms')
+        .eq('job_type', jobType)
+        .single();
+
+      const currentSuccessCount = currentJob?.success_count || 0;
+      const currentRunCount = currentJob?.run_count || 0;
+      const currentAvgDuration = currentJob?.average_duration_ms || 0;
+
+      const newSuccessCount = currentSuccessCount + 1;
+      const newRunCount = currentRunCount + 1;
+      const newAvgDuration = currentRunCount === 0
+        ? duration
+        : Math.round((currentAvgDuration * currentRunCount + duration) / newRunCount);
+
       await supabase
         .from('background_jobs')
         .update({
           status: 'completed',
-          success_count: supabase.sql`success_count + 1`,
-          run_count: supabase.sql`run_count + 1`,
+          success_count: newSuccessCount,
+          run_count: newRunCount,
           last_duration_ms: duration,
-          average_duration_ms: supabase.sql`
-            CASE
-              WHEN run_count = 0 THEN ${duration}
-              ELSE (average_duration_ms * run_count + ${duration}) / (run_count + 1)
-            END
-          `,
+          average_duration_ms: newAvgDuration,
           updated_at: new Date().toISOString()
         })
         .eq('job_type', jobType);
@@ -564,12 +576,22 @@ export class BackgroundJobSystem implements JobScheduler {
     try {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
+      // First get current counts to calculate new values
+      const { data: currentJob } = await supabase
+        .from('background_jobs')
+        .select('failure_count, run_count')
+        .eq('job_type', jobType)
+        .single();
+
+      const currentFailureCount = currentJob?.failure_count || 0;
+      const currentRunCount = currentJob?.run_count || 0;
+
       await supabase
         .from('background_jobs')
         .update({
           status: 'failed',
-          failure_count: supabase.sql`failure_count + 1`,
-          run_count: supabase.sql`run_count + 1`,
+          failure_count: currentFailureCount + 1,
+          run_count: currentRunCount + 1,
           last_error_message: errorMessage,
           last_error_at: new Date().toISOString(),
           updated_at: new Date().toISOString()

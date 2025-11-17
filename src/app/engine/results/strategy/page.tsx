@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import ResultsSidebar from '@/components/ResultsSidebar';
 import EngineActionsSummary from '@/components/EngineActionsSummary';
 import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
@@ -11,9 +12,16 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Target } from 'lucide-react';
 
 function StrategyPageContent() {
-  // Add tier2 class to body
+  // Add tier2 class to body and set page title
   useEffect(() => {
     document.body.classList.add('results-tier2');
+
+    // Set page title
+    const pageTitle = generatePageTitle({
+      pageTitle: 'Strategy'
+    });
+    updateDocumentTitle(pageTitle);
+
     return () => {
       document.body.classList.remove('results-tier2');
     };

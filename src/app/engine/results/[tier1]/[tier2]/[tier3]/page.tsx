@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { getTier3ItemsForTier2, getMappingForTier1, urlToTier2Name, urlToTier1Name, getTier2ItemsForTier1 } from '@/data/opal-mapping';
+import { generateResultsPageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ResultsSidebar from '@/components/ResultsSidebar';
@@ -67,13 +68,18 @@ function Tier3PageContent() {
     notFound();
   }
 
-  // Add tier3 class to body
+  // Add tier3 class to body and update page title
   useEffect(() => {
     document.body.classList.add('results-tier3');
+
+    // Update page title with hierarchical structure
+    const pageTitle = generateResultsPageTitle(tier1, tier2, tier3);
+    updateDocumentTitle(pageTitle);
+
     return () => {
       document.body.classList.remove('results-tier3');
     };
-  }, []);
+  }, [tier1, tier2, tier3]);
 
   return (
     <>

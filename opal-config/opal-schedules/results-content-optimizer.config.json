@@ -1,0 +1,241 @@
+{
+  "resultsContentOptimizer": {
+    "enabled": false,
+    "mode": "preview",
+    "configuration": {
+      "description": "Admin configuration for Results Content Optimizer scheduling and execution modes",
+      "last_updated": "2024-11-16T00:00:00Z",
+      "updated_by": "system_admin"
+    },
+    "execution_modes": {
+      "preview": {
+        "enabled": true,
+        "description": "Dry-run mode - analyzes content and logs potential changes without applying updates",
+        "safe_mode": true,
+        "actions": {
+          "analyze_content": true,
+          "generate_reports": true,
+          "validate_rules": true,
+          "apply_changes": false,
+          "update_live_content": false,
+          "send_notifications": false
+        },
+        "logging": {
+          "level": "detailed",
+          "include_diffs": true,
+          "include_analysis": true,
+          "generate_summary_report": true
+        }
+      },
+      "apply": {
+        "enabled": false,
+        "description": "Production mode - applies content optimizations to live Results pages",
+        "safe_mode": false,
+        "actions": {
+          "analyze_content": true,
+          "generate_reports": true,
+          "validate_rules": true,
+          "apply_changes": true,
+          "update_live_content": true,
+          "send_notifications": true
+        },
+        "logging": {
+          "level": "standard",
+          "include_diffs": true,
+          "include_analysis": false,
+          "generate_summary_report": true
+        },
+        "safety_checks": {
+          "require_backup": true,
+          "validate_before_apply": true,
+          "rollback_on_errors": true,
+          "manual_approval_for_critical": false
+        }
+      }
+    },
+    "schedule_settings": {
+      "auto_schedule_enabled": false,
+      "cron_expression": "0 2 * * *",
+      "timezone": "UTC",
+      "next_scheduled_run": null,
+      "last_successful_run": null,
+      "last_run_status": null
+    },
+    "execution_parameters": {
+      "confidence_threshold": 35,
+      "batch_size": 25,
+      "timeout_per_batch_minutes": 60,
+      "max_concurrent_optimizations": 3,
+      "retry_failed_pages": true,
+      "max_retries": 2,
+      "skip_low_confidence_pages": false,
+      "preserve_manual_overrides": true
+    },
+    "notification_settings": {
+      "notify_on_start": true,
+      "notify_on_completion": true,
+      "notify_on_errors": true,
+      "notify_on_high_change_volume": true,
+      "notification_channels": {
+        "osa_dashboard": true,
+        "webhook": true,
+        "email": false,
+        "slack": false
+      },
+      "notification_recipients": {
+        "admin": true,
+        "content_team": true,
+        "technical_team": false
+      }
+    },
+    "validation_rules": {
+      "language_compliance": {
+        "enabled": true,
+        "enforce_forbidden_terms": true,
+        "enforce_preferred_terms": true,
+        "target_compliance_rate": 100
+      },
+      "never_blank_validation": {
+        "enabled": true,
+        "ensure_all_sections_populated": true,
+        "confidence_based_fallbacks": true,
+        "target_coverage_rate": 100
+      },
+      "tier_alignment": {
+        "enabled": true,
+        "validate_tier_specific_patterns": true,
+        "target_alignment_rate": 95
+      },
+      "structural_integrity": {
+        "enabled": true,
+        "preserve_urls": true,
+        "preserve_navigation": true,
+        "preserve_agent_bindings": true,
+        "validate_json_schema": true
+      }
+    },
+    "performance_limits": {
+      "max_execution_time_minutes": 120,
+      "max_memory_usage_mb": 2048,
+      "max_pages_per_execution": 100,
+      "throttle_requests": true,
+      "parallel_processing_limit": 3
+    },
+    "error_handling": {
+      "continue_on_page_errors": true,
+      "rollback_on_critical_errors": true,
+      "generate_error_reports": true,
+      "alert_admin_on_high_errors": true,
+      "high_error_threshold_percentage": 10
+    },
+    "logging_configuration": {
+      "log_level": "info",
+      "log_to_file": true,
+      "log_to_dashboard": true,
+      "retain_logs_days": 30,
+      "include_performance_metrics": true,
+      "include_content_diffs": true,
+      "compress_old_logs": true
+    },
+    "admin_controls": {
+      "emergency_stop": {
+        "enabled": true,
+        "stop_file_path": "opal-config/emergency-stop.flag"
+      },
+      "manual_triggers": {
+        "allow_manual_execution": true,
+        "require_admin_approval": false,
+        "allow_partial_execution": true,
+        "allow_tier_specific_execution": true
+      },
+      "debugging": {
+        "verbose_logging": false,
+        "include_debug_info": false,
+        "capture_execution_traces": false,
+        "enable_profiling": false
+      }
+    },
+    "feature_flags": {
+      "enable_confidence_improvements": true,
+      "enable_language_rule_enforcement": true,
+      "enable_never_blank_validation": true,
+      "enable_tier_alignment_validation": true,
+      "enable_performance_monitoring": true,
+      "enable_diff_generation": true,
+      "enable_rollback_capability": true,
+      "enable_canary_deployment": false,
+      "enable_a_b_testing": false
+    },
+    "maintenance_windows": {
+      "scheduled_maintenance": {
+        "enabled": false,
+        "maintenance_window_start": "03:00",
+        "maintenance_window_end": "04:00",
+        "timezone": "UTC",
+        "skip_execution_during_maintenance": true
+      },
+      "system_health_checks": {
+        "enabled": true,
+        "check_opal_agents": true,
+        "check_database_connectivity": true,
+        "check_workflow_dependencies": true,
+        "abort_on_health_check_failure": true
+      }
+    }
+  },
+  "system_metadata": {
+    "config_version": "1.0.0",
+    "schema_version": "1.0",
+    "created_date": "2024-11-16T00:00:00Z",
+    "last_modified_date": "2024-11-16T00:00:00Z",
+    "configuration_source": "admin_interface",
+    "environment": "production",
+    "deployment_target": "opal_cloud_code"
+  },
+  "admin_interface": {
+    "ui_configuration": {
+      "show_advanced_options": false,
+      "group_related_settings": true,
+      "provide_setting_descriptions": true,
+      "highlight_dangerous_operations": true
+    },
+    "quick_actions": {
+      "enable_preview_mode": {
+        "action": "set_mode_preview",
+        "description": "Switch to preview mode for safe testing",
+        "requires_confirmation": false
+      },
+      "enable_apply_mode": {
+        "action": "set_mode_apply",
+        "description": "Switch to apply mode for live content updates",
+        "requires_confirmation": true
+      },
+      "enable_scheduler": {
+        "action": "enable_auto_schedule",
+        "description": "Enable automatic daily content optimization",
+        "requires_confirmation": true
+      },
+      "disable_scheduler": {
+        "action": "disable_auto_schedule",
+        "description": "Disable automatic content optimization",
+        "requires_confirmation": false
+      },
+      "trigger_manual_run": {
+        "action": "execute_manual_optimization",
+        "description": "Start manual content optimization now",
+        "requires_confirmation": true
+      },
+      "view_last_execution": {
+        "action": "show_execution_logs",
+        "description": "View logs from last optimization run",
+        "requires_confirmation": false
+      }
+    },
+    "validation_messages": {
+      "mode_switch_warning": "Switching to apply mode will make live changes to Results pages. Ensure you have reviewed recent preview runs.",
+      "scheduler_enable_warning": "Enabling automatic scheduling will run content optimization daily at 2 AM UTC. Monitor initial runs carefully.",
+      "manual_run_confirmation": "This will analyze and potentially modify content across 88+ Results pages. Continue?",
+      "emergency_stop_info": "Emergency stop will halt current execution and prevent new runs until disabled."
+    }
+  }
+}

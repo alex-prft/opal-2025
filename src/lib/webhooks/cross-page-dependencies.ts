@@ -191,11 +191,20 @@ export class CrossPageDependencySystem {
 
             // Update trigger count
             if (isDatabaseAvailable()) {
+              // First get the current trigger count
+              const { data: currentDependency } = await supabase
+                .from('cross_page_dependencies')
+                .select('trigger_count')
+                .eq('id', dependency.id)
+                .single();
+
+              const currentTriggerCount = currentDependency?.trigger_count || 0;
+
               await supabase
                 .from('cross_page_dependencies')
                 .update({
                   last_triggered_at: new Date().toISOString(),
-                  trigger_count: supabase.sql`trigger_count + 1`
+                  trigger_count: currentTriggerCount + 1
                 })
                 .eq('id', dependency.id);
             }

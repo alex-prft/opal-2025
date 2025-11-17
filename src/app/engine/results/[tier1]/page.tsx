@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { getTier2ItemsForTier1, getMappingForTier1, urlToTier1Name } from '@/data/opal-mapping';
+import { generateResultsPageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -181,13 +182,18 @@ function Tier1PageContent() {
     notFound();
   }
 
-  // Add tier1 class to body
+  // Add tier1 class to body and update page title
   useEffect(() => {
     document.body.classList.add('results-tier1');
+
+    // Update page title with hierarchical structure
+    const pageTitle = generateResultsPageTitle(tier1);
+    updateDocumentTitle(pageTitle);
+
     return () => {
       document.body.classList.remove('results-tier1');
     };
-  }, []);
+  }, [tier1]);
 
   const Icon = tier1IconMapping[tier1Name as keyof typeof tier1IconMapping] || Activity;
 

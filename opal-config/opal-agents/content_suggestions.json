@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "specialized",
+  "name": "Content Suggestions Generator",
+  "output": {
+    "type": "json",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "promise": { "type": "string" },
+            "metrics": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "value": { "type": "string" },
+                  "hint": { "type": "string" }
+                }
+              }
+            },
+            "confidence": { "type": "number" },
+            "confidenceNote": { "type": "string" }
+          }
+        },
+        "overview": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": "string" },
+            "keyPoints": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "quickWinSuggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "workingTitle": { "type": "string" },
+              "primaryPersona": { "type": "string" },
+              "secondaryPersona": { "type": "string" },
+              "topic": { "type": "string" },
+              "summary": { "type": "string" },
+              "suggestedFormats": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "seoAiHints": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "maturityHint": { "type": "string", "enum": ["crawl", "walk", "run", "fly"] },
+              "confidence": { "type": "number" },
+              "campaignContext": { "type": "string" },
+              "rationale": {
+                "type": "object",
+                "properties": {
+                  "problemSolving": { "type": "string" },
+                  "journeyStage": { "type": "string" },
+                  "dataSignals": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "strategicBetSuggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "workingTitle": { "type": "string" },
+              "primaryPersona": { "type": "string" },
+              "secondaryPersona": { "type": "string" },
+              "topic": { "type": "string" },
+              "summary": { "type": "string" },
+              "suggestedFormats": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "seoAiHints": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "maturityHint": { "type": "string", "enum": ["crawl", "walk", "run", "fly"] },
+              "confidence": { "type": "number" },
+              "campaignContext": { "type": "string" },
+              "rationale": {
+                "type": "object",
+                "properties": {
+                  "problemSolving": { "type": "string" },
+                  "journeyStage": { "type": "string" },
+                  "dataSignals": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "personaGapSuggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "workingTitle": { "type": "string" },
+              "primaryPersona": { "type": "string" },
+              "secondaryPersona": { "type": "string" },
+              "topic": { "type": "string" },
+              "summary": { "type": "string" },
+              "suggestedFormats": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "seoAiHints": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "maturityHint": { "type": "string", "enum": ["crawl", "walk", "run", "fly"] },
+              "confidence": { "type": "number" },
+              "campaignContext": { "type": "string" },
+              "rationale": {
+                "type": "object",
+                "properties": {
+                  "problemSolving": { "type": "string" },
+                  "journeyStage": { "type": "string" },
+                  "dataSignals": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "bullets": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "impactLevel": { "type": "string", "enum": ["High", "Medium", "Low"] },
+              "effortLevel": { "type": "string", "enum": ["Low", "Medium", "High"] },
+              "confidence": { "type": "number" }
+            }
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "ownerHint": { "type": "string" },
+              "timeframeHint": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "description": "Strategic content suggestions organized into three lanes: Quick Wins, Strategic Bets, and Persona Coverage Gaps"
+  },
+  "version": "1.0.0",
+  "agent_id": "content_suggestions",
+  "file_urls": [],
+  "is_active": true,
+  "creativity": 0.7,
+  "is_deleted": false,
+  "parameters": [
+    {
+      "name": "content_topics",
+      "type": "object",
+      "default": {},
+      "required": true,
+      "description": "Content Recs data including topic performance, trending themes, and content gaps"
+    },
+    {
+      "name": "analytics_data",
+      "type": "object",
+      "default": {},
+      "required": true,
+      "description": "Analytics Insights data including engagement metrics, audience behavior, and content performance"
+    },
+    {
+      "name": "user_interactions",
+      "type": "object",
+      "default": {},
+      "required": true,
+      "description": "User interaction data from various touchpoints and engagement patterns"
+    },
+    {
+      "name": "persona_data",
+      "type": "object",
+      "default": {},
+      "required": true,
+      "description": "ODP persona data including segment definitions, preferences, and content consumption patterns"
+    },
+    {
+      "name": "maturity_data",
+      "type": "object",
+      "default": {},
+      "required": true,
+      "description": "Current content maturity assessment and capability levels (Crawl/Walk/Run/Fly)"
+    },
+    {
+      "name": "cms_data",
+      "type": "object",
+      "default": {},
+      "required": false,
+      "description": "CMS content inventory and content management capabilities"
+    },
+    {
+      "name": "cmp_data",
+      "type": "object",
+      "default": {},
+      "required": false,
+      "description": "CMP data including personalization capabilities and content variants"
+    }
+  ],
+  "description": "Generates strategic content suggestions organized into three specialized lanes: Quick Wins (immediate impact opportunities), Strategic Bets (long-term content investments), and Persona Coverage Gaps (underserved audience segments). Integrates data from Content Recs, Analytics Insights, ODP, CMS, and CMP to provide comprehensive content strategy recommendations.",
+  "enabled_tools": [
+    "enhanced_tools_store_workflow_data_enhanced",
+    "enhanced_tools_send_data_to_osa_enhanced",
+    "workflow_data_sharing_validate_content_structure",
+    "osa_contentrecs_get_topic_performance",
+    "osa_contentrecs_analyze_content_gaps",
+    "osa_odp_get_persona_insights",
+    "osa_odp_analyze_engagement_patterns",
+    "workflow_data_sharing_optimize_language_compliance",
+    "workflow_data_sharing_ensure_never_blank_rules"
+  ],
+  "discovery_endpoint": "https://ifpa-strategy.vercel.app/api/opal/enhanced-tools",
+  "agent_metadata": null,
+  "inference_type": "simple_with_thinking",
+  "prompt_template": "**Role:** You are a strategic content suggestions expert specializing in Experience Optimization with deep integration across Content Recs, Analytics Insights, ODP personas, CMS capabilities, and CMP personalization data.\n\n**Objective:** Generate comprehensive content suggestions organized into three strategic lanes: Quick Wins (immediate impact), Strategic Bets (long-term investments), and Persona Coverage Gaps (underserved segments).\n\n**Input Data:**\n- Content Topics: [[content_topics]]\n- Analytics Data: [[analytics_data]]\n- User Interactions: [[user_interactions]]\n- Persona Data: [[persona_data]]\n- Maturity Data: [[maturity_data]]\n- CMS Data: [[cms_data]]\n- CMP Data: [[cmp_data]]\n\n**CRITICAL LANGUAGE RULES:**\n\n1. **NO REVENUE METRICS:** Never include currency ($, €, £), ROI, profit, or financial projections\n2. **PREFERRED TERMS:** Use \"impact\" (not \"effect\"), \"optimization\" (not \"improvement\"), \"performance\" (not \"results\")\n3. **AVOID:** Enterprise jargon, vague qualifiers (\"somewhat\", \"pretty good\"), unexplained acronyms\n4. **FOCUS:** Performance metrics, engagement indicators, optimization opportunities\n\n**THREE-LANE SUGGESTION SYSTEM:**\n\n**LANE 1: QUICK WINS (10 suggestions)**\n- **Criteria:** Low effort, high immediate impact, can be implemented within 2-4 weeks\n- **Focus:** Content optimization, format variations, persona-specific adaptations\n- **Data Sources:** Content Recs performance data, Analytics engagement patterns\n- **Maturity:** Primarily Crawl/Walk level implementations\n\n**LANE 2: STRATEGIC BETS (10 suggestions)**\n- **Criteria:** Medium to high effort, significant long-term impact, 2-6 month timeline\n- **Focus:** New content pillars, comprehensive topic coverage, advanced personalization\n- **Data Sources:** ODP persona insights, trend analysis, competitive gaps\n- **Maturity:** Walk/Run level implementations with Fly aspirations\n\n**LANE 3: PERSONA COVERAGE GAPS (10 suggestions)**\n- **Criteria:** Address underserved audience segments, fill content portfolio gaps\n- **Focus:** Persona-specific content, journey stage coverage, engagement improvement\n- **Data Sources:** ODP persona analysis, engagement patterns, content inventory gaps\n- **Maturity:** All levels, scaled to current capabilities\n\n**CONTENT SUGGESTION STRUCTURE:**\n\nFor each suggestion, provide:\n\n```json\n{\n  \"id\": \"unique_identifier\",\n  \"workingTitle\": \"Specific, actionable content title\",\n  \"primaryPersona\": \"Main target persona from ODP data\",\n  \"secondaryPersona\": \"Secondary persona if applicable\",\n  \"topic\": \"Content topic/theme from Content Recs analysis\",\n  \"summary\": \"2-3 sentence explanation of content purpose and approach\",\n  \"suggestedFormats\": [\"blog post\", \"video\", \"infographic\", \"interactive tool\"],\n  \"seoAiHints\": [\"SEO-focused keywords\", \"AI optimization suggestions\"],\n  \"maturityHint\": \"crawl|walk|run|fly\",\n  \"confidence\": 85,\n  \"campaignContext\": \"How this fits into broader content strategy\",\n  \"rationale\": {\n    \"problemSolving\": \"What specific problem this content addresses\",\n    \"journeyStage\": \"Where this fits in the customer journey\",\n    \"dataSignals\": [\"Specific data points supporting this suggestion\"]\n  }\n}\n```\n\n**DATA INTEGRATION STRATEGY:**\n\n1. **Content Recs Analysis:**\n   - Identify top-performing topics and content gaps\n   - Analyze trending themes and emerging opportunities\n   - Review content performance patterns and optimization potential\n\n2. **Analytics Insights Integration:**\n   - Examine engagement metrics and user behavior patterns\n   - Identify high-performing content characteristics\n   - Analyze conversion paths and content effectiveness\n\n3. **ODP Persona Insights:**\n   - Map persona preferences to content opportunities\n   - Identify underserved segments and engagement gaps\n   - Analyze persona journey stages and content needs\n\n4. **CMS/CMP Capabilities:**\n   - Consider current content management and personalization capabilities\n   - Align suggestions with technical implementation feasibility\n   - Leverage existing content assets and personalization frameworks\n\n**SUGGESTION PRIORITIZATION CRITERIA:**\n\n**Quick Wins:**\n- High engagement potential based on analytics data\n- Low implementation complexity\n- Leverages existing high-performing content themes\n- Clear persona-topic alignment from ODP data\n\n**Strategic Bets:**\n- Addresses significant content gaps identified in Content Recs\n- Targets high-value personas with growth potential\n- Aligns with long-term content strategy and business objectives\n- Requires investment but offers substantial performance impact\n\n**Persona Coverage Gaps:**\n- Directly addresses underserved persona segments\n- Fills identified journey stage content gaps\n- Improves overall content portfolio balance\n- Enhances personalization effectiveness\n\n**CONFIDENCE SCORING:**\n\n- **90-100%:** Strong data signals across multiple sources, clear implementation path\n- **75-89%:** Good data support, minor uncertainty in execution approach\n- **60-74%:** Moderate data confidence, requires validation during implementation\n- **45-59%:** Limited data, hypothesis-driven suggestion requiring testing\n- **<45%:** Exploratory suggestion, high uncertainty but potential value\n\n**OUTPUT STRUCTURE:**\n\nProvide complete Results page content with three-lane suggestions:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"Strategic Content Suggestions\",\n    \"promise\": \"Three specialized lanes of content opportunities based on comprehensive data analysis\",\n    \"metrics\": [\n      {\n        \"label\": \"Total Suggestions\",\n        \"value\": \"30 content ideas\",\n        \"hint\": \"Across Quick Wins, Strategic Bets, and Persona Gaps\"\n      },\n      {\n        \"label\": \"Average Confidence\",\n        \"value\": \"XX%\",\n        \"hint\": \"Data-driven suggestion reliability\"\n      },\n      {\n        \"label\": \"Persona Coverage\",\n        \"value\": \"XX personas\",\n        \"hint\": \"Audience segments addressed\"\n      }\n    ],\n    \"confidence\": 80,\n    \"confidenceNote\": \"Based on comprehensive analysis of Content Recs, Analytics, and ODP data\"\n  },\n  \"overview\": {\n    \"summary\": \"Comprehensive content strategy recommendations organized into three specialized lanes...\",\n    \"keyPoints\": [\n      \"Quick Wins: 10 immediate-impact content opportunities\",\n      \"Strategic Bets: 10 long-term content investments\",\n      \"Persona Gaps: 10 underserved audience content needs\"\n    ]\n  },\n  \"quickWinSuggestions\": [...],\n  \"strategicBetSuggestions\": [...],\n  \"personaGapSuggestions\": [...],\n  \"insights\": [\n    {\n      \"title\": \"Content Portfolio Analysis\",\n      \"description\": \"Key findings from comprehensive content analysis\",\n      \"bullets\": [\"Data-driven insights about content performance and gaps\"]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"Implement top 5 Quick Win suggestions\",\n      \"impactLevel\": \"High\",\n      \"effortLevel\": \"Low\",\n      \"confidence\": 90\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"Prioritize Quick Win implementations\",\n      \"ownerHint\": \"Content team\",\n      \"timeframeHint\": \"Next 2-4 weeks\"\n    }\n  ]\n}\n```\n\n**QUALITY STANDARDS:**\n\n✅ **30 Total Suggestions:** 10 per lane with complete suggestion objects\n✅ **Data Integration:** All suggestions backed by specific data signals\n✅ **Language Compliance:** No revenue metrics, enterprise-appropriate terminology\n✅ **Persona Alignment:** Clear primary/secondary persona assignments\n✅ **Maturity Appropriate:** Suggestions matched to current capability levels\n✅ **Actionable Content:** Specific, implementable recommendations with clear rationale\n\n***Store content suggestions via workflow data sharing and send optimized results to OSA dashboard.***",
+  "internal_version": 1
+}

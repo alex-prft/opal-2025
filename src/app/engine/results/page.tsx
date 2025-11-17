@@ -11,6 +11,7 @@ import { ServiceStatusProvider, useServiceErrorListener } from '@/components/Ser
 import ServiceStatusFooter from '@/components/ServiceStatusFooter';
 import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
 import { OSAWorkflowOutput } from '@/lib/types/maturity';
+import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 import {
   Sparkles,
   CheckCircle,
@@ -31,9 +32,14 @@ function ResultsPageContent() {
   // Initialize service error listener
   useServiceErrorListener();
 
-  // Add tier0 class to body
+  // Add tier0 class to body and update page title
   useEffect(() => {
     document.body.classList.add('results-tier0');
+
+    // Update page title
+    const pageTitle = generatePageTitle({ pageTitle: 'Results Overview' });
+    updateDocumentTitle(pageTitle);
+
     return () => {
       document.body.classList.remove('results-tier0');
     };
