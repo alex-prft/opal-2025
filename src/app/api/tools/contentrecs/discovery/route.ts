@@ -15,7 +15,7 @@ const CONTENTRECS_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "analyze_website_content",
+      name: "osa_analyze_website_content",
       description: "Comprehensive content analysis including quality scoring, SEO assessment, and personalization potential identification",
       parameters: [
         {

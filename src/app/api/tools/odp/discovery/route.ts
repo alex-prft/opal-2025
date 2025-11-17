@@ -15,7 +15,7 @@ const ODP_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "fetch_audience_segments",
+      name: "osa_fetch_audience_segments",
       description: "Retrieve existing audience segments from ODP for analysis and personalization strategy development",
       parameters: [
         {
@@ -35,7 +35,7 @@ const ODP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "analyze_member_behavior",
+      name: "osa_analyze_member_behavior",
       description: "Analyze IFPA member behavioral patterns for personalization opportunity identification",
       parameters: [
         {
@@ -61,7 +61,7 @@ const ODP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "create_dynamic_segments",
+      name: "osa_create_dynamic_segments",
       description: "Create new audience segments based on personalization strategy requirements",
       parameters: [
         {
@@ -81,7 +81,7 @@ const ODP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "calculate_segment_statistical_power",
+      name: "osa_calculate_segment_statistical_power",
       description: "Calculate statistical power and sample size requirements for audience segments in experimentation",
       parameters: [
         {

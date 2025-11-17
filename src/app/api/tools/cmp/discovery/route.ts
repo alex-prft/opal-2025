@@ -15,7 +15,7 @@ const CMP_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "compile_strategy_brief",
+      name: "osa_compile_strategy_brief",
       description: "Compile comprehensive personalization strategy brief from all workflow agent results",
       parameters: [
         {
@@ -41,7 +41,7 @@ const CMP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "generate_executive_summary",
+      name: "osa_generate_executive_summary",
       description: "Create executive-ready summary with key recommendations and business impact projections",
       parameters: [
         {
@@ -67,7 +67,7 @@ const CMP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "create_campaign_specifications",
+      name: "osa_create_campaign_specifications",
       description: "Generate detailed campaign specifications ready for CMP platform implementation",
       parameters: [
         {
@@ -93,7 +93,7 @@ const CMP_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "format_cmp_deliverables",
+      name: "osa_format_cmp_deliverables",
       description: "Format campaign specifications for direct import into CMP platforms",
       parameters: [
         {

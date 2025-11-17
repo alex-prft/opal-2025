@@ -15,59 +15,7 @@ const WEBX_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "perform_geo_audit",
-      description: "Comprehensive Generative Engine Optimization audit for AI citation readiness and search engine visibility",
-      parameters: [
-        {
-          name: "website_url",
-          type: "string",
-          description: "Target website URL for GEO audit",
-          required: true
-        },
-        {
-          name: "audit_scope",
-          type: "object",
-          description: "Audit scope including page depth, subdomains, and focus areas",
-          required: false
-        },
-        {
-          name: "ai_engine_compatibility",
-          type: "array",
-          description: "AI engines to optimize for citation readiness (google_ai, bing_copilot, claude, chatgpt, perplexity)",
-          required: false
-        }
-      ],
-      endpoint: "/tools/perform_geo_audit",
-      http_method: "POST"
-    },
-    {
-      name: "analyze_core_web_vitals",
-      description: "Assess Core Web Vitals and performance metrics for personalization implementation impact",
-      parameters: [
-        {
-          name: "target_pages",
-          type: "array",
-          description: "Specific pages to analyze for Core Web Vitals",
-          required: true
-        },
-        {
-          name: "performance_metrics",
-          type: "array",
-          description: "Performance metrics to evaluate (lcp, fid, cls, fcp, ttfb, speed_index)",
-          required: false
-        },
-        {
-          name: "testing_conditions",
-          type: "object",
-          description: "Testing conditions including device types and network conditions",
-          required: false
-        }
-      ],
-      endpoint: "/tools/analyze_core_web_vitals",
-      http_method: "POST"
-    },
-    {
-      name: "evaluate_technical_constraints",
+      name: "osa_evaluate_technical_constraints",
       description: "Identify technical constraints and requirements for personalization implementation",
       parameters: [
         {
@@ -83,11 +31,51 @@ const WEBX_TOOLS_CONFIG = {
           required: true
         }
       ],
-      endpoint: "/tools/evaluate_technical_constraints",
+      endpoint: "/tools/osa_evaluate_technical_constraints",
       http_method: "POST"
     },
     {
-      name: "generate_performance_baseline",
+      name: "assess_schema_markup_implementation",
+      description: "Evaluate and recommend schema markup for enhanced AI citation and search visibility",
+      parameters: [
+        {
+          name: "content_types",
+          type: "array",
+          description: "Content types to evaluate for schema markup",
+          required: true
+        },
+        {
+          name: "current_markup_audit",
+          type: "boolean",
+          description: "Audit existing schema markup implementation",
+          required: false
+        }
+      ],
+      endpoint: "/tools/assess_schema_markup_implementation",
+      http_method: "POST"
+    },
+    {
+      name: "perform_mobile_optimization_audit",
+      description: "Comprehensive mobile experience audit for personalization readiness",
+      parameters: [
+        {
+          name: "mobile_audit_scope",
+          type: "object",
+          description: "Mobile audit scope configuration",
+          required: false
+        },
+        {
+          name: "device_testing",
+          type: "array",
+          description: "Device types for testing",
+          required: false
+        }
+      ],
+      endpoint: "/tools/perform_mobile_optimization_audit",
+      http_method: "POST"
+    },
+    {
+      name: "osa_generate_performance_baseline",
       description: "Establish comprehensive performance baseline for personalization impact measurement",
       parameters: [
         {
@@ -103,7 +91,7 @@ const WEBX_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/generate_performance_baseline",
+      endpoint: "/tools/osa_generate_performance_baseline",
       http_method: "POST"
     }
   ]

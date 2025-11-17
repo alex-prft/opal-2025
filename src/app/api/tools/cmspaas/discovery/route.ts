@@ -15,7 +15,7 @@ const CMSPAAS_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "audit_content_structure",
+      name: "osa_audit_content_structure",
       description: "Analyze existing content structure and organization for personalization readiness",
       parameters: [
         {
@@ -35,7 +35,7 @@ const CMSPAAS_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "generate_content_templates",
+      name: "osa_generate_content_templates",
       description: "Create personalized content templates and structures for audience-specific content creation",
       parameters: [
         {
@@ -61,7 +61,7 @@ const CMSPAAS_TOOLS_CONFIG = {
       http_method: "POST"
     },
     {
-      name: "optimize_existing_content",
+      name: "osa_optimize_existing_content",
       description: "Optimize existing content for personalization and improved performance",
       parameters: [
         {
