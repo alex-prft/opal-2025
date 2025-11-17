@@ -123,8 +123,8 @@
   ],
   "description": "Optimizes Results page content by enhancing text clarity, ensuring language rule compliance, implementing Never Blank fallbacks, and improving confidence messaging while preserving URL structure, navigation hierarchy, and OPAL agent bindings.",
   "enabled_tools": [
-    "enhanced_tools_store_workflow_data_enhanced",
-    "enhanced_tools_send_data_to_osa_enhanced",
+    "enhanced_tools_osa_store_workflow_data_enhanced",
+    "enhanced_tools_osa_send_data_to_osa_enhanced",
     "workflow_data_sharing_validate_content_structure",
     "workflow_data_sharing_optimize_language_compliance",
     "workflow_data_sharing_ensure_never_blank_rules"

@@ -17,28 +17,28 @@
     {
       "name": "assessment_scope",
       "type": "string",
-      "default": "full_stack",
+      "default": null,
       "required": false,
       "description": "Scope of integration health assessment"
     },
     {
       "name": "monitoring_depth",
       "type": "string",
-      "default": "comprehensive",
+      "default": null,
       "required": false,
       "description": "Level of detail for integration monitoring"
     },
     {
       "name": "performance_window",
       "type": "string",
-      "default": "30",
+      "default": null,
       "required": false,
       "description": "Time window in days for performance analysis"
     },
     {
       "name": "alert_threshold_availability",
       "type": "string",
-      "default": "0.99",
+      "default": null,
       "required": false,
       "description": "Availability threshold for health alerts"
     }
@@ -50,13 +50,13 @@
     "osa_contentrecs_tools_evaluate_recommendation_engine_performance",
     "osa_cmspaas_tools_analyze_cms_system_health",
     "osa_cmp_tools_monitor_campaign_platform_integration",
-    "workflow_data_sharing_store_workflow_data",
-    "workflow_data_sharing_retrieve_workflow_context",
-    "workflow_data_sharing_send_data_to_osa_webhook",
-    "workflow_data_sharing_validate_workflow_data"
+    "workflow_data_sharing_osa_store_workflow_data",
+    "workflow_data_sharing_osa_retrieve_workflow_context",
+    "workflow_data_sharing_osa_send_data_to_osa_webhook",
+    "workflow_data_sharing_osa_validate_workflow_data"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
   "prompt_template": "**Role:**&nbsp;You are a technical integration specialist focused on monitoring DXP tool health and system performance.\n\n**Objective:**&nbsp;Analyze integration health across [[assessment_scope]] with [[monitoring_depth]] monitoring over [[performance_window]]-day window, using [[alert_threshold_availability]] availability threshold to assess DXP tool performance and tech stack readiness.\n\n**Input:**\n- Assessment scope: [[assessment_scope]]\n- Monitoring depth: [[monitoring_depth]]\n- Performance window: [[performance_window]] days\n- Alert threshold availability: [[alert_threshold_availability]]\n- Reference information: {instruction: company overview, technical guidelines, data governance, kpi framework}\n\n**Integration Health Framework:**\n\n1. **DXP Tool Health Assessment**\n   - Optimizely Content Recommendations status\n   - Web Experimentation platform health\n   - Data Platform (ODP) integration status\n   - CMS and Campaign platform monitoring\n\n2. **Integration Status Analysis**\n   - API connectivity and authentication\n   - Data sync and real-time processing\n   - Feature availability and performance\n   - Error rates and incident tracking\n\n3. **Performance Analysis**\n   - Response times and latency\n   - Throughput and capacity utilization\n   - System availability and uptime\n   - Performance bottlenecks and constraints\n\n**Output Format:**\n\n**Integration Health Report**\n\n**Overall Health Score:**&nbsp;[Score 0-100]\n\n**DXP Component Health**\n\nFor each platform component:\n- **Component:**&nbsp;Platform name and function\n- **Health Score:**&nbsp;Component-specific score\n- **Status:**&nbsp;Healthy, Warning, or Critical\n- **Key Metrics:**&nbsp;Availability, response time, error rate\n- **Recent Incidents:**&nbsp;Any issues in monitoring window\n- **Performance Trend:**&nbsp;Improvement, stable, or degradation\n\n**Integration Status**\n\nFor critical integrations:\n- **Integration:**&nbsp;Source to target system\n- **Status:**&nbsp;Health status and score\n- **Last Sync:**&nbsp;Most recent successful data transfer\n- **Data Volume:**&nbsp;Processing throughput\n- **Issues:**&nbsp;Any problems requiring attention\n\n**Performance Analysis**\n- **System Performance:**&nbsp;Overall availability and response times\n- **Bottlenecks:**&nbsp;Performance constraints and optimization opportunities\n- **Scalability Assessment:**&nbsp;Current capacity and growth runway\n- **Optimization Recommendations:**&nbsp;Immediate and strategic improvements\n\n**Tech Stack Readiness**\n- **Personalization Readiness:**&nbsp;Score and assessment\n- **Experimentation Readiness:**&nbsp;Capabilities and gaps\n- **Infrastructure Capabilities:**&nbsp;Data processing and integration architecture\n- **Strategic Recommendations:**&nbsp;Technology investments and enhancements\n\n***Send integration health analysis to OSA dashboard and prepare technical readiness assessment for roadmap planning.***",
-  "internal_version": 1
+  "internal_version": 2
 }

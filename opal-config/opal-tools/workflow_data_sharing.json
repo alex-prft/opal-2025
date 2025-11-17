@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "tools": [
     {
-      "name": "store_workflow_data",
+      "name": "osa_store_workflow_data",
       "description": "Store agent results in shared workflow context for use by subsequent agents",
       "input_schema": {
         "type": "object",
@@ -40,7 +40,7 @@
       }
     },
     {
-      "name": "retrieve_workflow_context",
+      "name": "osa_retrieve_workflow_context",
       "description": "Retrieve accumulated workflow context data for current agent execution",
       "input_schema": {
         "type": "object",
@@ -62,7 +62,7 @@
       }
     },
     {
-      "name": "send_data_to_osa_webhook",
+      "name": "osa_send_data_to_osa_webhook",
       "description": "Send agent data and results to OSA application via webhook for real-time updates",
       "input_schema": {
         "type": "object",
@@ -111,7 +111,7 @@
       }
     },
     {
-      "name": "validate_workflow_data",
+      "name": "osa_validate_workflow_data",
       "description": "Validate workflow data quality and completeness before agent execution",
       "input_schema": {
         "type": "object",
@@ -133,7 +133,7 @@
       }
     },
     {
-      "name": "compile_final_results",
+      "name": "osa_compile_final_results",
       "description": "Compile all workflow agent results into comprehensive strategy brief for final delivery",
       "input_schema": {
         "type": "object",

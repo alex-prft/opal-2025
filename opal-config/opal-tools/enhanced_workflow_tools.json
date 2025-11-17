@@ -197,7 +197,7 @@
       ]
     },
     {
-      "name": "send_data_to_osa_enhanced",
+      "name": "osa_send_data_to_osa_enhanced",
       "description": "Intelligent OSA webhook delivery with environment routing, retry logic, and delivery confirmation",
       "input_schema": {
         "type": "object",
@@ -256,6 +256,128 @@
         "Error recovery mechanisms",
         "Performance monitoring",
         "Webhook validation"
+      ]
+    },
+    {
+      "name": "osa_store_workflow_data_enhanced",
+      "description": "Enhanced workflow data storage with SDK integration, retry logic, and improved error handling",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent storing data"
+          },
+          "agent_results": {
+            "type": "object",
+            "description": "Complete structured results from agent execution"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "execution_order": {
+            "type": "number",
+            "description": "Sequential order of agent execution"
+          },
+          "data_quality_score": {
+            "type": "number",
+            "description": "Quality score of the data (0.0-1.0)"
+          },
+          "storage_options": {
+            "type": "object",
+            "properties": {
+              "enable_compression": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable data compression for storage efficiency"
+              },
+              "retention_policy": {
+                "type": "string",
+                "enum": ["standard", "extended", "permanent"],
+                "default": "standard",
+                "description": "Data retention policy"
+              },
+              "encryption_level": {
+                "type": "string",
+                "enum": ["basic", "enhanced", "enterprise"],
+                "default": "enhanced",
+                "description": "Encryption level for stored data"
+              }
+            }
+          }
+        },
+        "required": ["agent_id", "agent_results", "workflow_id", "execution_order"]
+      },
+      "features": [
+        "SDK-powered data validation",
+        "Automatic retry logic with exponential backoff",
+        "Data compression and encryption",
+        "Performance monitoring and metrics",
+        "Enhanced error reporting",
+        "Configurable retention policies"
+      ]
+    },
+    {
+      "name": "osa_retrieve_workflow_context_enhanced",
+      "description": "Enhanced context retrieval with performance optimization, intelligent caching, and advanced filtering",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "requesting_agent": {
+            "type": "string",
+            "description": "ID of agent requesting context data"
+          },
+          "include_agents": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Specific agent IDs to include in context"
+          },
+          "retrieval_options": {
+            "type": "object",
+            "properties": {
+              "cache_strategy": {
+                "type": "string",
+                "enum": ["aggressive", "balanced", "minimal"],
+                "default": "balanced",
+                "description": "Caching strategy for performance optimization"
+              },
+              "data_filtering": {
+                "type": "object",
+                "properties": {
+                  "quality_threshold": {
+                    "type": "number",
+                    "default": 0.7,
+                    "description": "Minimum quality score for included data"
+                  },
+                  "recency_weight": {
+                    "type": "number",
+                    "default": 0.8,
+                    "description": "Weight for data recency in filtering"
+                  }
+                }
+              },
+              "format_optimization": {
+                "type": "boolean",
+                "default": true,
+                "description": "Optimize data format for requesting agent"
+              }
+            }
+          }
+        },
+        "required": ["workflow_id", "requesting_agent"]
+      },
+      "features": [
+        "Intelligent caching with TTL management",
+        "Advanced data filtering and quality scoring",
+        "Performance-optimized data serialization",
+        "Context relevance scoring",
+        "Automatic data format optimization",
+        "Real-time performance metrics"
       ]
     }
   ],

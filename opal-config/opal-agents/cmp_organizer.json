@@ -17,21 +17,21 @@
     {
       "name": "deliverable_format",
       "type": "string",
-      "default": "comprehensive",
+      "default": null,
       "required": false,
       "description": "Level of detail for strategy brief and deliverables"
     },
     {
       "name": "cmp_integration_level",
       "type": "string",
-      "default": "full_integration",
+      "default": null,
       "required": false,
       "description": "Level of CMP platform integration required"
     },
     {
       "name": "presentation_format",
       "type": "string",
-      "default": "business_ready",
+      "default": null,
       "required": false,
       "description": "Target audience format for deliverables"
     }
@@ -44,10 +44,10 @@
     "osa_cmp_tools_format_cmp_deliverables",
     "osa_cmp_tools_send_to_cmp_platform",
     "osa_cmp_tools_generate_implementation_timeline",
-    "workflow_data_sharing_store_workflow_data",
-    "workflow_data_sharing_retrieve_workflow_context",
-    "workflow_data_sharing_send_data_to_osa_webhook",
-    "workflow_data_sharing_validate_workflow_data",
+    "workflow_data_sharing_osa_store_workflow_data",
+    "workflow_data_sharing_osa_retrieve_workflow_context",
+    "workflow_data_sharing_osa_send_data_to_osa_webhook",
+    "workflow_data_sharing_osa_validate_workflow_data",
     "workflow_data_sharing_compile_final_results"
   ],
   "agent_metadata": null,

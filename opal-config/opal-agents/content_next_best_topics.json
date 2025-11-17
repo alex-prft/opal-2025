@@ -39,8 +39,8 @@
   "description": "Generates next best content ideas across three strategic lanes: quick wins (high impact, low effort), strategic bets (medium/high effort, high strategic importance), and persona coverage gaps. Content-only focus with no experimentation or technology recommendations.",
   "enabled_tools": [
     "enhanced_tools_analyze_content_performance",
-    "enhanced_tools_store_workflow_data_enhanced",
-    "enhanced_tools_send_data_to_osa_enhanced",
+    "enhanced_tools_osa_store_workflow_data_enhanced",
+    "enhanced_tools_osa_send_data_to_osa_enhanced",
     "osa_contentrecs_tools_generate_content_recommendations",
     "osa_contentrecs_tools_assess_content_performance",
     "osa_contentrecs_tools_identify_personalization_opportunities"

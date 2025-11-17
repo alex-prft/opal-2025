@@ -245,8 +245,8 @@
   ],
   "description": "Generates strategic content suggestions organized into three specialized lanes: Quick Wins (immediate impact opportunities), Strategic Bets (long-term content investments), and Persona Coverage Gaps (underserved audience segments). Integrates data from Content Recs, Analytics Insights, ODP, CMS, and CMP to provide comprehensive content strategy recommendations.",
   "enabled_tools": [
-    "enhanced_tools_store_workflow_data_enhanced",
-    "enhanced_tools_send_data_to_osa_enhanced",
+    "enhanced_tools_osa_store_workflow_data_enhanced",
+    "enhanced_tools_osa_send_data_to_osa_enhanced",
     "workflow_data_sharing_validate_content_structure",
     "osa_contentrecs_get_topic_performance",
     "osa_contentrecs_analyze_content_gaps",

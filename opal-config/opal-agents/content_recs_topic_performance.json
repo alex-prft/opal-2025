@@ -39,8 +39,8 @@
   "description": "Analyzes content performance by topic with detailed breakdown of content items within each topic. Implements topic-level and content-level sorting rules with comprehensive engagement metrics. Integrates with DXP Tools Content Recommendations system.",
   "enabled_tools": [
     "enhanced_tools_analyze_content_performance",
-    "enhanced_tools_store_workflow_data_enhanced",
-    "enhanced_tools_send_data_to_osa_enhanced",
+    "enhanced_tools_osa_store_workflow_data_enhanced",
+    "enhanced_tools_osa_send_data_to_osa_enhanced",
     "osa_contentrecs_tools_assess_content_performance",
     "osa_contentrecs_tools_generate_content_recommendations",
     "osa_contentrecs_tools_analyze_topic_clusters"

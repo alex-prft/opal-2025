@@ -8,38 +8,38 @@
     "description": null
   },
   "version": "1.0.0",
-    "agent_id": "customer_journey",
-    "file_urls": [],
-    "is_active": true,
-    "creativity": 0.3,
-    "is_deleted": false,
+  "agent_id": "customer_journey",
+  "file_urls": [],
+  "is_active": true,
+  "creativity": 0.3,
+  "is_deleted": false,
   "parameters": [
     {
       "name": "journey_scope",
       "type": "string",
-      "default": "full_lifecycle",
+      "default": null,
       "required": false,
       "description": "Scope of customer journey analysis focus"
     },
     {
       "name": "analysis_depth",
       "type": "string",
-      "default": "comprehensive",
+      "default": null,
       "required": false,
       "description": "Level of detail for journey analysis"
     }
   ],
-    "description": "Analyzes customer journey patterns, identifies drop-off points, maps touchpoint experiences, and generates optimization recommendations for improved customer experience across all interaction channels.",
+  "description": "Analyzes customer journey patterns, identifies drop-off points, maps touchpoint experiences, and generates optimization recommendations for improved customer experience across all interaction channels.",
   "enabled_tools": [
     "osa_odp_tools_fetch_customer_journey_data",
     "osa_odp_tools_analyze_conversion_funnels",
     "osa_odp_tools_identify_drop_off_points",
     "osa_cmspaas_tools_analyze_content_interaction_patterns",
     "osa_contentrecs_tools_assess_personalization_effectiveness",
-    "workflow_data_sharing_store_workflow_data",
-    "workflow_data_sharing_retrieve_workflow_context",
-    "workflow_data_sharing_send_data_to_osa_webhook",
-    "workflow_data_sharing_validate_workflow_data"
+    "workflow_data_sharing_osa_store_workflow_data",
+    "workflow_data_sharing_osa_retrieve_workflow_context",
+    "workflow_data_sharing_osa_send_data_to_osa_webhook",
+    "workflow_data_sharing_osa_validate_workflow_data"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

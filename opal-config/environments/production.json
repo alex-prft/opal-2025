@@ -118,7 +118,7 @@
       "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_analyze_website_content_enhanced",
-        "enhanced_tools_store_workflow_data_enhanced",
+        "enhanced_tools_osa_store_workflow_data_enhanced",
         "enhanced_tools_send_data_to_osa_enhanced"
       ]
     },
@@ -126,7 +126,7 @@
       "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_generate_audience_segments_enhanced",
-        "enhanced_tools_retrieve_workflow_context_enhanced",
+        "enhanced_tools_osa_retrieve_workflow_context_enhanced",
         "enhanced_tools_send_data_to_osa_enhanced"
       ]
     },
@@ -134,7 +134,7 @@
       "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
       "enabled_tools": [
         "enhanced_tools_create_experiment_blueprint_enhanced",
-        "enhanced_tools_retrieve_workflow_context_enhanced",
+        "enhanced_tools_osa_retrieve_workflow_context_enhanced",
         "enhanced_tools_send_data_to_osa_enhanced"
       ]
     }

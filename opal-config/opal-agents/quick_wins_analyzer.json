@@ -40,10 +40,10 @@
   "enabled_tools": [
     "osa_contentrecs_tools_analyze_content_performance",
     "osa_odp_tools_identify_audience_opportunities",
-    "workflow_data_sharing_store_workflow_data",
-    "workflow_data_sharing_retrieve_workflow_context",
-    "workflow_data_sharing_send_data_to_osa_webhook",
-    "workflow_data_sharing_validate_workflow_data"
+    "workflow_data_sharing_osa_store_workflow_data",
+    "workflow_data_sharing_osa_retrieve_workflow_context",
+    "workflow_data_sharing_osa_send_data_to_osa_webhook",
+    "workflow_data_sharing_osa_validate_workflow_data"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
