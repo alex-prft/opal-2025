@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "tools": [
     {
-      "name": "fetch_audience_segments",
+      "name": "osa_fetch_audience_segments",
       "description": "Retrieve existing audience segments from ODP for analysis and personalization strategy development",
       "input_schema": {
         "type": "object",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "name": "analyze_member_behavior",
+      "name": "osa_analyze_member_behavior",
       "description": "Analyze IFPA member behavioral patterns for personalization opportunity identification",
       "input_schema": {
         "type": "object",
@@ -84,7 +84,7 @@
       }
     },
     {
-      "name": "create_dynamic_segments",
+      "name": "osa_create_dynamic_segments",
       "description": "Create new audience segments based on personalization strategy requirements",
       "input_schema": {
         "type": "object",
@@ -130,7 +130,7 @@
       }
     },
     {
-      "name": "get_member_journey_data",
+      "name": "osa_get_member_journey_data",
       "description": "Retrieve member journey and lifecycle data for personalization insights",
       "input_schema": {
         "type": "object",
@@ -163,7 +163,7 @@
       }
     },
     {
-      "name": "calculate_segment_statistical_power",
+      "name": "osa_calculate_segment_statistical_power",
       "description": "Calculate statistical power and sample size requirements for audience segments in experimentation",
       "input_schema": {
         "type": "object",
@@ -202,7 +202,7 @@
       }
     },
     {
-      "name": "export_segment_targeting_logic",
+      "name": "osa_export_segment_targeting_logic",
       "description": "Export segment definitions as targeting logic for CMP and personalization platforms",
       "input_schema": {
         "type": "object",

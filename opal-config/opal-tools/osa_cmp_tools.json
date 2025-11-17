@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "tools": [
     {
-      "name": "compile_strategy_brief",
+      "name": "osa_compile_strategy_brief",
       "description": "Compile comprehensive personalization strategy brief from all workflow agent results",
       "input_schema": {
         "type": "object",
@@ -44,7 +44,7 @@
       }
     },
     {
-      "name": "generate_executive_summary",
+      "name": "osa_generate_executive_summary",
       "description": "Create executive-ready summary with key recommendations and business impact projections",
       "input_schema": {
         "type": "object",
@@ -86,7 +86,7 @@
       }
     },
     {
-      "name": "create_campaign_specifications",
+      "name": "osa_create_campaign_specifications",
       "description": "Generate detailed campaign specifications ready for CMP platform implementation",
       "input_schema": {
         "type": "object",
@@ -138,7 +138,7 @@
       }
     },
     {
-      "name": "format_cmp_deliverables",
+      "name": "osa_format_cmp_deliverables",
       "description": "Format campaign specifications for direct import into CMP platforms",
       "input_schema": {
         "type": "object",
@@ -178,7 +178,7 @@
       }
     },
     {
-      "name": "send_to_cmp_platform",
+      "name": "osa_send_to_cmp_platform",
       "description": "Directly transmit formatted campaign specifications to CMP platform via API",
       "input_schema": {
         "type": "object",
@@ -217,7 +217,7 @@
       }
     },
     {
-      "name": "generate_implementation_timeline",
+      "name": "osa_generate_implementation_timeline",
       "description": "Create detailed implementation timeline with milestones, dependencies, and resource allocation",
       "input_schema": {
         "type": "object",

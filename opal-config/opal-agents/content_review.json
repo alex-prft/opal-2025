@@ -31,7 +31,7 @@
   ],
   "description": "Analyzes website content to identify optimization opportunities, content gaps, and personalization potential. Provides foundational insights for audience segmentation and strategy development.",
   "enabled_tools": [
-    "osa_contentrecs_tools_analyze_website_content",
+    "osa_contentrecs_tools_osa_analyze_website_content",
     "osa_contentrecs_tools_identify_personalization_opportunities",
     "osa_contentrecs_tools_generate_content_recommendations",
     "osa_contentrecs_tools_assess_content_performance",
