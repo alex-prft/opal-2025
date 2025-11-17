@@ -15,7 +15,7 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
 
   functions: [
     {
-      name: "store_workflow_data",
+      name: "osa_store_workflow_data",
       description: "Store agent results in shared workflow context for use by subsequent agents",
       parameters: [
         {
@@ -49,11 +49,11 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/store_workflow_data",
+      endpoint: "/tools/osa_store_workflow_data",
       http_method: "POST"
     },
     {
-      name: "retrieve_workflow_context",
+      name: "osa_retrieve_workflow_context",
       description: "Retrieve accumulated workflow context data for current agent execution",
       parameters: [
         {
@@ -75,11 +75,11 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/retrieve_workflow_context",
+      endpoint: "/tools/osa_retrieve_workflow_context",
       http_method: "POST"
     },
     {
-      name: "send_data_to_osa_webhook",
+      name: "osa_send_data_to_osa_webhook",
       description: "Send agent data and results to OSA application via webhook for real-time updates",
       parameters: [
         {
@@ -113,11 +113,11 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/send_data_to_osa_webhook",
+      endpoint: "/tools/osa_send_data_to_osa_webhook",
       http_method: "POST"
     },
     {
-      name: "validate_workflow_data",
+      name: "osa_validate_workflow_data",
       description: "Validate workflow data quality and completeness before agent execution",
       parameters: [
         {
@@ -139,11 +139,11 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/validate_workflow_data",
+      endpoint: "/tools/osa_validate_workflow_data",
       http_method: "POST"
     },
     {
-      name: "compile_final_results",
+      name: "osa_compile_final_results",
       description: "Compile all workflow agent results into comprehensive strategy brief for final delivery",
       parameters: [
         {
@@ -165,7 +165,7 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
           required: false
         }
       ],
-      endpoint: "/tools/compile_final_results",
+      endpoint: "/tools/osa_compile_final_results",
       http_method: "POST"
     }
   ]
