@@ -1,0 +1,349 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-17T12:00:00Z",
+    "description": "Phase definitions for AI Agent Factory 6-phase workflow system",
+    "author": "OSA Engineering Team"
+  },
+  "phases": {
+    "clarification": {
+      "id": "phase_0",
+      "name": "Requirements Clarification",
+      "description": "Main agent gathers detailed requirements through targeted questioning",
+      "order": 0,
+      "estimatedDuration": "15-30 minutes",
+      "complexity": "low",
+      "prerequisites": [],
+      "outputs": [
+        "refined_requirements",
+        "target_personas", 
+        "use_cases",
+        "technical_constraints",
+        "business_context"
+      ],
+      "validation": {
+        "required_fields": [
+          "refinedRequirements",
+          "targetPersonas",
+          "useCases",
+          "technicalConstraints",
+          "businessContext",
+          "confidenceScore"
+        ],
+        "minimum_confidence": 60,
+        "quality_checks": [
+          "requirements_completeness",
+          "persona_specificity",
+          "use_case_clarity",
+          "constraint_feasibility"
+        ]
+      },
+      "approval": {
+        "required": true,
+        "auto_approval_threshold": 85,
+        "reviewers": ["requirements_analyst", "product_manager"],
+        "timeout_hours": 24
+      },
+      "resources": {
+        "estimated_claude_calls": 1,
+        "estimated_tokens": 4000,
+        "estimated_cost_cents": 50,
+        "memory_requirements": "low"
+      }
+    },
+    "documentation": {
+      "id": "phase_1",
+      "name": "Technical Documentation",
+      "description": "Planner subagent creates comprehensive specifications",
+      "order": 1,
+      "estimatedDuration": "30-45 minutes",
+      "complexity": "medium",
+      "prerequisites": ["clarification"],
+      "outputs": [
+        "system_prompt",
+        "behavior_guidelines",
+        "tool_requirements",
+        "api_integrations",
+        "environment_config",
+        "testing_strategy",
+        "deployment_plan"
+      ],
+      "validation": {
+        "required_fields": [
+          "systemPrompt",
+          "behaviorGuidelines",
+          "toolRequirements",
+          "apiIntegrations",
+          "environmentConfig",
+          "testingStrategy",
+          "deploymentPlan",
+          "confidenceScore"
+        ],
+        "minimum_confidence": 70,
+        "quality_checks": [
+          "specification_completeness",
+          "technical_feasibility",
+          "integration_compatibility",
+          "deployment_readiness"
+        ]
+      },
+      "approval": {
+        "required": true,
+        "auto_approval_threshold": 80,
+        "reviewers": ["tech_lead", "senior_engineer"],
+        "timeout_hours": 24
+      },
+      "resources": {
+        "estimated_claude_calls": 1,
+        "estimated_tokens": 6000,
+        "estimated_cost_cents": 75,
+        "memory_requirements": "medium"
+      }
+    },
+    "parallel_development": {
+      "id": "phase_2",
+      "name": "Parallel Component Development",
+      "description": "Three specialized subagents work simultaneously on different components",
+      "order": 2,
+      "estimatedDuration": "45-90 minutes",
+      "complexity": "high",
+      "prerequisites": ["documentation"],
+      "subphases": [
+        {
+          "name": "prompt_engineering",
+          "description": "Design optimal system prompts and behavior modifiers",
+          "agent": "prompt-engineer",
+          "outputs": [
+            "system_prompt",
+            "context_prompts",
+            "behavior_modifiers",
+            "safeguards",
+            "performance_optimizations",
+            "test_prompts"
+          ]
+        },
+        {
+          "name": "tool_integration",
+          "description": "Plan tool implementations and API integrations",
+          "agent": "tool-integrator",
+          "outputs": [
+            "implemented_tools",
+            "api_connections",
+            "error_handling",
+            "rate_limiting"
+          ]
+        },
+        {
+          "name": "dependency_management",
+          "description": "Configure environment and dependencies",
+          "agent": "dependency-manager",
+          "outputs": [
+            "package_dependencies",
+            "environment_setup",
+            "configuration_files",
+            "security_configuration"
+          ]
+        }
+      ],
+      "validation": {
+        "required_fields": [
+          "promptEngineering",
+          "toolIntegration", 
+          "dependencyManagement",
+          "coordinationSummary",
+          "overallConfidence"
+        ],
+        "minimum_confidence": 75,
+        "quality_checks": [
+          "component_consistency",
+          "integration_compatibility",
+          "security_compliance",
+          "performance_optimization"
+        ]
+      },
+      "approval": {
+        "required": true,
+        "auto_approval_threshold": 85,
+        "reviewers": ["tech_lead", "prompt_engineer", "integration_specialist"],
+        "timeout_hours": 48
+      },
+      "resources": {
+        "estimated_claude_calls": 3,
+        "estimated_tokens": 12000,
+        "estimated_cost_cents": 150,
+        "memory_requirements": "high"
+      }
+    },
+    "implementation": {
+      "id": "phase_3",
+      "name": "Agent Implementation",
+      "description": "Main agent builds the complete agent using all specifications",
+      "order": 3,
+      "estimatedDuration": "60-120 minutes",
+      "complexity": "high",
+      "prerequisites": ["parallel_development"],
+      "outputs": [
+        "source_code",
+        "configuration",
+        "documentation",
+        "build_status"
+      ],
+      "validation": {
+        "required_fields": [
+          "sourceCode",
+          "configuration",
+          "documentation",
+          "buildStatus",
+          "confidenceScore"
+        ],
+        "minimum_confidence": 80,
+        "quality_checks": [
+          "code_quality",
+          "build_success",
+          "documentation_completeness",
+          "configuration_validity"
+        ]
+      },
+      "approval": {
+        "required": true,
+        "auto_approval_threshold": 90,
+        "reviewers": ["senior_engineer", "tech_lead"],
+        "timeout_hours": 24
+      },
+      "resources": {
+        "estimated_claude_calls": 2,
+        "estimated_tokens": 10000,
+        "estimated_cost_cents": 125,
+        "memory_requirements": "high"
+      }
+    },
+    "validation": {
+      "id": "phase_4",
+      "name": "Quality Validation",
+      "description": "Validator subagent creates tests and verifies functionality",
+      "order": 4,
+      "estimatedDuration": "30-60 minutes",
+      "complexity": "medium",
+      "prerequisites": ["implementation"],
+      "outputs": [
+        "functional_tests",
+        "performance_tests",
+        "security_tests",
+        "compliance_check",
+        "user_acceptance_tests",
+        "approval_status"
+      ],
+      "validation": {
+        "required_fields": [
+          "functionalTests",
+          "performanceTests",
+          "securityTests",
+          "complianceCheck",
+          "userAcceptanceTests",
+          "confidenceScore",
+          "approvalStatus"
+        ],
+        "minimum_confidence": 85,
+        "quality_checks": [
+          "test_coverage",
+          "security_compliance",
+          "performance_benchmarks",
+          "user_acceptance"
+        ]
+      },
+      "approval": {
+        "required": true,
+        "auto_approval_threshold": 95,
+        "reviewers": ["qa_engineer", "security_analyst"],
+        "timeout_hours": 24
+      },
+      "resources": {
+        "estimated_claude_calls": 1,
+        "estimated_tokens": 8000,
+        "estimated_cost_cents": 100,
+        "memory_requirements": "medium"
+      }
+    },
+    "delivery": {
+      "id": "phase_5",
+      "name": "Final Delivery",
+      "description": "Documentation and final packaging for deployment",
+      "order": 5,
+      "estimatedDuration": "20-40 minutes",
+      "complexity": "low",
+      "prerequisites": ["validation"],
+      "outputs": [
+        "packaged_agent",
+        "documentation",
+        "deployment_artifacts",
+        "user_training",
+        "maintenance_plan",
+        "handoff_notes"
+      ],
+      "validation": {
+        "required_fields": [
+          "packagedAgent",
+          "documentation",
+          "deploymentArtifacts",
+          "userTraining",
+          "maintenancePlan",
+          "handoffNotes",
+          "confidenceScore"
+        ],
+        "minimum_confidence": 90,
+        "quality_checks": [
+          "package_completeness",
+          "documentation_quality",
+          "deployment_readiness",
+          "training_materials"
+        ]
+      },
+      "approval": {
+        "required": false,
+        "auto_approval_threshold": 80,
+        "reviewers": ["product_manager", "deployment_engineer"],
+        "timeout_hours": 12
+      },
+      "resources": {
+        "estimated_claude_calls": 1,
+        "estimated_tokens": 6000,
+        "estimated_cost_cents": 75,
+        "memory_requirements": "low"
+      }
+    }
+  },
+  "workflow_rules": {
+    "sequential_execution": true,
+    "allow_phase_retry": true,
+    "max_retries_per_phase": 3,
+    "approval_timeout_action": "pause_workflow",
+    "error_escalation": "tech_lead",
+    "quality_gates": {
+      "minimum_overall_confidence": 75,
+      "required_approvals": ["clarification", "documentation", "parallel_development", "implementation", "validation"],
+      "security_validation_required": true,
+      "performance_benchmarks_required": true
+    }
+  },
+  "notifications": {
+    "phase_completion": ["agent_creator", "assigned_reviewers"],
+    "approval_needed": ["eligible_reviewers", "tech_lead"],
+    "approval_timeout": ["agent_creator", "tech_lead", "admin"],
+    "error_occurred": ["agent_creator", "tech_lead"],
+    "workflow_completed": ["agent_creator", "product_manager", "deployment_team"]
+  },
+  "compliance": {
+    "audit_logging": "required",
+    "pii_protection": "mandatory",
+    "data_retention": "1_year",
+    "security_scanning": "automatic",
+    "compliance_level": "enterprise"
+  },
+  "performance_targets": {
+    "total_workflow_time": "4-6 hours",
+    "success_rate": "95%",
+    "average_confidence_score": "85%",
+    "user_satisfaction": "4.5/5.0",
+    "cost_per_agent": "$3-5 USD"
+  }
+}

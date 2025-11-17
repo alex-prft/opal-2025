@@ -76,6 +76,7 @@
     "guardrails:compliance-report": "curl -X POST -H 'Content-Type: application/json' -d '{\"action\": \"compliance_report\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-12-31\"}' http://localhost:3000/api/admin/guardrails-health | jq"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.69.0",
     "@google-analytics/data": "^5.2.1",
     "@heroicons/react": "^2.2.0",
     "@kafkajs/confluent-schema-registry": "^3.9.0",

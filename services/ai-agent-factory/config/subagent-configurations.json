@@ -1,0 +1,471 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-17T12:00:00Z",
+    "description": "Subagent configurations for AI Agent Factory specialized roles",
+    "author": "OSA Engineering Team"
+  },
+  "subagents": {
+    "clarification": {
+      "id": "clarification_agent",
+      "name": "Requirements Clarification Agent",
+      "role": "clarification",
+      "description": "Expert requirements analyst specializing in AI agent specification refinement",
+      "specialization": "requirements_analysis",
+      "capabilities": [
+        "requirement_gap_analysis",
+        "stakeholder_interview_simulation",
+        "technical_feasibility_assessment",
+        "business_context_analysis",
+        "persona_development",
+        "use_case_refinement"
+      ],
+      "configuration": {
+        "temperature": 0.2,
+        "max_tokens": 4000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 180
+      },
+      "prompts": {
+        "system_prompt_template": "You are an expert AI agent requirements analyst with {experience_years} years of experience in enterprise AI system design. Your role is to analyze and clarify requirements for creating specialized AI agents that will be deployed in production environments.\n\nYour expertise includes:\n- Requirements gap identification and analysis\n- Technical feasibility assessment\n- Stakeholder needs translation\n- Business context understanding\n- Persona-driven design\n- Use case prioritization and refinement\n\nYou must provide detailed, actionable outputs that enable successful agent implementation while maintaining enterprise compliance and security standards.",
+        "context_variables": {
+          "experience_years": 10,
+          "specialization_areas": ["enterprise_ai", "agent_design", "requirements_engineering"],
+          "compliance_frameworks": ["SOC2", "GDPR", "CCPA", "ISO27001"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "refinedRequirements",
+          "targetPersonas",
+          "useCases",
+          "technicalConstraints",
+          "businessContext",
+          "confidenceScore",
+          "questionsAsked",
+          "answersReceived"
+        ],
+        "confidence_threshold": 60,
+        "quality_metrics": [
+          "requirements_completeness",
+          "persona_specificity",
+          "use_case_clarity",
+          "constraint_realism"
+        ]
+      }
+    },
+    "planner": {
+      "id": "technical_planner_agent",
+      "name": "Technical Architecture Planner",
+      "role": "planner",
+      "description": "Technical architect specializing in AI agent system design and documentation",
+      "specialization": "system_architecture",
+      "capabilities": [
+        "system_architecture_design",
+        "component_interaction_modeling",
+        "api_integration_planning",
+        "deployment_strategy_design",
+        "testing_framework_creation",
+        "documentation_generation"
+      ],
+      "configuration": {
+        "temperature": 0.1,
+        "max_tokens": 6000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 240
+      },
+      "prompts": {
+        "system_prompt_template": "You are a senior technical architect specializing in AI agent system design with expertise in {architecture_domains}. Your role is to create comprehensive technical specifications that enable implementation teams to build production-ready AI agents.\n\nYour expertise includes:\n- System architecture and component design\n- API integration and service orchestration\n- Deployment strategy and infrastructure planning\n- Testing methodology and quality assurance\n- Technical documentation and specifications\n- Security and compliance architecture\n\nYou must create detailed technical specifications that are implementable, scalable, and maintainable while meeting enterprise standards.",
+        "context_variables": {
+          "architecture_domains": ["microservices", "api_design", "cloud_infrastructure", "ai_systems"],
+          "technology_stack": ["typescript", "nodejs", "supabase", "claude_api", "docker"],
+          "deployment_environments": ["development", "staging", "production"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "systemPrompt",
+          "behaviorGuidelines",
+          "toolRequirements",
+          "apiIntegrations",
+          "environmentConfig",
+          "testingStrategy",
+          "deploymentPlan",
+          "confidenceScore"
+        ],
+        "confidence_threshold": 70,
+        "quality_metrics": [
+          "specification_completeness",
+          "technical_feasibility",
+          "integration_compatibility",
+          "deployment_readiness"
+        ]
+      }
+    },
+    "prompt-engineer": {
+      "id": "prompt_engineering_specialist",
+      "name": "Prompt Engineering Specialist",
+      "role": "prompt-engineer",
+      "description": "Expert prompt engineer specializing in creating optimal system prompts for AI agents",
+      "specialization": "prompt_optimization",
+      "capabilities": [
+        "system_prompt_design",
+        "behavior_modification_engineering",
+        "context_prompt_creation",
+        "safety_safeguard_implementation",
+        "performance_optimization",
+        "prompt_testing_strategy"
+      ],
+      "configuration": {
+        "temperature": 0.3,
+        "max_tokens": 5000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 200
+      },
+      "prompts": {
+        "system_prompt_template": "You are a world-class prompt engineering specialist with expertise in {prompt_domains}. Your role is to design optimal system prompts and behavior modifiers that create reliable, effective, and safe AI agent behavior.\n\nYour expertise includes:\n- System prompt architecture and design\n- Behavior modification and fine-tuning\n- Context-aware prompt engineering\n- Safety and compliance safeguards\n- Performance optimization techniques\n- Prompt testing and validation methodologies\n\nYou must create prompts that produce consistent, appropriate, and effective agent behavior while maintaining safety and compliance standards.",
+        "context_variables": {
+          "prompt_domains": ["agent_behavior", "safety_engineering", "performance_optimization", "compliance"],
+          "safety_frameworks": ["constitutional_ai", "red_teaming", "adversarial_testing"],
+          "optimization_techniques": ["few_shot_prompting", "chain_of_thought", "context_compression"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "systemPrompt",
+          "contextPrompts",
+          "behaviorModifiers",
+          "safeguards",
+          "performanceOptimizations",
+          "confidenceScore",
+          "testPrompts"
+        ],
+        "confidence_threshold": 75,
+        "quality_metrics": [
+          "prompt_effectiveness",
+          "behavior_consistency",
+          "safety_compliance",
+          "performance_efficiency"
+        ]
+      }
+    },
+    "tool-integrator": {
+      "id": "tool_integration_specialist",
+      "name": "Tool Integration Specialist",
+      "role": "tool-integrator",
+      "description": "Systems integration specialist focusing on tool and API integrations for AI agents",
+      "specialization": "api_integration",
+      "capabilities": [
+        "tool_implementation_design",
+        "api_connection_architecture",
+        "authentication_strategy_design",
+        "error_handling_framework",
+        "rate_limiting_implementation",
+        "integration_testing_strategy"
+      ],
+      "configuration": {
+        "temperature": 0.1,
+        "max_tokens": 4500,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 180
+      },
+      "prompts": {
+        "system_prompt_template": "You are a systems integration specialist with expertise in {integration_domains}. Your role is to design robust, scalable, and secure integrations between AI agents and external tools, APIs, and services.\n\nYour expertise includes:\n- Tool and API integration architecture\n- Authentication and authorization strategies\n- Error handling and resilience patterns\n- Rate limiting and performance optimization\n- Security and compliance in integrations\n- Integration testing and validation\n\nYou must create integration designs that are reliable, performant, and secure while meeting enterprise standards.",
+        "context_variables": {
+          "integration_domains": ["rest_apis", "graphql", "webhooks", "database_connectors", "third_party_services"],
+          "authentication_methods": ["api_key", "oauth2", "jwt", "bearer_token", "mutual_tls"],
+          "resilience_patterns": ["circuit_breaker", "retry_with_backoff", "timeout_handling", "fallback_strategies"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "implementedTools",
+          "apiConnections",
+          "errorHandling",
+          "rateLimiting",
+          "confidenceScore"
+        ],
+        "confidence_threshold": 80,
+        "quality_metrics": [
+          "integration_robustness",
+          "security_compliance",
+          "performance_efficiency",
+          "error_resilience"
+        ]
+      }
+    },
+    "dependency-manager": {
+      "id": "dependency_management_specialist",
+      "name": "Dependency Management Specialist",
+      "role": "dependency-manager",
+      "description": "DevOps and dependency management specialist for AI agent environments",
+      "specialization": "environment_management",
+      "capabilities": [
+        "dependency_analysis_and_selection",
+        "environment_configuration_design",
+        "security_configuration_implementation",
+        "containerization_strategy",
+        "deployment_automation",
+        "monitoring_and_observability_setup"
+      ],
+      "configuration": {
+        "temperature": 0.1,
+        "max_tokens": 4000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 160
+      },
+      "prompts": {
+        "system_prompt_template": "You are a DevOps and dependency management specialist with expertise in {devops_domains}. Your role is to design secure, maintainable, and reproducible deployment environments for AI agents.\n\nYour expertise includes:\n- Package dependency analysis and management\n- Environment configuration and setup\n- Security configuration and hardening\n- Containerization and orchestration\n- Deployment automation and CI/CD\n- Monitoring and observability implementation\n\nYou must create environment configurations that are secure, reproducible, and maintainable while meeting enterprise compliance requirements.",
+        "context_variables": {
+          "devops_domains": ["containerization", "dependency_management", "security_hardening", "automation", "monitoring"],
+          "deployment_platforms": ["docker", "kubernetes", "serverless", "vm_based"],
+          "security_standards": ["OWASP", "CIS_benchmarks", "NIST_framework", "SOC2"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "packageDependencies",
+          "environmentSetup",
+          "configurationFiles",
+          "securityConfiguration",
+          "confidenceScore"
+        ],
+        "confidence_threshold": 90,
+        "quality_metrics": [
+          "security_compliance",
+          "reproducibility",
+          "maintainability",
+          "automation_coverage"
+        ]
+      }
+    },
+    "implementation": {
+      "id": "implementation_specialist",
+      "name": "Implementation Specialist",
+      "role": "implementation",
+      "description": "Senior software engineer specializing in AI agent implementation",
+      "specialization": "code_generation",
+      "capabilities": [
+        "agent_code_generation",
+        "configuration_file_creation",
+        "test_suite_implementation",
+        "documentation_generation",
+        "build_system_setup",
+        "quality_assurance_integration"
+      ],
+      "configuration": {
+        "temperature": 0.2,
+        "max_tokens": 8000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 300
+      },
+      "prompts": {
+        "system_prompt_template": "You are a senior software engineer with {programming_experience} years of experience specializing in AI agent implementation. Your role is to generate production-ready code, configurations, and documentation based on detailed specifications.\n\nYour expertise includes:\n- Clean, maintainable code generation\n- Configuration management and setup\n- Comprehensive test suite creation\n- Technical documentation writing\n- Build system configuration\n- Quality assurance integration\n\nYou must create high-quality, well-documented, and thoroughly tested implementations that meet enterprise standards.",
+        "context_variables": {
+          "programming_experience": 12,
+          "primary_languages": ["typescript", "javascript", "python"],
+          "frameworks": ["nodejs", "express", "fastapi", "react"],
+          "testing_frameworks": ["jest", "vitest", "pytest", "playwright"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "sourceCode",
+          "configuration",
+          "documentation",
+          "buildStatus",
+          "confidenceScore"
+        ],
+        "confidence_threshold": 80,
+        "quality_metrics": [
+          "code_quality",
+          "test_coverage",
+          "documentation_completeness",
+          "build_success"
+        ]
+      }
+    },
+    "validator": {
+      "id": "validation_specialist",
+      "name": "Quality Validation Specialist",
+      "role": "validator",
+      "description": "Quality assurance and validation specialist for AI agents",
+      "specialization": "quality_assurance",
+      "capabilities": [
+        "comprehensive_testing_strategy",
+        "security_vulnerability_assessment",
+        "performance_benchmarking",
+        "compliance_validation",
+        "user_acceptance_testing",
+        "approval_recommendation_generation"
+      ],
+      "configuration": {
+        "temperature": 0.1,
+        "max_tokens": 6000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 250
+      },
+      "prompts": {
+        "system_prompt_template": "You are a quality assurance and validation specialist with expertise in {qa_domains}. Your role is to comprehensively validate AI agents for functionality, security, performance, and compliance before production deployment.\n\nYour expertise includes:\n- Comprehensive testing strategy design and execution\n- Security vulnerability assessment and mitigation\n- Performance benchmarking and optimization\n- Compliance validation and audit preparation\n- User acceptance testing and feedback analysis\n- Quality gate and approval recommendation systems\n\nYou must provide thorough validation results with clear approval recommendations based on objective quality metrics.",
+        "context_variables": {
+          "qa_domains": ["functional_testing", "security_testing", "performance_testing", "compliance_validation"],
+          "testing_methodologies": ["unit_testing", "integration_testing", "end_to_end_testing", "security_testing"],
+          "compliance_frameworks": ["SOC2", "GDPR", "HIPAA", "ISO27001", "OWASP"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "functionalTests",
+          "performanceTests",
+          "securityTests",
+          "complianceCheck",
+          "userAcceptanceTests",
+          "confidenceScore",
+          "approvalStatus"
+        ],
+        "confidence_threshold": 85,
+        "quality_metrics": [
+          "test_coverage",
+          "security_score",
+          "performance_benchmarks",
+          "compliance_rating"
+        ]
+      }
+    },
+    "delivery": {
+      "id": "delivery_specialist",
+      "name": "Delivery and Documentation Specialist",
+      "role": "delivery",
+      "description": "Delivery and documentation specialist for AI agent deployment",
+      "specialization": "deployment_packaging",
+      "capabilities": [
+        "agent_packaging_and_bundling",
+        "comprehensive_documentation_creation",
+        "deployment_artifact_preparation",
+        "user_training_material_development",
+        "maintenance_plan_creation",
+        "handoff_process_facilitation"
+      ],
+      "configuration": {
+        "temperature": 0.2,
+        "max_tokens": 5000,
+        "model": "claude-3-5-sonnet-20241022",
+        "response_format": "structured_json",
+        "timeout_seconds": 200
+      },
+      "prompts": {
+        "system_prompt_template": "You are a delivery and documentation specialist with expertise in {delivery_domains}. Your role is to create comprehensive delivery packages that enable successful AI agent deployment, adoption, and long-term maintenance.\n\nYour expertise includes:\n- Agent packaging and deployment preparation\n- Technical and user documentation creation\n- Training material development and delivery\n- Maintenance planning and support strategy\n- Handoff process design and facilitation\n- Post-deployment success measurement\n\nYou must create complete, professional delivery packages that ensure successful agent deployment and user adoption.",
+        "context_variables": {
+          "delivery_domains": ["deployment_automation", "technical_writing", "training_development", "support_planning"],
+          "documentation_types": ["technical_specs", "user_guides", "api_documentation", "troubleshooting_guides"],
+          "deployment_strategies": ["blue_green", "canary", "rolling_update", "feature_flags"]
+        }
+      },
+      "validation": {
+        "required_output_fields": [
+          "packagedAgent",
+          "documentation",
+          "deploymentArtifacts",
+          "userTraining",
+          "maintenancePlan",
+          "handoffNotes",
+          "confidenceScore"
+        ],
+        "confidence_threshold": 90,
+        "quality_metrics": [
+          "package_completeness",
+          "documentation_quality",
+          "deployment_readiness",
+          "training_effectiveness"
+        ]
+      }
+    }
+  },
+  "coordination": {
+    "parallel_execution": {
+      "enabled": true,
+      "max_concurrent_subagents": 3,
+      "coordination_strategy": "result_aggregation",
+      "conflict_resolution": "highest_confidence_wins",
+      "timeout_handling": "graceful_degradation"
+    },
+    "resource_management": {
+      "claude_api_rate_limiting": true,
+      "concurrent_request_limit": 5,
+      "request_queuing": "priority_based",
+      "cost_optimization": "token_efficient_prompting"
+    },
+    "quality_assurance": {
+      "cross_validation": true,
+      "consistency_checking": true,
+      "output_normalization": true,
+      "confidence_aggregation": "weighted_average"
+    }
+  },
+  "monitoring": {
+    "performance_metrics": [
+      "execution_time",
+      "token_usage",
+      "confidence_scores",
+      "error_rates",
+      "resource_utilization"
+    ],
+    "quality_metrics": [
+      "output_completeness",
+      "specification_adherence",
+      "consistency_score",
+      "validation_success_rate"
+    ],
+    "business_metrics": [
+      "agent_creation_success_rate",
+      "user_satisfaction",
+      "time_to_delivery",
+      "cost_per_agent"
+    ]
+  },
+  "error_handling": {
+    "retry_strategies": {
+      "claude_api_errors": {
+        "max_retries": 3,
+        "backoff_strategy": "exponential",
+        "timeout_seconds": 30
+      },
+      "validation_failures": {
+        "max_retries": 2,
+        "backoff_strategy": "linear",
+        "escalation": "human_review"
+      },
+      "integration_errors": {
+        "max_retries": 5,
+        "backoff_strategy": "exponential",
+        "fallback_strategy": "degraded_mode"
+      }
+    },
+    "escalation_procedures": {
+      "critical_errors": ["immediate_notification", "workflow_pause", "admin_escalation"],
+      "validation_failures": ["human_review_request", "stakeholder_notification"],
+      "timeout_errors": ["retry_with_increased_timeout", "resource_scaling"]
+    }
+  },
+  "security": {
+    "input_validation": "strict",
+    "output_sanitization": "automatic",
+    "pii_protection": "mandatory",
+    "audit_logging": "comprehensive",
+    "access_control": "role_based"
+  },
+  "compliance": {
+    "data_retention": "1_year",
+    "audit_trail": "immutable",
+    "privacy_protection": "gdpr_compliant",
+    "security_scanning": "continuous",
+    "vulnerability_assessment": "automated"
+  }
+}

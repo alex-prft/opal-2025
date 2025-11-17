@@ -81,8 +81,8 @@ export function ExperimentationWidget({ data, className = '' }: ExperimentationW
           <Card>
             <CardContent className="pt-6 text-center">
               <Target className="w-8 h-8 mx-auto mb-2 text-blue-500" />
-              <p className="text-2xl font-bold">${businessImpact.revenueImpact?.toLocaleString()}</p>
-              <p className="text-sm text-gray-600">Revenue Impact</p>
+              <p className="text-2xl font-bold">{businessImpact.performanceImpact || 'High'}</p>
+              <p className="text-sm text-gray-600">Performance Impact</p>
             </CardContent>
           </Card>
           <Card>

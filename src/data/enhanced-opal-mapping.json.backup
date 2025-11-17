@@ -2488,7 +2488,7 @@
             "tier3": "Experiment Design Framework"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["ExperimentDesignWidget", "HypothesisValidationWidget"],
             "layout": "accordion"
           },
@@ -2514,7 +2514,7 @@
             "tier3": "Statistical Testing Results"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["StatisticalResultsWidget", "SignificanceAnalysisWidget"],
             "layout": "tabs"
           },
@@ -2574,7 +2574,7 @@
             "tier3": "Personalization Strategy"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["PersonalizationStrategyWidget", "AudienceTargetingWidget"],
             "layout": "accordion"
           },
@@ -2600,7 +2600,7 @@
             "tier3": "Audience Segmentation"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["AudienceSegmentationWidget", "BehaviorAnalysisWidget"],
             "layout": "grid"
           },
@@ -2657,7 +2657,7 @@
             "tier3": "Experiment Design Framework"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["ExperimentDesignWidget", "HypothesisValidationWidget"],
             "layout": "accordion"
           },
@@ -2683,7 +2683,7 @@
             "tier3": "Statistical Testing Results"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["StatisticalResultsWidget", "SignificanceAnalysisWidget"],
             "layout": "tabs"
           },
@@ -2709,7 +2709,7 @@
             "tier3": "Hypothesis Validation"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["HypothesisValidationWidget", "ValidationAnalysisWidget"],
             "layout": "grid"
           },
@@ -2735,7 +2735,7 @@
             "tier3": "Test Impact Assessment"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["ImpactAssessmentWidget", "TestImpactWidget"],
             "layout": "accordion"
           },
@@ -2761,7 +2761,7 @@
             "tier3": "Experimentation Roadmap"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["ExperimentationRoadmapWidget", "TestPlanningWidget"],
             "layout": "tabs"
           },
@@ -2818,7 +2818,7 @@
             "tier3": "User Experience Analytics"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["UXAnalyticsWidget", "UserExperienceWidget"],
             "layout": "tabs"
           },
@@ -2844,7 +2844,7 @@
             "tier3": "Usability Assessment"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["UsabilityAssessmentWidget", "UsabilityMetricsWidget"],
             "layout": "grid"
           },
@@ -2870,7 +2870,7 @@
             "tier3": "Journey Optimization"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["JourneyOptimizationWidget", "PathwayAnalysisWidget"],
             "layout": "accordion"
           },
@@ -2896,7 +2896,7 @@
             "tier3": "Interface Performance"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["InterfacePerformanceWidget", "UIPerformanceWidget"],
             "layout": "tabs"
           },
@@ -2922,7 +2922,7 @@
             "tier3": "Accessibility & Compliance"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["AccessibilityWidget", "ComplianceTrackingWidget"],
             "layout": "grid"
           },
@@ -2980,7 +2980,7 @@
             "tier3": "Technical Performance Dashboard"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["TechPerformanceWidget", "PerformanceDashboardWidget"],
             "layout": "tabs"
           },
@@ -3006,7 +3006,7 @@
             "tier3": "Infrastructure Optimization"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["InfrastructureOptimizationWidget", "ResourceOptimizationWidget"],
             "layout": "grid"
           },
@@ -3032,7 +3032,7 @@
             "tier3": "Integration Health Monitoring"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["IntegrationHealthWidget", "HealthMonitoringWidget"],
             "layout": "accordion"
           },
@@ -3058,7 +3058,7 @@
             "tier3": "Security & Performance Analysis"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["SecurityAnalysisWidget", "SecurityPerformanceWidget"],
             "layout": "tabs"
           },
@@ -3084,7 +3084,7 @@
             "tier3": "Technology Roadmap & Planning"
           },
           "widgets": {
-            "primary": "ExperimentationResultsWidget",
+            "primary": "ExperimentationWidget",
             "secondary": ["TechnologyRoadmapWidget", "TechPlanningWidget"],
             "layout": "grid"
           },

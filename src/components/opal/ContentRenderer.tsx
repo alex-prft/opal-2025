@@ -33,6 +33,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import KPISummaryWidget from './KPISummaryWidget';
+import { ContentPerformanceMetricsWidget } from '@/components/widgets/ContentPerformanceMetricsWidget';
 import ConfidenceGauge from './ConfidenceGauge';
 import WorkflowProgress from './WorkflowProgress';
 import IntegrationHealth from './IntegrationHealth';
@@ -4429,7 +4430,7 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
       case 'visitor-analytics-dashboard':
         return renderVisitorAnalyticsDashboard();
       case 'content-performance-metrics':
-        return renderContentPerformanceMetrics();
+        return renderContentPerformanceMetricsNew();
       case 'recommendation-algorithms':
         return renderRecommendationAlgorithms();
       case 'a/b-testing-results':
@@ -4702,6 +4703,12 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
     </div>
   );
 
+  const renderContentPerformanceMetricsNew = () => (
+    <ContentRendererErrorBoundary>
+      <ContentPerformanceMetricsWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
+    </ContentRendererErrorBoundary>
+  );
+
   const renderContentPerformanceMetrics = () => (
     <div className="space-y-6">
       {/* Performance Leaderboard */}
@@ -4719,7 +4726,7 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
                 <h4 className="font-medium text-green-800 mb-3">Top Performers</h4>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center p-2 bg-green-50 rounded">
-                    <span className="text-sm">Product Carousel #3</span>
+                    <span className="text-sm">Product Carousel #3 - PLACEHOLDER CONTENT</span>
                     <Badge className="bg-green-100 text-green-800">98/100</Badge>
                   </div>
                   <div className="flex justify-between items-center p-2 bg-green-50 rounded">

@@ -65,7 +65,7 @@ export function DiagnosticsPanel({ className = '', id }: DiagnosticsPanelProps) 
   const [isTestingWorkflow, setIsTestingWorkflow] = useState(false);
 
   // Safe access helper for diagnostics data
-  const safeGet = <T>(getter: () => T, defaultValue: T): T => {
+  const safeGet = <T extends unknown>(getter: () => T, defaultValue: T): T => {
     try {
       return getter() ?? defaultValue;
     } catch {

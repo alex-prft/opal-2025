@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useRecentOsaStatus } from '@/hooks/useRecentOsaStatus';
+import { useLatestIntegrationStatus } from '@/hooks/useIntegrationStatus';
+import { IntegrationStatusBadge } from '@/components/admin/IntegrationStatusBadge';
 import type { UseQueryResult } from '@tanstack/react-query';
 
 type DisplayStatus = 'none' | 'processing' | 'success' | 'failed';
@@ -31,6 +33,12 @@ export default function RecentDataComponent({
     error,
     refetch,
   }: UseQueryResult<OsaRecentStatus, Error> = useRecentOsaStatus();
+
+  // Integration status for OPAL ↔ OSA validation
+  const { 
+    data: integrationStatus, 
+    isLoading: integrationLoading 
+  } = useLatestIntegrationStatus();
 
   const displayStatus: DisplayStatus = getDisplayStatus(isLoading, error, osaStatus);
   const lastActivity = getLastActivityTime(osaStatus);
@@ -69,6 +77,15 @@ export default function RecentDataComponent({
               <Calendar className="h-3 w-3" />
               {lastActivity ? formatRelativeTime(lastActivity) : 'Never'}
             </div>
+          </div>
+
+          {/* OPAL Integration Status Badge */}
+          <div className="mt-2">
+            <IntegrationStatusBadge 
+              integrationStatus={integrationStatus} 
+              isLoading={integrationLoading} 
+              compact={true}
+            />
           </div>
 
           {error && (
@@ -142,6 +159,20 @@ export default function RecentDataComponent({
               label="Last Force Sync"
               value={osaStatus?.lastForceSyncAt}
             />
+          </div>
+
+          {/* OPAL Integration Status */}
+          <div className="border-t border-gray-100 pt-3">
+            <div className="bg-blue-50 rounded-lg p-3">
+              <h4 className="text-sm font-medium text-gray-900 mb-2">
+                OPAL Integration Pipeline
+              </h4>
+              <IntegrationStatusBadge 
+                integrationStatus={integrationStatus} 
+                isLoading={integrationLoading} 
+                compact={false}
+              />
+            </div>
           </div>
 
           {/* Marketing-focused status explanation */}
