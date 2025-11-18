@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Requirements Current Command
 
 Show details of the current active requirement and resume any pending work.
@@ -61,3 +62,122 @@ Phase: DETAIL
 - Automatically continues the workflow where it left off
 - No need for additional commands if questions are pending
 - Provides context from previous answers to inform current question
+=======
+# View Current Requirement
+
+**Purpose:** Display detailed information about the currently active requirement gathering session.
+
+**Usage:** `/requirements-current`
+
+## What This Shows
+
+Provides comprehensive view of the active requirement including:
+- **Metadata:** ID, name, description, timestamps
+- **Progress:** Detailed phase and question status
+- **Files:** All generated files and their purpose
+- **Answers:** Summary of discovery and detail responses
+- **Next Steps:** Specific action needed to continue
+
+## Detailed Output Format
+
+### Requirement Overview
+```
+📋 Current Requirement: enhanced-content-analytics
+ID: req-20241118-enhanced-content-analytics
+Status: ACTIVE
+Phase: DISCOVERY
+Created: 11/18/2024, 9:15:23 AM
+```
+
+### Progress Tracking
+```
+🔍 Discovery Phase: 3/5 completed
+⚙️ Detail Phase: 0/5 (pending discovery completion)
+📊 Overall Progress: 30%
+```
+
+### File Structure
+Shows all generated files in `requirements/[id]/`:
+- ✅ `00-initial-request.md` - Original description
+- ✅ `01-discovery-questions.md` - Discovery questions
+- ✅ `02-discovery-answers.md` - Discovery responses (partial)
+- ✅ `03-context-findings.md` - Codebase analysis
+- ⏳ `04-detail-questions.md` - Pending
+- ⏳ `05-detail-answers.md` - Pending
+- ⏳ `06-requirements-spec.md` - Pending
+- ⏳ `07-implementation-next-steps.md` - Pending
+
+### Answer Summary
+```
+Discovery Answers:
+1. OSA UI involvement → YES
+2. Non-admin user access → YES
+3. Content/analytics focus → YES
+
+Detail Answers: (None yet - complete discovery first)
+```
+
+### Next Action
+```
+🎯 Next: Answer Discovery Question 4/5
+
+Q4: Will this feature need to integrate with or be aware of the DCI Orchestrator workflows?
+
+*DCI integration affects Results page placement, OPAL agent involvement, and data flow patterns.*
+
+*Answer with: yes/no/idk*
+```
+
+## No Active Requirement
+
+If no requirement is active:
+```
+No active requirement found.
+
+Use /requirements-start [description] to begin a new requirement gathering session.
+```
+
+## File Access
+
+All requirement files are accessible at:
+```
+requirements/[requirement-id]/[filename]
+```
+
+You can review any file directly:
+- Initial request and context
+- All questions and answers
+- Analysis and findings
+- Generated specifications (when complete)
+
+## Quality Control Integration
+
+Current view includes quality control status:
+- **CLAUDE.md Compliance:** Shows mandatory patterns integration
+- **Quality Agents:** Lists which agents will be used at completion
+- **Validation Steps:** Shows upcoming validation requirements
+
+## Error Handling
+
+If requirement data is corrupted:
+- Shows what files are missing
+- Indicates data integrity issues
+- Suggests recovery actions
+- Provides cleanup options via `/requirements-end`
+
+## Related Commands
+
+- `/requirements-status` - Quick status check
+- `/requirements-list` - View all requirements
+- `/requirements-end` - Complete or cancel current
+- Answer directly with `yes/no/idk` to continue
+
+## Implementation Notes
+
+This command provides the most detailed view of requirement state:
+- Reads all metadata and progress tracking
+- Parses answer files for summary display
+- Checks file existence and completeness
+- Provides direct file paths for manual review
+- Safe to use at any time (read-only operation)
+>>>>>>> 9752af8 (Claude: Sprint N - Add requirements management framework and slash commands for development workflow automation)
