@@ -26,7 +26,7 @@ const AskAssistantContext = createContext<AskAssistantContextValue>({
 
 export interface AskAssistantProviderProps {
   children: ReactNode;
-  sectionKey: ResultsSectionKey;
+  sectionKey: ResultsSectionKey | null;
   sourcePath?: string;
 }
 
@@ -36,7 +36,21 @@ export function AskAssistantProvider({
   sourcePath = ''
 }: AskAssistantProviderProps) {
   const promptConfig = getAskAssistantConfig(sectionKey);
-  const isAvailable = promptConfig !== undefined && !promptConfig.expertPromptExample.startsWith('TODO:');
+  // Always available now that getAskAssistantConfig always returns a configuration
+  const isAvailable = true;
+
+  // Debug logging for development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[AskAssistantProvider]', {
+      sectionKey,
+      sourcePath,
+      promptConfigFound: !!promptConfig,
+      promptConfigId: promptConfig?.id,
+      expertPromptStartsWithTodo: promptConfig?.expertPromptExample.startsWith('TODO:'),
+      isAvailable,
+      promptConfigLabel: promptConfig?.label
+    });
+  }
 
   const value: AskAssistantContextValue = {
     sectionKey,

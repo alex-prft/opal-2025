@@ -15,12 +15,12 @@ export function getResultsSectionKey(
   tier3?: string,
   pathname?: string
 ): ResultsSectionKey | null {
-  // Handle direct page routes first
+  // Handle direct page routes first (only exact matches to avoid conflicts)
   if (pathname) {
-    if (pathname.includes('/results/strategy')) return 'strategy:osa';
-    if (pathname.includes('/results/insights')) return 'analytics:content';
-    if (pathname.includes('/results/optimization')) return 'experience:content';
-    if (pathname.includes('/results/dxptools')) return 'dxp:content-recs';
+    if (pathname === '/engine/results/strategy') return 'strategy:osa';
+    if (pathname === '/engine/results/insights') return 'analytics:content';
+    if (pathname === '/engine/results/optimization') return 'experience:content';
+    if (pathname === '/engine/results/dxptools') return 'dxp:content-recs';
   }
 
   // Handle tier-based routing

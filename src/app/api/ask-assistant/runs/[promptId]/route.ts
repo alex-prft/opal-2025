@@ -31,10 +31,10 @@ const getHandler = createApiHandler({
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { promptId: string } }
+  { params }: { params: Promise<{ promptId: string }> }
 ) {
   return getHandler.handle(request, async (req, context, validated) => {
-    const promptId = params.promptId;
+    const { promptId } = await params;
 
     // Validate UUID format
     if (!promptId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(promptId)) {

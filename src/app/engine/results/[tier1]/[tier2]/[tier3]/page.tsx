@@ -14,7 +14,9 @@ import MegaMenuDropdown from '@/components/shared/MegaMenuDropdown';
 import Tier2SubNavigation from '@/components/shared/Tier2SubNavigation';
 import ContentRenderer from '@/components/opal/ContentRenderer';
 import { ArrowLeft, BarChart3, Activity, Settings, TrendingUp, Target } from 'lucide-react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { AskAssistantProvider } from '@/lib/askAssistant/context';
+import { getResultsSectionKey, getSourcePath } from '@/lib/askAssistant/sectionMapping';
 
 // Icon mapping for tier2 sections
 const tier2IconMapping = {
@@ -44,6 +46,22 @@ function Tier3PageContent() {
   const tier1 = decodeURIComponent(params.tier1 as string);
   const tier2 = decodeURIComponent(params.tier2 as string);
   const tier3 = decodeURIComponent(params.tier3 as string);
+
+  // Handle 301 redirects for old phase URLs
+  if (tier1 === 'strategy-plans' && tier2 === 'phases') {
+    const phaseRedirects: Record<string, string> = {
+      'phase-1-foundation-0-3-months': 'phase-1',
+      'phase-2-growth-3-6-months': 'phase-2',
+      'phase-3-optimization-6-9-months': 'phase-3',
+      'phase-4-scale-9-12-months': 'phase-4',
+      'cross-phase-analysis': 'cross-phase-analysis'
+    };
+
+    if (phaseRedirects[tier3]) {
+      const newUrl = `/engine/results/${tier1}/${tier2}/${phaseRedirects[tier3]}`;
+      redirect(newUrl);
+    }
+  }
 
   // Convert URL segments back to proper names using mapping-aware functions
   const tier1Name = urlToTier1Name(tier1);
@@ -81,7 +99,22 @@ function Tier3PageContent() {
     };
   }, [tier1, tier2, tier3]);
 
-  return (
+  // Calculate Ask Assistant section key and source path
+  const sectionKey = getResultsSectionKey(tier1, tier2, tier3, `/engine/results/${tier1}/${tier2}/${tier3}`);
+  const sourcePath = getSourcePath(tier1, tier2, tier3, `/engine/results/${tier1}/${tier2}/${tier3}`);
+
+  // Debug logging for development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[TIER3 ASK ASSISTANT DEBUG]', {
+      tier1, tier2, tier3,
+      tier1Name, tier2Name, tier3Name: validTier3,
+      sectionKey, sourcePath,
+      configExists: true, // Always true now with fallback
+      configComplete: true // Always true now with fallback
+    });
+  }
+
+  const content = (
     <>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="flex">
@@ -149,6 +182,13 @@ function Tier3PageContent() {
       </div>
       <ServiceStatusFooter />
     </>
+  );
+
+  // Always provide Ask Assistant context - fallback config available for all sections
+  return (
+    <AskAssistantProvider sectionKey={sectionKey} sourcePath={sourcePath}>
+      {content}
+    </AskAssistantProvider>
   );
 }
 

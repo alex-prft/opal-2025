@@ -29,6 +29,7 @@ import { WidgetRenderer } from '@/components/widgets/WidgetRenderer';
 import { notFound } from 'next/navigation';
 import { AskAssistantProvider } from '@/lib/askAssistant/context';
 import { getResultsSectionKey, getSourcePath } from '@/lib/askAssistant/sectionMapping';
+import { getAskAssistantConfig } from '@/lib/askAssistant/config';
 
 // Icon mapping for different tier1 areas
 const tier1IconMapping = {
@@ -39,9 +40,20 @@ const tier1IconMapping = {
 } as const;
 
 // Helper function to convert tier3 item names to URL-friendly format
-// Preserves special characters like parentheses and colons as they're used in routing
+// Uses custom mapping for phases to create clean URLs
 function tier3ItemToUrl(tier3Item: string): string {
-  return tier3Item.toLowerCase().replace(/\s+/g, '-');
+  // Custom URL mapping for specific tier3 items that need shorter URLs
+  const customUrlMapping: Record<string, string> = {
+    // Strategy Plans → Phases: Map to short URLs
+    'Phase 1: Foundation': 'phase-1',
+    'Phase 2: Growth': 'phase-2',
+    'Phase 3: Optimization': 'phase-3',
+    'Phase 4: Scale': 'phase-4',
+    'Cross-Phase Analysis': 'cross-phase-analysis'
+  };
+
+  // Use custom mapping if available, otherwise fall back to default conversion
+  return customUrlMapping[tier3Item] || tier3Item.toLowerCase().replace(/\s+/g, '-');
 }
 
 // Enhanced descriptions for tier2 sections
@@ -203,6 +215,18 @@ function Tier2PageContent() {
   const sectionKey = getResultsSectionKey(tier1, tier2, undefined, `/engine/results/${tier1}/${tier2}`);
   const sourcePath = getSourcePath(tier1, tier2, undefined, `/engine/results/${tier1}/${tier2}`);
 
+  // DEBUG: Log Ask Assistant configuration status
+  console.log('[ASK ASSISTANT DEBUG]', {
+    tier1,
+    tier2,
+    tier1Name,
+    tier2Name,
+    sectionKey,
+    sourcePath,
+    configExists: sectionKey ? !!getAskAssistantConfig(sectionKey) : false,
+    configComplete: sectionKey ? !getAskAssistantConfig(sectionKey)?.expertPromptExample.startsWith('TODO:') : false
+  });
+
   // Accordion helper functions
   const toggleAccordion = (tier3Item: string) => {
     const newExpanded = new Set(expandedAccordions);
@@ -225,7 +249,8 @@ function Tier2PageContent() {
   };
 
   const content = (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="flex">
           {/* Sidebar Navigation */}
           <ResultsSidebar />
@@ -376,15 +401,17 @@ function Tier2PageContent() {
             </div>
           </main>
         </div>
-    </div>
-    <ServiceStatusFooter />
+      </div>
+      <ServiceStatusFooter />
+    </>
   );
 
-  return sectionKey ? (
+  // Always provide Ask Assistant context - fallback config available for all sections
+  return (
     <AskAssistantProvider sectionKey={sectionKey} sourcePath={sourcePath}>
       {content}
     </AskAssistantProvider>
-  ) : content;
+  );
 }
 
 export default function Tier2Page() {

@@ -26,11 +26,43 @@ export function AskAssistantButton({
   size = 'default'
 }: AskAssistantButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { sectionKey, promptConfig, sourcePath } = useAskAssistant();
-  const { isAvailable, unavailableReason } = useAskAssistantAvailability();
+
+  // Safely get context with error handling
+  let contextValue;
+  try {
+    contextValue = useAskAssistant();
+  } catch (error) {
+    console.warn('[AskAssistantButton] Context not available:', error);
+    // Provide fallback values when context is not available
+    contextValue = {
+      sectionKey: null,
+      promptConfig: null,
+      sourcePath: '',
+      isAvailable: false
+    };
+  }
+
+  const { sectionKey, promptConfig, sourcePath, isAvailable: contextIsAvailable } = contextValue;
+
+  // Always available now - fallback configuration ensures button is always functional
+  const isFullyAvailable = contextIsAvailable && promptConfig !== null && promptConfig !== undefined;
+
+  // Debug logging for development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[AskAssistantButton]', {
+      sectionKey,
+      promptConfigExists: !!promptConfig,
+      contextIsAvailable,
+      isFullyAvailable,
+      promptConfigLabel: promptConfig?.label,
+      sourcePath
+    });
+  }
+
+  const { unavailableReason } = useAskAssistantAvailability();
 
   const handleClick = () => {
-    if (isAvailable && promptConfig) {
+    if (isFullyAvailable && promptConfig) {
       setIsModalOpen(true);
     }
   };
@@ -40,8 +72,8 @@ export function AskAssistantButton({
       variant={variant}
       size={size}
       onClick={handleClick}
-      disabled={!isAvailable}
-      className={`${className} ${!isAvailable ? 'opacity-60' : ''}`}
+      disabled={!isFullyAvailable}
+      className={`${className} ${!isFullyAvailable ? 'opacity-60' : ''}`}
     >
       <MessageSquare className="h-4 w-4 mr-2" />
       Ask Assistant
@@ -49,7 +81,7 @@ export function AskAssistantButton({
   );
 
   // If not available, wrap in tooltip to explain why
-  if (!isAvailable) {
+  if (!isFullyAvailable) {
     return (
       <TooltipProvider>
         <Tooltip>

@@ -740,10 +740,49 @@ IMPORTANT STYLE NOTES
 // =============================================================================
 
 /**
- * Get Ask Assistant configuration for a specific section key
+ * Fallback configuration for sections without specific Ask Assistant config
  */
-export function getAskAssistantConfig(sectionKey: ResultsSectionKey): AskAssistantPromptConfig | undefined {
-  return ASK_ASSISTANT_CONFIG[sectionKey];
+const FALLBACK_CONFIG: AskAssistantPromptConfig = {
+  id: "generic-assistant",
+  label: "Ask Assistant",
+  description: "Get AI-powered guidance and insights for your current page. Ask questions about optimization strategies, best practices, or specific implementation guidance.",
+  expertPromptExample: `Act as an **Optimizely Strategy Consultant** with deep expertise in digital experience optimization, experimentation, and personalization.
+
+**Your Role:**
+- Provide strategic guidance on optimization opportunities
+- Offer implementation recommendations and best practices
+- Help identify quick wins and long-term strategic initiatives
+- Share insights on industry trends and proven methodologies
+
+**Guidelines:**
+- Focus on actionable, practical advice
+- Consider the user's current context and goals
+- Provide both strategic thinking and tactical steps
+- Reference Optimizely's capabilities and ecosystem when relevant
+- Balance immediate opportunities with long-term strategic value
+
+**Current Context:** You are helping with optimization and strategy questions. Provide relevant, expert guidance based on the user's specific needs and questions.`,
+  recommendedPrompts: [
+    "What optimization opportunities should I prioritize right now?",
+    "Help me identify quick wins that can deliver immediate impact.",
+    "What are the key metrics I should be tracking for success?",
+    "How can I improve user experience on this page or section?",
+    "What experimentation strategies would work best here?",
+    "Show me industry best practices for this type of optimization."
+  ],
+  placeholder: "Ask about optimization strategies, best practices, or implementation guidance..."
+};
+
+/**
+ * Get Ask Assistant configuration for a specific section key
+ * Always returns a configuration - uses fallback for sections without specific config
+ */
+export function getAskAssistantConfig(sectionKey: ResultsSectionKey | null): AskAssistantPromptConfig {
+  if (!sectionKey) {
+    return FALLBACK_CONFIG;
+  }
+
+  return ASK_ASSISTANT_CONFIG[sectionKey] || FALLBACK_CONFIG;
 }
 
 /**
