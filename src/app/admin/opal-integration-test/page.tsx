@@ -1,5 +1,8 @@
 'use client';
 
+// Disable static generation to avoid SSR prerendering issues
+export const dynamic = 'force-dynamic';
+
 import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

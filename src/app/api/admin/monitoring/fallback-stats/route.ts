@@ -5,6 +5,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+
+// Use Edge Runtime to prevent build-time execution issues
+export const runtime = 'edge';
 import { createClient } from '@supabase/supabase-js';
 
 // Lazy initialization of Supabase client
