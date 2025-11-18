@@ -10,6 +10,7 @@ export { StrategyPlansWidget } from './StrategyPlansWidget';
 export { IntegrationHealthWidget } from './IntegrationHealthWidget';
 export { EngagementAnalyticsWidget } from './EngagementAnalyticsWidget';
 export { ExperimentationWidget } from './ExperimentationWidget';
+export { ContentRecommendationsDashboardWidget } from './ContentRecommendationsDashboardWidget';
 
 // Re-export for backward compatibility
 export {
@@ -31,3 +32,8 @@ export {
   ExperimentationWidget as _UnvalidatedExperimentationWidget,
   ExperimentationWidget as _ExperimentationWidget
 } from './ExperimentationWidget';
+
+export {
+  ContentRecommendationsDashboardWidget as _UnvalidatedContentRecommendationsDashboardWidget,
+  ContentRecommendationsDashboardWidget as _ContentRecommendationsDashboardWidget
+} from './ContentRecommendationsDashboardWidget';

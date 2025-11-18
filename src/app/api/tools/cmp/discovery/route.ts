@@ -117,6 +117,58 @@ const CMP_TOOLS_CONFIG = {
       ],
       endpoint: "/tools/format_cmp_deliverables",
       http_method: "POST"
+    },
+    {
+      name: "osa_send_to_cmp_platform",
+      description: "Directly transmit formatted campaign specifications to CMP platform via API",
+      parameters: [
+        {
+          name: "formatted_campaigns",
+          type: "array",
+          description: "CMP-ready campaign specifications",
+          required: true
+        },
+        {
+          name: "cmp_connection",
+          type: "object",
+          description: "CMP platform connection details",
+          required: true
+        },
+        {
+          name: "deployment_mode",
+          type: "string",
+          description: "Campaign deployment mode (draft, review, live, scheduled)",
+          required: false
+        }
+      ],
+      endpoint: "/tools/send_to_cmp_platform",
+      http_method: "POST"
+    },
+    {
+      name: "osa_generate_implementation_timeline",
+      description: "Create detailed implementation timeline with milestones, dependencies, and resource allocation",
+      parameters: [
+        {
+          name: "strategy_components",
+          type: "array",
+          description: "Strategy components for timeline planning",
+          required: true
+        },
+        {
+          name: "resource_constraints",
+          type: "object",
+          description: "Resource and constraint considerations",
+          required: false
+        },
+        {
+          name: "timeline_preferences",
+          type: "object",
+          description: "Timeline preferences and business considerations",
+          required: false
+        }
+      ],
+      endpoint: "/tools/generate_implementation_timeline",
+      http_method: "POST"
     }
   ]
 };

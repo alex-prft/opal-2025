@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSupabaseAdmin } from '@/lib/database/supabase-client';
+import { createSupabaseAdmin, isDatabaseAvailable } from '@/lib/database/supabase-client';
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if database is configured before attempting connection
+    if (!isDatabaseAvailable()) {
+      return NextResponse.json({
+        success: false,
+        error: 'Integration validation system not initialized - database configuration required',
+        fallback: true,
+        hint: 'This is expected in demo environments or during initial setup'
+      }, { status: 503 });
+    }
+
     const supabase = createSupabaseAdmin();
     const { searchParams } = new URL(request.url);
 
@@ -28,6 +38,16 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('[integration-status] DB error', error);
+
+      // Graceful fallback if table doesn't exist in production
+      if (error.code === 'PGRST116' || error.message.includes('does not exist')) {
+        return NextResponse.json({
+          success: false,
+          error: 'Integration validation system not yet initialized',
+          fallback: true
+        }, { status: 404 });
+      }
+
       return NextResponse.json(
         { success: false, error: error.message },
         { status: 500 }
@@ -101,6 +121,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if database is configured before attempting connection
+    if (!isDatabaseAvailable()) {
+      return NextResponse.json({
+        success: false,
+        error: 'Integration validation system not initialized - database configuration required',
+        fallback: true
+      }, { status: 503 });
+    }
+
     const supabase = createSupabaseAdmin();
     const body = await request.json();
 

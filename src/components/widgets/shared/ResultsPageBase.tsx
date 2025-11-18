@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AskAssistantButton } from '@/components/ask-assistant/AskAssistantButton';
 import {
   ResultsPageContent,
   ConfidenceLevel,
@@ -129,17 +130,20 @@ export function ResultsPageBase({
               </CardDescription>
             </div>
 
-            {confidence && (
-              <div className="text-right">
-                <Badge
-                  variant={confidence.level === 'high' ? 'default' :
-                           confidence.level === 'medium' ? 'secondary' : 'outline'}
-                  className="mb-2"
-                >
-                  {confidence.score}% Confidence
-                </Badge>
-              </div>
-            )}
+            <div className="flex items-start space-x-3">
+              <AskAssistantButton size="sm" />
+              {confidence && (
+                <div className="text-right">
+                  <Badge
+                    variant={confidence.level === 'high' ? 'default' :
+                             confidence.level === 'medium' ? 'secondary' : 'outline'}
+                    className="mb-2"
+                  >
+                    {confidence.score}% Confidence
+                  </Badge>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Hero Metrics */}

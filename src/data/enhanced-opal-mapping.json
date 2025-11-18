@@ -749,8 +749,7 @@
       "opal_agents": [
         "content_review",
         "audience_suggester",
-        "content_recs_topic_performance",
-        "content_performance_metrics"
+        "content_recs_topic_performance"
       ],
       "opal_tools": [
         "osa_contentrecs_tools"
@@ -771,17 +770,17 @@
         ]
       },
       "tier_mapping": {
-        "Visitor Analytics Dashboard": {
+        "Dashboard": {
           "url_pattern": "/engine/results/optimizely-dxp-tools/content-recs/visitor-analytics-dashboard",
           "static_url": "/engine/results/dxptools",
           "tier_level": {
             "tier1": "Optimizely DXP Tools",
             "tier2": "Content Recs",
-            "tier3": "Visitor Analytics Dashboard"
+            "tier3": "Dashboard"
           },
           "widgets": {
-            "primary": "IntegrationHealthWidget",
-            "secondary": ["VisitorAnalyticsWidget", "ContentPerformanceWidget"],
+            "primary": "ContentRecommendationsDashboardWidget",
+            "secondary": [],
             "layout": "tabs"
           },
           "data_props": {
@@ -2363,12 +2362,141 @@
         "tier3": [
           "Content Strategy",
           "Next Best Ideas",
-          "Content Performance",
+          "Content Improvements",
           "Persona Coverage",
           "Content Suggestions"
         ]
       },
       "tier_mapping": {
+        "Content Hub": {
+          "url_pattern": "/engine/results/experience-optimization/content",
+          "static_url": "/engine/results/experience-optimization/content",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": ""
+          },
+          "widgets": {
+            "primary": "ContentOptimizationWidget",
+            "secondary": [],
+            "layout": "hub"
+          },
+          "data_props": {
+            "contentAnalytics": "contentAnalytics",
+            "optimizationOpportunities": "optimizationOpportunities",
+            "performanceMetrics": "performanceMetrics"
+          },
+          "content_focus": {
+            "title": "Experience Optimization → Content Hub",
+            "description": "Content strategy hub with performance analytics, optimization recommendations, and strategic insights",
+            "key_metrics": ["Content Performance", "Optimization Impact", "Strategy Confidence", "Implementation Priority"],
+            "chart_types": ["performance-dashboard", "optimization-matrix", "strategy-overview", "recommendations-grid"]
+          }
+        },
+        "AI for SEO": {
+          "url_pattern": "/engine/results/experience-optimization/content/ai-for-seo",
+          "static_url": "/engine/results/experience-optimization/content/ai-for-seo",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "AI for SEO"
+          },
+          "widgets": {
+            "primary": "ContentPerformanceWidget",
+            "secondary": ["SEOAnalyticsWidget", "EngagementAnalyticsWidget"],
+            "layout": "grid"
+          },
+          "data_props": {
+            "performanceMetrics": "seoPerformanceMetrics",
+            "engagementData": "contentEngagementData",
+            "analyticsData": "seoAnalyticsData",
+            "benchmarkData": "seoBenchmarks"
+          },
+          "content_focus": {
+            "title": "AI for SEO",
+            "description": "AI-powered SEO performance analysis and content optimization insights",
+            "key_metrics": ["SEO Performance Score", "Content Quality Index", "Search Visibility", "Optimization Impact"],
+            "chart_types": ["seo-performance-trends", "content-quality-analysis", "search-visibility", "optimization-impact"]
+          }
+        },
+        "Content Suggestions": {
+          "url_pattern": "/engine/results/experience-optimization/content/content-optimization-recommendations",
+          "static_url": "/engine/results/experience-optimization/content/content-optimization-recommendations",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Content Suggestions"
+          },
+          "widgets": {
+            "primary": "ContentRecommendationsWidget",
+            "secondary": ["OptimizationOpportunitiesWidget", "ImpactAnalysisWidget"],
+            "layout": "cards"
+          },
+          "data_props": {
+            "recommendations": "contentOptimizationRecommendations",
+            "opportunities": "optimizationOpportunities",
+            "impactData": "optimizationImpactData",
+            "priorityScoring": "recommendationPriority"
+          },
+          "content_focus": {
+            "title": "Content Suggestions",
+            "description": "Actionable content optimization recommendations with priority scoring and impact analysis",
+            "key_metrics": ["Optimization Opportunities", "Impact Potential", "Implementation Priority", "Success Confidence"],
+            "chart_types": ["opportunity-matrix", "impact-analysis", "priority-scoring", "confidence-indicators"]
+          }
+        },
+        "Content Suggestions": {
+          "url_pattern": "/engine/results/experience-optimization/content/content-suggestions",
+          "static_url": "/engine/results/experience-optimization/content/content-suggestions",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Content Suggestions"
+          },
+          "widgets": {
+            "primary": "ContentSuggestionsWidget",
+            "secondary": ["MultiChannelWidget", "ChannelPerformanceWidget"],
+            "layout": "tabs"
+          },
+          "data_props": {
+            "suggestions": "contentSuggestions",
+            "channelPerformance": "channelContentPerformance",
+            "crossChannelData": "crossChannelContentData",
+            "topicData": "contentTopicSuggestions"
+          },
+          "content_focus": {
+            "title": "Content Suggestions",
+            "description": "Multi-channel content suggestions with performance tracking and cross-channel insights",
+            "key_metrics": ["Suggestion Quality", "Channel Effectiveness", "Cross-Channel Impact", "Content Synergy"],
+            "chart_types": ["suggestion-matrix", "channel-performance", "cross-channel-analysis", "synergy-tracking"]
+          }
+        },
+        "Content Growth": {
+          "url_pattern": "/engine/results/experience-optimization/content/content-roi-analysis",
+          "static_url": "/engine/results/experience-optimization/content/content-roi-analysis",
+          "tier_level": {
+            "tier1": "Experience Optimization",
+            "tier2": "Content",
+            "tier3": "Content Growth"
+          },
+          "widgets": {
+            "primary": "ContentPerformanceAnalysisWidget",
+            "secondary": ["ImpactMeasurementWidget", "EfficiencyAnalysisWidget"],
+            "layout": "dashboard"
+          },
+          "data_props": {
+            "performanceData": "contentPerformanceData",
+            "impactMetrics": "contentImpactMetrics",
+            "efficiencyData": "contentEfficiencyData",
+            "benchmarkData": "contentBenchmarks"
+          },
+          "content_focus": {
+            "title": "Content Growth",
+            "description": "Content performance analysis with impact measurement and efficiency tracking",
+            "key_metrics": ["Performance Impact", "Content Efficiency", "Engagement Quality", "Strategic Value"],
+            "chart_types": ["performance-analysis", "impact-measurement", "efficiency-tracking", "value-assessment"]
+          }
+        },
         "Content Strategy": {
           "url_pattern": "/engine/results/experience-optimization/content/content-strategy",
           "static_url": "/engine/results/optimization",
@@ -2419,33 +2547,6 @@
             "description": "Prioritized content recommendations across quick wins, strategic bets, and persona gaps",
             "key_metrics": ["Quick Wins", "Strategic Bets", "Persona Gaps", "Implementation Priority"],
             "chart_types": ["idea-lanes", "priority-matrix", "persona-coverage", "impact-effort"]
-          }
-        },
-        "Content Suggestions": {
-          "url_pattern": "/engine/results/experience-optimization/content/content-suggestions",
-          "static_url": "/engine/results/optimization",
-          "tier_level": {
-            "tier1": "Experience Optimization",
-            "tier2": "Content",
-            "tier3": "Content Suggestions"
-          },
-          "widgets": {
-            "primary": "ContentSuggestionsWidget",
-            "secondary": ["ContentIdeasWidget", "PersonaCoverageWidget"],
-            "layout": "lanes"
-          },
-          "data_props": {
-            "contentTopics": "contentTopics",
-            "analyticsData": "analyticsData",
-            "userInteractions": "userInteractions",
-            "personaData": "personaData",
-            "maturityData": "maturityData"
-          },
-          "content_focus": {
-            "title": "Content Suggestions: What to Publish Next",
-            "description": "Prioritized content ideas based on current performance, personas, and marketing focus",
-            "key_metrics": ["Content Suggestions", "Personas Covered", "Quick Win Opportunities", "Strategic Investments"],
-            "chart_types": ["suggestion-lanes", "persona-coverage", "confidence-scoring", "format-distribution"]
           }
         }
       }

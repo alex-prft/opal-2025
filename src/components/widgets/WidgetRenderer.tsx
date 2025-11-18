@@ -52,6 +52,10 @@ import { QuickWinsWidget as QuickWinsEnhancedWidget } from './strategy/QuickWins
 import { MaturityWidget as MaturityEnhancedWidget } from './strategy/MaturityWidget';
 import { PhasesEnhancedWidget } from './strategy/PhasesEnhancedWidget';
 import { RoadmapEnhancedWidget } from './strategy/RoadmapEnhancedWidget';
+import { ContentOptimizationWidget } from './ContentOptimizationWidget';
+import { AIForSEOWidget } from './AIForSEOWidget';
+import { ContentOptimizationRecommendationsWidget } from './ContentOptimizationRecommendationsWidget';
+import { ContentSuggestionsWidget } from './ContentSuggestionsWidget';
 
 // Helper function to calculate confidence score and eliminate NaN
 function calculateConfidenceScore(scores: (number | undefined)[]): number {
@@ -385,6 +389,46 @@ const UXOptimizationWidget = ({ data, context, className }: any) => {
   );
 };
 
+const ContentOptimizationWidgetContainer = ({ data, context, className }: any) => {
+  // Always render the ContentOptimizationWidget as it has built-in fallbacks and shows the hub page
+  console.log('[ContentOptimizationWidgetContainer] Rendering with data:', data);
+  return (
+    <div className={className}>
+      <ContentOptimizationWidget data={data} context={context} className="content-optimization-specialized" />
+    </div>
+  );
+};
+
+const AIForSEOWidgetContainer = ({ data, context, className }: any) => {
+  // Always render the AIForSEOWidget as it has built-in fallbacks
+  console.log('[AIForSEOWidgetContainer] Rendering AI for SEO widget with data:', data);
+  return (
+    <div className={className}>
+      <AIForSEOWidget data={data} context={context} className="ai-for-seo-specialized" />
+    </div>
+  );
+};
+
+const ContentOptimizationRecommendationsWidgetContainer = ({ data, context, className }: any) => {
+  // Always render the ContentOptimizationRecommendationsWidget as it has built-in fallbacks
+  console.log('[ContentOptimizationRecommendationsWidgetContainer] Rendering Content Optimization Recommendations widget with data:', data);
+  return (
+    <div className={className}>
+      <ContentOptimizationRecommendationsWidget data={data} context={context} className="content-optimization-recommendations-specialized" />
+    </div>
+  );
+};
+
+const ContentSuggestionsWidgetContainer = ({ data, context, className }: any) => {
+  // Always render the ContentSuggestionsWidget as it has built-in fallbacks
+  console.log('[ContentSuggestionsWidgetContainer] Rendering Content Suggestions widget with data:', data);
+  return (
+    <div className={className}>
+      <ContentSuggestionsWidget data={data} context={context} className="content-suggestions-specialized" />
+    </div>
+  );
+};
+
 export interface WidgetRendererProps {
   tier2?: string;
   tier3?: string;
@@ -393,7 +437,7 @@ export interface WidgetRendererProps {
 
 export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererProps) {
   const pathname = usePathname();
-  const context = useConditionalRenderingContext();
+  const context = useConditionalRenderingContext(pathname);
 
   // Debug in development
   if (process.env.NODE_ENV === 'development') {
@@ -569,8 +613,11 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     );
   }
 
-  // Enhanced no data state
-  if (!mergedData || (!mergedData.tier1Summary && !mergedData.tier2KPIs && !mergedData.tier3Content)) {
+  // Enhanced no data state - but skip for content optimization paths
+  const path = pathname.toLowerCase();
+  const isContentOptimization = pathMatchers.isExperienceOptimization(path) && pathMatchers.isContent(path);
+  
+  if (!isContentOptimization && (!mergedData || (!mergedData.tier1Summary && !mergedData.tier2KPIs && !mergedData.tier3Content))) {
     return (
       <div className={`space-y-6 ${className}`}>
         {renderNoDataState()}
@@ -580,7 +627,10 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
 
   // Enhanced conditional rendering based on full URL path
   const renderConditionalContent = () => {
-    if (!context.shouldRenderTier2) {
+    // Special case: If tier mapping specifies ContentOptimizationWidget, render tier-2 container
+    const hasContentOptimizationWidget = context.detection.tierMapping?.widgets?.primary === 'ContentOptimizationWidget';
+    
+    if (!context.shouldRenderTier2 && !hasContentOptimizationWidget) {
       return <GenericWidget data={mergedData} section={context.detection.tier1} className={className} />;
     }
 
@@ -676,7 +726,15 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     }
 
     // Experience Optimization tier-2 containers
+    console.log('[WidgetRenderer] Checking Experience Optimization for path:', path);
     if (pathMatchers.isExperienceOptimization(path)) {
+      console.log('[WidgetRenderer] Experience Optimization path detected:', path);
+      console.log('[WidgetRenderer] isContent check:', pathMatchers.isContent(path));
+      
+      if (pathMatchers.isContent(path)) {
+        console.log('[WidgetRenderer] Rendering ContentOptimizationWidgetContainer');
+        return <ContentOptimizationWidgetContainer data={mergedData} context={context} className="content-optimization-container" />;
+      }
       if (pathMatchers.isExperimentation(path)) {
         return <ExperimentationFrameworkWidget data={mergedData} context={context} className="experimentation-container" />;
       }
@@ -740,6 +798,26 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
       }
       if (path.includes('popular')) {
         return renderTier3Content('Popular Content Analysis', mergedData?.popularContent, 'popular-content');
+      }
+    }
+
+    // Experience Optimization → Content tier-3 content
+    console.log('[WidgetRenderer DEBUG] Path:', path);
+    console.log('[WidgetRenderer DEBUG] isExperienceOptimization:', pathMatchers.isExperienceOptimization(path));
+    console.log('[WidgetRenderer DEBUG] isContent:', pathMatchers.isContent(path));
+    console.log('[WidgetRenderer DEBUG] isContentSuggestions:', pathMatchers.isContentSuggestions(path));
+    if (pathMatchers.isExperienceOptimization(path) && pathMatchers.isContent(path)) {
+      if (pathMatchers.isAIForSEO(path)) {
+        return <AIForSEOWidgetContainer data={mergedData} context={context} className="ai-for-seo-tier3-container" />;
+      }
+      if (pathMatchers.isContentOptimizationRecommendations(path)) {
+        return <ContentOptimizationRecommendationsWidgetContainer data={mergedData} context={context} className="content-optimization-recommendations-tier3-container" />;
+      }
+      if (pathMatchers.isContentSuggestions(path)) {
+        return <ContentSuggestionsWidgetContainer data={mergedData} context={context} className="content-suggestions-tier3-container" />;
+      }
+      if (pathMatchers.isContentROIAnalysis(path)) {
+        return renderTier3Content('Content ROI Analysis', mergedData?.contentROIAnalysis, 'content-roi-analysis');
       }
     }
 

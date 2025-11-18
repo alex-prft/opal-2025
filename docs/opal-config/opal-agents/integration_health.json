@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "specialized",
+  "name": "Integration Health Agent",
+  "output": {
+    "type": "json",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "required": [
+            "title",
+            "promise",
+            "metrics",
+            "confidence"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "metrics": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "hint": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "value"
+                ]
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "confidenceNote": {
+              "type": "string"
+            }
+          }
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "insights": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ]
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ]
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "meta": {
+          "type": "object",
+          "required": [
+            "tier",
+            "agents",
+            "maturity",
+            "lastUpdated"
+          ],
+          "properties": {
+            "tier": {
+              "enum": [
+                "strategy",
+                "insights",
+                "optimization",
+                "dxptools"
+              ]
+            },
+            "agents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "maturity": {
+              "enum": [
+                "crawl",
+                "walk",
+                "run",
+                "fly"
+              ]
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      },
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ]
+    },
+    "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
+  },
+  "version": "1.0.0",
+  "agent_id": "integration_health",
+  "file_urls": [],
+  "is_active": true,
+  "creativity": 0.2,
+  "is_deleted": false,
+  "parameters": [
+    {
+      "name": "assessment_scope",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Scope of integration health assessment"
+    },
+    {
+      "name": "monitoring_depth",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Level of monitoring and analysis detail"
+    },
+    {
+      "name": "performance_window",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Time window for performance analysis"
+    },
+    {
+      "name": "alert_threshold_availability",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Availability threshold for health alerts"
+    }
+  ],
+  "description": "Monitors DXP integration health, API connectivity, and system performance across Optimizely platforms. Provides technical readiness assessment and integration status reporting for strategic initiative support.",
+  "enabled_tools": [
+    "osa_validate_language_rules",
+    "osa_evaluate_technical_constraints",
+    "osa_generate_performance_baseline",
+    "osa_analyze_data_insights",
+    "osa_retrieve_workflow_context",
+    "osa_send_data_to_osa_webhook",
+    "osa_store_workflow_data",
+    "osa_validate_workflow_data",
+    "osa_compile_final_results"
+  ],
+  "agent_metadata": null,
+  "inference_type": "simple_with_thinking",
+  "prompt_template": "**Role:** You are an integration health specialist focused on DXP platform monitoring and technical readiness assessment.\n\n**Objective:** Monitor DXP tool health and integration status across [[assessment_scope]] with [[monitoring_depth]] monitoring over [[performance_window]]-day window.\n\n**Input:**\n- assessment_scope: [[assessment_scope]]\n- monitoring_depth: [[monitoring_depth]]\n- performance_window: [[performance_window]]\n- alert_threshold_availability: [[alert_threshold_availability]]\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Use `osa_validate_language_rules` tool to validate all content before sending\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence based on data completeness (0-100)\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific dxptools metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Health Score\",\n            \"value\": \"87/100\",\n            \"hint\": \"Comprehensive DXP tool and integration health assessment\"\n      },\n      {\n            \"label\": \"System Availability\",\n            \"value\": \"99.2%\",\n            \"hint\": \"Platform uptime over performance window\"\n      },\n      {\n            \"label\": \"Integration Issues\",\n            \"value\": \"2 active\",\n            \"hint\": \"Current issues requiring immediate attention\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"dxptools\",\n    \"agents\": [\"integration_health\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 6
+}

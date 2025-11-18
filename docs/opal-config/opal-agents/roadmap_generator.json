@@ -1,0 +1,274 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "specialized",
+  "name": "Roadmap Generator Agent",
+  "output": {
+    "type": "json",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "required": [
+            "title",
+            "promise",
+            "metrics",
+            "confidence"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "metrics": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "hint": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "value"
+                ]
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "confidenceNote": {
+              "type": "string"
+            }
+          }
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "insights": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ]
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ]
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "meta": {
+          "type": "object",
+          "required": [
+            "tier",
+            "agents",
+            "maturity",
+            "lastUpdated"
+          ],
+          "properties": {
+            "tier": {
+              "enum": [
+                "strategy",
+                "insights",
+                "optimization",
+                "dxptools"
+              ]
+            },
+            "agents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "maturity": {
+              "enum": [
+                "crawl",
+                "walk",
+                "run",
+                "fly"
+              ]
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      },
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ]
+    },
+    "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
+  },
+  "version": "1.0.0",
+  "agent_id": "roadmap_generator",
+  "file_urls": [],
+  "is_active": true,
+  "creativity": 0.4,
+  "is_deleted": false,
+  "parameters": [
+    {
+      "name": "timeline_horizon",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Strategic planning timeline in months"
+    },
+    {
+      "name": "resource_constraints",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Resource availability for roadmap implementation"
+    },
+    {
+      "name": "priority_framework",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Methodology for prioritizing roadmap initiatives"
+    },
+    {
+      "name": "milestone_granularity",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Frequency of major milestone tracking"
+    }
+  ],
+  "description": "Converts strategic insights and recommendations into comprehensive implementation roadmaps with timeline visualization, milestone tracking, resource allocation planning, and dependency management for OSA strategy execution.",
+  "enabled_tools": [
+    "osa_validate_language_rules",
+    "osa_analyze_member_behavior",
+    "osa_create_dynamic_segments",
+    "osa_evaluate_technical_constraints",
+    "osa_generate_performance_baseline",
+    "osa_compile_final_results",
+    "osa_retrieve_workflow_context",
+    "osa_send_data_to_osa_webhook",
+    "osa_store_workflow_data",
+    "osa_validate_workflow_data",
+    "create_canvas",
+    "osa_calculate_impact_metrics",
+    "osa_generate_roadmap_insights",
+    "osa_track_strategy_progress",
+    "osa_validate_maturity_level",
+    "osa_compile_strategy_brief",
+    "osa_generate_executive_summary",
+    "osa_fetch_audience_segments"
+  ],
+  "agent_metadata": null,
+  "inference_type": "simple_with_thinking",
+  "prompt_template": "**Role:** You are a strategic planning specialist focused on converting insights into actionable implementation roadmaps.\n\n**Objective:** Transform strategic insights and recommendations into comprehensive implementation roadmaps with [[timeline_horizon]]-month horizon, [[resource_constraints]] resource constraints, using [[priority_framework]] prioritization within [[milestone_granularity]] milestone tracking.\n\n**Input:**\n- timeline_horizon: [[timeline_horizon]]\n- resource_constraints: [[resource_constraints]]\n- priority_framework: [[priority_framework]]\n- milestone_granularity: [[milestone_granularity]]\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Use `osa_validate_language_rules` tool to validate all content before sending\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence based on data completeness (0-100)\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific strategy metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Progress\",\n            \"value\": \"25%\",\n            \"hint\": \"Foundation phase completion status\"\n      },\n      {\n            \"label\": \"Timeline Confidence\",\n            \"value\": \"60%\",\n            \"hint\": \"Schedule adherence tracking based on milestone data\"\n      },\n      {\n            \"label\": \"Plan Confidence Index\",\n            \"value\": \"35/100\",\n            \"hint\": \"Confidence level building as data flows in\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"strategy\",\n    \"agents\": [\"roadmap_generator\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 5
+}

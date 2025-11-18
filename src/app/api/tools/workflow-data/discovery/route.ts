@@ -297,6 +297,192 @@ const WORKFLOW_DATA_TOOLS_CONFIG = {
       ],
       endpoint: "/tools/osa_generate_content_insights",
       http_method: "POST"
+    },
+    {
+      name: "osa_predict_next_agent_needs",
+      description: "Predict optimal next agent based on current workflow context and user goals",
+      parameters: [
+        {
+          name: "current_workflow_state",
+          type: "object",
+          description: "Current workflow context and completion status",
+          required: true
+        },
+        {
+          name: "user_goals",
+          type: "array",
+          description: "User's stated objectives and priorities",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_predict_next_agent_needs",
+      http_method: "POST"
+    },
+    {
+      name: "osa_share_insights_across_agents",
+      description: "Share relevant insights between agents for cross-pollination",
+      parameters: [
+        {
+          name: "source_agent",
+          type: "string",
+          description: "Agent sharing the insights",
+          required: true
+        },
+        {
+          name: "target_agents",
+          type: "array",
+          description: "Target agents to receive insights",
+          required: true
+        },
+        {
+          name: "insight_data",
+          type: "object",
+          description: "Structured insights to share",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_share_insights_across_agents",
+      http_method: "POST"
+    },
+    {
+      name: "osa_create_automated_campaign_pipeline",
+      description: "Create seamless strategy to campaign to deployment automation",
+      parameters: [
+        {
+          name: "strategy_data",
+          type: "object",
+          description: "Complete strategy analysis from all agents",
+          required: true
+        },
+        {
+          name: "automation_level",
+          type: "string",
+          description: "Level of automation for campaign pipeline",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_create_automated_campaign_pipeline",
+      http_method: "POST"
+    },
+    {
+      name: "osa_analyze_agent_performance_metrics",
+      description: "Analyze agent performance and provide optimization recommendations",
+      parameters: [
+        {
+          name: "performance_data",
+          type: "object",
+          description: "Comprehensive agent performance metrics",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_analyze_agent_performance_metrics",
+      http_method: "POST"
+    },
+    {
+      name: "osa_log_decision_audit_trail",
+      description: "Log comprehensive audit trail of agent decisions and tool usage",
+      parameters: [
+        {
+          name: "agent_id",
+          type: "string",
+          description: "Agent making the decision",
+          required: true
+        },
+        {
+          name: "decision_context",
+          type: "object",
+          description: "Context and inputs for the decision",
+          required: true
+        },
+        {
+          name: "decision_rationale",
+          type: "string",
+          description: "Explanation of decision reasoning",
+          required: true
+        }
+      ],
+      endpoint: "/tools/osa_log_decision_audit_trail",
+      http_method: "POST"
+    },
+    {
+      name: "osa_create_roadmap_timeline_canvas",
+      description: "Create comprehensive project timeline with milestones, dependencies, and critical path visualization",
+      parameters: [
+        {
+          name: "timeline_data",
+          type: "object",
+          description: "Project timeline with phases, milestones, and dependencies",
+          required: true
+        },
+        {
+          name: "visualization_style",
+          type: "string",
+          description: "Preferred visualization style for the timeline",
+          required: false
+        }
+      ],
+      endpoint: "/tools/osa_create_roadmap_timeline_canvas",
+      http_method: "POST"
+    },
+    {
+      name: "osa_create_milestone_tracker_canvas",
+      description: "Create interactive milestone tracking with progress indicators and completion status",
+      parameters: [
+        {
+          name: "milestones",
+          type: "array",
+          description: "List of project milestones with completion status",
+          required: true
+        },
+        {
+          name: "progress_metrics",
+          type: "object",
+          description: "Progress tracking metrics and indicators",
+          required: false
+        }
+      ],
+      endpoint: "/tools/osa_create_milestone_tracker_canvas",
+      http_method: "POST"
+    },
+    {
+      name: "osa_create_resource_allocation_canvas",
+      description: "Create visual resource planning with team assignments and capacity management",
+      parameters: [
+        {
+          name: "resource_data",
+          type: "object",
+          description: "Resource availability and allocation data",
+          required: true
+        },
+        {
+          name: "team_assignments",
+          type: "array",
+          description: "Team member assignments and responsibilities",
+          required: false
+        }
+      ],
+      endpoint: "/tools/osa_create_resource_allocation_canvas",
+      http_method: "POST"
+    },
+    {
+      name: "osa_create_dependency_map_canvas",
+      description: "Create strategic dependency visualization showing task relationships and bottlenecks",
+      parameters: [
+        {
+          name: "dependency_graph",
+          type: "object",
+          description: "Task dependencies and relationships",
+          required: true
+        },
+        {
+          name: "visualization_layout",
+          type: "string",
+          description: "Preferred layout for dependency visualization",
+          required: false
+        }
+      ],
+      endpoint: "/tools/osa_create_dependency_map_canvas",
+      http_method: "POST"
     }
   ]
 };

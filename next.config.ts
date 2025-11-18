@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? true : false,
   },
+  async redirects() {
+    return [
+      {
+        source: '/dev/logs',
+        destination: '/engine/admin/logs',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

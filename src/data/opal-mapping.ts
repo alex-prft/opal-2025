@@ -248,6 +248,7 @@ export const opalMapping = {
         "tier2": "Content",
         "tier3": [
           "Content Strategy Overview",
+          "AI for SEO",
           "Performance Analytics",
           "Content Optimization Recommendations",
           "Multi-channel Content Distribution",

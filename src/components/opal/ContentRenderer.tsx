@@ -34,6 +34,10 @@ import {
 } from 'lucide-react';
 import KPISummaryWidget from './KPISummaryWidget';
 import { ContentPerformanceMetricsWidget } from '@/components/widgets/ContentPerformanceMetricsWidget';
+import { AIForSEOWidget } from '@/components/widgets/AIForSEOWidget';
+import { ContentOptimizationRecommendationsWidget } from '@/components/widgets/ContentOptimizationRecommendationsWidget';
+import { ContentSuggestionsWidget } from '@/components/widgets/ContentSuggestionsWidget';
+import { ContentImpactAnalysisWidget } from '@/components/widgets/ContentImpactAnalysisWidget';
 import ConfidenceGauge from './ConfidenceGauge';
 import WorkflowProgress from './WorkflowProgress';
 import IntegrationHealth from './IntegrationHealth';
@@ -4431,6 +4435,8 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
         return renderVisitorAnalyticsDashboard();
       case 'content-performance-metrics':
         return renderContentPerformanceMetricsNew();
+      case 'ai-for-seo':
+        return renderAIForSEO();
       case 'recommendation-algorithms':
         return renderRecommendationAlgorithms();
       case 'a/b-testing-results':
@@ -4706,6 +4712,24 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
   const renderContentPerformanceMetricsNew = () => (
     <ContentRendererErrorBoundary>
       <ContentPerformanceMetricsWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
+    </ContentRendererErrorBoundary>
+  );
+
+  const renderAIForSEO = () => (
+    <ContentRendererErrorBoundary>
+      <AIForSEOWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
+    </ContentRendererErrorBoundary>
+  );
+
+  const renderContentOptimizationRecommendations = () => (
+    <ContentRendererErrorBoundary>
+      <ContentOptimizationRecommendationsWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
+    </ContentRendererErrorBoundary>
+  );
+
+  const renderContentSuggestions = () => (
+    <ContentRendererErrorBoundary>
+      <ContentSuggestionsWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
     </ContentRendererErrorBoundary>
   );
 
@@ -6563,31 +6587,27 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="h-5 w-5 text-blue-600" />
-                Content Strategy Overview
+                Experience Optimization → Content
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-900">Content Performance Score</h4>
-                  <div className="text-2xl font-bold text-blue-600">87.5%</div>
-                  <p className="text-sm text-blue-700">CTR, engagement, conversion rates</p>
+                  <h4 className="font-semibold text-blue-900">Recommended New Content Items</h4>
+                  <div className="text-2xl font-bold text-blue-600">12</div>
+                  <p className="text-sm text-blue-700">Items in Content Suggestions queue</p>
                 </div>
                 <div className="p-4 bg-green-50 rounded-lg">
-                  <h4 className="font-semibold text-green-900">Content Inventory Health</h4>
-                  <div className="text-2xl font-bold text-green-600">92.3%</div>
-                  <p className="text-sm text-green-700">Freshness, SEO optimization</p>
+                  <h4 className="font-semibold text-green-900">High-Priority Improvements</h4>
+                  <div className="text-2xl font-bold text-green-600">8</div>
+                  <p className="text-sm text-green-700">Optimization recommendations identified</p>
                 </div>
                 <div className="p-4 bg-purple-50 rounded-lg">
-                  <h4 className="font-semibold text-purple-900">Channel Distribution</h4>
-                  <div className="text-2xl font-bold text-purple-600">15</div>
-                  <p className="text-sm text-purple-700">Active distribution channels</p>
+                  <h4 className="font-semibold text-purple-900">Tracked Content KPI Types</h4>
+                  <div className="text-2xl font-bold text-purple-600">6</div>
+                  <p className="text-sm text-purple-700">Engagement depth, completion, scroll metrics</p>
                 </div>
-                <div className="p-4 bg-orange-50 rounded-lg">
-                  <h4 className="font-semibold text-orange-900">Content Lifecycle</h4>
-                  <div className="text-2xl font-bold text-orange-600">234</div>
-                  <p className="text-sm text-orange-700">Assets in optimization pipeline</p>
-                </div>
+
               </div>
             </CardContent>
           </Card>
@@ -6765,6 +6785,12 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
           </div>
         );
 
+      case 'ai-for-seo':
+        return renderAIForSEO();
+      case 'content-optimization-recommendations':
+        return renderContentOptimizationRecommendations();
+      case 'content-suggestions':
+        return renderContentSuggestions();
       case 'performance-analytics':
         return (
           <div className="space-y-6">
@@ -6962,187 +6988,13 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
         );
 
       case 'multi-channel-content-distribution':
-        return (
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Channel Performance Matrix</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-bold text-blue-900 mb-2">Website</h4>
-                    <div className="space-y-1 text-sm">
-                      <div className="flex justify-between">
-                        <span>Engagement Rate</span>
-                        <span className="font-bold">4.2%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Avg. Session Duration</span>
-                        <span className="font-bold">3:47</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Content Views/Session</span>
-                        <span className="font-bold">2.8</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-bold text-green-900 mb-2">Social Media</h4>
-                    <div className="space-y-1 text-sm">
-                      <div className="flex justify-between">
-                        <span>Engagement Rate</span>
-                        <span className="font-bold">6.7%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Share Rate</span>
-                        <span className="font-bold">1.2%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Click-through Rate</span>
-                        <span className="font-bold">2.9%</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-bold text-purple-900 mb-2">Email Marketing</h4>
-                    <div className="space-y-1 text-sm">
-                      <div className="flex justify-between">
-                        <span>Open Rate</span>
-                        <span className="font-bold">24.1%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Click Rate</span>
-                        <span className="font-bold">3.8%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Conversion Rate</span>
-                        <span className="font-bold">1.4%</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Cross-channel Content Adaptation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-semibold text-blue-900 mb-2">Automated Content Adaptation</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-sm font-medium">Format Optimization</div>
-                        <ul className="text-sm text-gray-600 mt-1">
-                          <li>• Long-form → Social snippets</li>
-                          <li>• Blog posts → Email newsletters</li>
-                          <li>• Videos → Audio podcasts</li>
-                          <li>• PDFs → Interactive web content</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium">Platform-specific Optimization</div>
-                        <ul className="text-sm text-gray-600 mt-1">
-                          <li>• LinkedIn: Professional tone, industry insights</li>
-                          <li>• Twitter: Concise, hashtag-optimized</li>
-                          <li>• Instagram: Visual-first, story format</li>
-                          <li>• YouTube: Video descriptions, thumbnails</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        );
+        return renderContentSuggestions();
 
       case 'content-roi-analysis':
         return (
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Financial Impact Metrics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">$127</div>
-                    <div className="text-sm text-green-800">Cost per Conversion</div>
-                    <div className="text-xs text-green-600 mt-1">↓ 23% vs. last quarter</div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">$4.2M</div>
-                    <div className="text-sm text-blue-800">Revenue Attribution</div>
-                    <div className="text-xs text-blue-600 mt-1">↑ 18% vs. last quarter</div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
-                    <div className="text-2xl font-bold text-purple-600">$89</div>
-                    <div className="text-sm text-purple-800">Customer Acquisition Cost</div>
-                    <div className="text-xs text-purple-600 mt-1">↓ 15% vs. last quarter</div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
-                    <div className="text-2xl font-bold text-orange-600">$2,340</div>
-                    <div className="text-sm text-orange-800">Lifetime Value Impact</div>
-                    <div className="text-xs text-orange-600 mt-1">↑ 12% engagement correlation</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Content Type ROI Breakdown</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <div>
-                      <div className="font-semibold">Blog Posts</div>
-                      <div className="text-sm text-gray-600">187 assets • $45K investment</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-green-600">ROI: 340%</div>
-                      <div className="text-sm text-gray-600">$153K attributed revenue</div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <div>
-                      <div className="font-semibold">Video Content</div>
-                      <div className="text-sm text-gray-600">42 assets • $89K investment</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-blue-600">ROI: 280%</div>
-                      <div className="text-sm text-gray-600">$249K attributed revenue</div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <div>
-                      <div className="font-semibold">Interactive Tools</div>
-                      <div className="text-sm text-gray-600">12 assets • $67K investment</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-purple-600">ROI: 450%</div>
-                      <div className="text-sm text-gray-600">$302K attributed revenue</div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center p-3 border rounded-lg">
-                    <div>
-                      <div className="font-semibold">Case Studies</div>
-                      <div className="text-sm text-gray-600">28 assets • $23K investment</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-orange-600">ROI: 520%</div>
-                      <div className="text-sm text-gray-600">$119K attributed revenue</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <ContentRendererErrorBoundary>
+            <ContentImpactAnalysisWidget data={tierDataResult.tier3.data || tierDataResult.tier2.data || tierDataResult.tier1.data || {}} />
+          </ContentRendererErrorBoundary>
         );
 
       default:

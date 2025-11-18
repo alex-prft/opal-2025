@@ -552,6 +552,49 @@ export function getTierSpecificDefaults(tier: ResultsPageContent['meta']['tier']
       agents: ['content_next_best_topics']
     },
 
+    'experience-optimization': {
+      promise: 'Optimizing content performance across channels to enhance user engagement and experience quality.',
+      metrics: [
+        { label: 'Content Performance Score', value: 'Analyzing...', hint: 'Evaluating content effectiveness' },
+        { label: 'Experience Impact', value: 'Calculating...', hint: 'Measuring user experience improvements' },
+        { label: 'Optimization Progress', value: `${Math.min(confidence + 5, 65)}/100`, hint: 'Content optimization advancement' }
+      ],
+      overview: {
+        summary: 'Experience optimization analysis is examining content performance patterns and user engagement to identify enhancement opportunities across all touchpoints.',
+        keyPoints: [
+          'Content performance tracking is active across all experience touchpoints',
+          'User engagement patterns are being analyzed for optimization insights',
+          'Experience quality metrics are building baseline for improvement strategies',
+          'Content optimization recommendations are being generated based on performance data'
+        ]
+      },
+      insights: [{
+        title: 'Content Experience Optimization Analysis',
+        description: 'Comprehensive analysis of content performance and user experience enhancement opportunities',
+        bullets: [
+          'Content engagement systems are collecting comprehensive performance metrics',
+          'User experience patterns are being analyzed for optimization opportunities',
+          'Performance data is informing content enhancement strategy development'
+        ]
+      }],
+      opportunities: [{
+        label: 'Implement content optimization recommendations to enhance user experience quality',
+        impactLevel: 'High' as const,
+        effortLevel: 'Medium' as const,
+        confidence: 80
+      }],
+      nextSteps: [{
+        label: 'Continue content performance monitoring across all experience touchpoints',
+        ownerHint: 'Experience Team',
+        timeframeHint: 'Ongoing'
+      }, {
+        label: 'Analyze content optimization patterns for experience enhancement',
+        ownerHint: 'Content Strategy Team',
+        timeframeHint: 'Next week'
+      }],
+      agents: ['content_optimization', 'experience_analytics']
+    },
+
     dxptools: {
       promise: 'Analyzing topic performance and content engagement to optimize DXP Tools Content Recommendations effectiveness.',
       metrics: [

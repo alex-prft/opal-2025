@@ -277,7 +277,7 @@ export class SimpleOpalDataService {
     }
 
     // DXP Tools specific mappings
-    if (pageId.includes('dxptools')) {
+    if (pageId.includes('dxptools') || pageId.includes('optimizely-dxp-tools')) {
       // Content Recommendations → Topic Performance
       if (pageId.includes('content-recs') && pageId.includes('topic-performance')) {
         return 'content_recs_topic_performance';

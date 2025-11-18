@@ -6,7 +6,7 @@
  */
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {
   findTierMappingByUrl,
   extractTiersFromUrl,
@@ -45,8 +45,9 @@ export interface ConditionalRenderingContext {
 /**
  * Enhanced URL Path Detection Hook
  */
-export function useUrlPathDetection(): TierDetectionResult {
-  const pathname = usePathname();
+export function useUrlPathDetection(externalPathname?: string): TierDetectionResult {
+  const internalPathname = usePathname();
+  const pathname = externalPathname || internalPathname;
   const [detection, setDetection] = useState<TierDetectionResult>({
     tier1: '',
     tier2: '',
@@ -59,6 +60,7 @@ export function useUrlPathDetection(): TierDetectionResult {
   });
 
   useEffect(() => {
+    console.log('[useUrlPathDetection] Hook called with pathname:', pathname);
     if (!pathname) return;
 
     // Extract tier information from URL
@@ -71,6 +73,16 @@ export function useUrlPathDetection(): TierDetectionResult {
 
     // Find tier mapping for complete validation
     const tierMapping = findTierMappingByUrl(pathname);
+
+    // Debug logging to identify the hook vs debug function difference
+    if (pathname && pathname.includes('experience-optimization/content')) {
+      console.log('[useUrlPathDetection] ====== HOOK DEBUG ======');
+      console.log('[useUrlPathDetection] Pathname:', pathname);
+      console.log('[useUrlPathDetection] tierInfo:', tierInfo);
+      console.log('[useUrlPathDetection] Tier mapping found:', !!tierMapping);
+      console.log('[useUrlPathDetection] Tier mapping object:', tierMapping?.widgets?.primary);
+      console.log('[useUrlPathDetection] ================================');
+    }
 
     // Convert URL segments to display names
     const tier1Display = convertUrlToDisplayName(tierInfo.tier1, 'tier1');
@@ -90,7 +102,14 @@ export function useUrlPathDetection(): TierDetectionResult {
     });
   }, [pathname]);
 
-  return detection;
+  // Memoize the return value to prevent unnecessary re-renders
+  return useMemo(() => detection, [
+    detection.fullPath,
+    detection.isValidTier,
+    detection.tier1,
+    detection.tier2,
+    detection.tier3
+  ]);
 }
 
 /**
@@ -162,8 +181,23 @@ function convertUrlToDisplayName(urlSegment: string, tierLevel: 'tier1' | 'tier2
 /**
  * Conditional Rendering Context Hook
  */
-export function useConditionalRenderingContext(): ConditionalRenderingContext {
-  const detection = useUrlPathDetection();
+export function useConditionalRenderingContext(pathname?: string): ConditionalRenderingContext {
+  console.log('[useConditionalRenderingContext] Hook called with pathname:', pathname);
+
+  // Use synchronous path detection instead of problematic React hooks
+  const rawDetection = pathname ? createSyncPathDetection(pathname) : useUrlPathDetection(pathname);
+
+  // Memoize detection to prevent infinite re-renders
+  const detection = useMemo(() => rawDetection, [
+    rawDetection.fullPath,
+    rawDetection.isValidTier,
+    rawDetection.tier1,
+    rawDetection.tier2,
+    rawDetection.tier3
+  ]);
+
+  console.log('[useConditionalRenderingContext] Detection result:', detection);
+
   const [context, setContext] = useState<ConditionalRenderingContext>({
     detection,
     widgets: {
@@ -223,7 +257,13 @@ export function useConditionalRenderingContext(): ConditionalRenderingContext {
       shouldRenderTier2: !!detection.tier2,
       shouldRenderTier3: !!detection.tier3
     });
-  }, [detection]);
+  }, [
+    detection.isValidTier,
+    detection.tier1Display,
+    detection.tier2Display,
+    detection.tier3Display,
+    detection.tierMapping
+  ]);
 
   return context;
 }
@@ -461,8 +501,75 @@ export const pathMatchers = {
     path.includes('/experimentation'),
 
   isPersonalization: (path: string) =>
-    path.includes('/personalization')
+    path.includes('/personalization'),
+
+  // Content optimization specific paths
+  isAIForSEO: (path: string) =>
+    path.includes('/ai-for-seo'),
+
+  isContentSuggestions: (path: string) =>
+    path.includes('/content-optimization-recommendations'),
+
+  isContentSuggestionsAlternate: (path: string) =>
+    path.includes('/content-suggestions'),
+
+  isContentGrowth: (path: string) =>
+    path.includes('/content-roi-analysis')
 };
+
+/**
+ * Synchronous path detection (bypassing React hook issues)
+ */
+function createSyncPathDetection(pathname: string): TierDetectionResult {
+  if (!pathname) {
+    return {
+      tier1: '',
+      tier2: '',
+      tier3: '',
+      tier1Display: '',
+      tier2Display: '',
+      tier3Display: '',
+      fullPath: pathname,
+      isValidTier: false
+    };
+  }
+
+  // Extract tier information from URL (same as debug function)
+  const tierInfo = extractTiersFromUrl(pathname);
+
+  if (!tierInfo) {
+    return {
+      tier1: '',
+      tier2: '',
+      tier3: '',
+      tier1Display: '',
+      tier2Display: '',
+      tier3Display: '',
+      fullPath: pathname,
+      isValidTier: false
+    };
+  }
+
+  // Find tier mapping for complete validation
+  const tierMapping = findTierMappingByUrl(pathname);
+
+  // Convert URL segments to display names
+  const tier1Display = convertUrlToDisplayName(tierInfo.tier1, 'tier1');
+  const tier2Display = convertUrlToDisplayName(tierInfo.tier2, 'tier2');
+  const tier3Display = convertUrlToDisplayName(tierInfo.tier3, 'tier3');
+
+  return {
+    tier1: tierInfo.tier1,
+    tier2: tierInfo.tier2,
+    tier3: tierInfo.tier3,
+    tier1Display,
+    tier2Display,
+    tier3Display,
+    fullPath: pathname,
+    isValidTier: !!tierMapping,
+    tierMapping: tierMapping || undefined
+  };
+}
 
 /**
  * Debug utilities for development
