@@ -47,6 +47,8 @@ export interface IntegrationStatusResponse {
   success: boolean;
   integrationStatus?: IntegrationStatus;
   error?: string;
+  fallback?: boolean;
+  hint?: string;
 }
 
 export function useIntegrationStatus(
@@ -71,12 +73,26 @@ export function useIntegrationStatus(
 
       const url = `/api/admin/osa/integration-status${params.toString() ? `?${params.toString()}` : ''}`;
       const res = await fetch(url);
-      
+      const data = await res.json();
+
+      // Handle expected fallback responses gracefully
       if (!res.ok) {
+        // Check if this is an expected fallback response (503 with fallback flag)
+        if (res.status === 503 && data.fallback === true) {
+          // Return the fallback response data instead of throwing
+          return {
+            success: false,
+            error: data.error,
+            fallback: true,
+            hint: data.hint
+          };
+        }
+
+        // For other non-OK responses, throw an error
         throw new Error(`Failed to load integration status: ${res.status} ${res.statusText}`);
       }
-      
-      return res.json();
+
+      return data;
     },
     staleTime: options?.staleTime ?? 2 * 60 * 1000, // 2 minutes default
     refetchInterval: options?.refetchInterval ?? false, // No auto-refetch by default
@@ -114,20 +130,35 @@ export function useForceSyncValidation(
     queryKey: ['force-sync-validation', forceSyncWorkflowId],
     queryFn: async () => {
       const res = await fetch(`/api/admin/osa/integration-status?forceSyncWorkflowId=${encodeURIComponent(forceSyncWorkflowId)}`);
-      
+      const data = await res.json();
+
+      // Handle expected fallback responses gracefully
       if (!res.ok) {
+        // Check if this is an expected fallback response (503 with fallback flag)
+        if (res.status === 503 && data.fallback === true) {
+          // Return the fallback response data instead of throwing
+          return {
+            success: false,
+            error: data.error,
+            fallback: true,
+            hint: data.hint
+          };
+        }
+
+        // For other non-OK responses, throw an error
         throw new Error(`Failed to load Force Sync validation: ${res.status} ${res.statusText}`);
       }
-      
-      return res.json();
+
+      return data;
     },
     enabled: !!forceSyncWorkflowId,
     staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: (data) => {
+    refetchInterval: (query) => {
+      const data = query.state.data;
       // If polling is enabled and status is not final, keep polling
-      if (pollUntilComplete && data?.integrationStatus) {
+      if (pollUntilComplete && data?.success && data.integrationStatus) {
         const status = data.integrationStatus.overallStatus;
-        if (status === 'yellow' || !data.integrationStatus.forceSync.status || 
+        if (status === 'yellow' || !data.integrationStatus.forceSync?.status ||
             data.integrationStatus.forceSync.status === 'running') {
           return 10 * 1000; // Poll every 10 seconds
         }

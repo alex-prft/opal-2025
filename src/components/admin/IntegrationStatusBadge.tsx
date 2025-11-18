@@ -13,8 +13,16 @@ interface IntegrationStatusData {
   workflow_correlation_id?: string | null;
 }
 
+interface IntegrationStatusResponse {
+  success: boolean;
+  integrationStatus?: IntegrationStatusData;
+  error?: string;
+  fallback?: boolean;
+  hint?: string;
+}
+
 interface IntegrationStatusBadgeProps {
-  integrationStatus: IntegrationStatusData | null | undefined;
+  integrationStatus: IntegrationStatusResponse | null | undefined;
   isLoading: boolean;
   compact?: boolean;
   className?: string;
@@ -38,13 +46,37 @@ export function IntegrationStatusBadge({
     );
   }
 
-  // No integration status data
-  if (!integrationStatus) {
+  // Handle fallback response (expected when database not configured)
+  if (integrationStatus?.fallback === true) {
+    return (
+      <div className={`flex items-center gap-2 ${className}`}>
+        <AlertCircle className="h-3 w-3 text-gray-400" />
+        <span className="text-xs text-gray-500">
+          {compact ? 'System initializing' : 'Integration validation system initializing'}
+        </span>
+      </div>
+    );
+  }
+
+  // No integration status data or failed response
+  if (!integrationStatus || !integrationStatus.success) {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
         <AlertCircle className="h-3 w-3 text-gray-400" />
         <span className="text-xs text-gray-500">
           {compact ? 'No validation' : 'No integration validation'}
+        </span>
+      </div>
+    );
+  }
+
+  const statusData = integrationStatus.integrationStatus;
+  if (!statusData) {
+    return (
+      <div className={`flex items-center gap-2 ${className}`}>
+        <AlertCircle className="h-3 w-3 text-gray-400" />
+        <span className="text-xs text-gray-500">
+          {compact ? 'No status data' : 'No integration status data'}
         </span>
       </div>
     );
@@ -57,7 +89,7 @@ export function IntegrationStatusBadge({
     osa_reception_rate,
     results_generation_success,
     created_at,
-  } = integrationStatus;
+  } = statusData;
 
   // Determine badge appearance based on overall status
   const getStatusConfig = () => {
