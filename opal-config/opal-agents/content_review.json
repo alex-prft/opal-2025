@@ -341,7 +341,15 @@
     "osa_create_content_performance_canvas",
     "osa_create_seo_optimization_canvas",
     "osa_create_content_gaps_canvas",
-    "osa_create_engagement_analytics_canvas"
+    "osa_create_engagement_analytics_canvas",
+    "assess_content_performance",
+    "create_content_matrix",
+    "optimize_content_for_seo",
+    "get_content_recommendations_by_topic",
+    "get_content_recommendations_by_section",
+    "get_available_content_catalog",
+    "generate_tier_based_content_data",
+    "refresh_content_recommendations_cache"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",

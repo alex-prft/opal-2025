@@ -128,7 +128,7 @@ const STRATEGY_PLANS_MAPPINGS: PageAgentMapping[] = [
 
   // Phases Section
   {
-    pageId: 'strategy-plans/phases/phase-1-foundation-(0-3-months)',
+    pageId: 'strategy-plans/phases/phase-1',
     tier: 2,
     section: 'strategy-plans',
     subsection: 'phases',
@@ -139,7 +139,7 @@ const STRATEGY_PLANS_MAPPINGS: PageAgentMapping[] = [
     priority: 2
   },
   {
-    pageId: 'strategy-plans/phases/phase-2-growth-(3-6-months)',
+    pageId: 'strategy-plans/phases/phase-2',
     tier: 2,
     section: 'strategy-plans',
     subsection: 'phases',

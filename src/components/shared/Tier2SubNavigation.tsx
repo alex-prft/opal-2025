@@ -21,12 +21,25 @@ interface Tier2SubNavigationProps {
 
 // Icon mapping for tier3 items
 const tier3IconMapping = {
+  // Updated OSA icons
+  'Strategy Overview': BarChart3,
+  'AI Recommendations': Target,
+  'Performance Insights': TrendingUp,
+  'Data Health Status': CheckCircle,
+  'Implementation Timeline': Clock,
+  // Legacy OSA icons (for backward compatibility)
   'Overview Dashboard': BarChart3,
   'Strategic Recommendations': Target,
   'Performance Metrics': TrendingUp,
   'Data Quality Score': CheckCircle,
   'Workflow Timeline': Clock,
-  // Fallback icons for other tier3 items
+  // Updated Quick Wins icons
+  'Ready to Implement': Target,
+  '30-Day Action Plan': Clock,
+  'Resource Planning': CheckCircle,
+  'Impact Projections': TrendingUp,
+  'Success Tracking': BarChart3,
+  // Legacy Quick Wins icons (for backward compatibility)
   'Immediate Opportunities': Target,
   'Implementation Roadmap (30-day)': Clock,
   'Resource Requirements': CheckCircle,
@@ -36,7 +49,25 @@ const tier3IconMapping = {
   'Maturity Framework': Target,
   'Gap Analysis': CheckCircle,
   'Improvement Pathway': TrendingUp,
-  'Benchmarking Data': BarChart3
+  'Benchmarking Data': BarChart3,
+  // Updated Phase icons
+  'Phase 1: Foundation': CheckCircle,
+  'Phase 2: Growth': TrendingUp,
+  'Phase 3: Optimization': Target,
+  'Phase 4: Scale': BarChart3,
+  'Cross-Phase Analysis': Clock,
+  // Updated Content Recs icons
+  'Content Performance': TrendingUp,
+  'Recommendation Engine': Target,
+  'Visitor Insights': BarChart3,
+  'Testing & Optimization': CheckCircle,
+  'Personalization Impact': TrendingUp,
+  // Legacy Content Recs icons (for backward compatibility)
+  'Visitor Analytics Dashboard': BarChart3,
+  'Content Performance Metrics': TrendingUp,
+  'Recommendation Algorithms': Target,
+  'A/B Testing Results': CheckCircle,
+  'Personalization Effectiveness': TrendingUp
 } as const;
 
 export default function Tier2SubNavigation({

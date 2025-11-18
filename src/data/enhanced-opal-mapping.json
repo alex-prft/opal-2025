@@ -185,21 +185,21 @@
         "tier1": "Strategy Plans",
         "tier2": "Phases",
         "tier3": [
-          "Phase 1: Foundation (0-3 months)",
-          "Phase 2: Growth (3-6 months)",
-          "Phase 3: Optimization (6-12 months)",
-          "Phase 4: Innovation (12+ months)",
-          "Cross-phase Dependencies"
+          "Phase 1",
+          "Phase 2",
+          "Phase 3",
+          "Phase 4",
+          "Cross-Phase"
         ]
       },
       "tier_mapping": {
-        "Phase 1: Foundation (0-3 months)": {
-          "url_pattern": "/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months",
+        "Phase 1": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-1",
           "static_url": "/engine/results/strategy",
           "tier_level": {
             "tier1": "Strategy Plans",
             "tier2": "Phases",
-            "tier3": "Phase 1: Foundation (0-3 months)"
+            "tier3": "Phase 1"
           },
           "widgets": {
             "primary": "StrategyPlansWidget",
@@ -219,13 +219,13 @@
             "chart_types": ["phase-timeline", "milestone-tracker", "resource-allocation", "risk-matrix"]
           }
         },
-        "Phase 2: Growth (3-6 months)": {
-          "url_pattern": "/engine/results/strategy-plans/phases/phase-2-growth-3-6-months",
+        "Phase 2": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-2",
           "static_url": "/engine/results/strategy",
           "tier_level": {
             "tier1": "Strategy Plans",
             "tier2": "Phases",
-            "tier3": "Phase 2: Growth (3-6 months)"
+            "tier3": "Phase 2"
           },
           "widgets": {
             "primary": "StrategyPlansWidget",
@@ -245,13 +245,13 @@
             "chart_types": ["growth-trends", "scaling-metrics", "capability-expansion", "performance-uplift"]
           }
         },
-        "Phase 3: Optimization (6-12 months)": {
-          "url_pattern": "/engine/results/strategy-plans/phases/phase-3-optimization-6-12-months",
+        "Phase 3": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-3",
           "static_url": "/engine/results/strategy",
           "tier_level": {
             "tier1": "Strategy Plans",
             "tier2": "Phases",
-            "tier3": "Phase 3: Optimization (6-12 months)"
+            "tier3": "Phase 3"
           },
           "widgets": {
             "primary": "StrategyPlansWidget",
@@ -271,13 +271,13 @@
             "chart_types": ["optimization-dashboard", "efficiency-metrics", "refinement-tracking", "maturity-progression"]
           }
         },
-        "Phase 4: Innovation (12+ months)": {
-          "url_pattern": "/engine/results/strategy-plans/phases/phase-4-innovation-12-months",
+        "Phase 4": {
+          "url_pattern": "/engine/results/strategy-plans/phases/phase-4",
           "static_url": "/engine/results/strategy",
           "tier_level": {
             "tier1": "Strategy Plans",
             "tier2": "Phases",
-            "tier3": "Phase 4: Innovation (12+ months)"
+            "tier3": "Phase 4"
           },
           "widgets": {
             "primary": "StrategyPlansWidget",
@@ -297,13 +297,13 @@
             "chart_types": ["innovation-pipeline", "future-readiness", "capability-evolution", "vision-alignment"]
           }
         },
-        "Cross-phase Dependencies": {
-          "url_pattern": "/engine/results/strategy-plans/phases/cross-phase-dependencies",
+        "Cross-Phase": {
+          "url_pattern": "/engine/results/strategy-plans/phases/cross-phase",
           "static_url": "/engine/results/strategy",
           "tier_level": {
             "tier1": "Strategy Plans",
             "tier2": "Phases",
-            "tier3": "Cross-phase Dependencies"
+            "tier3": "Cross-Phase"
           },
           "widgets": {
             "primary": "StrategyPlansWidget",
@@ -1058,11 +1058,11 @@
         "tier1": "Optimizely DXP Tools",
         "tier2": "ODP",
         "tier3": [
-          "Data Platform Dashboard",
-          "Audience Segmentation Analytics",
-          "Customer Data Quality",
-          "Real-time Event Processing",
-          "Data Integration Health"
+          "Customer Profiles",
+          "Audience Segments",
+          "Commerce",
+          "Real-time Events",
+          "Data Integration Status"
         ]
       },
       "tier_mapping": {
@@ -1712,11 +1712,15 @@
         "tier1": "Analytics Insights",
         "tier2": "Audiences",
         "tier3": [
-          "Audience Segmentation Overview",
-          "Behavioral Analysis",
-          "Demographic Insights",
-          "Journey Analytics",
-          "Engagement Patterns"
+          "Overview",
+          "Composition",
+          "Engagement Patterns",
+          "Lifecycle Stages",
+          "Behavioral Insights",
+          "Geographic Distribution",
+          "Channel Preferences",
+          "Content Affinity",
+          "Performance Benchmarks"
         ]
       },
       "tier_mapping": {
@@ -2360,11 +2364,12 @@
         "tier1": "Experience Optimization",
         "tier2": "Content",
         "tier3": [
-          "Content Strategy",
-          "Next Best Ideas",
-          "Content Improvements",
-          "Persona Coverage",
-          "Content Suggestions"
+          "Content Strategy Overview",
+          "AI for SEO",
+          "Performance Analytics",
+          "Content Optimization Recommendations",
+          "Audience Targeting",
+          "Content ROI Analysis"
         ]
       },
       "tier_mapping": {

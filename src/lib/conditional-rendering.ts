@@ -340,32 +340,39 @@ export function getTier3ContentData(path: string): {
   dataKey: string;
 } | null {
   // Strategy Plans → Phases tier-3 content
-  if (path.includes('phase-1-foundation')) {
+  if (path.includes('phase-1-foundation') || path.includes('/phase-1')) {
     return {
       contentId: 'phase-1-foundation-content',
       title: 'Phase 1: Foundation (0-3 months)',
       dataKey: 'phase1Data'
     };
   }
-  if (path.includes('phase-2-growth')) {
+  if (path.includes('phase-2-growth') || path.includes('/phase-2')) {
     return {
       contentId: 'phase-2-growth-content',
       title: 'Phase 2: Growth (3-6 months)',
       dataKey: 'phase2Data'
     };
   }
-  if (path.includes('phase-3-optimization')) {
+  if (path.includes('phase-3-optimization') || path.includes('/phase-3')) {
     return {
       contentId: 'phase-3-optimization-content',
       title: 'Phase 3: Optimization (6-12 months)',
       dataKey: 'phase3Data'
     };
   }
-  if (path.includes('phase-4-innovation')) {
+  if (path.includes('phase-4-innovation') || path.includes('/phase-4')) {
     return {
       contentId: 'phase-4-innovation-content',
       title: 'Phase 4: Innovation (12+ months)',
       dataKey: 'phase4Data'
+    };
+  }
+  if (path.includes('cross-phase-dependencies') || path.includes('/cross-phase')) {
+    return {
+      contentId: 'cross-phase-dependencies-content',
+      title: 'Cross-Phase Dependencies',
+      dataKey: 'crossPhaseDependencies'
     };
   }
 

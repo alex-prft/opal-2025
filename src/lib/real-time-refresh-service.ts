@@ -90,7 +90,7 @@ export class RealTimeRefreshService {
     // Strategy Plans - High Priority Pages
     this.addHighTrafficPage('/engine/results/strategy-plans', 'high', this.config.tier1_interval);
     this.addHighTrafficPage('/engine/results/strategy-plans/phases', 'high', this.config.tier2_interval);
-    this.addHighTrafficPage('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months', 'high', this.config.tier3_interval);
+    this.addHighTrafficPage('/engine/results/strategy-plans/phases/phase-1', 'high', this.config.tier3_interval);
 
     // DXP Tools - High Priority Pages
     this.addHighTrafficPage('/engine/results/optimizely-dxp-tools', 'high', this.config.tier1_interval);

@@ -115,25 +115,31 @@ const nextConfig = {
         destination: '/engine/results/strategy-plans/quick-wins/implementation-roadmap-%2830-day%29',
         permanent: false
       },
+      // Phase URL redirects - from old long URLs to new short URLs
       {
-        source: '/engine/results/strategy-plans/phases/phase-1%3A-foundation-0-3-months',
-        destination: '/engine/results/strategy-plans/phases/phase-1%3A-foundation-%280-3-months%29',
-        permanent: false
+        source: '/engine/results/strategy-plans/phases/phase-1%3A-foundation-%280-3-months%29',
+        destination: '/engine/results/strategy-plans/phases/phase-1',
+        permanent: true
       },
       {
-        source: '/engine/results/strategy-plans/phases/phase-2%3A-growth-3-6-months',
-        destination: '/engine/results/strategy-plans/phases/phase-2%3A-growth-%283-6-months%29',
-        permanent: false
+        source: '/engine/results/strategy-plans/phases/phase-2%3A-growth-%283-6-months%29',
+        destination: '/engine/results/strategy-plans/phases/phase-2',
+        permanent: true
       },
       {
-        source: '/engine/results/strategy-plans/phases/phase-3%3A-optimization-6-12-months',
-        destination: '/engine/results/strategy-plans/phases/phase-3%3A-optimization-%286-12-months%29',
-        permanent: false
+        source: '/engine/results/strategy-plans/phases/phase-3%3A-optimization-%286-12-months%29',
+        destination: '/engine/results/strategy-plans/phases/phase-3',
+        permanent: true
       },
       {
-        source: '/engine/results/strategy-plans/phases/phase-4%3A-innovation-12%2B-months',
-        destination: '/engine/results/strategy-plans/phases/phase-4%3A-innovation-%2812%2B-months%29',
-        permanent: false
+        source: '/engine/results/strategy-plans/phases/phase-4%3A-innovation-%2812%2B-months%29',
+        destination: '/engine/results/strategy-plans/phases/phase-4',
+        permanent: true
+      },
+      {
+        source: '/engine/results/strategy-plans/phases/cross-phase-dependencies',
+        destination: '/engine/results/strategy-plans/phases/cross-phase',
+        permanent: true
       },
     ];
   },

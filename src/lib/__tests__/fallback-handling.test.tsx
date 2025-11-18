@@ -34,7 +34,7 @@ import { WEBXWidget } from '@/components/widgets/tier2/WEBXWidget';
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months'
+  usePathname: () => '/engine/results/strategy-plans/phases/phase-1'
 }));
 
 // Mock conditional rendering context
@@ -42,7 +42,7 @@ const mockConditionalRenderingContext = () => ({
   detection: {
     tier1: 'strategy-plans',
     tier2: 'phases',
-    tier3: 'phase-1-foundation-0-3-months',
+    tier3: 'phase-1',
     tier1Display: 'Strategy Plans',
     tier2Display: 'Phases',
     tier3Display: 'Phase 1: Foundation (0-3 months)'
@@ -62,7 +62,7 @@ jest.mock('@/lib/conditional-rendering', () => ({
   pathMatchers: {
     isStrategyPlans: (path: string) => path.includes('strategy-plans'),
     isPhases: (path: string) => path.includes('phases'),
-    isPhase1Foundation: (path: string) => path.includes('phase-1-foundation'),
+    isPhase1Foundation: (path: string) => path.includes('phase-1-foundation') || path.includes('phase-1'),
     isDXPTools: (path: string) => path.includes('optimizely-dxp-tools'),
     isWEBX: (path: string) => path.includes('webx'),
     isAnalyticsInsights: (path: string) => path.includes('analytics-insights'),

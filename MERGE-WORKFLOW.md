@@ -11,12 +11,14 @@ If you are a human or an AI assistant working in this repo, you **must follow th
 We use a simple, opinionated branching model:
 
 - **`main`**
+
   - Source of truth for production.
   - Only contains **production-ready** code.
   - Only updated via **Pull Requests** (PRs) from other branches.
   - Protected: no direct pushes, no force-pushes.
 
 - **`claude-lab`**
+
   - Default lane for **AI-assisted development**, experiments, and normal sprint work.
   - This is where most day-to-day feature work happens.
   - May contain work-in-progress commits.
@@ -34,10 +36,12 @@ We use a simple, opinionated branching model:
 This repository uses Git worktrees for parallel development:
 
 - **Main Worktree**: `/my-nextjs-app` (main branch)
+
   - Stable, production-ready code
   - Used for final merges and production deployments
 
 - **Claude Worktree**: `/dev/my-nextjs-app-claude` (claude-lab branch)
+
   - **DEFAULT workspace for AI-assisted development**
   - Where Claude Code operates by default
   - Normal sprint work and experiments
@@ -68,18 +72,23 @@ Whenever you add or change automation (GitHub Actions, scripts, Vercel configura
 ## 4. General Rules
 
 1. **Do not commit directly to `main`.**
+
    - All changes must flow through a PR into `main`.
 
 2. **No force pushes to `main`.**
+
    - `git push --force` or `--force-with-lease` is never allowed on `main`.
 
 3. **Default development branch is `claude-lab`.**
+
    - For normal work, start from and work on `claude-lab` (or feature branches based on it).
 
 4. **Hotfixes belong in `bugfix-lab`.**
+
    - Only use `bugfix-lab` when there is a production issue that must be fixed urgently.
 
 5. **Keep branches up to date.**
+
    - Before opening a PR, ensure `claude-lab` or `bugfix-lab` is rebased/merged on top of the current `main`.
 
 6. **Tests and validation are mandatory before merging to `main`.**
@@ -204,6 +213,7 @@ Use this flow **only** for urgent production issues.
 ### 6.1. Identify Production Issue
 
 Before starting hotfix:
+
 1. Confirm the issue exists in production
 2. Determine if it requires immediate fix (can't wait for next sprint)
 3. Switch to bugfix workflow
@@ -433,22 +443,26 @@ git stash pop
 Before any merge to `main`, ensure:
 
 ### 10.1. Code Quality
+
 - [ ] `npm run lint` passes
 - [ ] `npm test` passes
 - [ ] `npm run build` succeeds
 - [ ] `npm run pre-deploy` passes
 
 ### 10.2. Security & Compliance
+
 - [ ] `npm run validate:security` achieves 34/35+ score
 - [ ] No hardcoded secrets or test data
 - [ ] CLAUDE.md patterns followed
 
 ### 10.3. Documentation
+
 - [ ] README updated if needed
 - [ ] API documentation current
 - [ ] Migration notes added if required
 
 ### 10.4. Deployment
+
 - [ ] Environment variables configured
 - [ ] Database migrations ready (if applicable)
 - [ ] Rollback plan documented
@@ -547,6 +561,7 @@ npm run dev -- --port 3002
 ## 13. Success Indicators
 
 ✅ **Workflow is working correctly when:**
+
 - All production deployments come from `main` branch
 - PRs are used for all changes to `main`
 - Hotfixes are small, focused, and use `bugfix-lab`
@@ -555,6 +570,7 @@ npm run dev -- --port 3002
 - Production issues can be fixed quickly via hotfix workflow
 
 ❌ **Warning signs that workflow is breaking down:**
+
 - Direct commits to `main`
 - Force pushes to `main`
 - Large/complex hotfixes
@@ -564,4 +580,36 @@ npm run dev -- --port 3002
 
 ---
 
-*This workflow prioritizes production stability while enabling rapid development and emergency response capabilities.*
+## 14. Disaster Recovery: “Oh no, I touched all 3 branches”
+
+If you accidentally made changes in **all three branches** (`main`, `claude-lab`, and `bugfix-lab`) and things feel messy, use this quick recovery flow to get back to a clean, sane state.
+
+### 14.1 High-level goal
+
+End state:
+
+- `main` = final, production-ready truth
+- `claude-lab` = fresh copy of `main` for the next sprint
+- `bugfix-lab` = fresh copy of `main` on standby for future emergencies
+
+### 14.2 Recovery steps
+
+From the repo root in each worktree:
+
+1. **Commit everything in all three worktrees**
+
+   In **main worktree**:
+
+   ```bash
+   git checkout main
+   git status
+   git add .
+   git commit -m "Main: local changes before recovery"   # if there are changes
+   git fetch origin
+   git pull origin main
+   git push origin main
+   ```
+
+---
+
+_This workflow prioritizes production stability while enabling rapid development and emergency response capabilities._

@@ -16,7 +16,7 @@ import { RefreshCw, Database, Clock, Server, TrendingUp, Users, BarChart3 } from
 export function TierDataDemo() {
   const [selectedTier1, setSelectedTier1] = useState('strategy-plans');
   const [selectedTier2, setSelectedTier2] = useState('phases');
-  const [selectedTier3, setSelectedTier3] = useState('phase-1-foundation-0-3-months');
+  const [selectedTier3, setSelectedTier3] = useState('phase-1');
 
   // Use the enhanced tier data hook
   const tierData = useTierOPALData(selectedTier1, selectedTier2, selectedTier3, {
@@ -57,9 +57,9 @@ export function TierDataDemo() {
 
   const tier3Options = {
     'phases': [
-      { value: 'phase-1-foundation-0-3-months', label: 'Phase 1: Foundation' },
-      { value: 'phase-2-growth-3-6-months', label: 'Phase 2: Growth' },
-      { value: 'phase-3-optimization-6-12-months', label: 'Phase 3: Optimization' }
+      { value: 'phase-1', label: 'Phase 1: Foundation' },
+      { value: 'phase-2', label: 'Phase 2: Growth' },
+      { value: 'phase-3', label: 'Phase 3: Optimization' }
     ],
     'webx': [
       { value: 'active-experiments', label: 'Active Experiments' },

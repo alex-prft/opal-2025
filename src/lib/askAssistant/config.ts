@@ -149,14 +149,58 @@ I will provide in my next messages:
   "strategy:quick-wins": {
     id: "strategy-quick-wins",
     label: "Quick Wins",
-    description: "TODO: define expert prompt for Quick Wins identification.",
-    expertPromptExample: "TODO: define expert prompt for Strategy Plans / Quick Wins.",
+    description: "Get expert guidance on identifying and implementing high-impact, low-effort strategic improvements that deliver immediate value.",
+    expertPromptExample: `Act as a **Strategic Quick Wins Consultant** specializing in identifying high-impact, low-effort opportunities that deliver immediate business value while building momentum for long-term strategic initiatives.
+
+Your goal is to analyze current capabilities, constraints, and opportunities to recommend actionable quick wins that can be implemented within 30-90 days and create meaningful progress toward larger strategic objectives.
+
+I will provide in my next messages:
+1) Current organizational capabilities and resources
+2) Strategic objectives and long-term goals
+3) Key performance indicators and success metrics
+4) Current challenges and pain points
+5) Available tools, technologies, and team capacity
+
+### Your tasks
+
+#### 1) Quick Wins Assessment
+- Evaluate current state against strategic objectives to identify opportunity gaps
+- Assess resource availability and implementation constraints
+- Identify dependencies and potential roadblocks for rapid implementation
+- Analyze impact-to-effort ratios across potential improvement areas
+
+#### 2) High-Impact Opportunity Identification
+- Recommend specific quick wins with clear business impact (revenue, efficiency, user experience)
+- Focus on improvements that require minimal resources but deliver measurable results
+- Identify low-hanging fruit that builds strategic momentum and stakeholder confidence
+- Suggest opportunities that enable future strategic initiatives
+
+#### 3) Implementation Roadmap
+- Design 30-60-90 day implementation timeline with clear milestones
+- Recommend resource allocation and team assignments for each quick win
+- Identify required tools, technologies, or process changes
+- Suggest measurement frameworks and success tracking methods
+
+#### 4) Strategic Alignment
+- Ensure quick wins directly support broader strategic objectives
+- Recommend how quick wins can create foundation for future initiatives
+- Identify opportunities for quick wins to demonstrate ROI and build internal support
+- Suggest communication strategies for highlighting quick win successes
+
+#### 5) Risk Mitigation & Success Factors
+- Identify potential implementation risks and mitigation strategies
+- Recommend success factors and critical enablers for quick win delivery
+- Suggest monitoring and course-correction approaches
+- Provide change management guidance for rapid implementation`,
     recommendedPrompts: [
-      "Identify high-impact, low-effort strategic improvements.",
-      "Recommend quick wins that build toward long-term goals.",
-      "Suggest implementation timeline for strategic quick wins."
+      "Identify the top 5 high-impact, low-effort strategic improvements we can implement in the next 30-60 days.",
+      "Recommend quick wins that will build momentum toward our long-term strategic objectives.",
+      "Design a 90-day quick wins implementation timeline with clear milestones and success metrics.",
+      "Suggest resource-efficient improvements that can deliver measurable business impact quickly.",
+      "Identify quick wins that will demonstrate strategic progress to stakeholders and leadership.",
+      "Recommend implementation strategies for quick wins that minimize disruption to current operations."
     ],
-    placeholder: "Describe your quick wins objectives..."
+    placeholder: "Describe your strategic objectives, current capabilities, and desired quick wins..."
   },
 
   "strategy:roadmap": {
@@ -179,14 +223,64 @@ I will provide in my next messages:
   "dxp:content-recs": {
     id: "dxp-content-recs",
     label: "Content Recommendations",
-    description: "TODO: define expert prompt for DXP Content Recommendations optimization.",
-    expertPromptExample: "TODO: define expert prompt for DXP Tools / Content Recommendations.",
+    description: "Get expert guidance on optimizing content recommendation algorithms, personalization strategies, and recommendation system performance.",
+    expertPromptExample: `Act as a **Content Recommendation Systems Specialist** with expertise in algorithmic personalization, machine learning-driven content discovery, and recommendation system optimization.
+
+Your goal is to analyze, optimize, and enhance content recommendation systems to improve user engagement, content discovery, and business outcomes through data-driven personalization strategies.
+
+I will provide in my next messages:
+1) Current content recommendation system architecture and algorithms
+2) Content inventory and metadata structure (topics, categories, tags, etc.)
+3) User behavior data and engagement metrics
+4) Content performance analytics and recommendation effectiveness data
+5) Business objectives for content recommendation optimization
+
+### Your tasks
+
+#### 1) Recommendation System Analysis
+- Evaluate current recommendation algorithm performance and accuracy
+- Analyze recommendation relevance, diversity, and coverage metrics
+- Identify cold start problems and content/user coverage gaps
+- Assess recommendation system scalability and performance characteristics
+
+#### 2) Algorithm Optimization Strategies
+- Recommend algorithm improvements based on content types and user behaviors
+- Suggest hybrid recommendation approaches (collaborative, content-based, knowledge-based)
+- Identify opportunities for real-time vs. batch recommendation processing
+- Recommend feature engineering improvements for better recommendation quality
+
+#### 3) Personalization Enhancement
+- Design user segmentation strategies for targeted content recommendations
+- Recommend context-aware personalization (time, device, location, intent)
+- Suggest implicit and explicit feedback integration strategies
+- Identify opportunities for cross-domain and cross-platform recommendation enhancement
+
+#### 4) Content Strategy Alignment
+- Analyze content taxonomy and metadata optimization for better recommendations
+- Recommend content tagging and categorization improvements
+- Suggest content freshness and lifecycle management for recommendation systems
+- Identify content gaps and creation priorities based on recommendation patterns
+
+#### 5) Testing and Measurement Framework
+- Design A/B testing strategies for recommendation algorithm improvements
+- Recommend key performance indicators and success metrics
+- Suggest recommendation system monitoring and alerting strategies
+- Provide recommendation quality evaluation frameworks and methodologies
+
+#### 6) Implementation Roadmap
+- Prioritize recommendation system improvements by impact and technical complexity
+- Recommend technology stack and infrastructure enhancements
+- Suggest data pipeline and processing optimizations
+- Provide change management strategies for recommendation system evolution`,
     recommendedPrompts: [
-      "Optimize our content recommendation algorithm performance.",
-      "Analyze content recommendation effectiveness and suggest improvements.",
-      "Design A/B tests for content recommendation strategies."
+      "Analyze our content recommendation system performance and identify optimization opportunities.",
+      "Design personalization strategies to improve recommendation relevance and engagement.",
+      "Recommend A/B testing approaches for evaluating recommendation algorithm improvements.",
+      "Suggest content metadata and taxonomy enhancements for better recommendation quality.",
+      "Analyze user segmentation strategies for targeted content recommendation experiences.",
+      "Design measurement frameworks for tracking recommendation system effectiveness and business impact."
     ],
-    placeholder: "Describe your content recommendations optimization goals..."
+    placeholder: "Describe your content recommendation system and optimization goals..."
   },
 
   "dxp:cms": {
@@ -261,14 +355,58 @@ I will provide in my next messages:
   "analytics:content": {
     id: "analytics-content",
     label: "Content Analytics",
-    description: "TODO: define expert prompt for Content Analytics insights.",
-    expertPromptExample: "TODO: define expert prompt for Analytics Insights / Content.",
+    description: "Get expert guidance on content performance analysis, engagement metrics, and optimization strategies.",
+    expertPromptExample: `Act as a **Content Analytics Strategist** specializing in data-driven content optimization for digital experience platforms.
+
+Your goal is to analyze content performance data, identify optimization opportunities, and provide actionable recommendations for improving content engagement, effectiveness, and business impact.
+
+I will provide in my next messages:
+1) Current content performance metrics and analytics data
+2) Content portfolio overview (types, topics, formats, channels)
+3) Key business objectives and success metrics for content
+4) Target audience segments and engagement patterns
+5) Current content creation and optimization workflows
+
+### Your tasks
+
+#### 1) Content Performance Analysis
+- Evaluate content performance across key metrics (engagement, conversions, retention)
+- Identify top-performing content patterns and characteristics
+- Analyze content gaps and underperforming segments
+- Assess content lifecycle performance and optimization opportunities
+
+#### 2) Audience Engagement Insights
+- Analyze content engagement patterns across different audience segments
+- Identify content preferences and consumption behaviors
+- Recommend content personalization and targeting strategies
+- Suggest audience-specific content optimization approaches
+
+#### 3) Content Optimization Strategy
+- Recommend specific content improvements based on performance data
+- Suggest A/B testing strategies for content optimization
+- Identify content update, refresh, and retirement opportunities
+- Recommend content format and channel optimization strategies
+
+#### 4) Measurement Framework
+- Design comprehensive content analytics measurement framework
+- Recommend key performance indicators and success metrics
+- Suggest reporting dashboards and monitoring strategies
+- Provide content performance benchmarking recommendations
+
+#### 5) Implementation Roadmap
+- Provide prioritized action plan for content optimization
+- Include timeline and resource requirements for implementation
+- Recommend tools and processes for ongoing content analytics
+- Suggest change management strategies for content optimization adoption`,
     recommendedPrompts: [
-      "Analyze our content performance data and identify optimization opportunities.",
-      "Recommend content analytics frameworks and measurement strategies.",
-      "Suggest content performance dashboards and reporting approaches."
+      "Analyze our content performance data and identify top optimization opportunities.",
+      "Recommend content analytics frameworks and key performance indicators.",
+      "Suggest audience-specific content optimization strategies based on engagement data.",
+      "Design content performance dashboards and reporting approaches.",
+      "Identify content gaps and recommend new content creation priorities.",
+      "Analyze content lifecycle performance and suggest optimization strategies."
     ],
-    placeholder: "Describe your content analytics goals..."
+    placeholder: "Describe your content analytics goals and current performance data..."
   },
 
   "analytics:audiences": {
@@ -330,14 +468,58 @@ I will provide in my next messages:
   "experience:content": {
     id: "experience-content",
     label: "Content Experience",
-    description: "TODO: define expert prompt for Content Experience optimization.",
-    expertPromptExample: "TODO: define expert prompt for Experience Optimization / Content.",
+    description: "Get expert guidance on optimizing content experiences across all customer touchpoints for maximum engagement and conversion.",
+    expertPromptExample: `Act as a **Content Experience Optimization Specialist** focused on creating seamless, high-converting content experiences across all customer touchpoints.
+
+Your goal is to analyze and optimize content experiences to maximize engagement, reduce friction, and drive measurable business outcomes through strategic content design and delivery.
+
+I will provide in my next messages:
+1) Current content experience audit across key touchpoints (website, apps, email, etc.)
+2) Customer journey maps and key interaction points
+3) Content performance metrics and user behavior data
+4) Business objectives and conversion goals
+5) Technical constraints and platform capabilities
+
+### Your tasks
+
+#### 1) Content Experience Audit
+- Evaluate content effectiveness across all customer touchpoints
+- Identify friction points and optimization opportunities in content flow
+- Analyze content consistency and brand alignment across channels
+- Assess content accessibility and user experience quality
+
+#### 2) Customer Journey Content Optimization
+- Map content experiences to customer journey stages (awareness, consideration, decision, retention)
+- Identify content gaps and redundancies across the journey
+- Recommend content personalization strategies for different user segments
+- Suggest content sequencing and progression strategies for optimal engagement
+
+#### 3) Content Performance Enhancement
+- Analyze content engagement metrics and conversion performance
+- Recommend content format optimization (visual, interactive, multimedia)
+- Suggest content length, structure, and presentation improvements
+- Identify high-impact content experiments and A/B testing opportunities
+
+#### 4) Cross-Channel Content Strategy
+- Design coherent content experiences across multiple channels and platforms
+- Recommend content repurposing and adaptation strategies
+- Suggest content syndication and distribution optimization
+- Provide content governance frameworks for multi-channel consistency
+
+#### 5) Implementation Roadmap
+- Prioritize content experience improvements by impact and effort
+- Recommend content optimization tools and technologies
+- Suggest measurement frameworks for tracking content experience success
+- Provide change management guidance for content experience transformation`,
     recommendedPrompts: [
-      "Optimize our content experience across all touchpoints.",
-      "Recommend content experience enhancement strategies.",
-      "Suggest content performance measurement and optimization approaches."
+      "Audit our content experience across key customer touchpoints and identify optimization opportunities.",
+      "Recommend content personalization strategies for different user journey stages.",
+      "Suggest A/B testing approaches for optimizing content engagement and conversion.",
+      "Design a cross-channel content experience strategy for consistency and effectiveness.",
+      "Analyze content performance metrics and recommend format and structure improvements.",
+      "Create a content experience optimization roadmap with prioritized implementation steps."
     ],
-    placeholder: "Describe your content experience optimization goals..."
+    placeholder: "Describe your content experience optimization goals and current touchpoints..."
   },
 
   "experience:content:ai-for-seo": {

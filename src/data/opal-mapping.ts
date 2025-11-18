@@ -6,11 +6,11 @@ export const opalMapping = {
         "tier1": "Strategy Plans",
         "tier2": "OSA",
         "tier3": [
-          "Overview Dashboard",
-          "Strategic Recommendations",
-          "Performance Metrics",
-          "Data Quality Score",
-          "Workflow Timeline"
+          "Strategy Overview",
+          "AI Recommendations",
+          "Performance Insights",
+          "Data Health Status",
+          "Implementation Timeline"
         ]
       }
     },
@@ -19,11 +19,11 @@ export const opalMapping = {
         "tier1": "Strategy Plans",
         "tier2": "Quick Wins",
         "tier3": [
-          "Immediate Opportunities",
-          "Implementation Roadmap (30-day)",
-          "Resource Requirements",
-          "Expected Impact",
-          "Success Metrics"
+          "Ready to Implement",
+          "30-Day Action Plan",
+          "Resource Planning",
+          "Impact Projections",
+          "Success Tracking"
         ]
       }
     },
@@ -45,11 +45,11 @@ export const opalMapping = {
         "tier1": "Strategy Plans",
         "tier2": "Phases",
         "tier3": [
-          "Phase 1: Foundation (0-3 months)",
-          "Phase 2: Growth (3-6 months)",
-          "Phase 3: Optimization (6-12 months)",
-          "Phase 4: Innovation (12+ months)",
-          "Cross-phase Dependencies"
+          "Phase 1: Foundation",
+          "Phase 2: Growth",
+          "Phase 3: Optimization",
+          "Phase 4: Scale",
+          "Cross-Phase Analysis"
         ]
       }
     },
@@ -73,11 +73,11 @@ export const opalMapping = {
         "tier1": "Optimizely DXP Tools",
         "tier2": "Content Recs",
         "tier3": [
-          "Visitor Analytics Dashboard",
-          "Content Performance Metrics",
-          "Recommendation Algorithms",
-          "A/B Testing Results",
-          "Personalization Effectiveness"
+          "Content Performance",
+          "Recommendation Engine",
+          "Visitor Insights",
+          "Testing & Optimization",
+          "Personalization Impact"
         ]
       }
     },
@@ -101,7 +101,7 @@ export const opalMapping = {
         "tier3": [
           "Customer Profiles",
           "Audience Segments",
-          "Journey Analytics",
+          "Commerce",
           "Real-time Events",
           "Data Integration Status"
         ]
@@ -170,13 +170,15 @@ export const opalMapping = {
         "tier1": "Analytics Insights",
         "tier2": "Audiences",
         "tier3": [
-          "Engagement",
-          "Topics",
-          "Popular",
-          "AI Visibility",
-          "Semantic",
-          "Geographic",
-          "Freshness"
+          "Overview",
+          "Composition",
+          "Engagement Patterns",
+          "Lifecycle Stages",
+          "Behavioral Insights",
+          "Geographic Distribution",
+          "Channel Preferences",
+          "Content Affinity",
+          "Performance Benchmarks"
         ]
       }
     },
@@ -251,7 +253,7 @@ export const opalMapping = {
           "AI for SEO",
           "Performance Analytics",
           "Content Optimization Recommendations",
-          "Multi-channel Content Distribution",
+          "Audience Targeting",
           "Content ROI Analysis"
         ]
       }

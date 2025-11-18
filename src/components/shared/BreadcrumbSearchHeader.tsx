@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, ChevronRight } from 'lucide-react';
+import { AskAssistantButton } from '@/components/ask-assistant/AskAssistantButton';
 
 interface BreadcrumbItem {
   label: string;
@@ -27,6 +28,7 @@ const BreadcrumbSearchHeader: React.FC<BreadcrumbSearchHeaderProps> = ({
   className = ""
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -123,10 +125,25 @@ const BreadcrumbSearchHeader: React.FC<BreadcrumbSearchHeaderProps> = ({
     }
   };
 
+  const handleSearchToggle = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+    // Clear search when collapsing
+    if (isSearchExpanded) {
+      setSearchQuery('');
+    }
+  };
+
+  const handleSearchBlur = () => {
+    // Collapse search if it's empty and user clicks away
+    if (!searchQuery.trim()) {
+      setIsSearchExpanded(false);
+    }
+  };
+
   return (
-    <div id="results-content-header" className={`flex items-center justify-between py-4 px-6 bg-white/80 backdrop-blur-sm border-b border-gray-200 ${className}`}>
+    <div id="results-content-header" className={`flex items-center py-4 px-6 bg-white/80 backdrop-blur-sm border-b border-gray-200 ${className}`}>
       {/* Breadcrumbs - Left Side */}
-      <nav className="flex items-center space-x-1 text-sm" aria-label="Breadcrumb">
+      <nav className="flex items-center space-x-1 text-sm flex-1" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-1">
           {breadcrumbs.map((item, index) => (
             <li key={index} className="flex items-center">
@@ -150,28 +167,51 @@ const BreadcrumbSearchHeader: React.FC<BreadcrumbSearchHeaderProps> = ({
         </ol>
       </nav>
 
+      {/* Ask Assistant Button - Center */}
+      <div className="flex items-center mx-4">
+        <AskAssistantButton size="sm" />
+      </div>
+
       {/* Search Box - Right Side */}
-      <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            type="text"
-            placeholder={searchPlaceholder}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="pl-10 pr-4 py-2 w-64 text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        {searchQuery && (
+      <div className="flex items-center">
+        {!isSearchExpanded ? (
+          // Collapsed state - just magnifying glass
           <Button
-            type="submit"
+            type="button"
+            variant="ghost"
             size="sm"
-            className="px-3 py-2"
+            onClick={handleSearchToggle}
+            className="p-2 hover:bg-gray-100 transition-colors"
           >
-            Search
+            <Search className="h-4 w-4 text-gray-600" />
           </Button>
+        ) : (
+          // Expanded state - search form
+          <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder={searchPlaceholder}
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onBlur={handleSearchBlur}
+                autoFocus
+                className="pl-10 pr-4 py-2 w-64 text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+            {searchQuery && (
+              <Button
+                type="submit"
+                size="sm"
+                className="px-3 py-2"
+              >
+                Search
+              </Button>
+            )}
+          </form>
         )}
-      </form>
+      </div>
     </div>
   );
 };

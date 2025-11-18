@@ -280,12 +280,20 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
 
       case 'phases':
         const phaseMapping: { [key: string]: string } = {
+          // New short URLs
+          'phase-1': 'Phase 1',
+          'phase-2': 'Phase 2',
+          'phase-3': 'Phase 3',
+          'phase-4': 'Phase 4',
+          'cross-phase': 'Cross-Phase',
+          // Legacy URLs for backward compatibility
           'phase-1:-foundation-(0-3-months)': 'Phase 1',
           'phase-2%3a-growth-(3-6-months)': 'Phase 2',
           'phase-2:-growth-(3-6-months)': 'Phase 2',
           'phase-3:-optimization-(6-12-months)': 'Phase 3',
           'phase-4:-innovation-(12+-months)': 'Phase 4',
-          'phase-4:-innovation-(12%2b-months)': 'Phase 4'
+          'phase-4:-innovation-(12%2b-months)': 'Phase 4',
+          'cross-phase-dependencies': 'Cross-Phase'
         };
         const currentPhase = phaseMapping[tier3.toLowerCase().replace(/\s+/g, '-')] || tier3;
 
@@ -4733,6 +4741,316 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
     </ContentRendererErrorBoundary>
   );
 
+  const renderAudienceTargeting = () => (
+    <div className="space-y-6">
+      {/* Audience Targeting Overview Dashboard */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5 text-indigo-600" />
+            Audience Targeting Performance Dashboard
+          </CardTitle>
+          <CardDescription>
+            Advanced audience segmentation and targeted content delivery performance metrics
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="p-4 bg-indigo-50 rounded-lg">
+              <h4 className="font-semibold text-indigo-900">Active Audience Segments</h4>
+              <div className="text-2xl font-bold text-indigo-600">34</div>
+              <p className="text-sm text-indigo-700">Behavioral and demographic segments</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <h4 className="font-semibold text-blue-900">Targeting Precision</h4>
+              <div className="text-2xl font-bold text-blue-600">87.3%</div>
+              <p className="text-sm text-blue-700">Audience-content match accuracy</p>
+            </div>
+            <div className="p-4 bg-purple-50 rounded-lg">
+              <h4 className="font-semibold text-purple-900">Engagement Lift</h4>
+              <div className="text-2xl font-bold text-purple-600">+42.8%</div>
+              <p className="text-sm text-purple-700">vs. non-targeted content</p>
+            </div>
+            <div className="p-4 bg-cyan-50 rounded-lg">
+              <h4 className="font-semibold text-cyan-900">Conversion Rate</h4>
+              <div className="text-2xl font-bold text-cyan-600">8.7%</div>
+              <p className="text-sm text-cyan-700">Targeted content conversion impact</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Audience Segments Performance Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Top Performing Audience Segments</CardTitle>
+          <CardDescription>
+            Segment-level performance analysis and targeting effectiveness
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left p-3 font-semibold">Segment Name</th>
+                  <th className="text-left p-3 font-semibold">Size</th>
+                  <th className="text-left p-3 font-semibold">Engagement Rate</th>
+                  <th className="text-left p-3 font-semibold">Conversion Rate</th>
+                  <th className="text-left p-3 font-semibold">Content Affinity</th>
+                  <th className="text-left p-3 font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b">
+                  <td className="p-3">
+                    <div>
+                      <div className="font-medium">Enterprise Decision Makers</div>
+                      <div className="text-xs text-gray-500">C-Suite, VPs, Directors</div>
+                    </div>
+                  </td>
+                  <td className="p-3">12,847</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">94.2%</Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge className="bg-blue-100 text-blue-800">12.8%</Badge>
+                  </td>
+                  <td className="p-3">Strategy, ROI, Case Studies</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">Active</Badge>
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3">
+                    <div>
+                      <div className="font-medium">Technical Implementers</div>
+                      <div className="text-xs text-gray-500">Developers, IT Managers, Architects</div>
+                    </div>
+                  </td>
+                  <td className="p-3">8,934</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">91.7%</Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge className="bg-purple-100 text-purple-800">15.4%</Badge>
+                  </td>
+                  <td className="p-3">Documentation, Tutorials, APIs</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">Active</Badge>
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3">
+                    <div>
+                      <div className="font-medium">Marketing Professionals</div>
+                      <div className="text-xs text-gray-500">CMOs, Marketing Managers, Analysts</div>
+                    </div>
+                  </td>
+                  <td className="p-3">15,623</td>
+                  <td className="p-3">
+                    <Badge className="bg-yellow-100 text-yellow-800">78.9%</Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge className="bg-blue-100 text-blue-800">9.2%</Badge>
+                  </td>
+                  <td className="p-3">Analytics, Campaigns, Optimization</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">Active</Badge>
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3">
+                    <div>
+                      <div className="font-medium">Growth-Stage Companies</div>
+                      <div className="text-xs text-gray-500">Series A-C, Scale-up phase</div>
+                    </div>
+                  </td>
+                  <td className="p-3">6,712</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">89.1%</Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge className="bg-indigo-100 text-indigo-800">18.7%</Badge>
+                  </td>
+                  <td className="p-3">Scaling, Integration, Best Practices</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">Active</Badge>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3">
+                    <div>
+                      <div className="font-medium">E-commerce Retailers</div>
+                      <div className="text-xs text-gray-500">Online retailers, Merchandising teams</div>
+                    </div>
+                  </td>
+                  <td className="p-3">11,459</td>
+                  <td className="p-3">
+                    <Badge className="bg-blue-100 text-blue-800">85.6%</Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">13.9%</Badge>
+                  </td>
+                  <td className="p-3">Personalization, A/B Testing, UX</td>
+                  <td className="p-3">
+                    <Badge className="bg-green-100 text-green-800">Active</Badge>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Targeting Strategy Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Content-Audience Matching Intelligence</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-3 bg-green-50 rounded">
+                <div>
+                  <div className="font-medium">Strategy Content → Enterprise</div>
+                  <div className="text-xs text-gray-600">ROI case studies, executive briefings</div>
+                </div>
+                <Badge className="bg-green-100 text-green-800">96% Match</Badge>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
+                <div>
+                  <div className="font-medium">Technical Docs → Developers</div>
+                  <div className="text-xs text-gray-600">API guides, implementation tutorials</div>
+                </div>
+                <Badge className="bg-blue-100 text-blue-800">94% Match</Badge>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-purple-50 rounded">
+                <div>
+                  <div className="font-medium">Campaign Examples → Marketers</div>
+                  <div className="text-xs text-gray-600">A/B test results, optimization tactics</div>
+                </div>
+                <Badge className="bg-purple-100 text-purple-800">91% Match</Badge>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                <div>
+                  <div className="font-medium">Integration Guides → IT Teams</div>
+                  <div className="text-xs text-gray-600">Setup documentation, troubleshooting</div>
+                </div>
+                <Badge className="bg-yellow-100 text-yellow-800">87% Match</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Behavioral Targeting Insights</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-2">Engagement Patterns by Segment</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-sm">Morning Browsers (8-11 AM)</span>
+                    <span className="font-bold text-blue-600">34% of traffic</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm">Lunch Break Readers (12-1 PM)</span>
+                    <span className="font-bold text-green-600">18% of traffic</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm">Evening Researchers (6-8 PM)</span>
+                    <span className="font-bold text-purple-600">28% of traffic</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm">Weekend Explorers</span>
+                    <span className="font-bold text-orange-600">20% of traffic</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Content Journey Analysis</h4>
+                <div className="space-y-2">
+                  <div className="p-2 bg-indigo-50 rounded text-sm">
+                    <strong>Typical Path:</strong> Product Features → Case Studies → Pricing → Demo Request
+                  </div>
+                  <div className="p-2 bg-cyan-50 rounded text-sm">
+                    <strong>Conversion Rate:</strong> 23.7% higher for guided content journeys
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Targeting Optimization Recommendations */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Targeting Strategy Recommendations</CardTitle>
+          <CardDescription>
+            AI-powered suggestions to improve audience targeting effectiveness
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-green-800 mb-3">High-Impact Opportunities</h4>
+              <div className="space-y-3">
+                <div className="p-3 border-l-4 border-green-500 bg-green-50">
+                  <div className="font-medium text-green-900">Expand Developer Segment</div>
+                  <div className="text-sm text-green-700 mt-1">
+                    Create more API documentation and code examples. Potential +34% engagement lift.
+                  </div>
+                </div>
+                <div className="p-3 border-l-4 border-blue-500 bg-blue-50">
+                  <div className="font-medium text-blue-900">Mobile-First Content for Field Teams</div>
+                  <div className="text-sm text-blue-700 mt-1">
+                    Optimize content for mobile consumption. 67% of field sales access content on mobile.
+                  </div>
+                </div>
+                <div className="p-3 border-l-4 border-purple-500 bg-purple-50">
+                  <div className="font-medium text-purple-900">Seasonal Campaign Targeting</div>
+                  <div className="text-sm text-purple-700 mt-1">
+                    Adjust targeting for Q4 holiday season. Historical data shows 45% higher conversion rates.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-orange-800 mb-3">Emerging Segments</h4>
+              <div className="space-y-3">
+                <div className="p-3 border border-orange-200 rounded bg-orange-50">
+                  <div className="font-medium text-orange-900">AI/ML Enthusiasts</div>
+                  <div className="text-sm text-orange-700 mt-1">
+                    Growing segment interested in AI-powered optimization. Size: 2,847 visitors.
+                  </div>
+                  <div className="text-xs text-orange-600 mt-2">Recommended content: AI case studies, ML algorithms</div>
+                </div>
+                <div className="p-3 border border-cyan-200 rounded bg-cyan-50">
+                  <div className="font-medium text-cyan-900">Privacy-First Marketers</div>
+                  <div className="text-sm text-cyan-700 mt-1">
+                    Segment focused on cookieless targeting solutions. Size: 4,123 visitors.
+                  </div>
+                  <div className="text-xs text-cyan-600 mt-2">Recommended content: Privacy compliance, first-party data</div>
+                </div>
+                <div className="p-3 border border-rose-200 rounded bg-rose-50">
+                  <div className="font-medium text-rose-900">Global Expansion Teams</div>
+                  <div className="text-sm text-rose-700 mt-1">
+                    Companies expanding internationally. Size: 1,956 visitors.
+                  </div>
+                  <div className="text-xs text-rose-600 mt-2">Recommended content: Localization, multi-region strategies</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   const renderContentPerformanceMetrics = () => (
     <div className="space-y-6">
       {/* Performance Leaderboard */}
@@ -5010,8 +5328,8 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
         return renderCustomerProfiles();
       case 'audience-segments':
         return renderAudienceSegments();
-      case 'journey-analytics':
-        return renderJourneyAnalytics();
+      case 'commerce':
+        return renderCommerce();
       case 'real-time-events':
         return renderRealTimeEvents();
       case 'data-integration-status':
@@ -5440,61 +5758,698 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
   // Additional ODP sub-page functions
   const renderAudienceSegments = () => (
     <div className="space-y-6">
+      {/* Section A: Segment Performance Dashboard (Top Band with KPI Cards) */}
       <Card>
         <CardHeader>
-          <CardTitle>Segment Performance Dashboard</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Activity className="h-5 w-5 text-blue-600" />
+            Segment Performance Dashboard
+          </CardTitle>
+          <CardDescription>
+            High-level audience segment metrics and performance indicators across your ODP audience portfolio
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg">
-              <h4 className="font-medium text-blue-800">High-Value Customers</h4>
-              <div className="text-sm text-gray-600 mt-2">
-                <div>Size: 12,847 profiles</div>
-                <div>Avg Order Value: $247</div>
-                <div>Conversion Rate: 8.3%</div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-blue-600">Total Active Segments</p>
+                  <p className="text-2xl font-bold text-blue-900">24</p>
+                </div>
+                <div className="p-2 bg-blue-200 rounded-full">
+                  <Activity className="h-5 w-5 text-blue-700" />
+                </div>
               </div>
+              <p className="text-xs text-blue-700 mt-2">+3 new this month</p>
             </div>
-            <div className="p-4 bg-green-50 border-l-4 border-green-400 rounded-lg">
-              <h4 className="font-medium text-green-800">Frequent Buyers</h4>
-              <div className="text-sm text-gray-600 mt-2">
-                <div>Size: 34,129 profiles</div>
-                <div>Avg Order Value: $127</div>
-                <div>Conversion Rate: 5.7%</div>
+
+            <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-600">Total Addressable Audience</p>
+                  <p className="text-2xl font-bold text-green-900">2.4M</p>
+                </div>
+                <div className="p-2 bg-green-200 rounded-full">
+                  <Target className="h-5 w-5 text-green-700" />
+                </div>
               </div>
+              <p className="text-xs text-green-700 mt-2">Across all segments</p>
             </div>
-            <div className="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
-              <h4 className="font-medium text-yellow-800">New Prospects</h4>
-              <div className="text-sm text-gray-600 mt-2">
-                <div>Size: 89,234 profiles</div>
-                <div>Avg Order Value: $67</div>
-                <div>Conversion Rate: 2.1%</div>
+
+            <div className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-purple-600">Avg Engagement Rate</p>
+                  <p className="text-2xl font-bold text-purple-900">67.3%</p>
+                </div>
+                <div className="p-2 bg-purple-200 rounded-full">
+                  <TrendingUp className="h-5 w-5 text-purple-700" />
+                </div>
               </div>
+              <p className="text-xs text-purple-700 mt-2">+12% vs last quarter</p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-orange-600">Segment Health Score</p>
+                  <p className="text-2xl font-bold text-orange-900">8.4/10</p>
+                </div>
+                <div className="p-2 bg-orange-200 rounded-full">
+                  <BarChart3 className="h-5 w-5 text-orange-700" />
+                </div>
+              </div>
+              <p className="text-xs text-orange-700 mt-2">Strong performance</p>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Section B: Main Segment Table (Core Content) */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-green-600" />
+            Active Audience Segments
+          </CardTitle>
+          <CardDescription>
+            Detailed segment performance metrics, sizes, and behavioral indicators for strategic audience targeting
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Segment Name</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Size</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Engagement Rate</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Conversion Rate</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Growth Trend</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Last Updated</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">High-Value Enterprise</div>
+                      <div className="text-sm text-gray-500">Premium B2B segment</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">12,847</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600 font-medium">84.2%</div>
+                      <div className="text-xs text-green-600">▲ 5.3%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">8.3%</div>
+                      <div className="text-xs text-blue-600">▲ 1.2%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="text-green-600 text-sm">Growing (+15%)</div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-600 text-sm">2 hours ago</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Frequent Buyers</div>
+                      <div className="text-sm text-gray-500">Repeat purchase behavior</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">34,129</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600 font-medium">72.1%</div>
+                      <div className="text-xs text-green-600">▲ 2.8%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">5.7%</div>
+                      <div className="text-xs text-blue-600">▲ 0.9%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="text-green-600 text-sm">Growing (+8%)</div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-600 text-sm">1 hour ago</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Mobile-First Users</div>
+                      <div className="text-sm text-gray-500">Primary mobile engagement</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">156,342</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-yellow-600 font-medium">58.9%</div>
+                      <div className="text-xs text-red-600">▼ 1.4%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">3.2%</div>
+                      <div className="text-xs text-blue-600">▲ 0.3%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="text-blue-600 text-sm">Stable (+2%)</div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-600 text-sm">3 hours ago</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Cart Abandoners</div>
+                      <div className="text-sm text-gray-500">Recovery opportunities</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">89,234</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-orange-600 font-medium">45.3%</div>
+                      <div className="text-xs text-green-600">▲ 3.1%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">2.1%</div>
+                      <div className="text-xs text-green-600">▲ 0.5%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="text-green-600 text-sm">Recovering (+12%)</div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-600 text-sm">4 hours ago</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Monitoring</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">New Prospects</div>
+                      <div className="text-sm text-gray-500">First-time visitors</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">423,891</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-gray-600 font-medium">31.7%</div>
+                      <div className="text-xs text-green-600">▲ 1.8%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">1.4%</div>
+                      <div className="text-xs text-blue-600">▲ 0.2%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="text-green-600 text-sm">Growing (+22%)</div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-600 text-sm">1 hour ago</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section C: Lists Section (List-level Performance View) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-purple-600" />
+              Segment Composition Analysis
+            </CardTitle>
+            <CardDescription>
+              Breakdown of audience characteristics and behavioral patterns within each segment
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <h4 className="font-medium text-purple-800 mb-3">Top Performing Attributes</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Previous Purchase History</span>
+                    <span className="text-sm font-medium text-purple-600">89% correlation</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Email Engagement Score</span>
+                    <span className="text-sm font-medium text-purple-600">76% correlation</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Geographic Location</span>
+                    <span className="text-sm font-medium text-purple-600">62% correlation</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Device Preference</span>
+                    <span className="text-sm font-medium text-purple-600">54% correlation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-800 mb-3">Audience Overlap Analysis</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">High-Value ↔ Frequent Buyers</span>
+                    <span className="text-sm font-medium text-blue-600">23% overlap</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Mobile ↔ Cart Abandoners</span>
+                    <span className="text-sm font-medium text-blue-600">31% overlap</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-700">Prospects ↔ Mobile Users</span>
+                    <span className="text-sm font-medium text-blue-600">67% overlap</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              Performance Trends & Insights
+            </CardTitle>
+            <CardDescription>
+              Recent performance trends and optimization opportunities across audience segments
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <h4 className="font-medium text-green-800 mb-3">Growth Opportunities</h4>
+                <div className="space-y-3">
+                  <div className="text-sm">
+                    <div className="font-medium text-gray-800">Cart Abandonment Recovery</div>
+                    <div className="text-gray-600">+12% improvement in recovery campaigns</div>
+                    <div className="text-xs text-green-600 mt-1">Recommended: Increase email frequency</div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="font-medium text-gray-800">Mobile Experience Optimization</div>
+                    <div className="text-gray-600">Mobile segment showing engagement decline</div>
+                    <div className="text-xs text-orange-600 mt-1">Recommended: UX audit and improvements</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <h4 className="font-medium text-yellow-800 mb-3">Monitoring Alerts</h4>
+                <div className="space-y-2">
+                  <div className="text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                      <span className="text-gray-700">Mobile engagement trending down (-1.4%)</span>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-gray-700">High-value segment exceeding targets (+5.3%)</span>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="text-gray-700">New prospects showing healthy growth (+22%)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
-  const renderJourneyAnalytics = () => (
+  const renderCommerce = () => (
     <div className="space-y-6">
+      {/* Section A: Revenue Performance Dashboard (Top Band with Financial KPIs) */}
       <Card>
         <CardHeader>
-          <CardTitle>Customer Journey Flow Visualization</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <DollarSign className="h-5 w-5 text-green-600" />
+            Commerce Performance Dashboard
+          </CardTitle>
+          <CardDescription>
+            Revenue metrics, transaction analytics, and e-commerce performance indicators from ODP customer data
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="p-4 border rounded-lg">
-              <h4 className="font-medium mb-2">Top Customer Paths</h4>
-              <div className="space-y-2">
-                <div className="text-sm">Awareness → Consideration → Purchase: 23% of customers</div>
-                <div className="text-sm">Direct Purchase → Loyalty: 18% of customers</div>
-                <div className="text-sm">Social → Email → Purchase: 15% of customers</div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-600">Total Revenue (30d)</p>
+                  <p className="text-2xl font-bold text-green-900">$847,234</p>
+                </div>
+                <div className="p-2 bg-green-200 rounded-full">
+                  <DollarSign className="h-5 w-5 text-green-700" />
+                </div>
               </div>
+              <p className="text-xs text-green-700 mt-2">+18.3% from last month</p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-blue-600">Average Order Value</p>
+                  <p className="text-2xl font-bold text-blue-900">$127.45</p>
+                </div>
+                <div className="p-2 bg-blue-200 rounded-full">
+                  <ShoppingCart className="h-5 w-5 text-blue-700" />
+                </div>
+              </div>
+              <p className="text-xs text-blue-700 mt-2">+5.2% improvement</p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-purple-600">Conversion Rate</p>
+                  <p className="text-2xl font-bold text-purple-900">4.23%</p>
+                </div>
+                <div className="p-2 bg-purple-200 rounded-full">
+                  <Target className="h-5 w-5 text-purple-700" />
+                </div>
+              </div>
+              <p className="text-xs text-purple-700 mt-2">Above industry avg</p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-orange-600">Customer Lifetime Value</p>
+                  <p className="text-2xl font-bold text-orange-900">$456.78</p>
+                </div>
+                <div className="p-2 bg-orange-200 rounded-full">
+                  <Users className="h-5 w-5 text-orange-700" />
+                </div>
+              </div>
+              <p className="text-xs text-orange-700 mt-2">+12.1% growth</p>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Section B: Sales Analytics Table (Core Commerce Data) */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-indigo-600" />
+            Sales Performance Analytics
+          </CardTitle>
+          <CardDescription>
+            Detailed breakdown of sales performance by product category, customer segment, and channel
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Product Category</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Revenue</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Units Sold</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Avg. Order Value</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Conversion Rate</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Margin</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700">Growth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Premium Software</div>
+                      <div className="text-sm text-gray-500">Enterprise solutions</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900 font-medium">$324,567</td>
+                  <td className="py-4 px-4 text-gray-900">1,847</td>
+                  <td className="py-4 px-4 text-gray-900">$175.82</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600 font-medium">6.2%</div>
+                      <div className="text-xs text-green-600">▲ 0.8%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">67.3%</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">+23.4%</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Digital Services</div>
+                      <div className="text-sm text-gray-500">Consultation & support</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900 font-medium">$189,432</td>
+                  <td className="py-4 px-4 text-gray-900">3,256</td>
+                  <td className="py-4 px-4 text-gray-900">$58.19</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-blue-600 font-medium">4.7%</div>
+                      <div className="text-xs text-blue-600">▲ 0.3%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">52.8%</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">+15.7%</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Training Programs</div>
+                      <div className="text-sm text-gray-500">Online & in-person</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900 font-medium">$156,789</td>
+                  <td className="py-4 px-4 text-gray-900">2,134</td>
+                  <td className="py-4 px-4 text-gray-900">$73.47</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-purple-600 font-medium">3.9%</div>
+                      <div className="text-xs text-purple-600">▲ 0.5%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">78.2%</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">+19.8%</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Subscriptions</div>
+                      <div className="text-sm text-gray-500">Monthly & annual plans</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900 font-medium">$134,298</td>
+                  <td className="py-4 px-4 text-gray-900">4,567</td>
+                  <td className="py-4 px-4 text-gray-900">$29.41</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-green-600 font-medium">7.8%</div>
+                      <div className="text-xs text-green-600">▲ 1.2%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">89.5%</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">+31.2%</span>
+                  </td>
+                </tr>
+                <tr className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-4">
+                    <div>
+                      <div className="font-medium text-gray-900">Add-on Products</div>
+                      <div className="text-sm text-gray-500">Extensions & plugins</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900 font-medium">$42,148</td>
+                  <td className="py-4 px-4 text-gray-900">1,893</td>
+                  <td className="py-4 px-4 text-gray-900">$22.27</td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-orange-600 font-medium">2.1%</div>
+                      <div className="text-xs text-red-600">▼ 0.2%</div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-gray-900">43.7%</td>
+                  <td className="py-4 px-4">
+                    <span className="px-2 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">+2.3%</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section C: Customer & Channel Analysis */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              Customer Revenue Segmentation
+            </CardTitle>
+            <CardDescription>
+              Revenue breakdown by customer value tiers and purchasing behavior patterns
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-lg border border-emerald-200">
+                <div>
+                  <p className="font-medium text-emerald-900">High-Value Customers (Top 10%)</p>
+                  <p className="text-sm text-emerald-700">1,247 customers</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-emerald-900">$423,567</p>
+                  <p className="text-xs text-emerald-700">50.1% of total revenue</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                <div>
+                  <p className="font-medium text-blue-900">Mid-Value Customers (30%)</p>
+                  <p className="text-sm text-blue-700">3,741 customers</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-blue-900">$254,123</p>
+                  <p className="text-xs text-blue-700">30.0% of total revenue</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                <div>
+                  <p className="font-medium text-gray-900">Growing Customers (60%)</p>
+                  <p className="text-sm text-gray-700">7,482 customers</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-gray-900">$169,544</p>
+                  <p className="text-xs text-gray-700">19.9% of total revenue</p>
+                </div>
+              </div>
+
+              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-sm text-amber-800"><strong>Revenue Concentration Alert:</strong> Top 10% of customers generate 50.1% of revenue. Consider retention strategies for high-value segment.</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-blue-600" />
+              Channel Performance & ROI
+            </CardTitle>
+            <CardDescription>
+              Sales channel effectiveness with revenue attribution and cost analysis
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-sm font-medium">Direct Sales</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold">$312,456 (36.9%)</div>
+                    <div className="text-xs text-green-600">ROI: 340%</div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <span className="text-sm font-medium">Digital Marketing</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold">$234,789 (27.7%)</div>
+                    <div className="text-xs text-blue-600">ROI: 285%</div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <span className="text-sm font-medium">Partner Channel</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold">$178,923 (21.1%)</div>
+                    <div className="text-xs text-purple-600">ROI: 420%</div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <span className="text-sm font-medium">Referral Program</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold">$89,234 (10.5%)</div>
+                    <div className="text-xs text-orange-600">ROI: 650%</div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+                    <span className="text-sm font-medium">Events & Trade Shows</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold">$31,832 (3.8%)</div>
+                    <div className="text-xs text-gray-600">ROI: 120%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-800"><strong>Channel Optimization:</strong> Referral program shows highest ROI (650%) but lowest volume. Consider scaling this channel.</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
@@ -6191,42 +7146,1357 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
     </div>
   );
 
-  const renderAnalyticsAudiencesContent = (tier3: string | undefined) => (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-blue-600" />
-            Audiences Analytics - {tier3 || 'Overview'}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="p-4">
-              <div className="text-2xl font-bold text-blue-600">12</div>
-              <div className="text-sm text-gray-600">Active Segments</div>
-              <div className="text-xs text-blue-600">Well-defined</div>
-            </Card>
-            <Card className="p-4">
-              <div className="text-2xl font-bold text-green-600">87%</div>
-              <div className="text-sm text-gray-600">Segment Coverage</div>
-              <div className="text-xs text-green-600">Comprehensive reach</div>
-            </Card>
-            <Card className="p-4">
-              <div className="text-2xl font-bold text-purple-600">+15%</div>
-              <div className="text-sm text-gray-600">High-Value Segment Growth</div>
-              <div className="text-xs text-purple-600">Strong growth</div>
-            </Card>
-            <Card className="p-4">
-              <div className="text-2xl font-bold text-orange-600">34%</div>
-              <div className="text-sm text-gray-600">Engagement Variance</div>
-              <div className="text-xs text-orange-600">Good diversity</div>
+  const renderAnalyticsAudiencesContent = (tier3: string | undefined) => {
+    const section = tier3 || 'overview';
+
+    switch (section.toLowerCase()) {
+      case 'overview':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-6 w-6 text-blue-600" />
+                  Audience Overview Dashboard
+                </CardTitle>
+                <CardDescription>
+                  Comprehensive view of your audience landscape and key performance indicators
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">12</div>
+                    <div className="text-sm text-gray-600">Active Segments</div>
+                    <div className="text-xs text-blue-600">Well-defined audiences</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">87%</div>
+                    <div className="text-sm text-gray-600">Total Coverage</div>
+                    <div className="text-xs text-green-600">Comprehensive reach</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">+15%</div>
+                    <div className="text-sm text-gray-600">Growth Rate</div>
+                    <div className="text-xs text-purple-600">Month-over-month</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">4.2/5</div>
+                    <div className="text-sm text-gray-600">Engagement Quality</div>
+                    <div className="text-xs text-orange-600">High quality interactions</div>
+                  </Card>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-3">Top Performing Segments</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Premium Subscribers</span>
+                        <span className="text-sm font-medium text-green-600">94% engagement</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Mobile-First Users</span>
+                        <span className="text-sm font-medium text-blue-600">89% engagement</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Content Creators</span>
+                        <span className="text-sm font-medium text-purple-600">85% engagement</span>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-3">Audience Health Indicators</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Segment Clarity Score</span>
+                        <span className="text-sm font-medium text-green-600">8.4/10</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Cross-segment Overlap</span>
+                        <span className="text-sm font-medium text-blue-600">12%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Data Completeness</span>
+                        <span className="text-sm font-medium text-purple-600">91%</span>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </CardContent>
             </Card>
           </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+        );
+
+      case 'composition':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <PieChart className="h-6 w-6 text-blue-600" />
+                  Audience Composition Analysis
+                </CardTitle>
+                <CardDescription>
+                  Detailed breakdown of audience demographics, attributes, and segment distribution
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">68K</div>
+                    <div className="text-sm text-gray-600">Total Audience Size</div>
+                    <div className="text-xs text-blue-600">+5.2K this month</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">42%</div>
+                    <div className="text-sm text-gray-600">Primary Segment</div>
+                    <div className="text-xs text-green-600">Professional Users</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">3.2</div>
+                    <div className="text-sm text-gray-600">Avg Segments per User</div>
+                    <div className="text-xs text-purple-600">Good overlap</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Segment Size Distribution</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Professional Users</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-blue-600 h-2 rounded-full" style={{width: '42%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">28.6K</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Mobile-First Users</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-green-600 h-2 rounded-full" style={{width: '35%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">23.8K</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Premium Subscribers</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-purple-600 h-2 rounded-full" style={{width: '18%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">12.2K</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Content Creators</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-orange-600 h-2 rounded-full" style={{width: '8%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">5.4K</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Demographic Breakdown</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Age 25-34</span>
+                          <span className="text-sm font-medium">38%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Age 35-44</span>
+                          <span className="text-sm font-medium">29%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Age 45-54</span>
+                          <span className="text-sm font-medium">21%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Other</span>
+                          <span className="text-sm font-medium">12%</span>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Geographic Distribution</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">North America</span>
+                          <span className="text-sm font-medium">45%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Europe</span>
+                          <span className="text-sm font-medium">32%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Asia-Pacific</span>
+                          <span className="text-sm font-medium">18%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Other</span>
+                          <span className="text-sm font-medium">5%</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'engagement-patterns':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Activity className="h-6 w-6 text-blue-600" />
+                  Engagement Patterns Analysis
+                </CardTitle>
+                <CardDescription>
+                  Behavioral insights and interaction patterns across audience segments
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">4.2</div>
+                    <div className="text-sm text-gray-600">Avg Session Duration (min)</div>
+                    <div className="text-xs text-blue-600">+12% from last month</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">68%</div>
+                    <div className="text-sm text-gray-600">Return Visitor Rate</div>
+                    <div className="text-xs text-green-600">Strong retention</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">5.7</div>
+                    <div className="text-sm text-gray-600">Pages per Session</div>
+                    <div className="text-xs text-purple-600">High engagement</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">23%</div>
+                    <div className="text-sm text-gray-600">Action Completion Rate</div>
+                    <div className="text-xs text-orange-600">Good conversion</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Engagement by Time of Day</h3>
+                    <div className="grid grid-cols-8 gap-2 mb-4">
+                      {['6AM', '9AM', '12PM', '3PM', '6PM', '9PM', '12AM', '3AM'].map((time, index) => (
+                        <div key={time} className="text-center">
+                          <div className="text-xs text-gray-600 mb-1">{time}</div>
+                          <div className="bg-gray-200 h-16 rounded flex items-end">
+                            <div
+                              className="bg-blue-600 rounded w-full"
+                              style={{height: `${[45, 78, 92, 85, 95, 68, 34, 15][index]}%`}}
+                            ></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-600">Peak engagement occurs between 12PM-6PM with highest activity at 6PM</p>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Top Engagement Actions</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Content Views</span>
+                          <span className="text-sm font-medium text-blue-600">45,234 actions</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Search Queries</span>
+                          <span className="text-sm font-medium text-green-600">28,912 actions</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Feature Usage</span>
+                          <span className="text-sm font-medium text-purple-600">18,756 actions</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Form Submissions</span>
+                          <span className="text-sm font-medium text-orange-600">9,423 actions</span>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Segment Engagement Comparison</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Professional Users</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div className="bg-blue-600 h-2 rounded-full" style={{width: '85%'}}></div>
+                            </div>
+                            <span className="text-sm font-medium">85%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Premium Subscribers</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div className="bg-purple-600 h-2 rounded-full" style={{width: '94%'}}></div>
+                            </div>
+                            <span className="text-sm font-medium">94%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Mobile-First Users</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div className="bg-green-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                            </div>
+                            <span className="text-sm font-medium">78%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Content Creators</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div className="bg-orange-600 h-2 rounded-full" style={{width: '91%'}}></div>
+                            </div>
+                            <span className="text-sm font-medium">91%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'lifecycle-stages':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart className="h-6 w-6 text-blue-600" />
+                  Audience Lifecycle Stages
+                </CardTitle>
+                <CardDescription>
+                  Customer journey progression and lifecycle stage analysis across segments
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">28%</div>
+                    <div className="text-sm text-gray-600">New Visitors</div>
+                    <div className="text-xs text-blue-600">First interaction</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">35%</div>
+                    <div className="text-sm text-gray-600">Engaged Users</div>
+                    <div className="text-xs text-green-600">Regular activity</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">22%</div>
+                    <div className="text-sm text-gray-600">Converted Users</div>
+                    <div className="text-xs text-purple-600">Action takers</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">15%</div>
+                    <div className="text-sm text-gray-600">Advocates</div>
+                    <div className="text-xs text-orange-600">High value users</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Lifecycle Stage Progression</h3>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
+                          <div>
+                            <div className="font-medium">New Visitors</div>
+                            <div className="text-sm text-gray-600">19,040 users (28%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-blue-600">65% conversion to Engaged</div>
+                          <div className="text-xs text-gray-600">Avg: 3.2 sessions</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-4 h-4 bg-green-600 rounded-full"></div>
+                          <div>
+                            <div className="font-medium">Engaged Users</div>
+                            <div className="text-sm text-gray-600">23,800 users (35%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-green-600">42% conversion to Converted</div>
+                          <div className="text-xs text-gray-600">Avg: 8.7 sessions</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-4 h-4 bg-purple-600 rounded-full"></div>
+                          <div>
+                            <div className="font-medium">Converted Users</div>
+                            <div className="text-sm text-gray-600">14,960 users (22%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-purple-600">38% conversion to Advocates</div>
+                          <div className="text-xs text-gray-600">Avg: 15.3 sessions</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-4 h-4 bg-orange-600 rounded-full"></div>
+                          <div>
+                            <div className="font-medium">Advocates</div>
+                            <div className="text-sm text-gray-600">10,200 users (15%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-orange-600">High retention rate</div>
+                          <div className="text-xs text-gray-600">Avg: 42.1 sessions</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Stage Transition Times</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">New → Engaged</span>
+                          <span className="text-sm font-medium text-blue-600">12.5 days avg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Engaged → Converted</span>
+                          <span className="text-sm font-medium text-green-600">28.3 days avg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Converted → Advocate</span>
+                          <span className="text-sm font-medium text-purple-600">45.7 days avg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Overall Journey</span>
+                          <span className="text-sm font-medium text-orange-600">86.5 days avg</span>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Stage-Specific Metrics</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Bounce Rate (New)</span>
+                          <span className="text-sm font-medium text-blue-600">35%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Engagement Score (Engaged)</span>
+                          <span className="text-sm font-medium text-green-600">7.2/10</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Conversion Rate (Converted)</span>
+                          <span className="text-sm font-medium text-purple-600">23%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Advocacy Actions (Advocates)</span>
+                          <span className="text-sm font-medium text-orange-600">4.8/user</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'behavioral-insights':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="h-6 w-6 text-blue-600" />
+                  Behavioral Insights
+                </CardTitle>
+                <CardDescription>
+                  Deep behavioral analysis and user interaction patterns across touchpoints
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">73%</div>
+                    <div className="text-sm text-gray-600">Intent Match Rate</div>
+                    <div className="text-xs text-blue-600">Content-behavior alignment</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">4.6</div>
+                    <div className="text-sm text-gray-600">Interaction Depth Score</div>
+                    <div className="text-xs text-green-600">High engagement quality</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">68%</div>
+                    <div className="text-sm text-gray-600">Behavior Predictability</div>
+                    <div className="text-xs text-purple-600">Consistent patterns</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">3.2x</div>
+                    <div className="text-sm text-gray-600">Cross-channel Activity</div>
+                    <div className="text-xs text-orange-600">Multi-touchpoint users</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Behavioral Patterns by Segment</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-medium text-blue-600 mb-2">Professional Users</h4>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-600">Peak Activity:</span>
+                            <span className="ml-2 font-medium">Weekdays 9AM-5PM</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Preferred Content:</span>
+                            <span className="ml-2 font-medium">Industry insights, tutorials</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Avg Session:</span>
+                            <span className="ml-2 font-medium">6.3 minutes</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Decision Speed:</span>
+                            <span className="ml-2 font-medium">Methodical (3.2 sessions)</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-green-600 mb-2">Mobile-First Users</h4>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-600">Peak Activity:</span>
+                            <span className="ml-2 font-medium">Evenings & weekends</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Preferred Content:</span>
+                            <span className="ml-2 font-medium">Quick reads, visual content</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Avg Session:</span>
+                            <span className="ml-2 font-medium">2.8 minutes</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Decision Speed:</span>
+                            <span className="ml-2 font-medium">Quick (1.7 sessions)</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-purple-600 mb-2">Premium Subscribers</h4>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-600">Peak Activity:</span>
+                            <span className="ml-2 font-medium">Consistent throughout week</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Preferred Content:</span>
+                            <span className="ml-2 font-medium">Premium features, advanced topics</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Avg Session:</span>
+                            <span className="ml-2 font-medium">8.7 minutes</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Decision Speed:</span>
+                            <span className="ml-2 font-medium">Thorough (4.8 sessions)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Top User Journeys</h3>
+                      <div className="space-y-3">
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Discovery → Content → Action</div>
+                          <div className="text-xs text-gray-600 mb-2">45% of successful conversions</div>
+                          <div className="text-xs">Search → Article → Feature Usage → Subscription</div>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Social → Browse → Engage</div>
+                          <div className="text-xs text-gray-600 mb-2">32% of successful conversions</div>
+                          <div className="text-xs">Social Link → Category Browse → Content Interaction</div>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Direct → Dashboard → Feature</div>
+                          <div className="text-xs text-gray-600 mb-2">23% of successful conversions</div>
+                          <div className="text-xs">Direct Access → Dashboard → Feature Exploration</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Behavioral Triggers</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Time-based triggers</span>
+                          <span className="text-sm font-medium text-blue-600">34% success rate</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Content-based triggers</span>
+                          <span className="text-sm font-medium text-green-600">42% success rate</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Behavior-based triggers</span>
+                          <span className="text-sm font-medium text-purple-600">58% success rate</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Context-based triggers</span>
+                          <span className="text-sm font-medium text-orange-600">67% success rate</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'geographic-distribution':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Globe className="h-6 w-6 text-blue-600" />
+                  Geographic Distribution
+                </CardTitle>
+                <CardDescription>
+                  Regional audience analysis and geographic performance insights
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">47</div>
+                    <div className="text-sm text-gray-600">Countries</div>
+                    <div className="text-xs text-blue-600">Global reach</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">68%</div>
+                    <div className="text-sm text-gray-600">Primary Region Share</div>
+                    <div className="text-xs text-green-600">North America</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">+23%</div>
+                    <div className="text-sm text-gray-600">APAC Growth</div>
+                    <div className="text-xs text-purple-600">Fastest growing</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">15</div>
+                    <div className="text-sm text-gray-600">Time Zones</div>
+                    <div className="text-xs text-orange-600">24/7 coverage</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Regional Distribution</h3>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                        <div>
+                          <div className="font-medium">North America</div>
+                          <div className="text-sm text-gray-600">46,240 users (68%)</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-blue-600">4.8/5 engagement</div>
+                          <div className="text-xs text-gray-600">USA: 39K, Canada: 7.2K</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                        <div>
+                          <div className="font-medium">Europe</div>
+                          <div className="text-sm text-gray-600">14,960 users (22%)</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-green-600">4.6/5 engagement</div>
+                          <div className="text-xs text-gray-600">UK: 5.2K, Germany: 3.8K</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                        <div>
+                          <div className="font-medium">Asia-Pacific</div>
+                          <div className="text-sm text-gray-600">5,440 users (8%)</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-purple-600">4.3/5 engagement</div>
+                          <div className="text-xs text-gray-600">Australia: 2.1K, Japan: 1.8K</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                        <div>
+                          <div className="font-medium">Other Regions</div>
+                          <div className="text-sm text-gray-600">1,360 users (2%)</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-orange-600">4.1/5 engagement</div>
+                          <div className="text-xs text-gray-600">Latin America, Africa, Others</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Top Cities</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">New York, NY</span>
+                          <span className="text-sm font-medium text-blue-600">8,240 users</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Los Angeles, CA</span>
+                          <span className="text-sm font-medium text-green-600">6,890 users</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">London, UK</span>
+                          <span className="text-sm font-medium text-purple-600">4,560 users</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Toronto, ON</span>
+                          <span className="text-sm font-medium text-orange-600">3,920 users</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Berlin, DE</span>
+                          <span className="text-sm font-medium text-indigo-600">2,680 users</span>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Regional Performance</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Highest Engagement</span>
+                          <span className="text-sm font-medium text-blue-600">North America</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Fastest Growth</span>
+                          <span className="text-sm font-medium text-green-600">Asia-Pacific</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Best Conversion Rate</span>
+                          <span className="text-sm font-medium text-purple-600">Europe</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Longest Sessions</span>
+                          <span className="text-sm font-medium text-orange-600">North America</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Most Active Hours</span>
+                          <span className="text-sm font-medium text-indigo-600">EST 9AM-5PM</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'channel-preferences':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Channels className="h-6 w-6 text-blue-600" />
+                  Channel Preferences
+                </CardTitle>
+                <CardDescription>
+                  Multi-channel engagement analysis and channel-specific user behavior
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">7</div>
+                    <div className="text-sm text-gray-600">Active Channels</div>
+                    <div className="text-xs text-blue-600">Multi-channel presence</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">54%</div>
+                    <div className="text-sm text-gray-600">Primary Channel</div>
+                    <div className="text-xs text-green-600">Web platform</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">2.8</div>
+                    <div className="text-sm text-gray-600">Avg Channels per User</div>
+                    <div className="text-xs text-purple-600">Cross-channel behavior</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">38%</div>
+                    <div className="text-sm text-gray-600">Mobile-First Users</div>
+                    <div className="text-xs text-orange-600">Growing segment</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Channel Performance Overview</h3>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Monitor className="h-5 w-5 text-blue-600" />
+                          <div>
+                            <div className="font-medium">Web Platform</div>
+                            <div className="text-sm text-gray-600">36,720 users (54%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-blue-600">6.4 min avg session</div>
+                          <div className="text-xs text-gray-600">High engagement</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Smartphone className="h-5 w-5 text-green-600" />
+                          <div>
+                            <div className="font-medium">Mobile App</div>
+                            <div className="text-sm text-gray-600">25,840 users (38%)</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-green-600">3.2 min avg session</div>
+                          <div className="text-xs text-gray-600">Quick interactions</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Mail className="h-5 w-5 text-purple-600" />
+                          <div>
+                            <div className="font-medium">Email</div>
+                            <div className="text-sm text-gray-600">47,600 subscribers</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-purple-600">28% open rate</div>
+                          <div className="text-xs text-gray-600">Strong engagement</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <MessageSquare className="h-5 w-5 text-orange-600" />
+                          <div>
+                            <div className="font-medium">Social Media</div>
+                            <div className="text-sm text-gray-600">15,280 followers</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-medium text-orange-600">12% engagement rate</div>
+                          <div className="text-xs text-gray-600">Active community</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Cross-Channel Journey</h3>
+                      <div className="space-y-3">
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Social → Web → Mobile</div>
+                          <div className="text-xs text-gray-600 mb-2">42% of new user acquisitions</div>
+                          <div className="text-xs">Discovery on social → Exploration on web → Regular usage on mobile</div>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Email → Web → Action</div>
+                          <div className="text-xs text-gray-600 mb-2">35% of conversions</div>
+                          <div className="text-xs">Email notification → Web platform → Feature usage</div>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm mb-1">Direct → Mobile → Web</div>
+                          <div className="text-xs text-gray-600 mb-2">23% of user flows</div>
+                          <div className="text-xs">Direct mobile access → Quick check → Detailed work on web</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Channel-Specific Preferences</h3>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="font-medium text-sm text-blue-600">Web Platform Users</div>
+                          <div className="text-xs text-gray-600">Prefer detailed content, longer sessions, feature-rich interactions</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-sm text-green-600">Mobile App Users</div>
+                          <div className="text-xs text-gray-600">Quick tasks, notifications, on-the-go access patterns</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-sm text-purple-600">Email Subscribers</div>
+                          <div className="text-xs text-gray-600">Weekly updates, curated content, high-value information</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-sm text-orange-600">Social Media Followers</div>
+                          <div className="text-xs text-gray-600">Community discussions, quick updates, visual content</div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'content-affinity':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="h-6 w-6 text-blue-600" />
+                  Content Affinity Analysis
+                </CardTitle>
+                <CardDescription>
+                  Content preferences, topic interests, and engagement patterns by content type
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">85%</div>
+                    <div className="text-sm text-gray-600">Content Match Rate</div>
+                    <div className="text-xs text-blue-600">Interest alignment</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">12</div>
+                    <div className="text-sm text-gray-600">Avg Topics per User</div>
+                    <div className="text-xs text-green-600">Diverse interests</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">7.8</div>
+                    <div className="text-sm text-gray-600">Content Engagement Score</div>
+                    <div className="text-xs text-purple-600">High engagement</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">64%</div>
+                    <div className="text-sm text-gray-600">Content Completion Rate</div>
+                    <div className="text-xs text-orange-600">Strong retention</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Top Content Categories</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Industry Insights</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-blue-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">78% affinity</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Technical Tutorials</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-green-600 h-2 rounded-full" style={{width: '72%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">72% affinity</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Best Practices</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-purple-600 h-2 rounded-full" style={{width: '68%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">68% affinity</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Case Studies</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-orange-600 h-2 rounded-full" style={{width: '65%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">65% affinity</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Product Updates</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-32 bg-gray-200 rounded-full h-2">
+                            <div className="bg-indigo-600 h-2 rounded-full" style={{width: '58%'}}></div>
+                          </div>
+                          <span className="text-sm font-medium">58% affinity</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Content Format Preferences</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Articles (2000+ words)</span>
+                          <span className="text-sm font-medium text-blue-600">42% preference</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Quick Guides (500-1000 words)</span>
+                          <span className="text-sm font-medium text-green-600">35% preference</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Video Tutorials</span>
+                          <span className="text-sm font-medium text-purple-600">28% preference</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Interactive Demos</span>
+                          <span className="text-sm font-medium text-orange-600">23% preference</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Infographics</span>
+                          <span className="text-sm font-medium text-indigo-600">18% preference</span>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Engagement by Content Type</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">How-to Guides</span>
+                          <span className="text-sm font-medium text-blue-600">8.2 min avg time</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Industry Analysis</span>
+                          <span className="text-sm font-medium text-green-600">6.8 min avg time</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Product Comparisons</span>
+                          <span className="text-sm font-medium text-purple-600">5.4 min avg time</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">News & Updates</span>
+                          <span className="text-sm font-medium text-orange-600">2.6 min avg time</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Opinion Pieces</span>
+                          <span className="text-sm font-medium text-indigo-600">4.1 min avg time</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-3">Content Affinity by Audience Segment</h3>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                      <div>
+                        <h4 className="font-medium text-blue-600 mb-2">Professional Users</h4>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Industry Reports</span>
+                            <span className="font-medium">92%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Technical Deep Dives</span>
+                            <span className="font-medium">88%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Best Practice Guides</span>
+                            <span className="font-medium">85%</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-green-600 mb-2">Mobile-First Users</h4>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Quick Tips</span>
+                            <span className="font-medium">89%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Visual Summaries</span>
+                            <span className="font-medium">82%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Video Content</span>
+                            <span className="font-medium">76%</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-purple-600 mb-2">Premium Subscribers</h4>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Exclusive Analysis</span>
+                            <span className="font-medium">95%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Advanced Tutorials</span>
+                            <span className="font-medium">91%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Expert Interviews</span>
+                            <span className="font-medium">87%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      case 'performance-benchmarks':
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-6 w-6 text-blue-600" />
+                  Performance Benchmarks
+                </CardTitle>
+                <CardDescription>
+                  Comparative performance analysis and industry benchmarking across audience segments
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-blue-600">127%</div>
+                    <div className="text-sm text-gray-600">vs Industry Average</div>
+                    <div className="text-xs text-blue-600">Engagement rate</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-green-600">Top 15%</div>
+                    <div className="text-sm text-gray-600">Industry Ranking</div>
+                    <div className="text-xs text-green-600">Audience quality</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-purple-600">+18%</div>
+                    <div className="text-sm text-gray-600">YoY Performance</div>
+                    <div className="text-xs text-purple-600">Growth trajectory</div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-2xl font-bold text-orange-600">94/100</div>
+                    <div className="text-sm text-gray-600">Audience Health Score</div>
+                    <div className="text-xs text-orange-600">Excellent rating</div>
+                  </Card>
+                </div>
+                <div className="space-y-6">
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Industry Benchmark Comparison</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm font-medium">Engagement Rate</span>
+                          <span className="text-sm text-green-600">+127% vs industry</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex-1">
+                            <div className="flex justify-between text-xs text-gray-600 mb-1">
+                              <span>Industry Avg: 2.4%</span>
+                              <span>Our Performance: 5.4%</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div className="bg-green-600 h-2 rounded-full" style={{width: '100%'}}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm font-medium">Session Duration</span>
+                          <span className="text-sm text-blue-600">+83% vs industry</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex-1">
+                            <div className="flex justify-between text-xs text-gray-600 mb-1">
+                              <span>Industry Avg: 2.3 min</span>
+                              <span>Our Performance: 4.2 min</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div className="bg-blue-600 h-2 rounded-full" style={{width: '83%'}}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm font-medium">Return Visitor Rate</span>
+                          <span className="text-sm text-purple-600">+45% vs industry</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex-1">
+                            <div className="flex justify-between text-xs text-gray-600 mb-1">
+                              <span>Industry Avg: 47%</span>
+                              <span>Our Performance: 68%</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div className="bg-purple-600 h-2 rounded-full" style={{width: '68%'}}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm font-medium">Conversion Rate</span>
+                          <span className="text-sm text-orange-600">+32% vs industry</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex-1">
+                            <div className="flex justify-between text-xs text-gray-600 mb-1">
+                              <span>Industry Avg: 17.4%</span>
+                              <span>Our Performance: 23%</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div className="bg-orange-600 h-2 rounded-full" style={{width: '58%'}}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Segment Performance vs Benchmarks</h3>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm">Professional Users</span>
+                            <span className="text-sm font-medium text-blue-600">Top 5% industry</span>
+                          </div>
+                          <div className="text-xs text-gray-600">Engagement 185% above average</div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm">Premium Subscribers</span>
+                            <span className="text-sm font-medium text-green-600">Top 3% industry</span>
+                          </div>
+                          <div className="text-xs text-gray-600">Retention 225% above average</div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm">Mobile-First Users</span>
+                            <span className="text-sm font-medium text-purple-600">Top 12% industry</span>
+                          </div>
+                          <div className="text-xs text-gray-600">Conversion 145% above average</div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm">Content Creators</span>
+                            <span className="text-sm font-medium text-orange-600">Top 8% industry</span>
+                          </div>
+                          <div className="text-xs text-gray-600">Advocacy 198% above average</div>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className="p-4">
+                      <h3 className="font-semibold mb-3">Performance Trends</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Last 30 Days</span>
+                          <span className="text-sm font-medium text-green-600">+12% improvement</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Last 90 Days</span>
+                          <span className="text-sm font-medium text-blue-600">+28% improvement</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Year over Year</span>
+                          <span className="text-sm font-medium text-purple-600">+45% improvement</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Vs Goals</span>
+                          <span className="text-sm font-medium text-orange-600">108% of target</span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                  <Card className="p-4">
+                    <h3 className="font-semibold mb-4">Competitive Analysis</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="text-left py-2">Metric</th>
+                            <th className="text-center py-2">Our Performance</th>
+                            <th className="text-center py-2">Industry Leader</th>
+                            <th className="text-center py-2">Industry Average</th>
+                            <th className="text-center py-2">Position</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-xs">
+                          <tr className="border-b">
+                            <td className="py-2">Audience Engagement</td>
+                            <td className="text-center font-medium text-green-600">5.4%</td>
+                            <td className="text-center">6.2%</td>
+                            <td className="text-center">2.4%</td>
+                            <td className="text-center font-medium text-green-600">#2</td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2">Session Quality</td>
+                            <td className="text-center font-medium text-blue-600">4.2 min</td>
+                            <td className="text-center">4.8 min</td>
+                            <td className="text-center">2.3 min</td>
+                            <td className="text-center font-medium text-blue-600">#3</td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2">User Retention</td>
+                            <td className="text-center font-medium text-purple-600">68%</td>
+                            <td className="text-center">72%</td>
+                            <td className="text-center">47%</td>
+                            <td className="text-center font-medium text-purple-600">#2</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2">Conversion Rate</td>
+                            <td className="text-center font-medium text-orange-600">23%</td>
+                            <td className="text-center">26%</td>
+                            <td className="text-center">17.4%</td>
+                            <td className="text-center font-medium text-orange-600">#2</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-6 w-6 text-blue-600" />
+                  Audiences Analytics - {section}
+                </CardTitle>
+                <CardDescription>
+                  Section content for {section} is being configured
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-8">
+                  <p className="text-gray-600">This section is being configured with specialized content.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+    }
+  };
 
   const renderAnalyticsCXContent = (tier3: string | undefined) => (
     <div className="space-y-6">
@@ -6987,8 +9257,8 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
           </div>
         );
 
-      case 'multi-channel-content-distribution':
-        return renderContentSuggestions();
+      case 'audience-targeting':
+        return renderAudienceTargeting();
 
       case 'content-roi-analysis':
         return (

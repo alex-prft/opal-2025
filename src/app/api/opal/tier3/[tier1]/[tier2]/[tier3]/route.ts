@@ -97,6 +97,31 @@ function generateTier3MockData(tier1: string, tier2: string, tier3: string): Tie
   // Page-specific configurations
   const pageConfigurations = {
     // Strategy Plans configurations
+    // Strategy Plans → Phases configurations (updated for new short URLs)
+    'strategy-plans-phases-phase-1': {
+      metrics: [
+        { id: 'completion', name: 'Phase Completion', value: 75.2, format: 'percentage' as const, comparison: { previous: 68.1, change: 7.1, changeType: 'percentage' as const } },
+        { id: 'budget', name: 'Budget Utilization', value: 142500, format: 'currency' as const, comparison: { previous: 128000, change: 14500, changeType: 'absolute' as const } },
+        { id: 'timeline', name: 'Timeline Adherence', value: 92.3, format: 'percentage' as const, comparison: { previous: 89.1, change: 3.2, changeType: 'percentage' as const } }
+      ],
+      summary: 'Phase 1 Foundation execution showing strong progress with 75% completion rate. Critical infrastructure components are on track with budget utilization within acceptable parameters.',
+      recommendations: [
+        {
+          title: 'Accelerate Data Integration',
+          description: 'Current data integration pace allows for acceleration without resource strain',
+          priority: 'medium' as const,
+          actionItems: ['Review integration backlog', 'Allocate additional dev resources', 'Implement parallel processing']
+        },
+        {
+          title: 'Risk Mitigation Review',
+          description: 'Proactive review of identified risks before Phase 2 transition',
+          priority: 'high' as const,
+          actionItems: ['Conduct risk assessment', 'Update mitigation strategies', 'Stakeholder alignment session']
+        }
+      ]
+    },
+
+    // Backward compatibility: Keep old key for redirected URLs
     'strategy-plans-phases-phase-1-foundation-0-3-months': {
       metrics: [
         { id: 'completion', name: 'Phase Completion', value: 75.2, format: 'percentage' as const, comparison: { previous: 68.1, change: 7.1, changeType: 'percentage' as const } },

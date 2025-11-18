@@ -41,7 +41,9 @@ describe('Conditional Rendering Logic', () => {
     });
 
     test('Phase 1 Foundation detection', () => {
+      // Test old format (backward compatibility)
       expect(pathMatchers.isPhase1Foundation('/strategy-plans/phases/phase-1-foundation-0-3-months')).toBe(true);
+      // Test new short format
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/phase-1')).toBe(true);
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/foundation')).toBe(true);
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/phase-2-growth')).toBe(false);
@@ -115,18 +117,27 @@ describe('Conditional Rendering Logic', () => {
 
   describe('Tier-3 Content Data Selection', () => {
     test('Strategy Plans tier-3 content', () => {
-      const phase1Content = getTier3ContentData('/strategy/phases/phase-1-foundation');
+      // Test new short format
+      const phase1Content = getTier3ContentData('/strategy/phases/phase-1');
       expect(phase1Content).toEqual({
         contentId: 'phase-1-foundation-content',
         title: 'Phase 1: Foundation (0-3 months)',
         dataKey: 'phase1Data'
       });
 
-      const phase2Content = getTier3ContentData('/strategy/phases/phase-2-growth');
+      const phase2Content = getTier3ContentData('/strategy/phases/phase-2');
       expect(phase2Content).toEqual({
         contentId: 'phase-2-growth-content',
         title: 'Phase 2: Growth (3-6 months)',
         dataKey: 'phase2Data'
+      });
+
+      // Test backward compatibility with old long format
+      const phase1ContentOld = getTier3ContentData('/strategy/phases/phase-1-foundation-0-3-months');
+      expect(phase1ContentOld).toEqual({
+        contentId: 'phase-1-foundation-content',
+        title: 'Phase 1: Foundation (0-3 months)',
+        dataKey: 'phase1Data'
       });
 
       const overviewContent = getTier3ContentData('/strategy/osa/overview-dashboard');
@@ -179,7 +190,7 @@ describe('Conditional Rendering Logic', () => {
     test('Full URL path detection works correctly', () => {
       const complexUrls = [
         {
-          url: '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+          url: '/engine/results/strategy-plans/phases/phase-1',
           expectTier2: 'PhasesWidget',
           expectTier3: {
             contentId: 'phase-1-foundation-content',
@@ -210,6 +221,18 @@ describe('Conditional Rendering Logic', () => {
       complexUrls.forEach(({ url, expectTier2, expectTier3 }) => {
         expect(getTier2WidgetComponent(url)).toBe(expectTier2);
         expect(getTier3ContentData(url)).toEqual(expectTier3);
+      });
+    });
+
+    test('Backward compatibility with old long URLs', () => {
+      // Test that old long URLs still work during transition period
+      const oldUrl = '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months';
+
+      expect(getTier2WidgetComponent(oldUrl)).toBe('PhasesWidget');
+      expect(getTier3ContentData(oldUrl)).toEqual({
+        contentId: 'phase-1-foundation-content',
+        title: 'Phase 1: Foundation (0-3 months)',
+        dataKey: 'phase1Data'
       });
     });
 

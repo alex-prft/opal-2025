@@ -353,7 +353,7 @@ async function testWebhookDelivery() {
   try {
     // Setup test servers
     await mockServer.createServer(3001, 'success');
-    await mockServer.createServer(3002, 'retry_then_success');
+    await mockServer.createServer(3007, 'retry_then_success');
     await mockServer.createServer(3003, 'permanent_failure');
     await mockServer.createServer(3004, 'rate_limit');
     await mockServer.createServer(3005, 'timeout');
@@ -388,7 +388,7 @@ async function testWebhookDelivery() {
 
     const result2 = await webhookService.deliverWebhook(
       'test-webhook-002',
-      'http://localhost:3002/webhook',
+      'http://localhost:3007/webhook',
       {
         event_type: 'payment_processed',
         transaction_id: 'txn_67890',

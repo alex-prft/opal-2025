@@ -47,6 +47,11 @@ export const createSupabaseAdmin = () => {
   // If database is not configured, return a mock client that will fail gracefully
   if (!isDatabaseConfigured) {
     console.log('📝 [Database] Using placeholder configuration, operations will fall back to file storage');
+  } else {
+    // Only log in development mode to reduce production noise
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ [Database] Using real Supabase configuration');
+    }
   }
 
   return createClient<Database>(supabaseUrl, serviceRoleKey, {

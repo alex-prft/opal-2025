@@ -12,7 +12,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AskAssistantButton } from '@/components/ask-assistant/AskAssistantButton';
 import {
   ResultsPageContent,
   ConfidenceLevel,
@@ -131,7 +130,6 @@ export function ResultsPageBase({
             </div>
 
             <div className="flex items-start space-x-3">
-              <AskAssistantButton size="sm" />
               {confidence && (
                 <div className="text-right">
                   <Badge

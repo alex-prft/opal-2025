@@ -83,19 +83,28 @@ export interface AuditReport {
 }
 
 export class AuditSystem {
-  private supabase = createSupabaseAdmin();
+  private _supabase: ReturnType<typeof createSupabaseAdmin> | null = null;
   private eventQueue: AuditEvent[] = [];
   private batchSize = 100;
   private flushInterval = 5000; // 5 seconds
   private flushTimer?: NodeJS.Timeout;
 
   constructor() {
-    // Start automatic batching
-    this.startBatchProcessing();
+    // Lazy initialization - don't create Supabase client until needed
+    // This prevents multiple GoTrueClient instances at module import time
+  }
 
-    // Graceful shutdown handling
-    process.on('SIGINT', () => this.flush());
-    process.on('SIGTERM', () => this.flush());
+  private get supabase() {
+    if (!this._supabase) {
+      this._supabase = createSupabaseAdmin();
+      // Start automatic batching only when client is first accessed
+      this.startBatchProcessing();
+
+      // Graceful shutdown handling
+      process.on('SIGINT', () => this.flush());
+      process.on('SIGTERM', () => this.flush());
+    }
+    return this._supabase;
   }
 
   /**

@@ -631,7 +631,11 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     const hasContentOptimizationWidget = context.detection.tierMapping?.widgets?.primary === 'ContentOptimizationWidget';
     
     if (!context.shouldRenderTier2 && !hasContentOptimizationWidget) {
-      return <GenericWidget data={mergedData} section={context.detection.tier1} className={className} />;
+      return (
+        <div className={className}>
+          <GenericWidget data={mergedData} section={context.detection.tier1} />
+        </div>
+      );
     }
 
     // Render tier-2 widget container with tier-3 content area
@@ -759,19 +763,19 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
     // Strategy Plans → Phases tier-3 content
     if (pathMatchers.isStrategyPlans(path) && pathMatchers.isPhases(path)) {
       if (pathMatchers.isPhase1Foundation(path)) {
-        return renderTier3Content('Phase 1: Foundation (0-3 months)', mergedData?.phase1Data, 'phase-1-foundation');
+        return renderTier3Content('Phase 1: Foundation (0-3 months)', mergedData?.phase1Data, 'phase-1');
       }
       if (pathMatchers.isPhase2Growth(path)) {
-        return renderTier3Content('Phase 2: Growth (3-6 months)', mergedData?.phase2Data, 'phase-2-growth');
+        return renderTier3Content('Phase 2: Growth (3-6 months)', mergedData?.phase2Data, 'phase-2');
       }
       if (path.includes('phase-3')) {
-        return renderTier3Content('Phase 3: Optimization (6-12 months)', mergedData?.phase3Data, 'phase-3-optimization');
+        return renderTier3Content('Phase 3: Optimization (6-12 months)', mergedData?.phase3Data, 'phase-3');
       }
       if (path.includes('phase-4')) {
-        return renderTier3Content('Phase 4: Innovation (12+ months)', mergedData?.phase4Data, 'phase-4-innovation');
+        return renderTier3Content('Phase 4: Innovation (12+ months)', mergedData?.phase4Data, 'phase-4');
       }
       if (path.includes('cross-phase')) {
-        return renderTier3Content('Cross-phase Dependencies', mergedData?.crossPhaseDependencies, 'cross-phase-dependencies');
+        return renderTier3Content('Cross-phase Dependencies', mergedData?.crossPhaseDependencies, 'cross-phase');
       }
     }
 

@@ -5,7 +5,14 @@ import { createSupabaseAdmin, handleDatabaseError, isDatabaseAvailable } from '.
 import type { Database } from '@/lib/types/database';
 // File storage temporarily disabled for debugging
 
-const supabase = createSupabaseAdmin();
+// Lazy initialization to prevent multiple GoTrueClient instances
+let supabaseInstance: ReturnType<typeof createSupabaseAdmin> | null = null;
+const getSupabase = () => {
+  if (!supabaseInstance) {
+    supabaseInstance = createSupabaseAdmin();
+  }
+  return supabaseInstance;
+};
 
 export interface WebhookEvent {
   id?: string;

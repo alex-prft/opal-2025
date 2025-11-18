@@ -27,6 +27,8 @@ import {
 import ContentRenderer from '@/components/opal/ContentRenderer';
 import { WidgetRenderer } from '@/components/widgets/WidgetRenderer';
 import { notFound } from 'next/navigation';
+import { AskAssistantProvider } from '@/lib/askAssistant/context';
+import { getResultsSectionKey, getSourcePath } from '@/lib/askAssistant/sectionMapping';
 
 // Icon mapping for different tier1 areas
 const tier1IconMapping = {
@@ -197,6 +199,10 @@ function Tier2PageContent() {
 
   const Icon = tier1IconMapping[tier1Name as keyof typeof tier1IconMapping] || Activity;
 
+  // Get Ask Assistant section key for this page
+  const sectionKey = getResultsSectionKey(tier1, tier2, undefined, `/engine/results/${tier1}/${tier2}`);
+  const sourcePath = getSourcePath(tier1, tier2, undefined, `/engine/results/${tier1}/${tier2}`);
+
   // Accordion helper functions
   const toggleAccordion = (tier3Item: string) => {
     const newExpanded = new Set(expandedAccordions);
@@ -218,9 +224,8 @@ function Tier2PageContent() {
     }
   };
 
-  return (
-    <>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  const content = (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="flex">
           {/* Sidebar Navigation */}
           <ResultsSidebar />
@@ -371,10 +376,15 @@ function Tier2PageContent() {
             </div>
           </main>
         </div>
-      </div>
-      <ServiceStatusFooter />
-    </>
+    </div>
+    <ServiceStatusFooter />
   );
+
+  return sectionKey ? (
+    <AskAssistantProvider sectionKey={sectionKey} sourcePath={sourcePath}>
+      {content}
+    </AskAssistantProvider>
+  ) : content;
 }
 
 export default function Tier2Page() {

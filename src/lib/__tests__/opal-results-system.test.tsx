@@ -49,8 +49,8 @@ jest.mock('@/lib/conditional-rendering', () => ({
   pathMatchers: {
     isStrategyPlans: (path: string) => path.includes('strategy-plans'),
     isPhases: (path: string) => path.includes('phases'),
-    isPhase1Foundation: (path: string) => path.includes('phase-1-foundation'),
-    isPhase2Growth: (path: string) => path.includes('phase-2-growth'),
+    isPhase1Foundation: (path: string) => path.includes('phase-1-foundation') || path.includes('phase-1'),
+    isPhase2Growth: (path: string) => path.includes('phase-2-growth') || path.includes('phase-2'),
     isDXPTools: (path: string) => path.includes('optimizely-dxp-tools'),
     isWEBX: (path: string) => path.includes('webx'),
     isActiveExperiments: (path: string) => path.includes('active-experiments'),
@@ -109,18 +109,18 @@ describe('OPAL Results System - Step 7: Testing', () => {
     const tier3TestCases = [
       {
         name: 'Strategy Plans - Phase 1 Foundation',
-        url: '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+        url: '/engine/results/strategy-plans/phases/phase-1',
         tier1: 'strategy-plans',
         tier2: 'phases',
-        tier3: 'phase-1-foundation-0-3-months',
+        tier3: 'phase-1',
         expectedContent: 'Phase 1: Foundation'
       },
       {
         name: 'Strategy Plans - Phase 2 Growth',
-        url: '/engine/results/strategy-plans/phases/phase-2-growth-3-6-months',
+        url: '/engine/results/strategy-plans/phases/phase-2',
         tier1: 'strategy-plans',
         tier2: 'phases',
-        tier3: 'phase-2-growth-3-6-months',
+        tier3: 'phase-2',
         expectedContent: 'Phase 2: Growth'
       },
       {
@@ -173,8 +173,8 @@ describe('OPAL Results System - Step 7: Testing', () => {
     });
 
     it('should render different content for different tier-3 pages in same tier-2', () => {
-      const phase1Url = '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months';
-      const phase2Url = '/engine/results/strategy-plans/phases/phase-2-growth-3-6-months';
+      const phase1Url = '/engine/results/strategy-plans/phases/phase-1';
+      const phase2Url = '/engine/results/strategy-plans/phases/phase-2';
 
       // Test Phase 1
       mockUsePathname.mockReturnValue(phase1Url);
@@ -188,8 +188,8 @@ describe('OPAL Results System - Step 7: Testing', () => {
       const phase1TierInfo = extractTierInfo(phase1Url);
       const phase2TierInfo = extractTierInfo(phase2Url);
 
-      expect(phase1TierInfo.tier3).toBe('phase-1-foundation-0-3-months');
-      expect(phase2TierInfo.tier3).toBe('phase-2-growth-3-6-months');
+      expect(phase1TierInfo.tier3).toBe('phase-1');
+      expect(phase2TierInfo.tier3).toBe('phase-2');
       expect(phase1TierInfo.tier3).not.toBe(phase2TierInfo.tier3);
 
       unmount1();
@@ -200,7 +200,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
   describe('Widget Blueprint Matching Validation', () => {
 
     it('should match Strategy Plans blueprint', () => {
-      const url = '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months';
+      const url = '/engine/results/strategy-plans/phases/phase-1';
       const tierInfo = extractTierInfo(url);
       const renderingRule = findRenderingRule(url);
 
@@ -240,7 +240,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
     it('should provide correct OPAL data props mapping', () => {
       const testCases = [
         {
-          url: '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+          url: '/engine/results/strategy-plans/phases/phase-1',
           expectedDataProps: ['phaseData', 'milestoneData', 'roadmapTimeline']
         },
         {
@@ -274,7 +274,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
         },
         {
           from: '/engine/results/strategy-plans/phases',
-          to: '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+          to: '/engine/results/strategy-plans/phases/phase-1',
           description: 'Tier-2 to Tier-3 navigation'
         },
         {
@@ -303,9 +303,9 @@ describe('OPAL Results System - Step 7: Testing', () => {
 
     it('should maintain consistent widget hierarchy across navigation', () => {
       const strategyUrls = [
-        '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
-        '/engine/results/strategy-plans/phases/phase-2-growth-3-6-months',
-        '/engine/results/strategy-plans/phases/phase-3-optimization-6-12-months'
+        '/engine/results/strategy-plans/phases/phase-1',
+        '/engine/results/strategy-plans/phases/phase-2',
+        '/engine/results/strategy-plans/phases/phase-3'
       ];
 
       strategyUrls.forEach(url => {
@@ -323,7 +323,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
     it('should handle cross-section navigation correctly', () => {
       const crossSectionTests = [
         {
-          from: '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+          from: '/engine/results/strategy-plans/phases/phase-1',
           to: '/engine/results/optimizely-dxp-tools/webx/active-experiments',
           description: 'Strategy Plans to DXP Tools'
         },
@@ -355,7 +355,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
       const { useTierOPALData } = require('@/hooks/useTierOPALData');
       useTierOPALData.mockReturnValue(createMockTierData(false, true, false));
 
-      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months');
+      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1');
 
       const { container } = render(<WidgetRenderer />);
 
@@ -367,7 +367,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
       const { useTierOPALData } = require('@/hooks/useTierOPALData');
       useTierOPALData.mockReturnValue(createMockTierData(false, false, true));
 
-      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months');
+      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1');
 
       const { container } = render(<WidgetRenderer />);
 
@@ -379,7 +379,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
       const { useTierOPALData } = require('@/hooks/useTierOPALData');
       useTierOPALData.mockReturnValue(createMockTierData(false, false, false));
 
-      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months');
+      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1');
 
       const { container } = render(<WidgetRenderer />);
 
@@ -391,9 +391,9 @@ describe('OPAL Results System - Step 7: Testing', () => {
       const { useTierOPALData } = require('@/hooks/useTierOPALData');
       useTierOPALData.mockReturnValue(createMockTierData(true, false, false));
 
-      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months');
+      mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1');
 
-      const mockContext = createMockContext('strategy-plans', 'phases', 'phase-1-foundation-0-3-months');
+      const mockContext = createMockContext('strategy-plans', 'phases', 'phase-1');
       const { useConditionalRenderingContext } = require('@/lib/conditional-rendering');
       useConditionalRenderingContext.mockReturnValue(mockContext);
 
@@ -418,7 +418,7 @@ describe('OPAL Results System - Step 7: Testing', () => {
 
     it('should have proper OPAL mapping integration', () => {
       const testUrls = [
-        '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+        '/engine/results/strategy-plans/phases/phase-1',
         '/engine/results/optimizely-dxp-tools/webx/active-experiments',
         '/engine/results/analytics-insights/content/engagement',
         '/engine/results/experience-optimization/experimentation/multivariate-testing'
@@ -457,7 +457,7 @@ describe('Performance and Optimization Validation', () => {
   it('should render widgets efficiently', () => {
     const start = performance.now();
 
-    mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months');
+    mockUsePathname.mockReturnValue('/engine/results/strategy-plans/phases/phase-1');
 
     const { unmount } = render(<WidgetRenderer />);
     const renderTime = performance.now() - start;
@@ -470,7 +470,7 @@ describe('Performance and Optimization Validation', () => {
 
   it('should handle multiple concurrent widget renders', () => {
     const urls = [
-      '/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months',
+      '/engine/results/strategy-plans/phases/phase-1',
       '/engine/results/optimizely-dxp-tools/webx/active-experiments',
       '/engine/results/analytics-insights/content/engagement'
     ];
