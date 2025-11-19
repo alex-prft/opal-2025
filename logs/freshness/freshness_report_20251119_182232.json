@@ -1,0 +1,36 @@
+{
+  "report_metadata": {
+    "timestamp": "2025-11-19T18:22:32-05:00",
+    "agents_checked": 3,
+    "thresholds": {
+      "max_age_hours": 24,
+      "critical_age_hours": 72
+    }
+  },
+  "agent_freshness": {
+    "audience_suggester": {
+      "status": "CRITICAL",
+      "age_hours": 9999,
+      "last_updated": "unknown",
+      "needs_refresh": true
+    },
+    "geo_audit": {
+      "status": "CRITICAL",
+      "age_hours": 9999,
+      "last_updated": "unknown",
+      "needs_refresh": true
+    },
+    "content_optimizer": {
+      "status": "CRITICAL",
+      "age_hours": 9999,
+      "last_updated": "unknown",
+      "needs_refresh": true
+    }
+  },
+  "summary": {
+    "fresh": 0,
+    "stale": 0,
+    "critical": 3,
+    "fresh_percentage": 0
+  }
+}

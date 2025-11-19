@@ -1,0 +1,31 @@
+{
+  "dashboard_metadata": {
+    "timestamp": "2025-11-19T18:22:11-05:00",
+    "base_url": "http://localhost:3000",
+    "monitoring_version": "2.0"
+  },
+  "system_status": {},
+  "agent_health": {
+    "audience_suggester": {
+      "status": "WARNING",
+      "last_checked": "2025-11-19T18:22:11-05:00"
+    },
+    "geo_audit": {
+      "status": "WARNING",
+      "last_checked": "2025-11-19T18:22:11-05:00"
+    },
+    "content_optimizer": {
+      "status": "WARNING",
+      "last_checked": "2025-11-19T18:22:11-05:00"
+    },
+    "strategy_assistant": {
+      "status": "WARNING",
+      "last_checked": "2025-11-19T18:22:11-05:00"
+    },
+    "performance_analyzer": {
+      "status": "WARNING",
+      "last_checked": "2025-11-19T18:22:11-05:00"
+    }
+  },
+  "summary": {}
+}

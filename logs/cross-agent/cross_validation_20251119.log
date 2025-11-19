@@ -1,0 +1,154 @@
+[2025-11-19 18:05:30] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:05:30] Fetching data for agent: audience_suggester
+[2025-11-19 18:05:30] ERROR: Failed to fetch data for audience_suggester
+[2025-11-19 18:05:30] Fetching data for agent: geo_audit
+[2025-11-19 18:05:30] ERROR: Failed to fetch data for geo_audit
+[2025-11-19 18:05:30] Fetching data for agent: content_optimizer
+[2025-11-19 18:05:30] ERROR: Failed to fetch data for content_optimizer
+[2025-11-19 18:05:30] Fetching data for agent: strategy_assistant
+[2025-11-19 18:05:30] ERROR: Failed to fetch data for strategy_assistant
+[2025-11-19 18:05:30] Fetching data for agent: performance_analyzer
+[2025-11-19 18:05:30] ERROR: Failed to fetch data for performance_analyzer
+[2025-11-19 18:18:16] 🚀 Starting comprehensive cross-agent validation...
+[2025-11-19 18:18:16] 🔄 Starting cross-agent data consistency validation...
+[2025-11-19 18:18:16] Fetching data for agent: audience_suggester
+[2025-11-19 18:18:16] ERROR: Failed to fetch data for audience_suggester
+[2025-11-19 18:18:16] ❌ audience_suggester: Failed to collect data
+[2025-11-19 18:18:16] Fetching data for agent: geo_audit
+[2025-11-19 18:18:16] ERROR: Failed to fetch data for geo_audit
+[2025-11-19 18:18:16] ❌ geo_audit: Failed to collect data
+[2025-11-19 18:18:16] Fetching data for agent: content_optimizer
+[2025-11-19 18:18:16] ERROR: Failed to fetch data for content_optimizer
+[2025-11-19 18:18:16] ❌ content_optimizer: Failed to collect data
+[2025-11-19 18:18:16] Fetching data for agent: strategy_assistant
+[2025-11-19 18:18:16] ERROR: Failed to fetch data for strategy_assistant
+[2025-11-19 18:18:16] ❌ strategy_assistant: Failed to collect data
+[2025-11-19 18:18:16] Fetching data for agent: performance_analyzer
+[2025-11-19 18:18:16] ERROR: Failed to fetch data for performance_analyzer
+[2025-11-19 18:18:16] ❌ performance_analyzer: Failed to collect data
+[2025-11-19 18:18:33] 🚀 Starting comprehensive cross-agent validation...
+[2025-11-19 18:18:33] 🔄 Starting cross-agent data consistency validation...
+[2025-11-19 18:18:33] Fetching data for agent: audience_suggester
+[2025-11-19 18:18:33] ERROR: Failed to fetch data for audience_suggester
+[2025-11-19 18:18:33] ❌ audience_suggester: Failed to collect data
+[2025-11-19 18:18:33] Fetching data for agent: geo_audit
+[2025-11-19 18:18:33] ERROR: Failed to fetch data for geo_audit
+[2025-11-19 18:18:33] ❌ geo_audit: Failed to collect data
+[2025-11-19 18:18:33] Fetching data for agent: content_optimizer
+[2025-11-19 18:18:33] ERROR: Failed to fetch data for content_optimizer
+[2025-11-19 18:18:33] ❌ content_optimizer: Failed to collect data
+[2025-11-19 18:18:33] Fetching data for agent: strategy_assistant
+[2025-11-19 18:18:33] ERROR: Failed to fetch data for strategy_assistant
+[2025-11-19 18:18:33] ❌ strategy_assistant: Failed to collect data
+[2025-11-19 18:18:33] Fetching data for agent: performance_analyzer
+[2025-11-19 18:18:33] ERROR: Failed to fetch data for performance_analyzer
+[2025-11-19 18:18:33] ❌ performance_analyzer: Failed to collect data
+[2025-11-19 18:19:50] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:19:50] Fetching data for agent: audience_suggester
+[2025-11-19 18:19:50] ERROR: Failed to fetch data for audience_suggester
+[2025-11-19 18:19:50] Fetching data for agent: geo_audit
+[2025-11-19 18:19:50] ERROR: Failed to fetch data for geo_audit
+[2025-11-19 18:19:50] Fetching data for agent: content_optimizer
+[2025-11-19 18:19:50] ERROR: Failed to fetch data for content_optimizer
+[2025-11-19 18:19:50] Fetching data for agent: strategy_assistant
+[2025-11-19 18:19:50] ERROR: Failed to fetch data for strategy_assistant
+[2025-11-19 18:19:50] Fetching data for agent: performance_analyzer
+[2025-11-19 18:19:50] ERROR: Failed to fetch data for performance_analyzer
+[2025-11-19 18:20:32] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:20:32] Fetching data for agent: audience_suggester
+[2025-11-19 18:20:51] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:20:51] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:04] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:21:04] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:04] Fetching data for agent: geo_audit
+[2025-11-19 18:21:04] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:04] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:04] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:10] 🚀 Starting comprehensive cross-agent validation...
+[2025-11-19 18:21:10] 🔄 Starting cross-agent data consistency validation...
+[2025-11-19 18:21:10] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:10] ✅ audience_suggester: Data collected successfully
+[2025-11-19 18:21:10] audience_suggester: Age=8957h, Segments=[
+  "Tech Enthusiasts",
+  "Enterprise Buyers"
+], Confidence=85, Status=STALE
+[2025-11-19 18:21:10] Fetching data for agent: geo_audit
+[2025-11-19 18:21:10] ✅ geo_audit: Data collected successfully
+[2025-11-19 18:21:10] geo_audit: Age=8957h, Segments=0, Confidence=85, Status=STALE
+[2025-11-19 18:21:10] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:10] ✅ content_optimizer: Data collected successfully
+[2025-11-19 18:21:10] content_optimizer: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:10] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:10] ✅ strategy_assistant: Data collected successfully
+[2025-11-19 18:21:10] strategy_assistant: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:10] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:10] ✅ performance_analyzer: Data collected successfully
+[2025-11-19 18:21:10] performance_analyzer: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:10] ✅ Data consistency validation completed: ./logs/cross-agent/consistency_report_20251119_182110.json
+[2025-11-19 18:21:10] 📊 Consistency Summary: ✅ Consistent: 0, ⚠️ Issues: 5, ❌ Failed: 0
+[2025-11-19 18:21:10] 🔗 Starting workflow context sharing validation...
+[2025-11-19 18:21:10] Testing context sharing for primary agent: audience_suggester
+[2025-11-19 18:21:10] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:11] Fetching data for agent: geo_audit
+[2025-11-19 18:21:11] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:11] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:11] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:11] audience_suggester: Context Score=50, Cross-refs=1, Status=PARTIALLY_INTEGRATED
+[2025-11-19 18:21:11] Testing context sharing for primary agent: geo_audit
+[2025-11-19 18:21:11] Fetching data for agent: geo_audit
+[2025-11-19 18:21:11] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:11] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:11] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:11] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:11] geo_audit: Context Score=50, Cross-refs=1, Status=PARTIALLY_INTEGRATED
+[2025-11-19 18:21:11] Testing context sharing for primary agent: content_optimizer
+[2025-11-19 18:21:11] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:11] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:12] Fetching data for agent: geo_audit
+[2025-11-19 18:21:12] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:12] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:12] content_optimizer: Context Score=50, Cross-refs=2, Status=PARTIALLY_INTEGRATED
+[2025-11-19 18:21:12] Testing context sharing for primary agent: strategy_assistant
+[2025-11-19 18:21:12] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:12] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:12] Fetching data for agent: geo_audit
+[2025-11-19 18:21:12] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:12] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:12] strategy_assistant: Context Score=50, Cross-refs=2, Status=PARTIALLY_INTEGRATED
+[2025-11-19 18:21:12] Testing context sharing for primary agent: performance_analyzer
+[2025-11-19 18:21:12] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:12] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:12] Fetching data for agent: geo_audit
+[2025-11-19 18:21:12] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:13] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:13] performance_analyzer: Context Score=50, Cross-refs=2, Status=PARTIALLY_INTEGRATED
+[2025-11-19 18:21:13] ✅ Workflow context sharing validation completed: ./logs/cross-agent/context_sharing_20251119_182110.json
+[2025-11-19 18:21:13] 📊 Integration Summary: 🔗 Well: 0, ⚡ Partial: 5, 🚫 Isolated: 0
+[2025-11-19 18:21:13] 🎯 Starting Results tier alignment validation...
+[2025-11-19 18:21:44] ⚡ Running quick cross-agent validation...
+[2025-11-19 18:21:44] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:44] Fetching data for agent: geo_audit
+[2025-11-19 18:21:44] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:44] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:44] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:50] 🔄 Starting cross-agent data consistency validation...
+[2025-11-19 18:21:50] Fetching data for agent: audience_suggester
+[2025-11-19 18:21:50] ✅ audience_suggester: Data collected successfully
+[2025-11-19 18:21:50] audience_suggester: Age=8957h, Segments=[
+  "Tech Enthusiasts",
+  "Enterprise Buyers"
+], Confidence=85, Status=STALE
+[2025-11-19 18:21:50] Fetching data for agent: geo_audit
+[2025-11-19 18:21:50] ✅ geo_audit: Data collected successfully
+[2025-11-19 18:21:50] geo_audit: Age=8957h, Segments=0, Confidence=85, Status=STALE
+[2025-11-19 18:21:50] Fetching data for agent: content_optimizer
+[2025-11-19 18:21:51] ✅ content_optimizer: Data collected successfully
+[2025-11-19 18:21:51] content_optimizer: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:51] Fetching data for agent: strategy_assistant
+[2025-11-19 18:21:51] ✅ strategy_assistant: Data collected successfully
+[2025-11-19 18:21:51] strategy_assistant: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:51] Fetching data for agent: performance_analyzer
+[2025-11-19 18:21:51] ✅ performance_analyzer: Data collected successfully
+[2025-11-19 18:21:51] performance_analyzer: Age=9999h, Segments=0, Confidence=20, Status=STALE
+[2025-11-19 18:21:51] ✅ Data consistency validation completed: ./logs/cross-agent/consistency_report_20251119_182150.json
+[2025-11-19 18:21:51] 📊 Consistency Summary: ✅ Consistent: 0, ⚠️ Issues: 5, ❌ Failed: 0

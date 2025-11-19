@@ -1,0 +1,10 @@
+{
+    "validation_metadata": {
+        "timestamp": "2025-11-19T18:18:16-05:00",
+        "correlation_id": "cross_validation_1763594296_43475",
+        "agents_tested": 5,
+        "max_drift_hours": 6
+    },
+    "agent_consistency": {"audience_suggester":"FAILED","geo_audit":"FAILED","content_optimizer":"FAILED","strategy_assistant":"FAILED","performance_analyzer":"FAILED"},
+    "summary": {}
+}

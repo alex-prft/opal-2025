@@ -1,0 +1,49 @@
+{
+  "validation_metadata": {
+    "timestamp": "2025-11-19T18:21:10-05:00",
+    "correlation_id": "cross_validation_1763594470_47671",
+    "agents_tested": 5,
+    "max_drift_hours": 6
+  },
+  "agent_consistency": {
+    "audience_suggester": {
+      "status": "STALE",
+      "age_hours": 8957,
+      "segments": [
+        "Tech Enthusiasts",
+        "Enterprise Buyers"
+      ],
+      "confidence": 85
+    },
+    "geo_audit": {
+      "status": "STALE",
+      "age_hours": 8957,
+      "segments": 0,
+      "confidence": 85
+    },
+    "content_optimizer": {
+      "status": "STALE",
+      "age_hours": 9999,
+      "segments": 0,
+      "confidence": 20
+    },
+    "strategy_assistant": {
+      "status": "STALE",
+      "age_hours": 9999,
+      "segments": 0,
+      "confidence": 20
+    },
+    "performance_analyzer": {
+      "status": "STALE",
+      "age_hours": 9999,
+      "segments": 0,
+      "confidence": 20
+    }
+  },
+  "summary": {
+    "consistent": 0,
+    "stale": 5,
+    "failed": 0,
+    "consistency_percentage": 0
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "validation_metadata": {
+        "timestamp": "2025-11-19T18:21:13-05:00",
+        "correlation_id": "cross_validation_1763594470_47671",
+        "test_type": "workflow_context_sharing"
+    },
+    "context_sharing": {"audience_suggester":{"status":"PARTIALLY_INTEGRATED","score":50,"cross_references":1,"compatible_agents":4},"geo_audit":{"status":"PARTIALLY_INTEGRATED","score":50,"cross_references":1,"compatible_agents":4},"content_optimizer":{"status":"PARTIALLY_INTEGRATED","score":50,"cross_references":2,"compatible_agents":4},"strategy_assistant":{"status":"PARTIALLY_INTEGRATED","score":50,"cross_references":2,"compatible_agents":4},"performance_analyzer":{"status":"PARTIALLY_INTEGRATED","score":50,"cross_references":2,"compatible_agents":4}},
+    "analysis": {}
+}

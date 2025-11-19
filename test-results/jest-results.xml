@@ -1,3 +1,523 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="OSA Admin Dashboard API Tests" tests="0" failures="0" errors="0" time="15.962">
+<testsuites name="OSA Admin Dashboard API Tests" tests="39" failures="2" errors="0" time="12.336">
+  <testsuite name="RecentDataComponent Status Logic" errors="0" failures="0" skipped="0" timestamp="2025-11-19T16:07:06" time="0.471" tests="16">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" name="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" time="0.01">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" name="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" name="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" name="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" name="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" name="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" name="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" name="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" name="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" name="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" time="0.016">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" name="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" name="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" time="0.001">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" name="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" time="0">
+    </testcase>
+    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" name="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Vercel Authorization Regression Tests" errors="0" failures="2" skipped="0" timestamp="2025-11-19T16:07:06" time="1.522" tests="23">
+    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" time="0.018">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" time="0.012">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent recurring token expiration issues" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent recurring token expiration issues" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" name="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" time="0.009">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: &quot;ifpa-strategy&quot;
+Received: &quot;opal-2025&quot;
+    at Object.toBe (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/tests/unit/vercel-auth-regression.test.js:75:41)
+    at Promise.then.completed (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should prevent project unlinking issues" name="Vercel Authorization Regression Tests Project Linking Validation should prevent project unlinking issues" time="0.035">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should validate project ID consistency" name="Vercel Authorization Regression Tests Project Linking Validation should validate project ID consistency" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Environment-Specific Authorization should handle different environments correctly" name="Vercel Authorization Regression Tests Environment-Specific Authorization should handle different environments correctly" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" name="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" time="0.015">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" name="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should prevent scope and team configuration issues" name="Vercel Authorization Regression Tests Deployment Command Validation should prevent scope and team configuration issues" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" name="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should prevent token exposure in logs" name="Vercel Authorization Regression Tests Token Security and Management should prevent token exposure in logs" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" name="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" name="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have clear documentation for authorization setup" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have clear documentation for authorization setup" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have automated testing for deployment configuration" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have automated testing for deployment configuration" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" time="0.001">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should validate GitHub repository URL consistency" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should validate GitHub repository URL consistency" time="0">
+    </testcase>
+    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" time="0.001">
+    </testcase>
+    <testcase classname="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" name="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" time="0.001">
+      <failure>Error: expect(received).toContain(expected) // indexOf
+
+Expected substring: &quot;Add it as a repository secret&quot;
+Received string:    &quot;#!/bin/bash·
+##############################################################################
+# Unified Production Deployment Script - Vercel Authorization Fix
+#
+# This script solves recurring Vercel authorization issues by:
+# 1. Implementing robust token validation and fallback mechanisms
+# 2. Providing clear guidance for token setup
+# 3. Supporting both local and CI/CD deployments
+# 4. Comprehensive error handling and rollback capabilities
+#
+# Usage:
+#   Local: VERCEL_TOKEN=your_token ./scripts/deploy-production-unified.sh
+#   CI/CD: Called from GitHub Actions with secrets
+##############################################################################·
+set -euo pipefail  # Exit on any error, undefined vars, pipe failures·
+# Colors for output
+readonly RED=&apos;\\033[0;31m&apos;
+readonly GREEN=&apos;\\033[0;32m&apos;
+readonly YELLOW=&apos;\\033[1;33m&apos;
+readonly BLUE=&apos;\\033[0;34m&apos;
+readonly NC=&apos;\\033[0m&apos; # No Color·
+# Configuration
+readonly SCRIPT_DIR=\&quot;$(cd \&quot;$(dirname \&quot;${BASH_SOURCE[0]}\&quot;)\&quot; &amp;&amp; pwd)\&quot;
+readonly PROJECT_ROOT=\&quot;$(cd \&quot;${SCRIPT_DIR}/..\&quot; &amp;&amp; pwd)\&quot;
+readonly DEPLOYMENT_ID=\&quot;deploy-$(date +%Y%m%d-%H%M%S)\&quot;
+readonly LOG_DIR=\&quot;${PROJECT_ROOT}/logs\&quot;
+readonly LOG_FILE=\&quot;${LOG_DIR}/deployment-${DEPLOYMENT_ID}.log\&quot;
+readonly BACKUP_DIR=\&quot;${PROJECT_ROOT}/backups\&quot;
+readonly PRODUCTION_URL=\&quot;https://ifpa-strategy.vercel.app\&quot;
+readonly GITHUB_REPO=\&quot;https://github.com/alex-prft/ifpa-strategy\&quot;·
+# Ensure directories exist
+mkdir -p \&quot;${LOG_DIR}\&quot; \&quot;${BACKUP_DIR}\&quot;·
+##############################################################################
+# Logging and Utility Functions
+##############################################################################·
+log() {
+    local level=$1
+    shift
+    local message=\&quot;$@\&quot;
+    local timestamp=$(date &apos;+%Y-%m-%d %H:%M:%S&apos;)·
+    # Log to file
+    echo \&quot;${timestamp} [${level}] ${message}\&quot; &gt;&gt; \&quot;${LOG_FILE}\&quot;·
+    # Display with colors
+    case $level in
+        \&quot;INFO\&quot;)    echo -e \&quot;${BLUE}ℹ️  ${message}${NC}\&quot; ;;
+        \&quot;SUCCESS\&quot;) echo -e \&quot;${GREEN}✅ ${message}${NC}\&quot; ;;
+        \&quot;WARN\&quot;)    echo -e \&quot;${YELLOW}⚠️  ${message}${NC}\&quot; ;;
+        \&quot;ERROR\&quot;)   echo -e \&quot;${RED}❌ ${message}${NC}\&quot; ;;
+    esac
+}·
+error_exit() {
+    log \&quot;ERROR\&quot; \&quot;$1\&quot;
+    log \&quot;ERROR\&quot; \&quot;Deployment failed. Check log: ${LOG_FILE}\&quot;
+    cleanup_on_error
+    exit 1
+}·
+cleanup_on_error() {
+    log \&quot;WARN\&quot; \&quot;Cleaning up after error...\&quot;
+    # Kill any background processes if needed
+    # Restore from backup if necessary
+    log \&quot;INFO\&quot; \&quot;Cleanup completed\&quot;
+}·
+##############################################################################
+# Vercel Authentication and Token Management
+##############################################################################·
+check_vercel_token() {
+    log \&quot;INFO\&quot; \&quot;🔑 Validating Vercel authentication...\&quot;·
+    # Check if VERCEL_TOKEN is set and valid
+    if [[ -n \&quot;${VERCEL_TOKEN:-}\&quot; ]]; then
+        log \&quot;INFO\&quot; \&quot;VERCEL_TOKEN found in environment\&quot;·
+        # Test token validity by checking team information
+        if VERCEL_TOKEN=\&quot;${VERCEL_TOKEN}\&quot; npx vercel teams ls &gt;/dev/null 2&gt;&amp;1; then
+            log \&quot;SUCCESS\&quot; \&quot;VERCEL_TOKEN is valid and active\&quot;
+            return 0
+        else
+            log \&quot;ERROR\&quot; \&quot;VERCEL_TOKEN is set but invalid or expired\&quot;
+            return 1
+        fi
+    fi·
+    # Check if vercel is logged in locally
+    if npx vercel whoami &gt;/dev/null 2&gt;&amp;1; then
+        log \&quot;SUCCESS\&quot; \&quot;Vercel CLI is authenticated locally\&quot;
+        return 0
+    fi·
+    return 1
+}·
+setup_vercel_auth() {
+    log \&quot;INFO\&quot; \&quot;🔧 Setting up Vercel authentication...\&quot;·
+    if check_vercel_token; then
+        return 0
+    fi·
+    log \&quot;WARN\&quot; \&quot;Vercel authentication not found or invalid\&quot;
+    log \&quot;INFO\&quot; \&quot;To fix recurring authorization issues, set up your VERCEL_TOKEN:\&quot;
+    echo
+    echo -e \&quot;${YELLOW}🔧 VERCEL_TOKEN Setup Instructions:${NC}\&quot;
+    echo \&quot;1. Go to https://vercel.com/account/tokens\&quot;
+    echo \&quot;2. Create a new token with deployment permissions\&quot;
+    echo \&quot;3. Set it in your environment:\&quot;
+    echo \&quot;   export VERCEL_TOKEN=&apos;your_token_here&apos;\&quot;
+    echo \&quot;   # Or add to your ~/.bashrc or ~/.zshrc for persistence\&quot;
+    echo
+    echo \&quot;4. For GitHub Actions, add it as a repository secret:\&quot;
+    echo \&quot;   - Go to ${GITHUB_REPO}/settings/secrets/actions\&quot;
+    echo \&quot;   - Add VERCEL_TOKEN with your token value\&quot;
+    echo·
+    # Interactive fallback for local development
+    if [[ \&quot;${CI:-false}\&quot; == \&quot;false\&quot; ]]; then
+        read -p \&quot;Would you like to authenticate interactively now? (y/N): \&quot; -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            log \&quot;INFO\&quot; \&quot;Starting interactive Vercel authentication...\&quot;
+            npx vercel login
+            if check_vercel_token; then
+                log \&quot;SUCCESS\&quot; \&quot;Interactive authentication successful\&quot;
+                return 0
+            fi
+        fi
+    fi·
+    error_exit \&quot;Vercel authentication required. Please set VERCEL_TOKEN environment variable.\&quot;
+}·
+##############################################################################
+# Environment Configuration Management
+##############################################################################·
+validate_environment() {
+    log \&quot;INFO\&quot; \&quot;🌍 Validating deployment environment...\&quot;·
+    local required_vars=(
+        \&quot;NODE_ENV\&quot;
+        \&quot;NEXT_PUBLIC_BASE_URL\&quot;
+        \&quot;OPAL_WEBHOOK_AUTH_KEY\&quot;
+        \&quot;JWT_SECRET\&quot;
+        \&quot;API_SECRET_KEY\&quot;
+    )·
+    local missing_vars=()·
+    for var in \&quot;${required_vars[@]}\&quot;; do
+        if [[ -z \&quot;${!var:-}\&quot; ]]; then
+            missing_vars+=(\&quot;$var\&quot;)
+        fi
+    done·
+    if [[ ${#missing_vars[@]} -gt 0 ]]; then
+        log \&quot;ERROR\&quot; \&quot;Missing required environment variables: ${missing_vars[*]}\&quot;
+        log \&quot;INFO\&quot; \&quot;Create a .env.production file with production values\&quot;
+        log \&quot;INFO\&quot; \&quot;Or set these variables in your Vercel project settings\&quot;
+        return 1
+    fi·
+    # Validate specific values
+    if [[ \&quot;${NEXT_PUBLIC_BASE_URL}\&quot; == *\&quot;localhost\&quot;* ]]; then
+        log \&quot;WARN\&quot; \&quot;NEXT_PUBLIC_BASE_URL appears to be set to localhost\&quot;
+        log \&quot;INFO\&quot; \&quot;For production, this should be: ${PRODUCTION_URL}\&quot;
+        export NEXT_PUBLIC_BASE_URL=\&quot;${PRODUCTION_URL}\&quot;
+        log \&quot;INFO\&quot; \&quot;Updated NEXT_PUBLIC_BASE_URL to production URL\&quot;
+    fi·
+    log \&quot;SUCCESS\&quot; \&quot;Environment validation passed\&quot;
+}·
+load_production_env() {
+    log \&quot;INFO\&quot; \&quot;📄 Loading production environment configuration...\&quot;·
+    # Load production environment file if it exists
+    if [[ -f \&quot;${PROJECT_ROOT}/.env.production\&quot; ]]; then
+        log \&quot;INFO\&quot; \&quot;Loading .env.production file\&quot;
+        set -o allexport
+        source \&quot;${PROJECT_ROOT}/.env.production\&quot;
+        set +o allexport
+    elif [[ -f \&quot;${PROJECT_ROOT}/.env.local\&quot; ]]; then
+        log \&quot;INFO\&quot; \&quot;Loading .env.local file (development settings)\&quot;
+        set -o allexport
+        source \&quot;${PROJECT_ROOT}/.env.local\&quot;
+        set +o allexport
+    fi·
+    # Set production defaults
+    export NODE_ENV=\&quot;production\&quot;
+    export NEXT_PUBLIC_BASE_URL=\&quot;${NEXT_PUBLIC_BASE_URL:-$PRODUCTION_URL}\&quot;
+}·
+##############################################################################
+# Git Repository Management
+##############################################################################·
+validate_git_status() {
+    log \&quot;INFO\&quot; \&quot;📋 Validating Git repository status...\&quot;·
+    # Check if we&apos;re in a git repository
+    if ! git rev-parse --git-dir &gt;/dev/null 2&gt;&amp;1; then
+        error_exit \&quot;Not in a Git repository\&quot;
+    fi·
+    # Check remote configuration
+    if ! git remote get-url origin &gt;/dev/null 2&gt;&amp;1; then
+        error_exit \&quot;No Git remote &apos;origin&apos; configured\&quot;
+    fi·
+    local remote_url=$(git remote get-url origin)
+    if [[ \&quot;$remote_url\&quot; != *\&quot;alex-prft/ifpa-strategy\&quot;* ]]; then
+        log \&quot;WARN\&quot; \&quot;Remote URL doesn&apos;t match expected repository: $remote_url\&quot;
+    fi·
+    # Check for uncommitted changes
+    if ! git diff-index --quiet HEAD --; then
+        log \&quot;WARN\&quot; \&quot;Uncommitted changes detected\&quot;
+        git status --porcelain·
+        if [[ \&quot;${CI:-false}\&quot; == \&quot;false\&quot; ]]; then
+            read -p \&quot;Continue with deployment anyway? (y/N): \&quot; -n 1 -r
+            echo
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                error_exit \&quot;Deployment cancelled due to uncommitted changes\&quot;
+            fi
+        else
+            log \&quot;WARN\&quot; \&quot;Proceeding with uncommitted changes in CI environment\&quot;
+        fi
+    fi·
+    # Get current commit info
+    export CURRENT_COMMIT=$(git rev-parse HEAD)
+    export CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)·
+    log \&quot;INFO\&quot; \&quot;Git validation completed\&quot;
+    log \&quot;INFO\&quot; \&quot;Branch: ${CURRENT_BRANCH}, Commit: ${CURRENT_COMMIT:0:8}\&quot;
+}·
+##############################################################################
+# Pre-deployment Validation
+##############################################################################·
+run_pre_deployment_checks() {
+    log \&quot;INFO\&quot; \&quot;🔍 Running pre-deployment validation...\&quot;·
+    # Check Node.js and npm
+    if ! command -v node &amp;&gt; /dev/null; then
+        error_exit \&quot;Node.js not found\&quot;
+    fi·
+    if ! command -v npm &amp;&gt; /dev/null; then
+        error_exit \&quot;npm not found\&quot;
+    fi·
+    log \&quot;INFO\&quot; \&quot;Node.js version: $(node --version)\&quot;
+    log \&quot;INFO\&quot; \&quot;npm version: $(npm --version)\&quot;·
+    # Validate package.json
+    if [[ ! -f \&quot;${PROJECT_ROOT}/package.json\&quot; ]]; then
+        error_exit \&quot;package.json not found\&quot;
+    fi·
+    # Check Vercel CLI
+    if ! npx vercel --version &gt;/dev/null 2&gt;&amp;1; then
+        error_exit \&quot;Vercel CLI not available\&quot;
+    fi·
+    log \&quot;SUCCESS\&quot; \&quot;Pre-deployment checks passed\&quot;
+}·
+##############################################################################
+# Build and Test Process
+##############################################################################·
+run_build_and_tests() {
+    log \&quot;INFO\&quot; \&quot;🔨 Building application for production...\&quot;·
+    cd \&quot;${PROJECT_ROOT}\&quot;·
+    # Clean install dependencies
+    log \&quot;INFO\&quot; \&quot;Installing dependencies...\&quot;
+    if ! npm ci --production=false; then
+        error_exit \&quot;Failed to install dependencies\&quot;
+    fi·
+    # Run tests (if they exist and we&apos;re not in CI skip mode)
+    if [[ -f \&quot;jest.config.js\&quot; ]] &amp;&amp; [[ \&quot;${SKIP_TESTS:-false}\&quot; != \&quot;true\&quot; ]]; then
+        log \&quot;INFO\&quot; \&quot;Running test suite...\&quot;
+        if ! npm test -- --passWithNoTests --watchAll=false; then
+            error_exit \&quot;Tests failed\&quot;
+        fi
+        log \&quot;SUCCESS\&quot; \&quot;Tests passed\&quot;
+    else
+        log \&quot;INFO\&quot; \&quot;Skipping tests (not configured or SKIP_TESTS=true)\&quot;
+    fi·
+    # Build the application
+    log \&quot;INFO\&quot; \&quot;Building Next.js application...\&quot;
+    if ! npm run build; then
+        error_exit \&quot;Build failed\&quot;
+    fi·
+    # Validate build output
+    if [[ ! -d \&quot;${PROJECT_ROOT}/.next\&quot; ]]; then
+        error_exit \&quot;Build output directory (.next) not found\&quot;
+    fi·
+    local build_size=$(du -sh .next 2&gt;/dev/null | cut -f1 || echo \&quot;unknown\&quot;)
+    log \&quot;SUCCESS\&quot; \&quot;Build completed successfully (size: ${build_size})\&quot;
+}·
+##############################################################################
+# Deployment Execution
+##############################################################################·
+deploy_to_vercel() {
+    log \&quot;INFO\&quot; \&quot;🚀 Deploying to Vercel...\&quot;·
+    cd \&quot;${PROJECT_ROOT}\&quot;·
+    # Construct deployment command
+    local deploy_cmd=\&quot;npx vercel --prod --yes\&quot;·
+    # Use token if available
+    if [[ -n \&quot;${VERCEL_TOKEN:-}\&quot; ]]; then
+        deploy_cmd=\&quot;VERCEL_TOKEN=&apos;${VERCEL_TOKEN}&apos; ${deploy_cmd}\&quot;
+        log \&quot;INFO\&quot; \&quot;Using VERCEL_TOKEN for authentication\&quot;
+    else
+        log \&quot;INFO\&quot; \&quot;Using local Vercel CLI authentication\&quot;
+    fi·
+    # Execute deployment
+    if eval \&quot;${deploy_cmd}\&quot;; then
+        log \&quot;SUCCESS\&quot; \&quot;Vercel deployment completed\&quot;
+    else
+        error_exit \&quot;Vercel deployment failed\&quot;
+    fi
+}·
+##############################################################################
+# Post-deployment Validation
+##############################################################################·
+validate_deployment() {
+    log \&quot;INFO\&quot; \&quot;🧪 Validating production deployment...\&quot;·
+    # Wait for deployment to be available
+    log \&quot;INFO\&quot; \&quot;Waiting for deployment to be ready...\&quot;
+    sleep 30·
+    # Test health endpoint
+    local health_url=\&quot;${PRODUCTION_URL}/api/health\&quot;
+    if curl -sSf --connect-timeout 10 --max-time 30 \&quot;${health_url}\&quot; &gt;/dev/null 2&gt;&amp;1; then
+        log \&quot;SUCCESS\&quot; \&quot;Health check passed\&quot;
+    else
+        log \&quot;WARN\&quot; \&quot;Health endpoint not available at ${health_url}\&quot;
+    fi·
+    # Test main application endpoints
+    local endpoints=(
+        \&quot;/api/opal/enhanced-tools\&quot;
+        \&quot;/api/webhooks/opal-workflow\&quot;
+        \&quot;/engine\&quot;
+        \&quot;/engine/results\&quot;
+    )·
+    local failed_endpoints=()·
+    for endpoint in \&quot;${endpoints[@]}\&quot;; do
+        local test_url=\&quot;${PRODUCTION_URL}${endpoint}\&quot;
+        if curl -sSf --connect-timeout 10 --max-time 30 --head \&quot;${test_url}\&quot; &gt;/dev/null 2&gt;&amp;1; then
+            log \&quot;SUCCESS\&quot; \&quot;Endpoint ${endpoint} is accessible\&quot;
+        else
+            log \&quot;WARN\&quot; \&quot;Endpoint ${endpoint} returned error\&quot;
+            failed_endpoints+=(\&quot;$endpoint\&quot;)
+        fi
+    done·
+    if [[ ${#failed_endpoints[@]} -gt 0 ]]; then
+        log \&quot;WARN\&quot; \&quot;Some endpoints failed validation: ${failed_endpoints[*]}\&quot;
+        log \&quot;INFO\&quot; \&quot;This may be expected for certain protected endpoints\&quot;
+    else
+        log \&quot;SUCCESS\&quot; \&quot;All endpoint validations passed\&quot;
+    fi
+}·
+##############################################################################
+# Deployment Record and Monitoring
+##############################################################################·
+create_deployment_record() {
+    log \&quot;INFO\&quot; \&quot;📊 Creating deployment record...\&quot;·
+    local record_file=\&quot;${BACKUP_DIR}/deployment-${DEPLOYMENT_ID}.json\&quot;·
+    cat &gt; \&quot;${record_file}\&quot; &lt;&lt; EOF
+{
+  \&quot;deploymentId\&quot;: \&quot;${DEPLOYMENT_ID}\&quot;,
+  \&quot;timestamp\&quot;: \&quot;$(date -u +%Y-%m-%dT%H:%M:%SZ)\&quot;,
+  \&quot;commit\&quot;: \&quot;${CURRENT_COMMIT:-unknown}\&quot;,
+  \&quot;branch\&quot;: \&quot;${CURRENT_BRANCH:-unknown}\&quot;,
+  \&quot;deploymentUrl\&quot;: \&quot;${PRODUCTION_URL}\&quot;,
+  \&quot;githubRepo\&quot;: \&quot;${GITHUB_REPO}\&quot;,
+  \&quot;vercelProject\&quot;: \&quot;ifpa-strategy\&quot;,
+  \&quot;status\&quot;: \&quot;completed\&quot;,
+  \&quot;logFile\&quot;: \&quot;${LOG_FILE}\&quot;,
+  \&quot;nodeVersion\&quot;: \&quot;$(node --version 2&gt;/dev/null || echo &apos;unknown&apos;)\&quot;,
+  \&quot;npmVersion\&quot;: \&quot;$(npm --version 2&gt;/dev/null || echo &apos;unknown&apos;)\&quot;
+}
+EOF·
+    # Create latest deployment symlink
+    ln -sf \&quot;deployment-${DEPLOYMENT_ID}.json\&quot; \&quot;${BACKUP_DIR}/latest-deployment.json\&quot;·
+    log \&quot;SUCCESS\&quot; \&quot;Deployment record created: ${record_file}\&quot;
+}·
+##############################################################################
+# Main Deployment Flow
+##############################################################################·
+main() {
+    log \&quot;INFO\&quot; \&quot;🚀 Starting Unified Production Deployment: ${DEPLOYMENT_ID}\&quot;
+    log \&quot;INFO\&quot; \&quot;Target: ${PRODUCTION_URL}\&quot;
+    log \&quot;INFO\&quot; \&quot;Log file: ${LOG_FILE}\&quot;·
+    # Change to project directory
+    cd \&quot;${PROJECT_ROOT}\&quot;·
+    # Execute deployment steps
+    setup_vercel_auth
+    load_production_env
+    validate_environment
+    validate_git_status
+    run_pre_deployment_checks
+    run_build_and_tests
+    deploy_to_vercel
+    validate_deployment
+    create_deployment_record·
+    # Success message
+    echo
+    echo \&quot;==========================================================================\&quot;
+    log \&quot;SUCCESS\&quot; \&quot;🎉 Deployment ${DEPLOYMENT_ID} completed successfully!\&quot;
+    echo \&quot;==========================================================================\&quot;
+    echo
+    log \&quot;INFO\&quot; \&quot;📋 Deployment Summary:\&quot;
+    log \&quot;INFO\&quot; \&quot;  URL: ${PRODUCTION_URL}\&quot;
+    log \&quot;INFO\&quot; \&quot;  Commit: ${CURRENT_COMMIT:0:8} (${CURRENT_BRANCH})\&quot;
+    log \&quot;INFO\&quot; \&quot;  Log: ${LOG_FILE}\&quot;
+    echo
+    log \&quot;INFO\&quot; \&quot;🔧 To prevent future authorization issues:\&quot;
+    log \&quot;INFO\&quot; \&quot;  1. Set VERCEL_TOKEN in your environment permanently\&quot;
+    log \&quot;INFO\&quot; \&quot;  2. Use GitHub Actions for automated deployments\&quot;
+    log \&quot;INFO\&quot; \&quot;  3. Configure production environment variables in Vercel dashboard\&quot;
+    echo
+    log \&quot;INFO\&quot; \&quot;📊 Next steps:\&quot;
+    log \&quot;INFO\&quot; \&quot;  - Monitor application performance and error rates\&quot;
+    log \&quot;INFO\&quot; \&quot;  - Verify OPAL integration endpoints\&quot;
+    log \&quot;INFO\&quot; \&quot;  - Test critical user workflows\&quot;·
+    exit 0
+}·
+##############################################################################
+# Error Handling and Cleanup
+##############################################################################·
+# Set up error handling
+trap &apos;error_exit \&quot;Script interrupted\&quot;&apos; INT TERM
+trap &apos;cleanup_on_error&apos; ERR·
+# Execute main function
+main \&quot;$@\&quot;&quot;
+    at Object.toContain (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/tests/unit/vercel-auth-regression.test.js:301:27)
+    at Promise.then.completed (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="Authorization Error Recovery Tests should handle token expiration gracefully" name="Authorization Error Recovery Tests should handle token expiration gracefully" time="0.001">
+    </testcase>
+    <testcase classname="Authorization Error Recovery Tests should provide alternative authentication methods" name="Authorization Error Recovery Tests should provide alternative authentication methods" time="0">
+    </testcase>
+  </testsuite>
 </testsuites>

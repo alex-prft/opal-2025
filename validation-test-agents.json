@@ -1,0 +1,320 @@
+{
+  "validation_run": {
+    "timestamp": "2025-11-19T22:42:00.000Z",
+    "validator": "opal-integration-validator",
+    "agents_tested": [
+      "audience_suggester",
+      "geo_audit",
+      "content_review"
+    ],
+    "test_type": "health_check",
+    "test_criteria": [
+      "Data-Driven Specificity Requirements",
+      "Standardized Confidence Calculation",
+      "Mandatory Language Rules Validation",
+      "Clear Mode Detection Requirements",
+      "Explicit Business Context Integration"
+    ]
+  },
+  "agents": {
+    "audience_suggester": {
+      "agent_id": "audience_suggester",
+      "agent_name": "Audience Suggester Agent",
+      "version": "1.0.0",
+      "internal_version": 61,
+      "is_active": true,
+      "configuration_checks": {
+        "has_json_schema": true,
+        "has_prompt_template": true,
+        "has_enabled_tools": true,
+        "required_parameters_present": true
+      },
+      "compliance_checks": {
+        "1_data_driven_specificity": {
+          "status": "pass",
+          "evidence": "Prompt includes 'Critical Data-Driven Requirements' section with ODP behavioral traits, Salesforce member data, engagement patterns, conversion paths",
+          "score": 100,
+          "notes": "Comprehensive data source requirements: ODP traits, content analytics, experimentation results, member journey touchpoints"
+        },
+        "2_confidence_calculation": {
+          "status": "pass",
+          "evidence": "4-tier confidence framework present: 80-100 (complete DXP), 60-79 (partial), 40-59 (limited), 0-39 (minimal)",
+          "score": 100,
+          "notes": "Confidence based on data completeness, not reasoning quality"
+        },
+        "3_language_rules_validation": {
+          "status": "pass",
+          "evidence": "MANDATORY validation using osa_validate_language_rules before final output",
+          "score": 100,
+          "notes": "Tool call required before finalizing output"
+        },
+        "4_mode_detection": {
+          "status": "pass",
+          "evidence": "Dual-mode operation clearly defined: Data Mode (JSON via OSA tools) and Chat Mode (natural language + Canvas)",
+          "score": 100,
+          "notes": "Clear triggers: osa_retrieve_workflow_context for Data Mode, direct conversation for Chat Mode"
+        },
+        "5_business_context": {
+          "status": "pass",
+          "evidence": "FreshProduce.com/IFPA context integrated: industry focus, target personas (Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol), content pillars, KPIs",
+          "score": 100,
+          "notes": "Comprehensive business context with specific persona references and member segments"
+        }
+      },
+      "tool_validation": {
+        "total_tools": 30,
+        "critical_tools_present": [
+          "osa_validate_language_rules",
+          "osa_retrieve_workflow_context",
+          "osa_send_data_to_osa_webhook",
+          "osa_store_workflow_data"
+        ],
+        "data_pipeline_tools_count": 4,
+        "analytics_tools_count": 8,
+        "canvas_tools_count": 4
+      },
+      "output_schema_validation": {
+        "has_hero_section": true,
+        "has_overview_section": true,
+        "has_insights_section": true,
+        "has_opportunities_section": true,
+        "has_nextSteps_section": true,
+        "has_meta_section": true,
+        "confidence_scoring_present": true,
+        "metrics_structure_valid": true
+      },
+      "overall_health": {
+        "status": "healthy",
+        "compliance_score": 100,
+        "readiness": "production_ready",
+        "last_updated": "2025-11-19T22:42:00.000Z"
+      }
+    },
+    "geo_audit": {
+      "agent_id": "geo_audit",
+      "agent_name": "GEO Audit Agent",
+      "version": "1.0.0",
+      "internal_version": 19,
+      "is_active": true,
+      "configuration_checks": {
+        "has_json_schema": true,
+        "has_prompt_template": true,
+        "has_enabled_tools": true,
+        "required_parameters_present": true
+      },
+      "compliance_checks": {
+        "1_data_driven_specificity": {
+          "status": "pass",
+          "evidence": "GEO Audit Framework includes Technical Foundation Analysis, Schema Markup Validation, Content Structure Optimization with specific metrics",
+          "score": 100,
+          "notes": "Data-driven requirements: Core Web Vitals, schema validation, AI crawler accessibility, technical performance metrics"
+        },
+        "2_confidence_calculation": {
+          "status": "pass",
+          "evidence": "4-tier confidence framework: < 40 (Low), 40-60 (Medium), 60-80 (Good), 80+ (High) based on data completeness",
+          "score": 100,
+          "notes": "Confidence based on data availability, not reasoning quality"
+        },
+        "3_language_rules_validation": {
+          "status": "pass",
+          "evidence": "MANDATORY osa_validate_language_rules tool validation before sending",
+          "score": 100,
+          "notes": "Language rules compliance section with forbidden terms, preferred terminology, validation requirements"
+        },
+        "4_mode_detection": {
+          "status": "pass",
+          "evidence": "Dual-mode operation: Data Mode (structured JSON) and Chat Mode (GEO specialist guidance with visualizations)",
+          "score": 100,
+          "notes": "Clear mode triggers and output format differences defined"
+        },
+        "5_business_context": {
+          "status": "partial",
+          "evidence": "Generic GEO optimization context; missing FreshProduce.com/IFPA specific business context",
+          "score": 60,
+          "notes": "IMPROVEMENT NEEDED: Should integrate IFPA-specific regional markets, produce industry context, member-focused GEO optimization"
+        }
+      },
+      "tool_validation": {
+        "total_tools": 24,
+        "critical_tools_present": [
+          "osa_validate_language_rules",
+          "osa_retrieve_workflow_context",
+          "osa_send_data_to_osa_webhook",
+          "osa_store_workflow_data"
+        ],
+        "data_pipeline_tools_count": 4,
+        "geo_specific_tools_count": 4,
+        "canvas_tools_count": 4
+      },
+      "output_schema_validation": {
+        "has_hero_section": true,
+        "has_overview_section": true,
+        "has_insights_section": true,
+        "has_opportunities_section": true,
+        "has_nextSteps_section": true,
+        "has_meta_section": true,
+        "confidence_scoring_present": true,
+        "metrics_structure_valid": true
+      },
+      "overall_health": {
+        "status": "healthy_with_improvements",
+        "compliance_score": 92,
+        "readiness": "production_ready_with_enhancements",
+        "improvement_areas": [
+          "Enhance business context with IFPA-specific regional produce markets",
+          "Integrate member persona GEO optimization strategies"
+        ],
+        "last_updated": "2025-11-19T22:42:00.000Z"
+      }
+    },
+    "content_review": {
+      "agent_id": "content_review",
+      "agent_name": "Content Review Agent",
+      "version": "1.0.0",
+      "internal_version": 8,
+      "is_active": true,
+      "configuration_checks": {
+        "has_json_schema": true,
+        "has_prompt_template": true,
+        "has_enabled_tools": true,
+        "required_parameters_present": true
+      },
+      "compliance_checks": {
+        "1_data_driven_specificity": {
+          "status": "pass",
+          "evidence": "Enhanced Content Analytics Framework with performance analysis, gap identification, SEO optimization using specific tools",
+          "score": 100,
+          "notes": "Data sources: content engagement analytics, performance metrics, user interactions, SEO data"
+        },
+        "2_confidence_calculation": {
+          "status": "pass",
+          "evidence": "4-tier confidence framework: < 40 (Low), 40-60 (Medium), 60-80 (Good), 80+ (High) based on data completeness",
+          "score": 100,
+          "notes": "Confidence calculated from data availability"
+        },
+        "3_language_rules_validation": {
+          "status": "pass",
+          "evidence": "MANDATORY osa_validate_language_rules validation before sending with forbidden terms list",
+          "score": 100,
+          "notes": "Comprehensive language rules with forbidden terms, preferred terminology, quality standards"
+        },
+        "4_mode_detection": {
+          "status": "pass",
+          "evidence": "Dual-mode operation: Data Mode (JSON via OSA tools) and Chat Mode (content strategist guidance)",
+          "score": 100,
+          "notes": "Clear operational modes with appropriate output formats"
+        },
+        "5_business_context": {
+          "status": "partial",
+          "evidence": "Generic content strategy context; missing explicit FreshProduce.com/IFPA business context",
+          "score": 60,
+          "notes": "IMPROVEMENT NEEDED: Should integrate IFPA content pillars (Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development)"
+        }
+      },
+      "tool_validation": {
+        "total_tools": 38,
+        "critical_tools_present": [
+          "osa_validate_language_rules",
+          "osa_retrieve_workflow_context",
+          "osa_send_data_to_osa_webhook",
+          "osa_store_workflow_data"
+        ],
+        "data_pipeline_tools_count": 4,
+        "content_analytics_tools_count": 12,
+        "canvas_tools_count": 4
+      },
+      "output_schema_validation": {
+        "has_hero_section": true,
+        "has_overview_section": true,
+        "has_insights_section": true,
+        "has_opportunities_section": true,
+        "has_nextSteps_section": true,
+        "has_meta_section": true,
+        "confidence_scoring_present": true,
+        "metrics_structure_valid": true
+      },
+      "overall_health": {
+        "status": "healthy_with_improvements",
+        "compliance_score": 92,
+        "readiness": "production_ready_with_enhancements",
+        "improvement_areas": [
+          "Integrate IFPA-specific content pillars and member segments",
+          "Add produce industry content performance benchmarks"
+        ],
+        "last_updated": "2025-11-19T22:42:00.000Z"
+      }
+    }
+  },
+  "summary": {
+    "total_agents_tested": 3,
+    "agents_passing_all_checks": 1,
+    "agents_passing_with_improvements": 2,
+    "agents_failing": 0,
+    "average_compliance_score": 94.67,
+    "critical_issues_found": 0,
+    "improvement_opportunities": 2,
+    "overall_health_status": "healthy",
+    "readiness_for_production": "ready_with_minor_enhancements"
+  },
+  "recommendations": [
+    {
+      "priority": "medium",
+      "agent": "geo_audit",
+      "recommendation": "Enhance business context integration with FreshProduce.com/IFPA regional produce markets, member GEO optimization strategies, and industry-specific AI citation requirements",
+      "impact": "Improves relevance of GEO recommendations for IFPA member audience",
+      "effort": "low"
+    },
+    {
+      "priority": "medium",
+      "agent": "content_review",
+      "recommendation": "Integrate explicit IFPA content pillars (Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development) and member segment performance tracking",
+      "impact": "Aligns content recommendations with IFPA member needs and organizational content strategy",
+      "effort": "low"
+    },
+    {
+      "priority": "low",
+      "agent": "all",
+      "recommendation": "Continue monitoring agent performance through OSA webhook data reception to validate real-world data pipeline health",
+      "impact": "Ensures ongoing integration quality and early detection of issues",
+      "effort": "ongoing"
+    }
+  ],
+  "integration_pipeline_status": {
+    "layer_1_force_sync": {
+      "status": "operational",
+      "last_force_sync": "2025-11-19T22:42:01.868Z",
+      "workflow_id_tracking": "functional",
+      "correlation_id_matching": "functional"
+    },
+    "layer_2_opal_agents": {
+      "status": "ready",
+      "total_agents": 9,
+      "agents_tested": 3,
+      "agents_passing": 3,
+      "configuration_compliance": "high",
+      "notes": "All tested agents have proper tool configurations and data pipeline integration"
+    },
+    "layer_3_osa_ingestion": {
+      "status": "awaiting_data",
+      "last_webhook_at": "2025-11-15T18:41:29.945118+00:00",
+      "data_reception_rate": 0,
+      "webhook_endpoint_health": "healthy",
+      "signature_validation_rate": 0.207,
+      "notes": "No recent agent data received; awaiting Force Sync execution to validate data flow"
+    },
+    "layer_4_results_generation": {
+      "status": "ready",
+      "schema_validation": "pass",
+      "json_output_conformance": "pass",
+      "results_page_integration": "configured",
+      "notes": "All agents configured to send data via osa_store_workflow_data and osa_send_data_to_osa_webhook"
+    }
+  },
+  "next_validation_steps": [
+    "Execute test Force Sync to generate live agent data",
+    "Monitor OSA webhook reception for all 9 agents",
+    "Validate end-to-end data flow from OPAL → OSA → Results",
+    "Verify results optimizer can read and process agent data",
+    "Confirm admin monitoring UI shows accurate health metrics"
+  ]
+}
