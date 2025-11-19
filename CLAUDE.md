@@ -223,6 +223,36 @@ TodoWrite([
 ]);
 ```
 
+#### 🔥 MANDATORY: Production Build Validation Required
+**Every significant change must include production build validation to prevent deployment failures.**
+
+```typescript
+// ✅ CORRECT: Always include build validation
+TodoWrite([
+  { content: "Implement React hook safety fixes", status: "completed", activeForm: "Implementing React hook safety fixes" },
+  { content: "Test production build passes (npm run build)", status: "pending", activeForm: "Testing production build passes" },
+  { content: "Use CLAUDE.md checker to validate all changes", status: "pending", activeForm: "Using CLAUDE.md checker to validate all changes" }
+]);
+
+// ❌ WRONG: Missing build validation
+TodoWrite([
+  { content: "Update context provider", status: "completed", activeForm: "Updating context provider" }
+  // Missing production build test - VIOLATION
+]);
+```
+
+**When to Apply**:
+- Any changes to React hooks, context providers, or components
+- Modifications to build configuration (next.config.js, package.json)
+- New dependencies or import changes
+- Changes to layout.tsx or global components
+
+**Why It Matters**:
+- Prevents `TypeError: Cannot read properties of null (reading 'useState')` build failures
+- Catches static generation issues before deployment
+- Ensures all React hooks are properly guarded
+- Validates Next.js 16 compatibility
+
 #### 🔥 MANDATORY: Agent Usage Must Be Tracked
 **All agent invocations must be tracked with TodoWrite for visibility and accountability.**
 
@@ -301,6 +331,76 @@ const { data } = await secureSupabase.from('table').insert(data, {
 - **Streaming over polling**: Use SSE for real-time data updates
 - **Defensive programming**: Assume data might be missing or malformed
 
+### React Hook Safety During Static Generation
+**🔥 CRITICAL**: All React hooks must be safe during Next.js static generation to prevent production build failures.
+
+**Problem Solved**: `TypeError: Cannot read properties of null (reading 'useState')` during `npm run build`
+
+**Root Cause**: Next.js static generation executes code before React context is fully initialized, causing hooks to fail when React is null.
+
+**Mandatory Pattern** for all custom hooks and context providers:
+```typescript
+// ✅ CORRECT: Safe hook implementation
+export function useSafeHook() {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    return {
+      // Provide safe fallback object during build
+      data: null,
+      isLoading: false,
+      error: 'Hook unavailable during static generation'
+    };
+  }
+
+  // Normal hook implementation for runtime
+  const [data, setData] = useState(null);
+  // ... rest of hook logic
+  return { data, isLoading, error: null };
+}
+
+// ✅ CORRECT: Safe context provider
+export function MyContextProvider({ children }: { children: ReactNode }) {
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return children directly during static generation
+    return <>{children}</>;
+  }
+
+  // Normal provider implementation
+  const [state, setState] = useState(initialState);
+  return (
+    <MyContext.Provider value={{ state, setState }}>
+      {children}
+    </MyContext.Provider>
+  );
+}
+
+// ❌ WRONG: Hook without safety checks
+export function useUnsafeHook() {
+  const [data, setData] = useState(null); // FAILS during static generation
+  return { data, setData };
+}
+```
+
+**When to Apply**:
+- Any custom hook that uses `useState`, `useContext`, `useEffect`
+- All React context providers in `src/lib/contexts/`
+- Components that might be rendered during static generation
+- Any hook that might be called from layout.tsx or global components
+
+**Why It Matters**:
+- Prevents production build failures that block deployment
+- Zero runtime performance impact (checks only run during static generation)
+- Enables graceful degradation when React is not available
+- Maintains 100% functionality in browser environment
+
+**Files Using This Pattern**:
+- `src/lib/providers/QueryProvider.tsx`
+- `src/lib/contexts/GuardrailsContext.tsx`
+- `src/lib/contexts/AuthContext.tsx`
+- `src/lib/opal/integration-validator.ts`
+- `src/components/ServiceStatusProvider.tsx`
+- `src/components/admin/PollingToggle.tsx`
+
 ### Edge Runtime Compatibility
 - **Avoid Node.js modules** in middleware/API routes marked with Edge Runtime
 - **Use lazy initialization** for external service clients
@@ -355,7 +455,8 @@ const performanceRiskyOperations = {
     "Persistent SSE streams without user activity checks",
     "Uncontrolled API polling (intervals < 30 seconds)",
     "Large bundle imports without dynamic loading",
-    "Debug logging in production code paths"
+    "Debug logging in production code paths",
+    "React hooks without static generation safety checks (causes build failures)"
   ],
   developerExperience: [
     "Modifying core development commands (npm scripts)",
@@ -452,6 +553,7 @@ time curl -s http://localhost:3000/api/admin/osa/recent-status
 For detailed information, see:
 - **Agent Integration**: `docs/agent-integration-patterns.md` - Comprehensive agent usage patterns and quality control framework
 - **Quality Control**: `docs/quality-control-framework-gotchas.md` - Troubleshooting, gotchas, and best practices
+- **React Hook Safety**: `docs/react-hook-static-generation-troubleshooting.md` - Complete guide to preventing useState/useContext build failures
 - **Results Architecture**: `docs/comprehensive-results-architecture-patterns.md` - Complete 88+ page implementation with architectural decisions
 - **Results Content Model**: `docs/results-content-model-patterns.md` - Shared content model architecture & language rules
 - **Performance Optimization**: `docs/webhook-streaming-optimization-patterns.md` - 7-step optimization architecture & patterns

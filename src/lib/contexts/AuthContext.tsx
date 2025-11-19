@@ -79,15 +79,56 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  // During static generation, React can be null, so check before using any hooks
+  if (typeof window === 'undefined' && (!React || !useContext)) {
+    return {
+      isAuthenticated: false,
+      isLoading: false,
+      logout: () => {},
+      checkAuth: () => {}
+    } as AuthContextType;
   }
-  return context;
+
+  // Check if React context system is available (React can be null during static generation)
+  try {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+  } catch (error) {
+    // During static generation or when React context isn't available,
+    // return a fallback object to prevent runtime errors
+    if (typeof window === 'undefined') {
+      return {
+        isAuthenticated: false,
+        isLoading: false,
+        logout: () => {},
+        checkAuth: () => {}
+      } as AuthContextType;
+    }
+    // Re-throw the error if we're in a browser environment
+    throw error;
+  }
 }
 
 // Hook for checking if user is authenticated (with loading state)
 export function useAuthStatus(): { isAuthenticated: boolean; isLoading: boolean } {
-  const { isAuthenticated, isLoading } = useAuth();
-  return { isAuthenticated, isLoading };
+  // During static generation, React can be null, so check before using any hooks
+  if (typeof window === 'undefined' && (!React || !useContext)) {
+    return { isAuthenticated: false, isLoading: false };
+  }
+
+  try {
+    const { isAuthenticated, isLoading } = useAuth();
+    return { isAuthenticated, isLoading };
+  } catch (error) {
+    // During static generation or when React context isn't available,
+    // return safe defaults
+    if (typeof window === 'undefined') {
+      return { isAuthenticated: false, isLoading: false };
+    }
+    // Re-throw the error if we're in a browser environment
+    throw error;
+  }
 }

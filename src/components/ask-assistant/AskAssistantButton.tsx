@@ -9,10 +9,10 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AskAssistantModal } from './AskAssistantModal';
-import { useAskAssistant, useAskAssistantAvailability } from '@/lib/askAssistant/context';
-import { MessageSquare, HelpCircle } from 'lucide-react';
+import { useAskAssistant } from '@/lib/askAssistant/context';
+import { getAskAssistantConfig } from '@/lib/askAssistant/config';
+import { MessageSquare } from 'lucide-react';
 
 export interface AskAssistantButtonProps {
   className?: string;
@@ -34,18 +34,20 @@ export function AskAssistantButton({
   } catch (error) {
     console.warn('[AskAssistantButton] Context not available:', error);
     // Provide fallback values when context is not available
+    // Use getAskAssistantConfig to ensure we always have a valid config (returns FALLBACK_CONFIG)
     contextValue = {
       sectionKey: null,
-      promptConfig: null,
+      promptConfig: getAskAssistantConfig(null),
       sourcePath: '',
-      isAvailable: false
+      isAvailable: true  // Should be true since fallback config is available
     };
   }
 
   const { sectionKey, promptConfig, sourcePath, isAvailable: contextIsAvailable } = contextValue;
 
-  // Always available now - fallback configuration ensures button is always functional
-  const isFullyAvailable = contextIsAvailable && promptConfig !== null && promptConfig !== undefined;
+  // PERMANENT RULE: Ask Assistant button is never disabled
+  // User request: "create a permanent rule that the Ask Assistant button is never disabled"
+  const isFullyAvailable = true; // Always available - button should never be disabled
 
   // Debug logging for development
   if (process.env.NODE_ENV === 'development') {
@@ -59,12 +61,11 @@ export function AskAssistantButton({
     });
   }
 
-  const { unavailableReason } = useAskAssistantAvailability();
 
   const handleClick = () => {
-    if (isFullyAvailable && promptConfig) {
-      setIsModalOpen(true);
-    }
+    // PERMANENT RULE: Always open modal, with fallback handling for missing config
+    // The modal and config system will handle fallback scenarios appropriately
+    setIsModalOpen(true);
   };
 
   const buttonContent = (
@@ -72,43 +73,24 @@ export function AskAssistantButton({
       variant={variant}
       size={size}
       onClick={handleClick}
-      disabled={!isFullyAvailable}
-      className={`${className} ${!isFullyAvailable ? 'opacity-60' : ''}`}
+      className={className}
     >
       <MessageSquare className="h-4 w-4 mr-2" />
       Ask Assistant
     </Button>
   );
 
-  // If not available, wrap in tooltip to explain why
-  if (!isFullyAvailable) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            {buttonContent}
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="flex items-center">
-              <HelpCircle className="h-3 w-3 mr-1" />
-              {unavailableReason || 'Ask Assistant not available for this section yet'}
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
+  // PERMANENT RULE: Always render the button without tooltip, never disabled
   return (
     <>
       {buttonContent}
 
-      {/* Ask Assistant Modal */}
-      {isModalOpen && promptConfig && sectionKey && (
+      {/* Ask Assistant Modal - Always render when modal is open, with fallback handling */}
+      {isModalOpen && (
         <AskAssistantModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          sectionKey={sectionKey}
+          sectionKey={sectionKey || 'fallback'}
           promptConfig={promptConfig}
           sourcePath={sourcePath}
         />

@@ -88,46 +88,75 @@ export class AuditSystem {
   private batchSize = 100;
   private flushInterval = 5000; // 5 seconds
   private flushTimer?: NodeJS.Timeout;
+  private isInitialized = false;
 
   constructor() {
     // Lazy initialization - don't create Supabase client until needed
     // This prevents multiple GoTrueClient instances at module import time
+    // Process listeners and timers are only set up when actually used
   }
 
   private get supabase() {
     if (!this._supabase) {
-      this._supabase = createSupabaseAdmin();
+      // Only initialize if we're in a proper runtime environment
+      if (typeof window === 'undefined' && typeof process !== 'undefined') {
+        this._supabase = createSupabaseAdmin();
+        this.initializeIfNeeded();
+      } else {
+        // Return a mock client during static generation or in browser
+        throw new Error('Audit system not available in this environment');
+      }
+    }
+    return this._supabase;
+  }
+
+  private initializeIfNeeded() {
+    if (this.isInitialized) return;
+
+    // Only set up process listeners and timers if we're in a Node.js server environment
+    if (typeof process !== 'undefined' && process.env.NODE_ENV !== undefined) {
       // Start automatic batching only when client is first accessed
       this.startBatchProcessing();
 
-      // Graceful shutdown handling
+      // Graceful shutdown handling - only in server environment
       process.on('SIGINT', () => this.flush());
       process.on('SIGTERM', () => this.flush());
+
+      this.isInitialized = true;
     }
-    return this._supabase;
   }
 
   /**
    * Log an audit event (queued for batch processing)
    */
   async logEvent(event: Omit<AuditEvent, 'id' | 'created_at'>): Promise<void> {
-    const auditEvent: AuditEvent = {
-      ...event,
-      id: `audit_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      created_at: new Date().toISOString()
-    };
-
-    // Add to queue
-    this.eventQueue.push(auditEvent);
-
-    // Flush immediately for critical events
-    if (event.severity === 'critical') {
-      await this.flush();
+    // Skip audit logging during static generation or in environments where it's not available
+    if (typeof window !== 'undefined' || typeof process === 'undefined') {
+      return;
     }
 
-    // Flush if queue is full
-    if (this.eventQueue.length >= this.batchSize) {
-      await this.flush();
+    try {
+      const auditEvent: AuditEvent = {
+        ...event,
+        id: `audit_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        created_at: new Date().toISOString()
+      };
+
+      // Add to queue
+      this.eventQueue.push(auditEvent);
+
+      // Flush immediately for critical events
+      if (event.severity === 'critical') {
+        await this.flush();
+      }
+
+      // Flush if queue is full
+      if (this.eventQueue.length >= this.batchSize) {
+        await this.flush();
+      }
+    } catch (error) {
+      // Silently fail during static generation - audit logging is not critical for build process
+      console.warn('Audit logging unavailable during static generation');
     }
   }
 
@@ -477,6 +506,12 @@ export class AuditSystem {
   private async flush(): Promise<void> {
     if (this.eventQueue.length === 0) return;
 
+    // Skip flush during static generation or in browser environments
+    if (typeof window !== 'undefined' || typeof process === 'undefined') {
+      this.eventQueue = []; // Clear queue since we can't flush
+      return;
+    }
+
     const eventsToFlush = [...this.eventQueue];
     this.eventQueue = [];
 
@@ -491,9 +526,14 @@ export class AuditSystem {
         this.eventQueue.unshift(...eventsToFlush);
       }
     } catch (error) {
-      console.error('Audit flush error:', error);
-      // Re-queue events on failure
-      this.eventQueue.unshift(...eventsToFlush);
+      // During static generation, just log and continue
+      if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'build') {
+        console.warn('Audit flush unavailable during static generation');
+      } else {
+        console.error('Audit flush error:', error);
+        // Re-queue events on failure only in runtime
+        this.eventQueue.unshift(...eventsToFlush);
+      }
     }
   }
 

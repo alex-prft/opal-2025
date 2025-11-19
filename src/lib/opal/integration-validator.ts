@@ -301,8 +301,19 @@ export async function getTenantValidationHistory(tenantId?: string, limit: numbe
 
 /**
  * React hook for triggering validation
+ * Safe for static generation - checks React availability before using hooks
  */
 export function useValidationTrigger() {
+  // During static generation, React can be null, so check before using hooks
+  if (!React || typeof React.useState !== 'function') {
+    // Return safe fallback during static generation
+    return {
+      triggerValidation: async (input: ValidationTriggerInput) => ({ success: false, errors: ['Hook unavailable during static generation'] }),
+      isValidating: false,
+      lastResult: null
+    };
+  }
+
   const [isValidating, setIsValidating] = React.useState(false);
   const [lastResult, setLastResult] = React.useState<ValidationResult | null>(null);
 

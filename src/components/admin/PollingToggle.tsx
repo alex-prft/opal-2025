@@ -101,6 +101,14 @@ export function PollingProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const usePollingContext = () => {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !React.useContext)) {
+    return {
+      isPollingEnabled: false,
+      setPollingEnabled: () => {}
+    };
+  }
+
   const context = React.useContext(PollingContext);
   if (!context) {
     throw new Error('usePollingContext must be used within PollingProvider');

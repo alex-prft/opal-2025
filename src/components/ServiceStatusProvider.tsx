@@ -62,6 +62,16 @@ export function ServiceStatusProvider({ children }: ServiceStatusProviderProps) 
 }
 
 export function useServiceStatus() {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useContext)) {
+    return {
+      issues: [],
+      addIssue: () => {},
+      resolveIssue: () => {},
+      clearIssues: () => {}
+    };
+  }
+
   const context = useContext(ServiceStatusContext);
   if (context === undefined) {
     throw new Error('useServiceStatus must be used within a ServiceStatusProvider');
@@ -104,6 +114,11 @@ export function withErrorHandling<T extends (...args: any[]) => Promise<any>>(
 
 // Custom hook to add service error listener
 export function useServiceErrorListener() {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !React.useEffect)) {
+    return; // No-op during static generation
+  }
+
   const { addIssue } = useServiceStatus();
 
   React.useEffect(() => {

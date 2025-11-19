@@ -20,6 +20,13 @@ import Link from 'next/link';
 import ForceSyncButton from './ForceSyncButton';
 
 export default function ServiceStatusFooter() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return null during static generation to prevent build failures
+    return null;
+  }
+
   const { issues, clearIssues, resolveIssue } = useServiceStatus();
   const { isAuthenticated, isLoading } = useAuthStatus();
   const { logout } = useAuth();

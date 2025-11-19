@@ -106,6 +106,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
   async redirects() {
     return [
       // Strategy Plans redirects - from clean URLs to working URLs with special characters

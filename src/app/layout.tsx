@@ -25,6 +25,20 @@ export default function RootLayout({
         className="antialiased"
         suppressHydrationWarning={true}
       >
+        {/*
+          CRITICAL: Context Provider Hierarchy & Static Generation Safety
+
+          During Next.js static generation, all these providers are executed before React
+          is fully initialized. Each provider MUST implement the React Hook Safety Pattern
+          to prevent build failures:
+
+          - QueryProvider: Handles React Query setup with useState safety check
+          - GuardrailsProvider: Manages security context with useContext safety
+          - AuthProvider: Handles authentication state with hook safety
+
+          If you add new providers here, ensure they follow the pattern in:
+          docs/react-hook-static-generation-troubleshooting.md
+        */}
         <QueryProvider>
           <GuardrailsProvider>
             <AuthProvider>

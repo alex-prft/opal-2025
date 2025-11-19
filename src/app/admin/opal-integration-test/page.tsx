@@ -117,23 +117,40 @@ const TEST_SCENARIOS: TestScenario[] = [
 ];
 
 export default function OpalIntegrationTestPage() {
-  const [activeTab, setActiveTab] = useState('manual');
-  const [isValidating, setIsValidating] = useState(false);
-  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // During static generation, useState might not be available, so check React availability
+  const getInitialState = <T,>(defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
+    if (typeof window === 'undefined' && (!React || !useState)) {
+      // Return a mock state setter during static generation
+      return [defaultValue, (() => {}) as React.Dispatch<React.SetStateAction<T>>];
+    }
+    return useState(defaultValue);
+  };
+
+  const [activeTab, setActiveTab] = getInitialState('manual');
+  const [isValidating, setIsValidating] = getInitialState(false);
+  const [validationResult, setValidationResult] = getInitialState<ValidationResult | null>(null);
+  const [error, setError] = getInitialState<string | null>(null);
 
   // Manual test form state
-  const [manualInput, setManualInput] = useState({
+  const [manualInput, setManualInput] = getInitialState({
     forceSyncWorkflowId: 'ws_manual_test_001',
     opalCorrelationId: 'opal_corr_manual_001',
     tenantId: 'tenant_test'
   });
 
   // Scenario test state
-  const [selectedScenario, setSelectedScenario] = useState<TestScenario | null>(null);
-  const [scenarioResults, setScenarioResults] = useState<Record<string, ValidationResult>>({});
+  const [selectedScenario, setSelectedScenario] = getInitialState<TestScenario | null>(null);
+  const [scenarioResults, setScenarioResults] = getInitialState<Record<string, ValidationResult>>({});
 
-  const runValidation = useCallback(async (input: any, testMode: 'manual' | 'mock' = 'manual') => {
+  // Safe useCallback during static generation
+  const safeUseCallback = <T extends (...args: any[]) => any>(callback: T, deps: React.DependencyList): T => {
+    if (typeof window === 'undefined' && (!React || !useCallback)) {
+      return callback; // Return callback directly during static generation
+    }
+    return useCallback(callback, deps);
+  };
+
+  const runValidation = safeUseCallback(async (input: any, testMode: 'manual' | 'mock' = 'manual') => {
     setIsValidating(true);
     setError(null);
     setValidationResult(null);

@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Additional directories to exclude from linting:
+    "old/**",          // Old build artifacts and directories
+    ".claude/**",      // Claude Code skills and backup directories
+    "docs/**",         // Documentation with example code
+    "debug-*.js",      // Debug scripts with relaxed syntax
+    "scripts/**/*.js", // Build scripts that may use CommonJS
   ]),
 ]);
 

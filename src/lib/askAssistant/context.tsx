@@ -70,6 +70,16 @@ export function AskAssistantProvider({
  * Hook to access Ask Assistant context in components
  */
 export function useAskAssistant(): AskAssistantContextValue {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useContext)) {
+    return {
+      sectionKey: null,
+      promptConfig: null,
+      sourcePath: '',
+      isAvailable: false
+    };
+  }
+
   const context = useContext(AskAssistantContext);
 
   if (!context) {
@@ -83,6 +93,16 @@ export function useAskAssistant(): AskAssistantContextValue {
  * Hook to check if Ask Assistant is available for the current section
  */
 export function useAskAssistantAvailability() {
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useContext)) {
+    return {
+      isAvailable: false,
+      sectionKey: null,
+      promptConfig: null,
+      unavailableReason: 'Unavailable during static generation'
+    };
+  }
+
   const { isAvailable, sectionKey, promptConfig } = useAskAssistant();
 
   return {
