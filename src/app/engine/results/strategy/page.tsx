@@ -6,7 +6,7 @@ import ResultsSidebar from '@/components/ResultsSidebar';
 import EngineActionsSummary from '@/components/EngineActionsSummary';
 import BreadcrumbSearchHeader from '@/components/shared/BreadcrumbSearchHeader';
 import { ServiceStatusProvider } from '@/components/ServiceStatusProvider';
-import { WidgetRenderer } from '@/components/widgets/WidgetRenderer';
+import { EnhancedResultsRenderer } from '@/components/results/EnhancedResultsRenderer';
 import { AskAssistantProvider } from '@/lib/askAssistant/context';
 import { getResultsSectionKey, getSourcePath } from '@/lib/askAssistant/sectionMapping';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -66,8 +66,12 @@ function StrategyPageContent() {
                   </CardHeader>
                 </Card>
 
-                {/* OPAL Widget Renderer */}
-                <WidgetRenderer className="space-y-6" />
+                {/* Enhanced Results Content System - Phase 4 Integration */}
+                <EnhancedResultsRenderer
+                  className="space-y-6"
+                  tier1="strategy-plans"
+                  tier2="strategy"
+                />
 
                 {/* Engine Actions Summary */}
                 <div className="mt-8">
@@ -113,8 +117,12 @@ function StrategyPageContent() {
                 </CardHeader>
               </Card>
 
-              {/* OPAL Widget Renderer */}
-              <WidgetRenderer className="space-y-6" />
+              {/* Enhanced Results Content System - Phase 4 Integration */}
+              <EnhancedResultsRenderer
+                className="space-y-6"
+                tier1="strategy-plans"
+                tier2="strategy"
+              />
 
               {/* Engine Actions Summary */}
               <div className="mt-8">
