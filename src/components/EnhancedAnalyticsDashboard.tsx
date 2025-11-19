@@ -28,12 +28,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { OSAWorkflowOutput } from '@/lib/types/maturity';
 import LoadingAnimation, { LoadingPresets } from '@/components/LoadingAnimation';
+// Note: PieChart is imported both directly and as alias due to namespace conflict with recharts
 import {
   Download,
   TrendingUp,
   Users,
   Globe,
   BarChart3,
+  PieChart,
   PieChart as PieChartIcon,
   Activity,
   Zap,

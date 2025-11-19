@@ -1,0 +1,422 @@
+{
+  "name": "OSA Enhanced Workflow Tools (SDK-Powered)",
+  "description": "Next-generation OPAL tools built with the official SDK, featuring interactive UI, type safety, and advanced capabilities",
+  "discovery_url": "http://localhost:3000/api/opal/enhanced-tools",
+  "registry_id": "osa_enhanced_tools",
+  "version": "2.0.0",
+  "sdk_version": "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
+  "tools": [
+    {
+      "name": "analyze_website_content_enhanced",
+      "description": "Interactive content analysis with real-time configuration, quality scoring, and personalization opportunity identification",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "website_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Target website URL for comprehensive analysis"
+          },
+          "analysis_config": {
+            "type": "object",
+            "properties": {
+              "analysis_depth": {
+                "type": "string",
+                "enum": ["surface", "comprehensive", "deep_analysis"],
+                "default": "comprehensive",
+                "description": "Depth of content analysis"
+              },
+              "include_seo": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include technical SEO analysis"
+              },
+              "include_accessibility": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include accessibility audit"
+              },
+              "content_types": {
+                "type": "string",
+                "enum": ["all", "text_only", "multimedia_focus", "interactive_elements"],
+                "default": "all",
+                "description": "Content types to analyze"
+              },
+              "confirmed": {
+                "type": "boolean",
+                "description": "Configuration confirmation status"
+              }
+            },
+            "description": "Interactive analysis configuration options"
+          },
+          "workflow_context": {
+            "type": "object",
+            "description": "Workflow execution context and metadata"
+          }
+        },
+        "required": ["website_url"]
+      },
+      "response_schema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["island", "data"],
+            "description": "Response type - 'island' for interactive UI, 'data' for results"
+          },
+          "config": {
+            "type": "object",
+            "description": "Interactive island configuration (if type=island)"
+          },
+          "results": {
+            "type": "object",
+            "description": "Analysis results (if type=data)"
+          }
+        }
+      },
+      "features": [
+        "Interactive configuration UI",
+        "Real-time quality scoring",
+        "Personalization opportunity detection",
+        "Technical SEO analysis",
+        "Accessibility compliance audit",
+        "Type-safe parameter validation"
+      ]
+    },
+    {
+      "name": "generate_audience_segments_enhanced",
+      "description": "ML-powered audience segmentation with interactive refinement and statistical validation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "business_objectives": {
+            "type": "string",
+            "description": "Primary business objectives for segmentation"
+          },
+          "segmentation_config": {
+            "type": "object",
+            "properties": {
+              "segment_size_min": {
+                "type": "integer",
+                "default": 1000,
+                "description": "Minimum segment size for statistical significance"
+              },
+              "geographic_scope": {
+                "type": "string",
+                "enum": ["global", "regional", "country_specific", "local"],
+                "default": "global",
+                "description": "Geographic scope for segmentation"
+              },
+              "behavioral_weight": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.7,
+                "description": "Weight for behavioral data in segmentation"
+              },
+              "demographic_weight": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.3,
+                "description": "Weight for demographic data in segmentation"
+              }
+            },
+            "description": "Interactive segmentation configuration"
+          },
+          "data_sources": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Available data sources for segmentation analysis"
+          }
+        },
+        "required": ["business_objectives"]
+      },
+      "features": [
+        "ML-powered segmentation algorithms",
+        "Statistical significance validation",
+        "Interactive parameter tuning",
+        "Geographic scope optimization",
+        "Behavioral pattern analysis",
+        "Real-time segment validation"
+      ]
+    },
+    {
+      "name": "create_experiment_blueprint_enhanced",
+      "description": "Interactive experiment portfolio design with statistical power analysis and ROI projections",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "personalization_goals": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Personalization objectives for experiment design"
+          },
+          "experiment_config": {
+            "type": "object",
+            "properties": {
+              "confidence_level": {
+                "type": "number",
+                "enum": [90, 95, 99],
+                "default": 95,
+                "description": "Statistical confidence level percentage"
+              },
+              "minimum_effect_size": {
+                "type": "number",
+                "default": 5,
+                "description": "Minimum detectable effect size (percentage)"
+              },
+              "test_duration_weeks": {
+                "type": "integer",
+                "default": 4,
+                "description": "Planned test duration in weeks"
+              },
+              "traffic_allocation": {
+                "type": "string",
+                "enum": ["50/50", "70/30", "80/20"],
+                "default": "50/50",
+                "description": "Traffic split between control and treatment"
+              }
+            },
+            "description": "Interactive experiment configuration"
+          },
+          "available_traffic": {
+            "type": "integer",
+            "description": "Monthly available traffic volume"
+          }
+        },
+        "required": ["personalization_goals", "available_traffic"]
+      },
+      "features": [
+        "Statistical power calculation",
+        "ROI projection modeling",
+        "Interactive experiment designer",
+        "Traffic optimization analysis",
+        "Multi-variant test planning",
+        "Risk assessment framework"
+      ]
+    },
+    {
+      "name": "osa_send_data_to_osa_enhanced",
+      "description": "Intelligent OSA webhook delivery with environment routing, retry logic, and delivery confirmation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "Identifier of the agent sending data"
+          },
+          "agent_data": {
+            "type": "object",
+            "description": "Structured agent execution results and insights"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "execution_status": {
+            "type": "string",
+            "enum": ["in_progress", "completed", "failed", "partial"],
+            "description": "Current execution status"
+          },
+          "osa_environment": {
+            "type": "string",
+            "enum": ["dev", "staging", "prod"],
+            "default": "dev",
+            "description": "Target OSA environment for webhook delivery"
+          },
+          "delivery_options": {
+            "type": "object",
+            "properties": {
+              "max_retries": {
+                "type": "integer",
+                "default": 3,
+                "description": "Maximum retry attempts"
+              },
+              "retry_delay_ms": {
+                "type": "integer",
+                "default": 1000,
+                "description": "Base retry delay in milliseconds"
+              },
+              "confirm_delivery": {
+                "type": "boolean",
+                "default": true,
+                "description": "Require delivery confirmation"
+              }
+            },
+            "description": "Advanced delivery configuration options"
+          }
+        },
+        "required": ["agent_id", "agent_data", "workflow_id", "execution_status"]
+      },
+      "features": [
+        "Intelligent environment routing",
+        "Exponential backoff retry logic",
+        "Delivery confirmation tracking",
+        "Error recovery mechanisms",
+        "Performance monitoring",
+        "Webhook validation"
+      ]
+    },
+    {
+      "name": "osa_store_workflow_data_enhanced",
+      "description": "Enhanced workflow data storage with SDK integration, retry logic, and improved error handling",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent storing data"
+          },
+          "agent_results": {
+            "type": "object",
+            "description": "Complete structured results from agent execution"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "execution_order": {
+            "type": "number",
+            "description": "Sequential order of agent execution"
+          },
+          "data_quality_score": {
+            "type": "number",
+            "description": "Quality score of the data (0.0-1.0)"
+          },
+          "storage_options": {
+            "type": "object",
+            "properties": {
+              "enable_compression": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable data compression for storage efficiency"
+              },
+              "retention_policy": {
+                "type": "string",
+                "enum": ["standard", "extended", "permanent"],
+                "default": "standard",
+                "description": "Data retention policy"
+              },
+              "encryption_level": {
+                "type": "string",
+                "enum": ["basic", "enhanced", "enterprise"],
+                "default": "enhanced",
+                "description": "Encryption level for stored data"
+              }
+            }
+          }
+        },
+        "required": ["agent_id", "agent_results", "workflow_id", "execution_order"]
+      },
+      "features": [
+        "SDK-powered data validation",
+        "Automatic retry logic with exponential backoff",
+        "Data compression and encryption",
+        "Performance monitoring and metrics",
+        "Enhanced error reporting",
+        "Configurable retention policies"
+      ]
+    },
+    {
+      "name": "osa_retrieve_workflow_context_enhanced",
+      "description": "Enhanced context retrieval with performance optimization, intelligent caching, and advanced filtering",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique workflow execution identifier"
+          },
+          "requesting_agent": {
+            "type": "string",
+            "description": "ID of agent requesting context data"
+          },
+          "include_agents": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Specific agent IDs to include in context"
+          },
+          "retrieval_options": {
+            "type": "object",
+            "properties": {
+              "cache_strategy": {
+                "type": "string",
+                "enum": ["aggressive", "balanced", "minimal"],
+                "default": "balanced",
+                "description": "Caching strategy for performance optimization"
+              },
+              "data_filtering": {
+                "type": "object",
+                "properties": {
+                  "quality_threshold": {
+                    "type": "number",
+                    "default": 0.7,
+                    "description": "Minimum quality score for included data"
+                  },
+                  "recency_weight": {
+                    "type": "number",
+                    "default": 0.8,
+                    "description": "Weight for data recency in filtering"
+                  }
+                }
+              },
+              "format_optimization": {
+                "type": "boolean",
+                "default": true,
+                "description": "Optimize data format for requesting agent"
+              }
+            }
+          }
+        },
+        "required": ["workflow_id", "requesting_agent"]
+      },
+      "features": [
+        "Intelligent caching with TTL management",
+        "Advanced data filtering and quality scoring",
+        "Performance-optimized data serialization",
+        "Context relevance scoring",
+        "Automatic data format optimization",
+        "Real-time performance metrics"
+      ]
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${OPAL_ENHANCED_TOKEN}",
+    "description": "Enhanced authentication with SDK validation"
+  },
+  "sdk_integration": {
+    "benefits": [
+      "Type-safe tool development",
+      "Interactive UI components (Islands)",
+      "Automatic parameter validation",
+      "Built-in error handling",
+      "Standardized response formats",
+      "Real-time progress updates",
+      "Enhanced debugging capabilities"
+    ],
+    "interactive_features": [
+      "Dynamic configuration interfaces",
+      "Real-time parameter validation",
+      "Progress indicators",
+      "Interactive result visualization",
+      "Multi-step workflows",
+      "Contextual help and guidance"
+    ]
+  },
+  "integration_endpoints": {
+    "enhanced_discovery": "http://localhost:3000/api/opal/enhanced-tools",
+    "tool_execution": "http://localhost:3000/api/opal/enhanced-tools",
+    "osa_webhook_dev": "http://localhost:3000/api/webhooks/opal-workflow",
+    "osa_webhook_staging": "https://ifpa-strategy-staging.vercel.app/api/webhooks/opal-workflow",
+    "osa_webhook_prod": "https://ifpa-strategy.vercel.app/api/webhooks/opal-workflow"
+  },
+  "compatibility": {
+    "opal_version": ">=1.0.0",
+    "sdk_version": ">=0.1.3-dev",
+    "node_version": ">=18.0.0",
+    "backwards_compatible": true
+  }
+}

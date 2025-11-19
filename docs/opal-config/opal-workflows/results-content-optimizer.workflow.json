@@ -1,0 +1,556 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "workflow",
+  "name": "Results Content Optimizer Workflow",
+  "description": "Headless workflow that systematically optimizes content across all 88+ Results pages, ensuring language rule compliance, Never Blank principles, and tier-specific content patterns while preserving URL structure, navigation hierarchy, and OPAL agent bindings.",
+  "version": "1.0.0",
+  "agent_id": "results_content_optimizer_workflow",
+  "objective": "Optimize Results page content across all tiers (Strategy Plans, DXP Tools, Analytics Insights, Experience Optimization) to ensure enterprise compliance, user value, and consistent presentation.",
+  "plan": "Systematically iterate through all Results sections and pages, apply content optimization using the results-content-optimizer agent, and update content structures while preserving architectural constraints.",
+  "is_active": true,
+  "is_deleted": false,
+  "agent_metadata": {
+    "edges": [
+      {
+        "id": "init-to-strategy",
+        "source": "workflow-initializer",
+        "target": "strategy-plans-optimizer"
+      },
+      {
+        "id": "strategy-to-dxp",
+        "source": "strategy-plans-optimizer",
+        "target": "dxp-tools-optimizer"
+      },
+      {
+        "id": "dxp-to-insights",
+        "source": "dxp-tools-optimizer",
+        "target": "analytics-insights-optimizer"
+      },
+      {
+        "id": "insights-to-optimization",
+        "source": "analytics-insights-optimizer",
+        "target": "experience-optimization-optimizer"
+      },
+      {
+        "id": "optimization-to-finalizer",
+        "source": "experience-optimization-optimizer",
+        "target": "workflow-finalizer"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "workflow-initializer",
+        "position": { "x": 100, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      },
+      {
+        "id": "strategy-plans-optimizer",
+        "position": { "x": 500, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      },
+      {
+        "id": "dxp-tools-optimizer",
+        "position": { "x": 900, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      },
+      {
+        "id": "analytics-insights-optimizer",
+        "position": { "x": 1300, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      },
+      {
+        "id": "experience-optimization-optimizer",
+        "position": { "x": 1700, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      },
+      {
+        "id": "workflow-finalizer",
+        "position": { "x": 2100, "y": 100 },
+        "measured": { "width": 300, "height": 120 }
+      }
+    ]
+  },
+  "internal_version": 1,
+  "steps": [
+    {
+      "step_id": "workflow-initializer",
+      "step_type": "system",
+      "name": "Workflow Initialization",
+      "description": "Initialize Results content optimization workflow and prepare page iteration data with mode detection",
+      "agent_id": "system_initializer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_mode": { "type": "string", "default": "headless" },
+          "execution_mode": { "type": "string", "enum": ["preview", "apply"], "default": "preview" },
+          "optimization_scope": { "type": "string", "default": "all_results_pages" },
+          "preserve_constraints": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["url_structure", "navigation_hierarchy", "agent_bindings"]
+          },
+          "config_source": {
+            "type": "string",
+            "default": "opal-config/opal-schedules/results-content-optimizer.config.json"
+          },
+          "check_emergency_stop": { "type": "boolean", "default": true },
+          "logging_configuration": {
+            "type": "object",
+            "properties": {
+              "log_level": { "type": "string", "enum": ["minimal", "standard", "detailed"], "default": "detailed" },
+              "log_destination": { "type": "string", "default": "opal-logs/results-content-optimizer" },
+              "generate_diff_reports": { "type": "boolean", "default": true },
+              "include_performance_metrics": { "type": "boolean", "default": true }
+            }
+          }
+        }
+      },
+      "next_step_id": "strategy-plans-optimizer",
+      "timeout_seconds": 600
+    },
+    {
+      "step_id": "strategy-plans-optimizer",
+      "step_type": "specialized",
+      "name": "Strategy Plans Content Optimization",
+      "description": "Optimize content across all Strategy Plans Results pages (OSA, Quick Wins, Maturity, Phases, Roadmap)",
+      "agent_id": "results_content_optimizer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target_pages": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": [
+              "Strategy Plans/OSA/Overview Dashboard",
+              "Strategy Plans/OSA/Strategic Recommendations",
+              "Strategy Plans/OSA/Performance Metrics",
+              "Strategy Plans/OSA/Data Quality Score",
+              "Strategy Plans/OSA/Workflow Timeline",
+              "Strategy Plans/Quick Wins/Immediate Opportunities",
+              "Strategy Plans/Quick Wins/Implementation Roadmap (30-day)",
+              "Strategy Plans/Quick Wins/Resource Requirements",
+              "Strategy Plans/Quick Wins/Expected Impact",
+              "Strategy Plans/Quick Wins/Success Metrics",
+              "Strategy Plans/Maturity/Current State Assessment",
+              "Strategy Plans/Maturity/Maturity Framework",
+              "Strategy Plans/Maturity/Gap Analysis",
+              "Strategy Plans/Maturity/Improvement Pathway",
+              "Strategy Plans/Maturity/Benchmarking Data",
+              "Strategy Plans/Phases/Phase 1: Foundation (0-3 months)",
+              "Strategy Plans/Phases/Phase 2: Growth (3-6 months)",
+              "Strategy Plans/Phases/Phase 3: Optimization (6-12 months)",
+              "Strategy Plans/Phases/Phase 4: Innovation (12+ months)",
+              "Strategy Plans/Phases/Cross-phase Dependencies",
+              "Strategy Plans/Roadmap/Timeline View",
+              "Strategy Plans/Roadmap/Milestone Tracking",
+              "Strategy Plans/Roadmap/Resource Allocation",
+              "Strategy Plans/Roadmap/Risk Assessment",
+              "Strategy Plans/Roadmap/Progress Indicators"
+            ]
+          },
+          "tier": { "type": "string", "default": "strategy" },
+          "primary_agents": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["strategy_workflow"]
+          },
+          "optimization_focus": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["foundation_progress", "timeline_confidence", "plan_validation"]
+          }
+        }
+      },
+      "next_step_id": "dxp-tools-optimizer",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "dxp-tools-optimizer",
+      "step_type": "specialized",
+      "name": "DXP Tools Content Optimization",
+      "description": "Optimize content across all Optimizely DXP Tools Results pages (Content Recs, CMS, ODP, WEBX, CMP)",
+      "agent_id": "results_content_optimizer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target_pages": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": [
+              "Optimizely DXP Tools/Content Recs/Visitor Analytics Dashboard",
+              "Optimizely DXP Tools/Content Recs/Content Performance Metrics",
+              "Optimizely DXP Tools/Content Recs/Recommendation Algorithms",
+              "Optimizely DXP Tools/Content Recs/A/B Testing Results",
+              "Optimizely DXP Tools/Content Recs/Personalization Effectiveness",
+              "Optimizely DXP Tools/CMS/Content Inventory",
+              "Optimizely DXP Tools/CMS/Publishing Workflows",
+              "Optimizely DXP Tools/CMS/Content Performance",
+              "Optimizely DXP Tools/CMS/SEO Optimization",
+              "Optimizely DXP Tools/CMS/Multi-channel Publishing",
+              "Optimizely DXP Tools/ODP/Customer Profiles",
+              "Optimizely DXP Tools/ODP/Audience Segments",
+              "Optimizely DXP Tools/ODP/Journey Analytics",
+              "Optimizely DXP Tools/ODP/Real-time Events",
+              "Optimizely DXP Tools/ODP/Data Integration Status",
+              "Optimizely DXP Tools/WEBX/Active Experiments",
+              "Optimizely DXP Tools/WEBX/Results Analysis",
+              "Optimizely DXP Tools/WEBX/Statistical Significance",
+              "Optimizely DXP Tools/WEBX/Conversion Impact",
+              "Optimizely DXP Tools/WEBX/Test Configuration",
+              "Optimizely DXP Tools/CMP/Campaign Performance",
+              "Optimizely DXP Tools/CMP/Email Analytics",
+              "Optimizely DXP Tools/CMP/Automation Workflows",
+              "Optimizely DXP Tools/CMP/Audience Targeting",
+              "Optimizely DXP Tools/CMP/ROI Analysis"
+            ]
+          },
+          "tier": { "type": "string", "default": "dxptools" },
+          "primary_agents": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["content_review", "audience_suggester", "experiment_blueprinter", "cmp_organizer", "integration_health", "content_recs_topic_performance"]
+          },
+          "optimization_focus": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["integration_health", "topic_performance", "recommendation_effectiveness"]
+          }
+        }
+      },
+      "next_step_id": "analytics-insights-optimizer",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "analytics-insights-optimizer",
+      "step_type": "specialized",
+      "name": "Analytics Insights Content Optimization",
+      "description": "Optimize content across all Analytics Insights Results pages (OSA, Content, Audiences, CX, Trends)",
+      "agent_id": "results_content_optimizer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target_pages": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": [
+              "Analytics Insights/OSA/Engagement",
+              "Analytics Insights/OSA/Topics",
+              "Analytics Insights/OSA/Popular",
+              "Analytics Insights/OSA/AI Visibility",
+              "Analytics Insights/OSA/Semantic",
+              "Analytics Insights/OSA/Geographic",
+              "Analytics Insights/OSA/Freshness",
+              "Analytics Insights/Content/Engagement",
+              "Analytics Insights/Content/Topics",
+              "Analytics Insights/Content/Popular",
+              "Analytics Insights/Content/AI Visibility",
+              "Analytics Insights/Content/Semantic",
+              "Analytics Insights/Content/Geographic",
+              "Analytics Insights/Content/Freshness",
+              "Analytics Insights/Audiences/Engagement",
+              "Analytics Insights/Audiences/Topics",
+              "Analytics Insights/Audiences/Popular",
+              "Analytics Insights/Audiences/AI Visibility",
+              "Analytics Insights/Audiences/Semantic",
+              "Analytics Insights/Audiences/Geographic",
+              "Analytics Insights/Audiences/Freshness",
+              "Analytics Insights/CX/Engagement",
+              "Analytics Insights/CX/Topics",
+              "Analytics Insights/CX/Popular",
+              "Analytics Insights/CX/AI Visibility",
+              "Analytics Insights/CX/Semantic",
+              "Analytics Insights/CX/Geographic",
+              "Analytics Insights/CX/Freshness",
+              "Analytics Insights/Trends/Engagement",
+              "Analytics Insights/Trends/Topics",
+              "Analytics Insights/Trends/Popular",
+              "Analytics Insights/Trends/AI Visibility",
+              "Analytics Insights/Trends/Semantic",
+              "Analytics Insights/Trends/Geographic",
+              "Analytics Insights/Trends/Freshness"
+            ]
+          },
+          "tier": { "type": "string", "default": "insights" },
+          "primary_agents": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["content_review", "audience_suggester", "geo_audit"]
+          },
+          "optimization_focus": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["content_performance", "engagement_analysis", "topic_distribution"]
+          }
+        }
+      },
+      "next_step_id": "experience-optimization-optimizer",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "experience-optimization-optimizer",
+      "step_type": "specialized",
+      "name": "Experience Optimization Content Optimization",
+      "description": "Optimize content across all Experience Optimization Results pages (Content, Experimentation, Personalization, UX, Technology)",
+      "agent_id": "results_content_optimizer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target_pages": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": [
+              "Experience Optimization/Content/Content Strategy Overview",
+              "Experience Optimization/Content/Performance Analytics",
+              "Experience Optimization/Content/Content Optimization Recommendations",
+              "Experience Optimization/Content/Multi-channel Content Distribution",
+              "Experience Optimization/Content/Content ROI Analysis",
+              "Experience Optimization/Experimentation/Experiment Design Framework",
+              "Experience Optimization/Experimentation/Statistical Testing Results",
+              "Experience Optimization/Experimentation/Hypothesis Validation",
+              "Experience Optimization/Experimentation/Test Impact Assessment",
+              "Experience Optimization/Experimentation/Experimentation Roadmap",
+              "Experience Optimization/Personalization/Personalization Strategy",
+              "Experience Optimization/Personalization/Audience Segmentation",
+              "Experience Optimization/Personalization/Dynamic Content Delivery",
+              "Experience Optimization/Personalization/Personalization Performance",
+              "Experience Optimization/Personalization/Real-time Optimization",
+              "Experience Optimization/UX/User Journey Mapping",
+              "Experience Optimization/UX/Interaction Analytics",
+              "Experience Optimization/UX/Usability Testing Results",
+              "Experience Optimization/UX/Conversion Path Optimization",
+              "Experience Optimization/UX/Experience Quality Metrics",
+              "Experience Optimization/Technology/Integration Architecture",
+              "Experience Optimization/Technology/Platform Performance",
+              "Experience Optimization/Technology/API Analytics",
+              "Experience Optimization/Technology/Data Flow Optimization",
+              "Experience Optimization/Technology/Technical Implementation Guide"
+            ]
+          },
+          "tier": { "type": "string", "default": "optimization" },
+          "primary_agents": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["content_review", "experiment_blueprinter", "personalization_idea_generator", "content_next_best_topics"]
+          },
+          "optimization_focus": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["content_recommendations", "persona_coverage", "implementation_priority"]
+          }
+        }
+      },
+      "next_step_id": "workflow-finalizer",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "workflow-finalizer",
+      "step_type": "system",
+      "name": "Workflow Completion and Validation",
+      "description": "Finalize content optimization workflow, validate all updates, and generate completion summary",
+      "agent_id": "system_finalizer",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "validation_checks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["language_rule_compliance", "never_blank_validation", "tier_alignment", "constraint_preservation"]
+          },
+          "output_summary": { "type": "boolean", "default": true },
+          "notify_completion": { "type": "boolean", "default": true }
+        }
+      },
+      "next_step_id": null,
+      "timeout_seconds": 600
+    }
+  ],
+  "specialized_agents_required": [
+    "results_content_optimizer"
+  ],
+  "triggers": [
+    {
+      "trigger_id": "headless-content-optimizer-trigger",
+      "trigger_type": "manual",
+      "name": "Results Content Optimization Trigger",
+      "description": "Manual trigger for headless Results content optimization across all 88+ pages",
+      "is_active": true,
+      "auth_key": "results-content-optimizer-workflow-2025",
+      "auth_header_name": "Authorization",
+      "auth_header_format": "Bearer {token}",
+      "payload_content_type": "application/json"
+    },
+    {
+      "trigger_id": "scheduled-optimization-trigger",
+      "trigger_type": "scheduled",
+      "name": "Scheduled Content Optimization",
+      "description": "Automated daily Results content optimization at 2 AM UTC",
+      "is_active": false,
+      "schedule_expression": "0 2 * * *",
+      "timezone": "UTC"
+    }
+  ],
+  "workflow_configuration": {
+    "execution_mode": "headless",
+    "parallel_processing": false,
+    "error_handling": "continue_on_page_failure",
+    "content_validation": {
+      "enforce_language_rules": true,
+      "validate_never_blank": true,
+      "check_tier_alignment": true,
+      "preserve_constraints": true
+    },
+    "optimization_parameters": {
+      "max_pages_per_step": 25,
+      "confidence_threshold": 35,
+      "fallback_mode": "tier_specific_defaults",
+      "validation_strictness": "enterprise"
+    },
+    "output_configuration": {
+      "update_content_json": true,
+      "update_opal_mapping": false,
+      "notify_osa_dashboard": true,
+      "generate_summary_report": true
+    },
+    "execution_modes": {
+      "preview": {
+        "description": "Dry-run mode that analyzes content and logs potential changes without applying updates",
+        "actions": {
+          "scan_pages": true,
+          "analyze_content": true,
+          "identify_changes": true,
+          "validate_language_rules": true,
+          "generate_diff_report": true,
+          "apply_changes": false,
+          "update_content_json": false,
+          "notify_osa_dashboard": false
+        },
+        "logging_level": "detailed"
+      },
+      "apply": {
+        "description": "Production mode that applies content optimizations and updates live content",
+        "actions": {
+          "scan_pages": true,
+          "analyze_content": true,
+          "identify_changes": true,
+          "validate_language_rules": true,
+          "generate_diff_report": true,
+          "apply_changes": true,
+          "update_content_json": true,
+          "notify_osa_dashboard": true
+        },
+        "logging_level": "standard"
+      }
+    },
+    "schedule_integration": {
+      "config_source": "opal-config/opal-schedules/results-content-optimizer.config.json",
+      "schedule_source": "opal-config/opal-schedules/results-content-optimizer.schedule.json",
+      "mode_detection": {
+        "check_config_before_execution": true,
+        "respect_admin_overrides": true,
+        "emergency_stop_check": true
+      }
+    },
+    "comprehensive_logging": {
+      "log_destination": "opal-logs/results-content-optimizer",
+      "log_components": {
+        "execution_summary": {
+          "enabled": true,
+          "include_metadata": true,
+          "include_performance_metrics": true
+        },
+        "page_scan_logs": {
+          "enabled": true,
+          "log_per_page": true,
+          "include_content_analysis": true,
+          "include_confidence_scores": true
+        },
+        "change_detection_logs": {
+          "enabled": true,
+          "include_before_after_diff": true,
+          "include_change_reasoning": true,
+          "highlight_language_fixes": true
+        },
+        "error_logs": {
+          "enabled": true,
+          "include_stack_traces": true,
+          "include_retry_attempts": true,
+          "categorize_error_types": true
+        },
+        "diff_reports": {
+          "enabled": true,
+          "format": "unified_diff",
+          "include_context_lines": 3,
+          "generate_html_reports": true
+        }
+      },
+      "page_logging_details": {
+        "pages_scanned": {
+          "log_format": "json",
+          "fields": [
+            "page_id",
+            "tier",
+            "scan_timestamp",
+            "current_content_confidence",
+            "optimization_required",
+            "agent_outputs_available",
+            "language_violations_detected",
+            "never_blank_violations_detected",
+            "tier_alignment_score"
+          ]
+        },
+        "pages_changed": {
+          "log_format": "json",
+          "fields": [
+            "page_id",
+            "change_type",
+            "change_category",
+            "change_reason",
+            "confidence_before",
+            "confidence_after",
+            "language_rule_fixes",
+            "never_blank_improvements",
+            "content_diff_summary"
+          ]
+        },
+        "pages_skipped": {
+          "log_format": "json",
+          "fields": [
+            "page_id",
+            "skip_reason",
+            "skip_timestamp",
+            "confidence_level",
+            "missing_dependencies",
+            "agent_availability",
+            "retry_scheduled"
+          ]
+        }
+      }
+    }
+  },
+  "page_iteration_logic": {
+    "description": "Systematic iteration through all Results pages with tier-specific optimization",
+    "constraints": {
+      "never_change": [
+        "URL structure and routing paths",
+        "Navigation hierarchy and relationships",
+        "OPAL agent bindings and assignments",
+        "Component architecture and data flows",
+        "Tier classifications and structural organization"
+      ],
+      "only_update": [
+        "Text content and descriptions",
+        "Content labels and messaging",
+        "Confidence messaging and fallbacks",
+        "Language rule compliance",
+        "Structured content fields in ResultsPageContent format"
+      ]
+    },
+    "optimization_approach": {
+      "step_1": "Load current page content and OPAL agent outputs",
+      "step_2": "Apply tier-specific optimization patterns",
+      "step_3": "Validate language rules and Never Blank compliance",
+      "step_4": "Update content structures while preserving constraints",
+      "step_5": "Store optimized content and notify dashboard"
+    }
+  }
+}

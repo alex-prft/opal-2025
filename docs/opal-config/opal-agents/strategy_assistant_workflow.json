@@ -1,0 +1,236 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "workflow",
+  "name": "strategy_assistant ",
+  "description": "Webhook to collect data from all the DXP tools and send to our application",
+  "version": "",
+  "agent_id": "strategy_assistant",
+  "objective": "",
+  "plan": "",
+  "is_active": true,
+  "is_deleted": false,
+  "agent_metadata": {
+    "edges": [
+      {
+        "id": "af7b5d40-de64-4570-a452-0eac7e9ed05c",
+        "source": "24e33b43-48f9-4ad1-9080-2689ff64e4dc",
+        "target": "6452fcaa-8442-454d-ba57-4391b6eb4cb3"
+      },
+      {
+        "id": "e00405aa-692a-417f-a743-61411dce113d",
+        "source": "a91ec0a0-239a-4436-b3c4-0ae09193ae30",
+        "target": "705aeb9a-0404-429b-99af-2698e420dd7c"
+      },
+      {
+        "id": "fc8b1cef-5f58-4606-94c0-48c6820b92ee",
+        "source": "d062a7ee-1893-4854-982f-198e4aadf9fe",
+        "target": "a91ec0a0-239a-4436-b3c4-0ae09193ae30"
+      },
+      {
+        "id": "40a80265-8b08-4125-9fd0-48dbaf19f63f",
+        "source": "6452fcaa-8442-454d-ba57-4391b6eb4cb3",
+        "target": "5d0e76db-e743-473d-8bf6-4615788b780d"
+      },
+      {
+        "id": "22ca5f20-9b5b-4796-8bd4-901029ff08a5",
+        "source": "5d0e76db-e743-473d-8bf6-4615788b780d",
+        "target": "d062a7ee-1893-4854-982f-198e4aadf9fe"
+      },
+      {
+        "id": "bd1f0864-b81b-41b4-9c30-dacde98ec74f",
+        "source": "7518c133-764c-40cd-9158-6de241cf0e18",
+        "target": "24e33b43-48f9-4ad1-9080-2689ff64e4dc"
+      },
+      {
+        "id": "6e21b041-5f4a-4c22-9195-d5ec9fbc8322",
+        "source": "825e1edf-fd07-460e-a123-aab99ed78c2b",
+        "target": "7518c133-764c-40cd-9158-6de241cf0e18"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "825e1edf-fd07-460e-a123-aab99ed78c2b",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": -150,
+          "y": 120
+        }
+      },
+      {
+        "id": "24e33b43-48f9-4ad1-9080-2689ff64e4dc",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 150,
+          "y": 300
+        }
+      },
+      {
+        "id": "a91ec0a0-239a-4436-b3c4-0ae09193ae30",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1230,
+          "y": 300
+        }
+      },
+      {
+        "id": "705aeb9a-0404-429b-99af-2698e420dd7c",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1500,
+          "y": 300
+        }
+      },
+      {
+        "id": "d062a7ee-1893-4854-982f-198e4aadf9fe",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 960,
+          "y": 300
+        }
+      },
+      {
+        "id": "6452fcaa-8442-454d-ba57-4391b6eb4cb3",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 420,
+          "y": 300
+        }
+      },
+      {
+        "id": "5d0e76db-e743-473d-8bf6-4615788b780d",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 690,
+          "y": 300
+        }
+      },
+      {
+        "id": "7518c133-764c-40cd-9158-6de241cf0e18",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": -120,
+          "y": 300
+        }
+      }
+    ]
+  },
+  "internal_version": 23,
+  "steps": [
+    {
+      "step_id": "24e33b43-48f9-4ad1-9080-2689ff64e4dc",
+      "step_type": "specialized",
+      "name": "Content_Review",
+      "description": "Review content to determine what is most valuable and influential.",
+      "agent_id": "Content_Review",
+      "parameters_schema": {},
+      "next_step_id": "6452fcaa-8442-454d-ba57-4391b6eb4cb3",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "a91ec0a0-239a-4436-b3c4-0ae09193ae30",
+      "step_type": "specialized",
+      "name": "personalization_idea_generator",
+      "description": "Purpose: Generate on-site personalization ideas mapped to audiences and Content Recommendations topics.",
+      "agent_id": "personalization_idea_generator",
+      "parameters_schema": {},
+      "next_step_id": "705aeb9a-0404-429b-99af-2698e420dd7c",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "705aeb9a-0404-429b-99af-2698e420dd7c",
+      "step_type": "specialized",
+      "name": "CMP Organizer Agent",
+      "description": "Compiles and organizes results from all workflow agents into executive-ready strategy briefs and CMP-ready campaign specifications for stakeholder review and implementation.",
+      "agent_id": "cmp_organizer",
+      "parameters_schema": {},
+      "next_step_id": null,
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "d062a7ee-1893-4854-982f-198e4aadf9fe",
+      "step_type": "specialized",
+      "name": "experiment_blueprinter",
+      "description": "Purpose: Turn an idea into an experiment spec (hypothesis, variants, metrics, MDE, run time).",
+      "agent_id": "experiment_blueprinter",
+      "parameters_schema": {},
+      "next_step_id": "a91ec0a0-239a-4436-b3c4-0ae09193ae30",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "6452fcaa-8442-454d-ba57-4391b6eb4cb3",
+      "step_type": "specialized",
+      "name": "GEO Audit",
+      "description": "Audits webpages for LLM discoverability, retrievability, and understandability to deliver actionable recommendations to optimize content for generative search. This empowers creators to enhance visibility, directly answer user queries, and drive high-quality traffic in the evolving AI search landscape.",
+      "agent_id": "geo_audit_recommendations",
+      "parameters_schema": {},
+      "next_step_id": "5d0e76db-e743-473d-8bf6-4615788b780d",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "5d0e76db-e743-473d-8bf6-4615788b780d",
+      "step_type": "specialized",
+      "name": "audience_suggester",
+      "description": "Purpose: Propose high‑value audiences for personalization based on ODP traits + Salesforce tiers/lifecycle.\nInputs: KPI_TARGET, CHANNEL (Web/App/Email), REGION",
+      "agent_id": "audience_suggester",
+      "parameters_schema": {},
+      "next_step_id": "d062a7ee-1893-4854-982f-198e4aadf9fe",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "7518c133-764c-40cd-9158-6de241cf0e18",
+      "step_type": "specialized",
+      "name": "Integration Health Agent",
+      "description": "Monitors and analyzes the health, performance, and integration status of Optimizely DXP tools and supporting technology stack, providing optimization recommendations and readiness assessments for strategic initiatives.",
+      "agent_id": "integration_health",
+      "parameters_schema": {},
+      "next_step_id": "24e33b43-48f9-4ad1-9080-2689ff64e4dc",
+      "timeout_seconds": 3600
+    }
+  ],
+  "specialized_agents_required": [
+    "personalization_idea_generator",
+    "experiment_blueprinter",
+    "geo_audit_recommendations",
+    "integration_health",
+    "audience_suggester",
+    "Content_Review",
+    "cmp_organizer"
+  ],
+  "triggers": [
+    {
+      "trigger_id": "825e1edf-fd07-460e-a123-aab99ed78c2b",
+      "trigger_type": "webhook",
+      "name": "Webhook",
+      "description": "Trigger via webhook",
+      "is_active": true,
+      "auth_key": "opal-workflow-webhook-secret-2025",
+      "auth_header_name": "Authorization",
+      "auth_header_format": "Bearer {token}",
+      "payload_content_type": "application/json"
+    }
+  ]
+}

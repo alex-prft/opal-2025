@@ -1,0 +1,185 @@
+{
+  "environment": "production",
+  "description": "Production environment configuration for OPAL enhanced tools integration",
+  "version": "2.0.0-production",
+
+  "discovery_endpoints": {
+    "primary": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+    "fallback": "https://opal-2025.vercel.app/api/opal/enhanced-tools"
+  },
+
+  "integration_endpoints": {
+    "osa_webhook_agent": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+    "data_storage": "https://opal-2025.vercel.app/api/opal/workflow-data",
+    "osa_webhook_results": "https://opal-2025.vercel.app/api/opal/workflow-results",
+    "validation_service": "https://opal-2025.vercel.app/api/opal/validate",
+    "monitoring_endpoint": "https://opal-2025.vercel.app/api/opal/status"
+  },
+
+  "enhanced_tools": [
+    {
+      "name": "send_data_to_osa_enhanced",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "method": "POST",
+      "priority": "critical",
+      "description": "Production-ready webhook delivery with intelligent routing and comprehensive error handling"
+    },
+    {
+      "name": "analyze_website_content_enhanced",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "method": "POST",
+      "priority": "high",
+      "description": "Enhanced content analysis with quality scoring and personalization opportunities"
+    },
+    {
+      "name": "generate_audience_segments_enhanced",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "method": "POST",
+      "priority": "high",
+      "description": "ML-powered audience segmentation with statistical validation"
+    },
+    {
+      "name": "create_experiment_blueprint_enhanced",
+      "endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "method": "POST",
+      "priority": "high",
+      "description": "Interactive experiment design with statistical power analysis"
+    }
+  ],
+
+  "performance_configuration": {
+    "timeout_ms": 60000,
+    "max_retries": 5,
+    "retry_delay_ms": 2000,
+    "circuit_breaker": {
+      "failure_threshold": 5,
+      "recovery_timeout_ms": 30000,
+      "monitoring_window_ms": 60000
+    },
+    "rate_limiting": {
+      "requests_per_minute": 120,
+      "burst_allowance": 20
+    }
+  },
+
+  "authentication": {
+    "type": "bearer",
+    "header_name": "Authorization",
+    "environment_variable": "OPAL_WEBHOOK_AUTH_KEY_PROD",
+    "validation_required": true
+  },
+
+  "monitoring": {
+    "health_check_interval_ms": 30000,
+    "performance_metrics": true,
+    "error_tracking": true,
+    "usage_analytics": true,
+    "alerting": {
+      "error_rate_threshold": 5,
+      "response_time_threshold_ms": 30000,
+      "availability_threshold": 99.5
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "include_request_ids": true,
+    "include_performance_metrics": true,
+    "retention_days": 30,
+    "structured_logging": true
+  },
+
+  "deployment": {
+    "deployment_method": "vercel",
+    "auto_scaling": true,
+    "cdn_enabled": true,
+    "ssl_required": true,
+    "environment_variables": [
+      "OPAL_WEBHOOK_AUTH_KEY_PROD",
+      "NEXT_PUBLIC_API_SECRET_KEY",
+      "NODE_ENV=production"
+    ]
+  },
+
+  "security": {
+    "cors_enabled": true,
+    "allowed_origins": [
+      "https://opal-2025.vercel.app",
+      "https://*.vercel.app"
+    ],
+    "csrf_protection": true,
+    "rate_limiting": true,
+    "input_validation": "strict",
+    "audit_logging": true
+  },
+
+  "agent_configurations": {
+    "content_review": {
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "enabled_tools": [
+        "enhanced_tools_analyze_website_content_enhanced",
+        "enhanced_tools_osa_store_workflow_data_enhanced",
+        "enhanced_tools_send_data_to_osa_enhanced"
+      ]
+    },
+    "audience_suggester": {
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "enabled_tools": [
+        "enhanced_tools_generate_audience_segments_enhanced",
+        "enhanced_tools_osa_retrieve_workflow_context_enhanced",
+        "enhanced_tools_send_data_to_osa_enhanced"
+      ]
+    },
+    "experiment_blueprinter": {
+      "discovery_endpoint": "https://opal-2025.vercel.app/api/opal/enhanced-tools",
+      "enabled_tools": [
+        "enhanced_tools_create_experiment_blueprint_enhanced",
+        "enhanced_tools_osa_retrieve_workflow_context_enhanced",
+        "enhanced_tools_send_data_to_osa_enhanced"
+      ]
+    }
+  },
+
+  "quality_assurance": {
+    "pre_deployment_validation": [
+      "Enhanced tools API endpoint accessibility",
+      "Webhook delivery functionality",
+      "Authentication and authorization",
+      "Performance benchmarks",
+      "Error handling scenarios",
+      "Complete workflow execution"
+    ],
+    "continuous_monitoring": [
+      "API response times",
+      "Error rates and patterns",
+      "Webhook delivery success rates",
+      "Resource utilization",
+      "Security event detection"
+    ]
+  },
+
+  "rollback_strategy": {
+    "automated_rollback": true,
+    "rollback_triggers": [
+      "Error rate > 10%",
+      "Response time > 30s",
+      "Availability < 99%"
+    ],
+    "rollback_target": "previous_stable_version",
+    "notification_channels": [
+      "email",
+      "slack"
+    ]
+  },
+
+  "maintenance": {
+    "scheduled_maintenance_window": "02:00-04:00 UTC",
+    "auto_updates": false,
+    "backup_frequency": "daily",
+    "disaster_recovery": {
+      "backup_regions": ["us-west", "eu-west"],
+      "recovery_time_objective_minutes": 15,
+      "recovery_point_objective_minutes": 5
+    }
+  }
+}

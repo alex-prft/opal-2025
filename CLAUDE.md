@@ -22,6 +22,7 @@ OSA (Optimizely Strategy Assistant) is an AI-powered strategy assistant for Opti
 ### Validation & Quality Assurance
 - `npm run validate:all` - Run all validation checks
 - `npm run validate:security` - Security validation
+- `npm run error-check` - **Critical**: Identify deployment-blocking errors (always run before Git push)
 - `npm run pre-deploy` - Complete pre-deployment validation suite
 
 ### OPAL & Production Tools
@@ -98,6 +99,93 @@ The Claude Code system provides specialized agents for complex tasks. **Always u
 - **Purpose**: Configure Claude Code status line settings
 - **When to Use**: Setting up or modifying status line display
 - **Tools Available**: Read, Edit
+
+## OPAL Agent Configuration Standards
+
+### 🔥 MANDATORY: 5 Core Requirements for All OPAL Agents
+
+**Every OPAL agent configuration in `opal-config/opal-agents/` must implement these 5 standards:**
+
+#### ✅ 1. Data-Driven Specificity Requirements
+**REQUIRED**: All agents must include "Critical Data-Driven Requirements" section mandating actual DXP data sources:
+
+```typescript
+// ✅ CORRECT: Data-driven recommendations
+"Based on ODP trait 'Industry_Role:Buyer' (12,450 members), create targeted navigation"
+"Content topic 'Food Safety' shows 2.3x engagement vs baseline - expand this theme"
+"Homepage experiment #4521 achieved 18% lift - apply to product pages"
+
+// ❌ WRONG: Generic marketing advice
+"Improve your value proposition"
+"Consider A/B testing your homepage"
+"Segment your audience by demographics"
+```
+
+#### ✅ 2. Standardized Confidence Calculation
+**REQUIRED**: 4-tier confidence framework based on data availability (not reasoning quality):
+
+- **80-100**: Complete DXP data available (ODP segments, CMS analytics, experiment results)
+- **60-79**: Partial DXP data available, some performance benchmarks
+- **40-59**: Limited DXP data, early-stage implementation
+- **0-39**: Minimal DXP data available, theoretical recommendations
+
+#### ✅ 3. Mandatory Language Rules Validation
+**REQUIRED**: Change validation from optional to mandatory:
+
+```json
+"Before generating final JSON output, CALL `osa_validate_language_rules` tool MANDATORY"
+```
+
+#### ✅ 4. Clear Mode Detection Requirements
+**REQUIRED**: Explicit dual-mode behavior with clear triggers:
+
+- **Data Mode**: Triggered via `osa_retrieve_workflow_context` or OSA webhook → Pure JSON output
+- **Chat Mode**: Direct user conversation → Natural language + Canvas visualizations
+- **Mode Verification**: Always check context to determine appropriate response format
+
+#### ✅ 5. Explicit Business Context Integration
+**REQUIRED**: Replace generic placeholders with specific FreshProduce.com/IFPA business context:
+
+- Industry: Fresh produce professional association (IFPA)
+- Key Segments: Commercial Buyers, Produce Suppliers/Growers, Industry Professionals
+- Target Personas: Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol
+- Primary KPIs: Membership conversion rate, content engagement score, event registration rate
+
+### Multi-Agent Update Patterns
+
+#### ✅ Systematic Configuration Updates
+**When updating multiple OPAL agents:**
+
+```typescript
+// REQUIRED: Track progress across all agents
+TodoWrite([
+  { content: "Apply improvement X to all 9 agents", status: "in_progress", activeForm: "Applying improvement X to all 9 agents" },
+  { content: "Validate configurations with opal-integration-validator", status: "pending", activeForm: "Validating configurations with opal-integration-validator" },
+  { content: "Use CLAUDE.md checker to validate all changes", status: "pending", activeForm: "Using CLAUDE.md checker to validate all changes" }
+]);
+```
+
+#### ✅ Performance-Conscious Configuration Updates
+**PREFERRED**: Use targeted regex replacements over full file rewrites
+- Minimizes risk of syntax errors or breaking integrations
+- Maintains precise control over changes
+- Safer for production configurations
+
+#### ✅ Validation Best Practices
+**REQUIRED**: Always validate with specialized agents AND direct verification:
+
+1. Use `opal-integration-validator` for domain-specific validation
+2. Cross-reference results with direct search/grep for confirmation
+3. Validation agents may miss successful implementations due to pattern matching
+
+### Business Context Integration Requirements
+
+**FreshProduce.com/IFPA Context Standards:**
+- **Industry Focus**: Fresh produce professional association serving IFPA members
+- **Target Segments**: Must reference specific segments (Commercial Buyers, Suppliers/Growers, Industry Professionals, Association Members)
+- **Persona Integration**: Recommendations should align with Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol, Executive Leader Linda
+- **Content Pillars**: Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development
+- **KPI Alignment**: All recommendations should tie to membership conversion, content engagement, event registration, or member retention
 
 ## Mandatory Task Management & Quality Control
 
@@ -218,6 +306,37 @@ const { data } = await secureSupabase.from('table').insert(data, {
 - **Use lazy initialization** for external service clients
 - **Environment-aware imports** with proper fallbacks
 
+### Git Workflow Safety
+- **🔥 MANDATORY**: Always run `npm run error-check` before any Git push
+- **Critical vs Warning**: Only critical errors block deployment; warnings can be addressed separately
+- **Validation-First Pattern**: `npm run error-check` → Fix critical errors → Re-validate → Commit → Push
+- **Never push with unresolved critical errors** - This prevents deployment failures
+
+### Import Conflict Resolution
+**When components have naming conflicts between UI libraries:**
+```typescript
+// ✅ CORRECT: Handle recharts vs lucide-react conflicts
+import {
+  PieChart,           // For recharts chart component
+  PieChart as PieChartIcon,  // For lucide-react icon
+  // ... other imports
+} from 'lucide-react';
+
+import {
+  PieChart,           // Chart component from recharts
+  // ... other chart imports
+} from 'recharts';
+
+// Usage:
+<PieChart width={300} height={200}>  {/* recharts component */}
+<PieChartIcon className="h-5 w-5" /> {/* lucide-react icon */}
+```
+
+**Common conflict patterns:**
+- `PieChart`: recharts component vs lucide-react icon
+- `BarChart`: recharts component vs lucide-react icon
+- Always check actual JSX usage to determine correct import strategy
+
 ## Critical Performance Guardrails
 
 ### 🔥 Operations That Require User Approval
@@ -265,11 +384,22 @@ docker system prune -a                             # Can slow subsequent builds
 
 ### Pre-Deployment Validation
 ```bash
-npm run build                    # Critical: Test production build
-npm run validate:all            # Comprehensive validation
-npm run validate:security       # Security checks (target: 34/35+)
-npm run pre-deploy              # Complete validation suite
+npm run error-check             # 🔥 CRITICAL: Must pass before Git push
+npm run build                   # Critical: Test production build
+npm run validate:all           # Comprehensive validation
+npm run validate:security      # Security checks (target: 34/35+)
+npm run pre-deploy             # Complete validation suite
 ```
+
+**Critical Error Resolution Workflow:**
+1. Run `npm run error-check`
+2. Fix ALL critical errors (deployment blockers)
+3. Re-run `npm run error-check` to confirm 0 critical errors
+4. Proceed with Git operations (warnings are acceptable)
+
+**Error Priority:**
+- **Critical Errors**: Missing imports, compilation failures, deployment blockers - MUST FIX
+- **Warnings**: TypeScript `any` types, unused variables, linting issues - Can defer
 
 ### Health Monitoring
 ```bash

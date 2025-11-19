@@ -1,0 +1,512 @@
+{
+  "workflow_id": "results-content-optimizer",
+  "name": "Results Content Optimizer Workflow",
+  "version": "1.0.0",
+  "description": "Orchestrates content optimization across all Results pages using the results-content-optimizer agent",
+  "category": "content_management",
+  "tags": ["results", "content", "optimization", "automation"],
+
+  "configuration": {
+    "execution_mode": "batch",
+    "parallel_execution": true,
+    "max_concurrent_jobs": 5,
+    "retry_policy": {
+      "max_attempts": 3,
+      "backoff_strategy": "exponential",
+      "base_delay": 5000,
+      "max_delay": 60000
+    },
+    "timeout": {
+      "job_timeout": 300000,
+      "workflow_timeout": 3600000
+    }
+  },
+
+  "parameters": {
+    "required": [
+      {
+        "name": "execution_mode",
+        "type": "string",
+        "enum": ["preview", "apply"],
+        "default": "preview",
+        "description": "Whether to preview changes or apply them to generated content files"
+      }
+    ],
+    "optional": [
+      {
+        "name": "target_pages",
+        "type": "array",
+        "description": "Specific page IDs to process. If empty, processes all mapped pages",
+        "items": { "type": "string" }
+      },
+      {
+        "name": "target_sections",
+        "type": "array",
+        "description": "Specific sections to process",
+        "items": {
+          "type": "string",
+          "enum": ["strategy-plans", "optimizely-dxp-tools", "analytics-insights", "experience-optimization"]
+        }
+      },
+      {
+        "name": "priority_filter",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3,
+        "description": "Only process pages with this priority level or higher"
+      },
+      {
+        "name": "confidence_threshold",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "default": 70,
+        "description": "Minimum confidence required to apply generated content"
+      },
+      {
+        "name": "force_regeneration",
+        "type": "boolean",
+        "default": false,
+        "description": "Force regeneration even if existing content has high confidence"
+      }
+    ]
+  },
+
+  "steps": [
+    {
+      "id": "initialize",
+      "name": "Initialize Workflow",
+      "type": "system",
+      "description": "Load configuration and validate parameters",
+      "config": {
+        "validations": [
+          "check_execution_mode",
+          "validate_target_pages",
+          "verify_agent_availability"
+        ]
+      }
+    },
+
+    {
+      "id": "load_opal_instructions",
+      "name": "Load OPAL Instructions",
+      "type": "data_fetch",
+      "description": "Fetch current OPAL instructions (personas, tone, KPIs, maturity)",
+      "config": {
+        "source": "opal_client",
+        "method": "getOpalInstructions",
+        "cache_ttl": 300,
+        "retry_on_failure": true
+      },
+      "outputs": {
+        "opal_instructions": "object"
+      }
+    },
+
+    {
+      "id": "discover_target_pages",
+      "name": "Discover Target Pages",
+      "type": "data_processing",
+      "description": "Determine which pages to process based on filters and mappings",
+      "depends_on": ["initialize"],
+      "config": {
+        "source": "page_mappings",
+        "filters": {
+          "target_pages": "${parameters.target_pages}",
+          "target_sections": "${parameters.target_sections}",
+          "priority_filter": "${parameters.priority_filter}"
+        }
+      },
+      "outputs": {
+        "page_list": "array",
+        "processing_stats": "object"
+      }
+    },
+
+    {
+      "id": "process_pages_batch",
+      "name": "Process Pages in Batches",
+      "type": "parallel_execution",
+      "description": "Process pages in parallel batches for optimal performance",
+      "depends_on": ["load_opal_instructions", "discover_target_pages"],
+      "config": {
+        "batch_size": 5,
+        "parallel_jobs": "${configuration.max_concurrent_jobs}",
+        "input_source": "${steps.discover_target_pages.outputs.page_list}"
+      },
+      "sub_workflow": "process_single_page"
+    },
+
+    {
+      "id": "aggregate_results",
+      "name": "Aggregate Results",
+      "type": "data_processing",
+      "description": "Collect and analyze results from all page processing jobs",
+      "depends_on": ["process_pages_batch"],
+      "config": {
+        "aggregation_rules": {
+          "success_count": "sum",
+          "failure_count": "sum",
+          "average_confidence": "mean",
+          "total_processing_time": "sum"
+        }
+      },
+      "outputs": {
+        "summary_stats": "object",
+        "failed_pages": "array",
+        "low_confidence_pages": "array"
+      }
+    },
+
+    {
+      "id": "generate_report",
+      "name": "Generate Execution Report",
+      "type": "reporting",
+      "description": "Create comprehensive report of workflow execution",
+      "depends_on": ["aggregate_results"],
+      "config": {
+        "report_format": "json",
+        "include_sections": [
+          "execution_summary",
+          "page_processing_details",
+          "confidence_analysis",
+          "error_summary",
+          "recommendations"
+        ]
+      },
+      "outputs": {
+        "execution_report": "object"
+      }
+    }
+  ],
+
+  "sub_workflows": {
+    "process_single_page": {
+      "name": "Process Single Results Page",
+      "description": "Complete processing pipeline for a single Results page",
+      "parameters": {
+        "page_mapping": "object",
+        "opal_instructions": "object",
+        "execution_mode": "string",
+        "confidence_threshold": "number"
+      },
+      "steps": [
+        {
+          "id": "load_existing_content",
+          "name": "Load Existing Content",
+          "type": "data_fetch",
+          "description": "Load existing generated content if available",
+          "config": {
+            "source": "content_loader",
+            "method": "getResultPageContent",
+            "parameters": ["${page_mapping.pageId}"],
+            "handle_not_found": true
+          },
+          "outputs": {
+            "existing_content": "object",
+            "content_exists": "boolean"
+          }
+        },
+
+        {
+          "id": "check_regeneration_needed",
+          "name": "Check if Regeneration Needed",
+          "type": "decision",
+          "description": "Determine if content needs to be regenerated",
+          "depends_on": ["load_existing_content"],
+          "config": {
+            "conditions": [
+              "${parameters.force_regeneration} == true",
+              "${existing_content.dataLineage.confidenceScore} < ${parameters.confidence_threshold}",
+              "age(${existing_content.dataLineage.lastUpdatedAt}) > 86400000",
+              "${existing_content} == null"
+            ],
+            "logic": "OR"
+          },
+          "outputs": {
+            "needs_regeneration": "boolean",
+            "skip_reason": "string"
+          }
+        },
+
+        {
+          "id": "fetch_agent_data",
+          "name": "Fetch Agent Data",
+          "type": "parallel_fetch",
+          "description": "Fetch data from relevant OPAL agents",
+          "depends_on": ["check_regeneration_needed"],
+          "condition": "${check_regeneration_needed.outputs.needs_regeneration} == true",
+          "config": {
+            "agents": "${page_mapping.primaryAgents} + ${page_mapping.secondaryAgents}",
+            "context": {
+              "pageId": "${page_mapping.pageId}",
+              "tier": "${page_mapping.tier}"
+            },
+            "timeout": 30000
+          },
+          "outputs": {
+            "agent_outputs": "array"
+          }
+        },
+
+        {
+          "id": "fetch_dxp_data",
+          "name": "Fetch DXP Tool Data",
+          "type": "parallel_fetch",
+          "description": "Fetch data from relevant DXP tools",
+          "depends_on": ["check_regeneration_needed"],
+          "condition": "${check_regeneration_needed.outputs.needs_regeneration} == true",
+          "config": {
+            "tools": "${page_mapping.requiredTools} + ${page_mapping.optionalTools}",
+            "context": {
+              "pageId": "${page_mapping.pageId}",
+              "tier": "${page_mapping.tier}"
+            },
+            "timeout": 45000,
+            "allow_partial_failure": true
+          },
+          "outputs": {
+            "dxp_data": "array"
+          }
+        },
+
+        {
+          "id": "generate_content",
+          "name": "Generate Optimized Content",
+          "type": "agent_execution",
+          "description": "Execute results-content-optimizer agent",
+          "depends_on": ["fetch_agent_data", "fetch_dxp_data"],
+          "condition": "${check_regeneration_needed.outputs.needs_regeneration} == true",
+          "config": {
+            "agent_id": "results-content-optimizer",
+            "inputs": {
+              "pageId": "${page_mapping.pageId}",
+              "tier": "${page_mapping.tier}",
+              "opalInstructions": "${parameters.opal_instructions}",
+              "agentOutputs": "${fetch_agent_data.outputs.agent_outputs}",
+              "dxpData": "${fetch_dxp_data.outputs.dxp_data}",
+              "existingContent": "${load_existing_content.outputs.existing_content}",
+              "generationMode": "${parameters.execution_mode}",
+              "confidenceThreshold": "${parameters.confidence_threshold}"
+            },
+            "timeout": 120000
+          },
+          "outputs": {
+            "generated_content": "object",
+            "generation_metadata": "object"
+          }
+        },
+
+        {
+          "id": "validate_content",
+          "name": "Validate Generated Content",
+          "type": "validation",
+          "description": "Validate generated content meets quality standards",
+          "depends_on": ["generate_content"],
+          "condition": "${generate_content.outputs.generated_content} != null",
+          "config": {
+            "validators": [
+              "language_compliance_check",
+              "structure_validation",
+              "confidence_threshold_check",
+              "persona_alignment_check"
+            ],
+            "fail_on_violation": false
+          },
+          "outputs": {
+            "validation_result": "object",
+            "is_valid": "boolean",
+            "warnings": "array"
+          }
+        },
+
+        {
+          "id": "backup_existing_content",
+          "name": "Backup Existing Content",
+          "type": "file_operation",
+          "description": "Create backup of existing content before overwriting",
+          "depends_on": ["validate_content"],
+          "condition": "${validate_content.outputs.is_valid} == true AND ${parameters.execution_mode} == 'apply' AND ${load_existing_content.outputs.content_exists} == true",
+          "config": {
+            "operation": "backup",
+            "source_path": "${page_mapping.pageId}",
+            "backup_path": "generated-backups/${page_mapping.pageId}_${timestamp}.ts",
+            "include_metadata": true
+          },
+          "outputs": {
+            "backup_path": "string"
+          }
+        },
+
+        {
+          "id": "write_generated_content",
+          "name": "Write Generated Content",
+          "type": "file_operation",
+          "description": "Write generated content to appropriate file",
+          "depends_on": ["backup_existing_content", "validate_content"],
+          "condition": "${validate_content.outputs.is_valid} == true AND ${parameters.execution_mode} == 'apply'",
+          "config": {
+            "operation": "write",
+            "target_path": "src/results/generated/${page_mapping.pageId}.ts",
+            "content": {
+              "header_comment": "AUTO-GENERATED BY results-content-optimizer. DO NOT EDIT BY HAND.",
+              "content": "${generate_content.outputs.generated_content}",
+              "backup_reference": "${backup_existing_content.outputs.backup_path}"
+            },
+            "format": "typescript_module"
+          },
+          "outputs": {
+            "write_success": "boolean",
+            "file_path": "string"
+          }
+        },
+
+        {
+          "id": "log_processing_result",
+          "name": "Log Processing Result",
+          "type": "logging",
+          "description": "Log the processing result for audit and monitoring",
+          "depends_on": ["write_generated_content", "validate_content", "check_regeneration_needed"],
+          "config": {
+            "log_level": "info",
+            "structured_log": true,
+            "include_fields": [
+              "pageId",
+              "processing_result",
+              "confidence_score",
+              "execution_mode",
+              "processing_time",
+              "validation_warnings"
+            ]
+          },
+          "outputs": {
+            "log_entry": "object"
+          }
+        }
+      ],
+
+      "outputs": {
+        "processing_result": {
+          "pageId": "${page_mapping.pageId}",
+          "success": "${write_generated_content.outputs.write_success} ?? ${check_regeneration_needed.outputs.needs_regeneration} == false",
+          "skipped": "${check_regeneration_needed.outputs.needs_regeneration} == false",
+          "skip_reason": "${check_regeneration_needed.outputs.skip_reason}",
+          "confidence_score": "${generate_content.outputs.generated_content.dataLineage.confidenceScore}",
+          "validation_warnings": "${validate_content.outputs.warnings}",
+          "processing_time": "${workflow.execution_time}",
+          "backup_path": "${backup_existing_content.outputs.backup_path}"
+        }
+      }
+    }
+  },
+
+  "error_handling": {
+    "global_error_handlers": [
+      {
+        "error_type": "timeout",
+        "action": "retry",
+        "max_retries": 2,
+        "escalate_after": "log_and_continue"
+      },
+      {
+        "error_type": "validation_failure",
+        "action": "log_and_continue",
+        "create_incident": false
+      },
+      {
+        "error_type": "agent_unavailable",
+        "action": "fail_workflow",
+        "create_incident": true
+      }
+    ],
+    "step_error_handlers": {
+      "generate_content": [
+        {
+          "error_type": "low_confidence",
+          "action": "log_and_skip",
+          "message": "Generated content below confidence threshold"
+        }
+      ],
+      "write_generated_content": [
+        {
+          "error_type": "file_write_error",
+          "action": "retry",
+          "max_retries": 3,
+          "escalate_to": "fail_step"
+        }
+      ]
+    }
+  },
+
+  "monitoring": {
+    "metrics": [
+      {
+        "name": "pages_processed_total",
+        "type": "counter",
+        "description": "Total number of pages processed"
+      },
+      {
+        "name": "pages_updated_total",
+        "type": "counter",
+        "description": "Total number of pages updated with new content"
+      },
+      {
+        "name": "pages_skipped_total",
+        "type": "counter",
+        "description": "Total number of pages skipped"
+      },
+      {
+        "name": "average_confidence_score",
+        "type": "gauge",
+        "description": "Average confidence score of generated content"
+      },
+      {
+        "name": "workflow_execution_duration",
+        "type": "histogram",
+        "description": "Workflow execution time distribution"
+      },
+      {
+        "name": "validation_warnings_total",
+        "type": "counter",
+        "description": "Total number of validation warnings"
+      }
+    ],
+    "alerts": [
+      {
+        "name": "low_success_rate",
+        "condition": "pages_updated_total / pages_processed_total < 0.5",
+        "severity": "warning",
+        "message": "Less than 50% of processed pages were successfully updated"
+      },
+      {
+        "name": "high_validation_warnings",
+        "condition": "validation_warnings_total > pages_processed_total * 0.1",
+        "severity": "warning",
+        "message": "High number of validation warnings detected"
+      },
+      {
+        "name": "workflow_timeout",
+        "condition": "workflow_execution_duration > workflow_timeout * 0.9",
+        "severity": "error",
+        "message": "Workflow approaching timeout limit"
+      }
+    ]
+  },
+
+  "outputs": {
+    "execution_summary": {
+      "workflow_id": "${workflow_id}",
+      "execution_mode": "${parameters.execution_mode}",
+      "start_time": "${workflow.start_time}",
+      "end_time": "${workflow.end_time}",
+      "duration": "${workflow.duration}",
+      "pages_processed": "${aggregate_results.outputs.summary_stats.success_count} + ${aggregate_results.outputs.summary_stats.failure_count}",
+      "pages_updated": "${aggregate_results.outputs.summary_stats.success_count}",
+      "pages_failed": "${aggregate_results.outputs.summary_stats.failure_count}",
+      "average_confidence": "${aggregate_results.outputs.summary_stats.average_confidence}",
+      "failed_pages": "${aggregate_results.outputs.failed_pages}",
+      "low_confidence_pages": "${aggregate_results.outputs.low_confidence_pages}"
+    },
+    "execution_report": "${generate_report.outputs.execution_report}"
+  }
+}

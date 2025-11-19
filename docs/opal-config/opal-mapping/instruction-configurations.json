@@ -1,0 +1,65 @@
+{
+  "company-overview": {
+    "filename": "company-overview.md",
+    "title": "Company Overview Guidelines",
+    "description": "Foundational company information, business objectives, and strategic context for OPAL analysis",
+    "content_type": "guideline",
+    "applicable_areas": ["Strategy Plans"]
+  },
+  "marketing-strategy": {
+    "filename": "marketing-strategy.md",
+    "title": "Marketing Strategy Framework",
+    "description": "Marketing goals, target audiences, competitive positioning, and strategic objectives",
+    "content_type": "framework",
+    "applicable_areas": ["Strategy Plans"]
+  },
+  "personalization-maturity-rubric": {
+    "filename": "personalization-maturity-rubric.md",
+    "title": "Personalization Maturity Assessment",
+    "description": "Crawl-Walk-Run-Fly maturity framework for evaluating personalization capabilities",
+    "content_type": "rubric",
+    "applicable_areas": ["Strategy Plans", "Experience Optimization"]
+  },
+  "personas": {
+    "filename": "personas.md",
+    "title": "Customer Personas and Segments",
+    "description": "Detailed customer personas, behavioral patterns, and audience segmentation guidelines",
+    "content_type": "guideline",
+    "applicable_areas": ["Analytics Insights", "Experience Optimization", "Optimizely DXP Tools"]
+  },
+  "technical-implementation-guidelines": {
+    "filename": "technical-implementation-guidelines.md",
+    "title": "Technical Implementation Standards",
+    "description": "Technical requirements, integration patterns, and implementation best practices for DXP tools",
+    "content_type": "guideline",
+    "applicable_areas": ["Strategy Plans", "Optimizely DXP Tools", "Experience Optimization"]
+  },
+  "content-guidelines": {
+    "filename": "content-guidelines.md",
+    "title": "Content Performance Guidelines",
+    "description": "Content creation standards, performance metrics, and optimization criteria",
+    "content_type": "guideline",
+    "applicable_areas": ["Analytics Insights", "Experience Optimization", "Optimizely DXP Tools"]
+  },
+  "data-governance-privacy": {
+    "filename": "data-governance-privacy.md",
+    "title": "Data Governance and Privacy Standards",
+    "description": "Privacy compliance, data handling protocols, and governance framework for customer data",
+    "content_type": "framework",
+    "applicable_areas": ["Analytics Insights", "Optimizely DXP Tools"]
+  },
+  "kpi-experimentation": {
+    "filename": "kpi-experimentation.md",
+    "title": "KPI and Experimentation Framework",
+    "description": "Key performance indicators, testing methodologies, and experimentation best practices",
+    "content_type": "framework",
+    "applicable_areas": ["Analytics Insights", "Experience Optimization"]
+  },
+  "brand-tone-guidelines": {
+    "filename": "brand-tone-guidelines.md",
+    "title": "Brand Voice and Tone Guidelines",
+    "description": "Brand personality, messaging standards, and content tone guidelines for consistent communication",
+    "content_type": "guideline",
+    "applicable_areas": ["Analytics Insights", "Experience Optimization"]
+  }
+}

@@ -41,7 +41,8 @@ import {
   MoreHorizontal,
   ArrowUp,
   ArrowDown,
-  Minus
+  Minus,
+  PieChart
 } from 'lucide-react';
 
 // Sample data for charts

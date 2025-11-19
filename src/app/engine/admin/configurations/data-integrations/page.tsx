@@ -25,7 +25,8 @@ import {
   Server,
   Eye,
   PlayCircle,
-  PauseCircle
+  PauseCircle,
+  PieChart as PieChartIcon
 } from 'lucide-react';
 
 // Import chart components

@@ -1,0 +1,295 @@
+{
+  "name": "OSA - CMP Integration Tools",
+  "description": "Campaign Management Platform integration tools for strategy compilation, campaign creation, and executive deliverable generation in OSA workflows",
+  "discovery_url": "https://opal-2025.vercel.app/api/tools/cmp/discovery",
+  "registry_id": "osa_cmp",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "osa_compile_strategy_brief",
+      "description": "Compile comprehensive personalization strategy brief from all workflow agent results",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_results": {
+            "type": "object",
+            "properties": {
+              "content_analysis": {"type": "object", "description": "Content review agent results"},
+              "geo_analysis": {"type": "object", "description": "GEO audit agent results"},
+              "audience_analysis": {"type": "object", "description": "Audience suggester agent results"},
+              "personalization_strategy": {"type": "object", "description": "Personalization idea generator results"},
+              "experiment_portfolio": {"type": "object", "description": "Experiment blueprinter results"}
+            },
+            "description": "Complete workflow results from all agents"
+          },
+          "compilation_format": {
+            "type": "string",
+            "enum": ["executive_summary", "detailed_brief", "comprehensive"],
+            "default": "comprehensive",
+            "description": "Level of detail for strategy brief"
+          },
+          "target_audience": {
+            "type": "string",
+            "enum": ["technical_team", "business_stakeholders", "executive_leadership"],
+            "default": "business_stakeholders",
+            "description": "Target audience for the brief formatting"
+          },
+          "include_implementation_timeline": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include detailed implementation timeline and roadmap"
+          }
+        },
+        "required": ["workflow_results"]
+      }
+    },
+    {
+      "name": "osa_generate_executive_summary",
+      "description": "Create executive-ready summary with key recommendations and business impact projections",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "strategy_insights": {
+            "type": "object",
+            "description": "Key insights from complete strategy analysis"
+          },
+          "business_impact_projections": {
+            "type": "object",
+            "properties": {
+              "revenue_impact": {"type": "object", "description": "Projected revenue improvements"},
+              "engagement_lift": {"type": "object", "description": "Expected engagement improvements"},
+              "efficiency_gains": {"type": "object", "description": "Operational efficiency projections"}
+            },
+            "description": "Business impact projections and ROI estimates"
+          },
+          "priority_recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "recommendation": {"type": "string"},
+                "business_value": {"type": "string"},
+                "implementation_effort": {"type": "string"},
+                "timeline": {"type": "string"}
+              }
+            },
+            "description": "Top priority recommendations for executive attention"
+          },
+          "executive_format": {
+            "type": "string",
+            "enum": ["presentation_slides", "executive_memo", "dashboard_summary"],
+            "default": "executive_memo",
+            "description": "Format for executive summary delivery"
+          }
+        },
+        "required": ["strategy_insights", "priority_recommendations"]
+      }
+    },
+    {
+      "name": "osa_create_campaign_specifications",
+      "description": "Generate detailed campaign specifications ready for CMP platform implementation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "personalization_ideas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "idea_id": {"type": "string"},
+                "target_segments": {"type": "array"},
+                "implementation_details": {"type": "object"},
+                "expected_impact": {"type": "object"}
+              }
+            },
+            "description": "Personalization ideas to convert into campaigns"
+          },
+          "audience_segments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "segment_id": {"type": "string"},
+                "targeting_criteria": {"type": "object"},
+                "size_estimate": {"type": "number"}
+              }
+            },
+            "description": "Audience segments for campaign targeting"
+          },
+          "campaign_objectives": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["awareness", "engagement", "conversion", "retention", "cross_sell", "upsell"]
+            },
+            "description": "Primary campaign objectives"
+          },
+          "platform_requirements": {
+            "type": "object",
+            "properties": {
+              "cmp_platform": {"type": "string", "description": "Target CMP platform"},
+              "integration_requirements": {"type": "array"},
+              "tracking_specifications": {"type": "object"}
+            },
+            "description": "Platform-specific requirements and constraints"
+          }
+        },
+        "required": ["personalization_ideas", "audience_segments", "campaign_objectives"]
+      }
+    },
+    {
+      "name": "osa_format_cmp_deliverables",
+      "description": "Format campaign specifications for direct import into CMP platforms",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "campaign_specifications": {
+            "type": "array",
+            "description": "Campaign specifications to format"
+          },
+          "cmp_platform_type": {
+            "type": "string",
+            "enum": ["optimizely_web", "optimizely_feature", "adobe_target", "google_optimize", "generic_json"],
+            "default": "optimizely_web",
+            "description": "Target CMP platform for formatting"
+          },
+          "export_format": {
+            "type": "string",
+            "enum": ["api_payload", "csv_import", "json_config", "xml_export"],
+            "default": "json_config",
+            "description": "Export format for CMP platform"
+          },
+          "include_validation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include validation rules and quality checks"
+          },
+          "campaign_hierarchy": {
+            "type": "object",
+            "properties": {
+              "project_structure": {"type": "string"},
+              "naming_convention": {"type": "string"},
+              "organization_tags": {"type": "array"}
+            },
+            "description": "CMP platform organization structure"
+          }
+        },
+        "required": ["campaign_specifications", "cmp_platform_type"]
+      }
+    },
+    {
+      "name": "osa_send_to_cmp_platform",
+      "description": "Directly transmit formatted campaign specifications to CMP platform via API",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "formatted_campaigns": {
+            "type": "array",
+            "description": "CMP-ready campaign specifications"
+          },
+          "cmp_connection": {
+            "type": "object",
+            "properties": {
+              "platform_endpoint": {"type": "string"},
+              "project_id": {"type": "string"},
+              "workspace_id": {"type": "string"},
+              "authentication_method": {"type": "string"}
+            },
+            "description": "CMP platform connection details"
+          },
+          "deployment_mode": {
+            "type": "string",
+            "enum": ["draft", "review", "live", "scheduled"],
+            "default": "draft",
+            "description": "Campaign deployment mode"
+          },
+          "notification_settings": {
+            "type": "object",
+            "properties": {
+              "notify_stakeholders": {"type": "boolean"},
+              "notification_recipients": {"type": "array"},
+              "notification_format": {"type": "string"}
+            },
+            "description": "Notification settings for campaign deployment"
+          }
+        },
+        "required": ["formatted_campaigns", "cmp_connection"]
+      }
+    },
+    {
+      "name": "osa_generate_implementation_timeline",
+      "description": "Create detailed implementation timeline with milestones, dependencies, and resource allocation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "strategy_components": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "component_type": {"type": "string"},
+                "implementation_complexity": {"type": "string"},
+                "estimated_effort": {"type": "string"},
+                "dependencies": {"type": "array"}
+              }
+            },
+            "description": "Strategy components for timeline planning"
+          },
+          "resource_constraints": {
+            "type": "object",
+            "properties": {
+              "team_capacity": {"type": "object"},
+              "budget_constraints": {"type": "object"},
+              "technical_limitations": {"type": "array"}
+            },
+            "description": "Resource and constraint considerations"
+          },
+          "timeline_preferences": {
+            "type": "object",
+            "properties": {
+              "preferred_duration": {"type": "string"},
+              "critical_milestones": {"type": "array"},
+              "seasonal_considerations": {"type": "array"}
+            },
+            "description": "Timeline preferences and business considerations"
+          },
+          "risk_mitigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include risk mitigation and contingency planning"
+          }
+        },
+        "required": ["strategy_components"]
+      }
+    }
+  ],
+  "authentication": {
+    "type": "header",
+    "header_name": "Authorization",
+    "header_value": "Bearer ${CMP_API_KEY}"
+  },
+  "integration_endpoints": {
+    "strategy_compilation": "https://opal-2025.vercel.app/api/tools/cmp/compile",
+    "campaign_generation": "https://opal-2025.vercel.app/api/tools/cmp/campaigns",
+    "cmp_export": "https://opal-2025.vercel.app/api/tools/cmp/export",
+    "timeline_planning": "https://opal-2025.vercel.app/api/tools/cmp/timeline"
+  },
+  "configuration": {
+    "workspace_id": "${CMP_WORKSPACE_ID}",
+    "default_settings": {
+      "campaign_prefix": "OSA",
+      "project_organization": "personalization_strategy",
+      "quality_assurance": true
+    },
+    "deliverable_formats": {
+      "executive_summary": "pdf_with_interactive_elements",
+      "technical_specifications": "detailed_json_with_documentation",
+      "implementation_guide": "step_by_step_with_screenshots"
+    },
+    "notification_integrations": {
+      "email_service": "${SENDGRID_API_KEY}",
+      "slack_webhook": "${SLACK_WEBHOOK_URL}",
+      "osa_application": "${OSA_BASE_URL}/api/opal/notifications"
+    }
+  }
+}

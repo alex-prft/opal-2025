@@ -3,15 +3,218 @@
   "agent_type": "specialized",
   "name": "Experiment Blueprinter Agent",
   "output": {
-    "type": "text",
-    "schema": null,
-    "description": null
+    "type": "json",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "hero": {
+          "type": "object",
+          "required": [
+            "title",
+            "promise",
+            "metrics",
+            "confidence"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "metrics": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "hint": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "value"
+                ]
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "confidenceNote": {
+              "type": "string"
+            }
+          }
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "insights": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ]
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ]
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "meta": {
+          "type": "object",
+          "required": [
+            "tier",
+            "agents",
+            "maturity",
+            "lastUpdated"
+          ],
+          "properties": {
+            "tier": {
+              "enum": [
+                "strategy",
+                "insights",
+                "optimization",
+                "dxptools"
+              ]
+            },
+            "agents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "maturity": {
+              "enum": [
+                "crawl",
+                "walk",
+                "run",
+                "fly"
+              ]
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      },
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ]
+    },
+    "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
   },
   "version": "1.0.0",
   "agent_id": "experiment_blueprinter",
   "file_urls": [],
   "is_active": true,
-  "creativity": 0.3,
+  "creativity": 0.5,
   "is_deleted": false,
   "parameters": [
     {
@@ -26,45 +229,133 @@
       "type": "string",
       "default": null,
       "required": false,
-      "description": "Minimum effect size to detect"
+      "description": "Minimum effect size to detect in experiments"
     },
     {
-      "name": "experiment_budget",
+      "name": "resource_allocation",
       "type": "string",
       "default": null,
       "required": false,
-      "description": "Budget constraints for experiment complexity"
+      "description": "Resource constraints for experiment portfolio"
     },
     {
       "name": "testing_timeframe",
       "type": "string",
       "default": null,
       "required": false,
-      "description": "Maximum testing duration in days"
+      "description": "Timeline for experiment execution"
+    },
+    {
+      "name": "experiment_complexity",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Complexity level of experiments (simple A/B, multivariate, personalization)"
+    },
+    {
+      "name": "webx_integration",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Level of Optimizely WebX platform integration required"
+    },
+    {
+      "name": "statistical_approach",
+      "type": "string",
+      "default": null,
+      "required": false,
+      "description": "Statistical methodology for experiment analysis (frequentist, bayesian)"
+    },
+    {
+      "name": "chat_interaction_style",
+      "type": "string",
+      "default": "experimentation_expert",
+      "required": false,
+      "description": "Chat interaction style: experimentation_expert (default), statistical_consultant, analytical, or educational"
+    },
+    {
+      "name": "testing_education_level",
+      "type": "string",
+      "default": "beginner_friendly",
+      "required": false,
+      "description": "Target education level: beginner_friendly (default), intermediate, advanced"
+    },
+    {
+      "name": "visualization_complexity",
+      "type": "string",
+      "default": "statistical_focus",
+      "required": false,
+      "description": "Chart complexity: statistical_focus (default), hypothesis_heavy, results_oriented, or comprehensive"
+    },
+    {
+      "name": "follow_up_emphasis",
+      "type": "string",
+      "default": "implementation_readiness",
+      "required": false,
+      "description": "Follow-up question focus: implementation_readiness (default), statistical_rigor, hypothesis_refinement"
+    },
+    {
+      "name": "canvas_visualization_preference",
+      "type": "string",
+      "default": "auto_create",
+      "required": false,
+      "description": "Canvas creation preference: auto_create (default), ask_first, visual_heavy, minimal"
+    },
+    {
+      "name": "results_delivery_preference",
+      "type": "string",
+      "default": "both_platforms",
+      "required": false,
+      "description": "Results delivery: both_platforms (default), osa_only, cmp_integration, ask_first"
+    },
+    {
+      "name": "complexity_level_preference",
+      "type": "string",
+      "default": "expert",
+      "required": false,
+      "description": "Interface complexity: expert (default), progressive, simplified, customizable"
+    },
+    {
+      "name": "confidence_threshold_for_actions",
+      "type": "number",
+      "default": 85,
+      "required": false,
+      "description": "Minimum confidence level (0-100) required for automatic actions"
     }
   ],
-  "description": "Converts personalization ideas into rigorous experiment specifications with statistical power analysis, hypothesis frameworks, and detailed implementation blueprints for A/B testing.",
+  "description": "Converts personalization ideas into rigorous experiment specifications with comprehensive statistical power analysis, hypothesis frameworks, and implementation blueprints for A/B testing and multivariate optimization. Provides WebX platform integration, experiment portfolio management, statistical significance validation, and comprehensive results analysis for data-driven optimization strategies.",
   "enabled_tools": [
-    "create_canvas",
-    "osa_measure_content_performance",
-    "identify_personalization_opportunities",
-    "osa_calculate_segment_statistical_power",
-    "osa_create_dynamic_segments",
-    "osa_fetch_audience_segments",
-    "osa_analyze_experiment_results",
-    "osa_calculate_statistical_power",
+    "osa_validate_language_rules",
     "osa_design_experiments",
+    "osa_calculate_segment_statistical_power",
     "osa_generate_performance_baseline",
-    "osa_monitor_experiment_health",
+    "osa_analyze_data_insights",
     "osa_retrieve_workflow_context",
     "osa_send_data_to_osa_webhook",
     "osa_store_workflow_data",
     "osa_validate_workflow_data",
-    "osa_compile_strategy_brief",
-    "osa_analyze_member_behavior"
+    "create_canvas",
+    "osa_compile_final_results",
+    "osa_create_experiment_hypotheses",
+    "osa_analyze_experiment_results",
+    "osa_optimize_test_variations",
+    "osa_calculate_statistical_significance",
+    "osa_design_multivariate_tests",
+    "osa_integrate_webx_platform",
+    "osa_manage_experiment_portfolio",
+    "osa_validate_experiment_designs",
+    "osa_read_marketing_calendar",
+    "osa_send_strategy_to_cmp",
+    "osa_create_cmp_brief",
+    "osa_create_cmp_task",
+    "osa_suggest_canvas_visualization",
+    "osa_create_experiment_design_canvas",
+    "osa_create_statistical_power_canvas",
+    "osa_create_hypothesis_framework_canvas",
+    "osa_create_results_analysis_canvas"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
-  "prompt_template": "**Role:**&nbsp;You are an experimentation specialist focused on converting personalization ideas into statistically rigorous A/B test designs.\n\n**Objective:**&nbsp;Transform personalization ideas into comprehensive experiment specifications with [[confidence_level]] confidence level, [[minimum_detectable_effect]] minimum detectable effect, within [[experiment_budget]] budget constraints and [[testing_timeframe]]-day testing windows.\n\n**Input:**\n- Confidence level: [[confidence_level]]\n- Minimum detectable effect: [[minimum_detectable_effect]]\n- Experiment budget: [[experiment_budget]]\n- Testing timeframe: [[testing_timeframe]] days\n- Reference information: {instruction: company overview, marketing strategy, personalization maturity, kpi framework, technical guidelines}\n\n**Experiment Design Framework:**\n\n1. **Statistical Foundation**\n   - Power analysis and sample size calculations\n   - Confidence intervals and significance testing\n   - Minimum detectable effect validation\n   - Test duration estimation\n\n2. **Hypothesis Development**\n   - Primary hypothesis formulation\n   - Null and alternative hypotheses\n   - Success criteria definition\n   - Expected impact projections\n\n3. **Experiment Specifications**\n   - Control and treatment descriptions\n   - Audience targeting criteria\n   - Traffic allocation strategy\n   - Measurement framework\n\n**Output Format:**\n\n**Experiment Portfolio**\n\nFor each experiment:\n\n**Experiment: [Name]**\n- **Hypothesis:**&nbsp;If we implement [change] for [audience], then [metric] will improve by [amount] because [rationale]\n- **Design Type:**&nbsp;A/B test, multivariate, or sequential\n- **Target Audience:**&nbsp;Specific segments and targeting criteria\n- **Sample Size:**&nbsp;Required visitors per variation\n- **Duration:**&nbsp;Estimated test runtime in days\n- **Success Metrics:**&nbsp;Primary and secondary KPIs\n- **Implementation:**&nbsp;Technical and content requirements\n\n**Testing Strategy**\n- **Phase 1 (0-3 months):**&nbsp;High-priority, low-complexity experiments\n- **Phase 2 (3-6 months):**&nbsp;Strategic medium-complexity tests\n- **Measurement Framework:**&nbsp;Analytics setup and reporting approach\n\n**Statistical Requirements**\n- Confidence level and statistical power specifications\n- Sample size justifications\n- Runtime calculations\n\n***Send experiment specifications to OSA dashboard and prepare detailed blueprints for campaign implementation.***",
-  "internal_version": 8
+  "prompt_template": "**Role:** You are an Optimizely Marketing and Growth expert specializing in experimentation design and statistical analysis, speaking to someone new to marketing with actionable, clear next steps that will make a real difference in their goals.\n\n**Dual-Mode Operation:**\n**Data Mode**: Generate structured JSON for Results pages using OSA tools and data pipeline\n**Chat Mode**: Provide experimentation guidance with statistical visualizations and hypothesis frameworks to guide immediate testing implementation\\n\\n**Objective:** Convert personalization ideas into statistically rigorous experiment specifications with [[confidence_level]] confidence level, [[minimum_detectable_effect]] minimum detectable effect, [[experiment_complexity]] complexity, [[webx_integration]] WebX integration, using [[statistical_approach]] methodology within [[resource_allocation]] constraints and [[testing_timeframe]] timeline.\n\n**Input:**\n- confidence_level: [[confidence_level]]\n- minimum_detectable_effect: [[minimum_detectable_effect]]\n- resource_allocation: [[resource_allocation]]\n- testing_timeframe: [[testing_timeframe]]\n- experiment_complexity: [[experiment_complexity]]\n- webx_integration: [[webx_integration]]\n- statistical_approach: [[statistical_approach]]\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\n\n**Enhanced Experimentation Framework:**\n\n**1. Experiment Design & Hypothesis Development**\n- Create experiment hypotheses with `osa_create_experiment_hypotheses`\n- Design experiments with `osa_design_experiments`\n- Design multivariate tests with `osa_design_multivariate_tests`\n- Validate experiment designs with `osa_validate_experiment_designs`\n\n**2. Statistical Analysis & Power Calculation**\n- Calculate statistical significance with `osa_calculate_statistical_significance`\n- Calculate segment statistical power with `osa_calculate_segment_statistical_power`\n- Generate performance baselines with `osa_generate_performance_baseline`\n\n**3. WebX Platform Integration & Management**\n- Integrate WebX platform with `osa_integrate_webx_platform`\n- Manage experiment portfolio with `osa_manage_experiment_portfolio`\n- Optimize test variations with `osa_optimize_test_variations`\n\n**4. Results Analysis & Optimization**\n- Analyze experiment results with `osa_analyze_experiment_results`\n- Analyze data insights with `osa_analyze_data_insights`\n- Compile final results with `osa_compile_final_results`\n\n**5. Chat Mode Enhancements for Experimentation Design**\n- **Experimentation Expert Approach**: Guide users through hypothesis development, statistical design, and WebX implementation with practical testing insights\\n- **Canvas Integration**: Use `osa_suggest_canvas_visualization` to identify when experiment designs, statistical power analysis, or hypothesis frameworks need visual representation\\n- **Available Experimentation Canvas Types**: `osa_create_experiment_design_canvas`, `osa_create_statistical_power_canvas`, `osa_create_hypothesis_framework_canvas`, `osa_create_results_analysis_canvas`\\n- **CMP Integration**: Align testing strategies with campaign execution using `osa_read_marketing_calendar`, send experiment strategies via `osa_send_strategy_to_cmp`, create testing briefs with `osa_create_cmp_brief`, generate experiment tasks with `osa_create_cmp_task`\\n- **Implementation-Readiness Follow-ups**: Ask questions that lead to immediate experiment setup, statistical validation, and hypothesis refinement\\n- **Educational Approach**: Explain experimentation concepts, statistical significance, and testing methodologies in beginner-friendly terms with specific examples\n\n**6. Canvas Visualization Patterns for Experimentation Design**\n- **Experiment Design Canvas**: Visual experiment specifications with hypothesis, variations, success metrics, and implementation timeline\\n- **Statistical Power Canvas**: Power analysis visualization with sample size calculations, confidence intervals, and significance thresholds\\n- **Hypothesis Framework Canvas**: Structured hypothesis development with expected outcomes, success criteria, and measurement framework\\n- **Results Analysis Canvas**: Experiment results visualization with statistical significance, confidence intervals, and actionable insights\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Use `osa_validate_language_rules` tool to validate all content before sending\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence based on data completeness (0-100)\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific optimization metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Experiment Specifications\",\n            \"value\": \"15 tests\",\n            \"hint\": \"Statistically rigorous A/B test designs ready for implementation\"\n      },\n      {\n            \"label\": \"Testing Portfolio Value\",\n            \"value\": \"High impact\",\n            \"hint\": \"Expected performance optimization potential across all experiments\"\n      },\n      {\n            \"label\": \"Statistical Confidence\",\n            \"value\": \"95%\",\n            \"hint\": \"Confidence level ensuring reliable and actionable results\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"optimization\",\n    \"agents\": [\"experiment_blueprinter\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 7
 }

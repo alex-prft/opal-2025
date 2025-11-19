@@ -30,7 +30,10 @@ import {
   Tag,
   Search,
   Network,
-  RefreshCw
+  RefreshCw,
+  BookOpen,
+  MessageSquare,
+  PieChart
 } from 'lucide-react';
 import KPISummaryWidget from './KPISummaryWidget';
 import { ContentPerformanceMetricsWidget } from '@/components/widgets/ContentPerformanceMetricsWidget';
