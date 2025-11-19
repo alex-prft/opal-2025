@@ -25,7 +25,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
-import { PieChart as PieChartIcon } from 'lucide-react';
+import { PieChart, PieChart as PieChartIcon } from 'lucide-react';
 import { OSAWorkflowOutput } from '@/lib/types/maturity';
 
 interface MaturityAnalyticsDashboardProps {

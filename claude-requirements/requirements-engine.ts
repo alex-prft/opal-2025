@@ -1,14 +1,8 @@
 /**
  * Requirements Engine - Core logic for the two-phase questioning system
-<<<<<<< HEAD
- * 
- * This file implements the main workflow logic for gathering requirements
- * through discovery and detail phases.
-=======
  *
  * This file implements the main workflow logic for gathering requirements
  * through discovery and detail phases with mandatory CLAUDE.md compliance.
->>>>>>> 9752af8 (Claude: Sprint N - Add requirements management framework and slash commands for development workflow automation)
  */
 
 import {
@@ -27,20 +21,11 @@ import {
   readRequirementFile,
   updateRequirementsIndex,
   generateDiscoveryQuestions,
-<<<<<<< HEAD
-  generateDetailQuestions
-} from './utils';
-
-export class RequirementsEngine {
-  
-=======
   generateDetailQuestions,
   RequirementsError
 } from './utils';
 
 export class RequirementsEngine {
-
->>>>>>> 9752af8 (Claude: Sprint N - Add requirements management framework and slash commands for development workflow automation)
   /**
    * Start a new requirement gathering process
    */

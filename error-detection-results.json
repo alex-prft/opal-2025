@@ -1,28 +1,16 @@
 {
-  "timestamp": "2025-11-19T03:18:30.525Z",
+  "timestamp": "2025-11-19T23:30:51.162Z",
   "summary": {
-    "errors": 3,
-    "warnings": 612,
+    "errors": 1,
+    "warnings": 624,
     "fixed": 0,
     "status": "FAILED"
   },
   "errors": [
     {
-      "type": "MISSING_IMPORT",
-      "file": "src/app/engine/admin/configurations/data-integrations/page.tsx",
-      "issue": "Missing lucide-react imports: PieChart",
-      "fix": "Add to import: { Activity, AlertTriangle, BarChart3, Brain, CheckCircle, Clock, Database, Eye, Network, PauseCircle, PieChart, PieChart as PieChartIcon, PlayCircle, RefreshCw, Server, Target, TrendingDown, TrendingUp, Users, XCircle, Zap }"
-    },
-    {
-      "type": "MISSING_IMPORT",
-      "file": "src/components/MaturityAnalyticsDashboard.tsx",
-      "issue": "Missing lucide-react imports: PieChart",
-      "fix": "Add to import: { PieChart, PieChart as PieChartIcon }"
-    },
-    {
       "type": "TYPESCRIPT_ERROR",
       "issue": "TypeScript compilation failed",
-      "details": "scripts/start-production-sdk-tools.ts(114,31): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,38): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,39): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,48): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(130,28): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(130,33): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(130,51): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(130,53): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(143,22): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,28): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,32): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,38): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,46): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,54): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,57): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,62): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(144,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(147,6): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,3): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,5): error TS1005: 'try' expected.\nscripts/start-production-sdk-tools.ts(153,1): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(175,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(175,43): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(187,17): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(187,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(187,46): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,31): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,37): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,63): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,61): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(201,34): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,41): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(201,57): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(211,21): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(211,39): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(219,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(219,20): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(219,32): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(219,47): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,56): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,62): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,21): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,22): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,34): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,42): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(223,58): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(223,60): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(268,2): error TS1160: Unterminated template literal.\n",
+      "details": "claude-requirements/requirements-engine.ts(30,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(36,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(43,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(85,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(87,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(89,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(231,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(236,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(241,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(248,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(256,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(264,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(270,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(282,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(294,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(303,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(305,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(307,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(324,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(329,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(334,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(341,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(349,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(357,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(363,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(379,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(396,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(429,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(437,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(445,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(454,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(460,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(466,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(471,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(476,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(481,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(488,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(490,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(492,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(498,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(500,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(502,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(512,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(514,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(516,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(527,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(529,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(531,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(548,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(550,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(552,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(558,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(563,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(568,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(574,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(583,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(596,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(602,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(604,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(606,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(611,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(623,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(635,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(641,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(643,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(645,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(651,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(653,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(655,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(663,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(665,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(667,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(675,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(677,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(679,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(686,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(691,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(697,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(723,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(731,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(739,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(766,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(769,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(772,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(782,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(784,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(786,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(800,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(801,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(820,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(825,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(827,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(841,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(874,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(876,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(878,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(890,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(892,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(894,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(919,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(925,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(931,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(937,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(939,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(941,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(950,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(952,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(954,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(961,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(967,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(973,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(979,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(981,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(983,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(992,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(994,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/requirements-engine.ts(996,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(12,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(23,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(29,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(31,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(33,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(39,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(40,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(43,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(49,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(52,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(56,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(65,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(107,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(166,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(182,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(195,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(211,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(221,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(240,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(251,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(269,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(283,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(299,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(315,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(330,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(339,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(354,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(369,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(386,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(399,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(428,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(470,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(521,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(558,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(641,1): error TS1185: Merge conflict marker encountered.\nclaude-requirements/utils.ts(807,1): error TS1185: Merge conflict marker encountered.\nscripts/start-production-sdk-tools.ts(114,31): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,38): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,39): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(114,48): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(130,28): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(130,33): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(130,51): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(130,53): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(143,22): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,28): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,32): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,38): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,46): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,54): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,57): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(143,62): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(144,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(147,6): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,3): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(149,5): error TS1005: 'try' expected.\nscripts/start-production-sdk-tools.ts(153,1): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(175,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(175,43): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(187,17): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(187,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(187,46): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,31): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,37): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(191,63): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,17): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,27): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(195,61): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(201,34): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(201,41): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(201,57): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(211,21): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(211,39): error TS1443: Module declaration names may only use ' or \" quoted strings.\nscripts/start-production-sdk-tools.ts(219,20): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(219,20): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(219,32): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(219,47): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,56): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(219,62): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,21): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,22): error TS1127: Invalid character.\nscripts/start-production-sdk-tools.ts(223,34): error TS1005: ',' expected.\nscripts/start-production-sdk-tools.ts(223,42): error TS1005: ';' expected.\nscripts/start-production-sdk-tools.ts(223,58): error TS1128: Declaration or statement expected.\nscripts/start-production-sdk-tools.ts(223,60): error TS1434: Unexpected keyword or identifier.\nscripts/start-production-sdk-tools.ts(268,2): error TS1160: Unterminated template literal.\n",
       "fix": "Fix TypeScript errors before proceeding"
     }
   ],
@@ -79,14 +67,14 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/app/engine/admin/governance/page.tsx",
-      "line": 175,
+      "line": 237,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/app/engine/admin/governance/page.tsx",
-      "line": 193,
+      "line": 255,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -2297,6 +2285,34 @@
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/results/EnhancedResultsRenderer.tsx",
+      "line": 38,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/results/ResultsContentRenderer.tsx",
+      "line": 65,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/results/ResultsContentRenderer.tsx",
+      "line": 65,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/results/SimpleResultsRenderer.tsx",
+      "line": 32,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/shared/BreadcrumbSearchHeader.tsx",
       "line": 144,
       "issue": "Dynamic Tailwind class may be purged in production",
@@ -2577,50 +2593,78 @@
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
-      "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 601,
+      "file": "src/components/widgets/ODPWidget.tsx",
+      "line": 70,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/ODPWidget.tsx",
+      "line": 70,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/ODPWidget.tsx",
+      "line": 0,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/ODPWidget.tsx",
+      "line": 0,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 601,
+      "line": 586,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 601,
+      "line": 586,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 643,
+      "line": 586,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 880,
+      "line": 628,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 601,
+      "line": 865,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/widgets/WidgetRenderer.tsx",
-      "line": 601,
+      "line": 586,
+      "issue": "Dynamic Tailwind class may be purged in production",
+      "fix": "Use explicit conditional logic instead of template literals"
+    },
+    {
+      "type": "DYNAMIC_TAILWIND_CLASS",
+      "file": "src/components/widgets/WidgetRenderer.tsx",
+      "line": 586,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
@@ -2975,7 +3019,7 @@
     {
       "type": "UNUSED_IMPORT",
       "file": "src/app/engine/admin/governance/page.tsx",
-      "issue": "Unused lucide-react imports: Shield, AlertTriangle, CheckCircle, XCircle, Clock, Users, Settings, RefreshCw",
+      "issue": "Unused lucide-react imports: Shield, AlertTriangle, CheckCircle, XCircle, Clock, Users, RefreshCw",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {
@@ -3538,6 +3582,24 @@
     },
     {
       "type": "UNUSED_IMPORT",
+      "file": "src/components/results/EnhancedResultsRenderer.tsx",
+      "issue": "Unused lucide-react imports: Database",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/results/ResultsContentRenderer.tsx",
+      "issue": "Unused lucide-react imports: AlertCircle, Loader2",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/results/SimpleResultsRenderer.tsx",
+      "issue": "Unused lucide-react imports: Database",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
       "file": "src/components/shared/BreadcrumbSearchHeader.tsx",
       "issue": "Unused lucide-react imports: Search, ChevronRight",
       "fix": "Remove unused imports to optimize bundle size"
@@ -3690,6 +3752,12 @@
       "type": "UNUSED_IMPORT",
       "file": "src/components/widgets/IntegrationHealthWidget.tsx",
       "issue": "Unused lucide-react imports: CheckCircle, AlertCircle, XCircle",
+      "fix": "Remove unused imports to optimize bundle size"
+    },
+    {
+      "type": "UNUSED_IMPORT",
+      "file": "src/components/widgets/ODPWidget.tsx",
+      "issue": "Unused lucide-react imports: AlertCircle, CheckCircle",
       "fix": "Remove unused imports to optimize bundle size"
     },
     {

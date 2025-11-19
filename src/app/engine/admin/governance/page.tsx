@@ -21,7 +21,8 @@ import {
   Activity,
   TrendingUp,
   Settings,
-  RefreshCw
+  RefreshCw,
+  Target
 } from 'lucide-react';
 
 interface DashboardData {

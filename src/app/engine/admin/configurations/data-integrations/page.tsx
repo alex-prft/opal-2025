@@ -26,6 +26,7 @@ import {
   Eye,
   PlayCircle,
   PauseCircle,
+  PieChart,
   PieChart as PieChartIcon
 } from 'lucide-react';
 
