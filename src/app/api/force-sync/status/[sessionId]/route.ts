@@ -9,9 +9,9 @@ import { ForceSyncService } from '@/lib/force-sync/force-sync-service';
 export const dynamic = 'force-dynamic';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     sessionId: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {

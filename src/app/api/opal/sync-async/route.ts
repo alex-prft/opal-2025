@@ -157,9 +157,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { jobId?: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ jobId?: string }> }) {
   const searchParams = request.nextUrl.searchParams;
-  const jobId = params?.jobId || searchParams.get('job_id');
+  const resolvedParams = await params;
+  const jobId = resolvedParams?.jobId || searchParams.get('job_id');
 
   if (jobId) {
     // Return specific job status

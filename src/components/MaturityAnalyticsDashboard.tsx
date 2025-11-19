@@ -16,7 +16,7 @@ import {
   Radar,
   LineChart,
   Line,
-  PieChart,
+  PieChart as ReChartsPieChart,
   Pie,
   Cell,
   Area,
@@ -276,7 +276,7 @@ export default function MaturityAnalyticsDashboard({ workflowResult }: MaturityA
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig}>
-                  <PieChart>
+                  <ReChartsPieChart>
                     <Pie
                       data={investmentBreakdownData}
                       cx="50%"
@@ -290,7 +290,7 @@ export default function MaturityAnalyticsDashboard({ workflowResult }: MaturityA
                       ))}
                     </Pie>
                     <Tooltip content={<ChartTooltipContent />} />
-                  </PieChart>
+                  </ReChartsPieChart>
                 </ChartContainer>
               </CardContent>
             </Card>

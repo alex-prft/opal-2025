@@ -43,7 +43,7 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  PieChart,
+  PieChart as ReChartsPieChart,
   Pie,
   Cell
 } from 'recharts';
@@ -606,7 +606,7 @@ export default function RealTimeAnalyticsDashboard() {
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={300}>
-                      <PieChart>
+                      <ReChartsPieChart>
                         <Pie
                           data={[
                             { name: 'High Impact', value: recommendationMetrics.impactDistribution.high, color: '#0088FE' },
@@ -624,7 +624,7 @@ export default function RealTimeAnalyticsDashboard() {
                           ))}
                         </Pie>
                         <Tooltip />
-                      </PieChart>
+                      </ReChartsPieChart>
                     </ResponsiveContainer>
                   </CardContent>
                 </Card>
