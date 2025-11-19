@@ -1,1 +1,1 @@
-cd dev/my-nextjs-app-claude # My experiments
+move to claude-labs worktree

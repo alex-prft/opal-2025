@@ -1,37 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="OSA Admin Dashboard API Tests" tests="16" failures="0" errors="0" time="1.25">
-  <testsuite name="RecentDataComponent Status Logic" errors="0" failures="0" skipped="0" timestamp="2025-11-16T23:18:23" time="0.606" tests="16">
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" name="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" time="0.002">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" name="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" name="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" name="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" name="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" time="0">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" name="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" time="0">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" name="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" name="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" name="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" name="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" time="0">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" name="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" time="0.001">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" name="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" time="0">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" name="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" time="0">
-    </testcase>
-    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" name="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" time="0.001">
-    </testcase>
-  </testsuite>
+<testsuites name="OSA Admin Dashboard API Tests" tests="0" failures="0" errors="0" time="48.488">
 </testsuites>

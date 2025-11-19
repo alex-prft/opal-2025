@@ -46,7 +46,9 @@ describe('Conditional Rendering Logic', () => {
       // Test new short format
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/phase-1')).toBe(true);
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/foundation')).toBe(true);
+      // Test that other phases don't match (both old and new format)
       expect(pathMatchers.isPhase1Foundation('/strategy/phases/phase-2-growth')).toBe(false);
+      expect(pathMatchers.isPhase1Foundation('/strategy/phases/phase-2')).toBe(false);
     });
 
     test('DXP Tools path detection', () => {
@@ -183,6 +185,55 @@ describe('Conditional Rendering Logic', () => {
     test('Unknown tier-3 paths return null', () => {
       expect(getTier3ContentData('/unknown/path')).toBe(null);
       expect(getTier3ContentData('')).toBe(null);
+    });
+  });
+
+  describe('Phase URL Transition Support', () => {
+    test('All phases support both old and new URL formats', () => {
+      const phaseTransitions = [
+        {
+          oldUrl: '/strategy-plans/phases/phase-1-foundation-0-3-months',
+          newUrl: '/strategy/phases/phase-1',
+          shortUrl: '/phases/phase-1',
+          expectedWidget: 'PhasesWidget',
+          expectedContent: {
+            contentId: 'phase-1-foundation-content',
+            title: 'Phase 1: Foundation (0-3 months)',
+            dataKey: 'phase1Data'
+          }
+        },
+        {
+          oldUrl: '/strategy-plans/phases/phase-2-growth-3-6-months',
+          newUrl: '/strategy/phases/phase-2',
+          shortUrl: '/phases/phase-2',
+          expectedWidget: 'PhasesWidget',
+          expectedContent: {
+            contentId: 'phase-2-growth-content',
+            title: 'Phase 2: Growth (3-6 months)',
+            dataKey: 'phase2Data'
+          }
+        }
+      ];
+
+      phaseTransitions.forEach(({ oldUrl, newUrl, shortUrl, expectedWidget, expectedContent }) => {
+        // Test that all URL formats return the same widget
+        expect(getTier2WidgetComponent(oldUrl)).toBe(expectedWidget);
+        expect(getTier2WidgetComponent(newUrl)).toBe(expectedWidget);
+        expect(getTier2WidgetComponent(shortUrl)).toBe(expectedWidget);
+
+        // Test that all URL formats return the same content data
+        expect(getTier3ContentData(oldUrl)).toEqual(expectedContent);
+        expect(getTier3ContentData(newUrl)).toEqual(expectedContent);
+        expect(getTier3ContentData(shortUrl)).toEqual(expectedContent);
+      });
+    });
+
+    test('Phase path matchers work with both URL formats', () => {
+      // Test that phase detection works for both old and new formats
+      expect(pathMatchers.isPhases('/engine/results/strategy-plans/phases/phase-1-foundation-0-3-months')).toBe(true);
+      expect(pathMatchers.isPhases('/engine/results/strategy/phases/phase-1')).toBe(true);
+      expect(pathMatchers.isPhases('/strategy-plans/phases/phase-2-growth-3-6-months')).toBe(true);
+      expect(pathMatchers.isPhases('/strategy/phases/phase-2')).toBe(true);
     });
   });
 

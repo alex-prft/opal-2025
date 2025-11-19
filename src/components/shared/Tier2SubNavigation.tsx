@@ -70,6 +70,16 @@ const tier3IconMapping = {
   'Personalization Effectiveness': TrendingUp
 } as const;
 
+// Custom URL mapping for tier3 items that need shorter URLs
+const tier3UrlMapping = {
+  // Strategy Plans → Phases: Map to short URLs
+  'Phase 1: Foundation': 'phase-1',
+  'Phase 2: Growth': 'phase-2',
+  'Phase 3: Optimization': 'phase-3',
+  'Phase 4: Scale': 'phase-4',
+  'Cross-Phase Analysis': 'cross-phase-analysis'
+} as const;
+
 export default function Tier2SubNavigation({
   tier1Name,
   tier2Name,
@@ -96,7 +106,9 @@ export default function Tier2SubNavigation({
         <nav className="flex overflow-x-auto" role="navigation" aria-label="Sub navigation">
           <div className="flex min-w-full">
             {tier3Items.map((tier3Item, index) => {
-              const tier3Url = tier3Item.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '');
+              // Use custom URL mapping if available, otherwise fall back to default conversion
+              const tier3Url = tier3UrlMapping[tier3Item as keyof typeof tier3UrlMapping] ||
+                              tier3Item.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '');
               const href = `/engine/results/${currentTier1Url}/${currentTier2Url}/${tier3Url}`;
               const isActive = currentTier3Url === tier3Url || pathname === href;
               const Icon = tier3IconMapping[tier3Item as keyof typeof tier3IconMapping] || BarChart3;

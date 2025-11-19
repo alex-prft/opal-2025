@@ -7,6 +7,9 @@ export const metadata = generatePageMetadata({
   description: 'Monitor and manage OPAL integrations and data flow.'
 });
 
+// Disable static generation for pages with client-side data fetching
+export const dynamic = 'force-dynamic';
+
 export default function IntegrationDashboardPage() {
   return <ValidationDashboard />;
 }

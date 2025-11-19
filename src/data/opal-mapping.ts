@@ -45,11 +45,11 @@ export const opalMapping = {
         "tier1": "Strategy Plans",
         "tier2": "Phases",
         "tier3": [
-          "Phase 1: Foundation",
-          "Phase 2: Growth",
-          "Phase 3: Optimization",
-          "Phase 4: Scale",
-          "Cross-Phase Analysis"
+          "phase-1",
+          "phase-2",
+          "phase-3",
+          "phase-4",
+          "cross-phase-analysis"
         ]
       }
     },

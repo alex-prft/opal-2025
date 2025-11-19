@@ -207,6 +207,7 @@ export class WebhookEventOperations {
         }
       };
 
+      const supabase = getSupabase();
       const { data, error } = await supabase
         .from('opal_webhook_events')
         .insert(eventData)
@@ -240,6 +241,7 @@ export class WebhookEventOperations {
     }
 
     try {
+      const supabase = getSupabase();
       let queryBuilder = supabase
         .from('opal_webhook_events')
         .select('*')
@@ -315,6 +317,7 @@ export class WebhookEventOperations {
    */
   async getLatestWebhookForSession(sessionId: string): Promise<WebhookEvent | null> {
     try {
+      const supabase = getSupabase();
       const { data, error } = await supabase
         .from('opal_webhook_events')
         .select('*')
@@ -378,6 +381,7 @@ export class WebhookEventOperations {
       const since = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
 
       // Get total events and success/failure counts using actual schema
+      const supabase = getSupabase();
       const { data: events, error } = await supabase
         .from('opal_webhook_events')
         .select('status, event_data, event_type')
@@ -427,6 +431,7 @@ export class WebhookEventOperations {
   }> {
     try {
       // Get the most recent webhook using actual schema
+      const supabase = getSupabase();
       const { data: latest } = await supabase
         .from('opal_webhook_events')
         .select('created_at, status')
@@ -484,6 +489,7 @@ export class WebhookEventOperations {
     try {
       const cutoffDate = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000).toISOString();
 
+      const supabase = getSupabase();
       const { data, error } = await supabase
         .from('opal_webhook_events')
         .delete()

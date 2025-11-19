@@ -112,11 +112,11 @@ class RuntimeErrorPrevention {
    * CRITICAL: Check for missing component imports
    */
   checkMissingImports(content, filePath) {
-    const lines = content.split('\n');
+    const lines = content.split('\\n');
 
     // Extract all imports
     const imports = new Set();
-    const importRegex = /import\s+(?:{([^}]+)}|\*\s+as\s+\w+|\w+)\s+from\s+['"]([^'"]+)['"]/g;
+    const importRegex = /import\\s+(?:{([^}]+)}|\\*\\s+as\\s+\\w+|\\w+)\\s+from\\s+['"]([^'"]+)['"]/g;
     let importMatch;
 
     while ((importMatch = importRegex.exec(content)) !== null) {
@@ -126,13 +126,22 @@ class RuntimeErrorPrevention {
         namedImports.forEach(imp => imports.add(imp));
       } else {
         // Default imports (simplified)
-        const defaultImport = importMatch[0].match(/import\s+(\w+)/);
+        const defaultImport = importMatch[0].match(/import\\s+(\\w+)/);
         if (defaultImport) imports.add(defaultImport[1]);
       }
     }
 
+    // Extract locally defined functions/components
+    const localDefinitions = new Set();
+    const functionDefRegex = /(?:export\\s+)?(?:function|const)\\s+(\\w+)/g;
+    let funcMatch;
+    
+    while ((funcMatch = functionDefRegex.exec(content)) !== null) {
+      localDefinitions.add(funcMatch[1]);
+    }
+
     // Check for component usage without imports
-    const componentUsageRegex = /<(\w+)[\s>]/g;
+    const componentUsageRegex = /<(\\w+)[\\s>]/g;
     let componentMatch;
     const usedComponents = new Set();
 
@@ -149,7 +158,9 @@ class RuntimeErrorPrevention {
 
     // Check for missing component imports
     usedComponents.forEach(component => {
-      if (!imports.has(component) && this.componentDatabase.has(component)) {
+      if (!imports.has(component) && 
+          !localDefinitions.has(component) && 
+          this.componentDatabase.has(component)) {
         const lineNumber = this.findComponentUsageLine(lines, component);
         this.criticalIssues.push({
           file: filePath,
@@ -163,7 +174,7 @@ class RuntimeErrorPrevention {
     });
 
     // Check for missing icon imports
-    const iconUsageRegex = /<(\w+)\s+className="[^"]*(?:h-\d+|w-\d+|icon)"/g;
+    const iconUsageRegex = /<(\\w+)\\s+className="[^"]*(?:h-\\d+|w-\\d+|icon)"/g;
     let iconMatch;
 
     while ((iconMatch = iconUsageRegex.exec(content)) !== null) {

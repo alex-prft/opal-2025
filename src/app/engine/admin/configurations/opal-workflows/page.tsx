@@ -6,6 +6,9 @@ export const metadata = generatePageMetadata({
   description: 'Configure and manage OPAL workflow templates.'
 });
 
+// Disable static generation to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 export default function OpalWorkflowsPage() {
   return (
     <div className="space-y-6 p-6">

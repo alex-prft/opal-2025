@@ -6692,7 +6692,7 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
     </div>
   );
 
-  const renderAudienceTargeting = () => (
+  const renderAudienceTargetingEffectiveness = () => (
     <div className="space-y-6">
       <Card>
         <CardHeader>
@@ -9258,7 +9258,7 @@ function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: Conte
         );
 
       case 'audience-targeting':
-        return renderAudienceTargeting();
+        return renderAudienceTargetingEffectiveness();
 
       case 'content-roi-analysis':
         return (

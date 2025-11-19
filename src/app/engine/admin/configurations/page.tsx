@@ -3,6 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+// Disable static generation for client-side navigation
+export const dynamic = 'force-dynamic';
+
 export default function ConfigurationsPage() {
   const router = useRouter();
 
