@@ -1,69 +1,20 @@
-$1"_agent_standards_documentation": {
-    "overview": "This agent implements the 5 OPAL Agent Configuration Standards for data-driven strategic planning and implementation roadmaps that populate OSA Results pages via the ResultsPageContent JSON schema.",
-    "standards_implemented": {
-      "1_data_driven_specificity": {
-        "requirement": "Ground all roadmap recommendations in actual DXP platform data and current implementation status, never generic strategy templates",
-        "implementation": "Critical Data-Driven Requirements section mandates referencing actual ODP behavioral insights for strategic direction, CMS content performance for content strategy phases, WebX experiment results for optimization timelines, and actual maturity levels",
-        "examples": {
-          "correct": "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), create targeted navigation by Q2",
-          "incorrect": "Improve your value proposition"
-        }
-      },
-      "2_standardized_confidence_calculation": {
-        "requirement": "Calculate roadmap confidence based on data completeness and implementation track record rather than strategic theory",
-        "implementation": "Confidence Scoring based on actual performance data: High (80-100) = complete DXP data with historical baselines, Medium (60-79) = partial data with some performance benchmarks, Moderate (40-59) = limited implementation data, Low (0-39) = minimal data or new implementation (crawl maturity)",
-        "maturity_integration": "Uses osa_validate_maturity_level to ensure roadmap recommendations align with current implementation maturity (crawl/walk/run/fly)"
-      },
-      "3_mandatory_language_rules_validation": {
-        "requirement": "Validate all strategic recommendations against OSA language rules, particularly avoiding financial projections in roadmap planning",
-        "implementation": "Language Rules Compliance section mandates calling osa_validate_language_rules before final JSON output",
-        "strategic_language_rules": {
-          "forbidden": ["Revenue projections", "ROI forecasts", "Cost-benefit analysis"],
-          "preferred": ["Performance optimization phases", "Impact measurement milestones", "Engagement optimization timeline"]
-        }
-      },
-      "4_clear_mode_detection": {
-        "requirement": "Distinguish between structured roadmap JSON output and conversational strategic guidance with Canvas recommendations",
-        "implementation": "Mode Detection Requirements: Data Mode (webhook/workflow) outputs pure JSON roadmap specifications, Chat Mode (direct conversation) provides strategic guidance with dynamic Canvas visualization recommendations",
-        "strategic_modes": {
-          "data_mode": "Pure JSON with timeline specifications, milestone definitions, and resource allocation blueprints",
-          "chat_mode": "Strategic planning guidance with Advanced Canvas Intelligence Framework for roadmap visualization"
-        }
-      },
-      "5_explicit_business_context": {
-        "requirement": "Reference specific FreshProduce.com/IFPA business context and association goals in strategic roadmap planning",
-        "implementation": "Business Context section mandates referencing IFPA member acquisition goals, association KPIs (membership conversion, content engagement, event registration, member retention), content pillars (Industry Intelligence, Operational Excellence, etc.), and persona-specific strategic initiatives",
-        "strategic_personas": {
-          "strategic_buyer_sarah": "Supply chain optimization and vendor relationship roadmap initiatives",
-          "innovation_focused_frank": "Technology adoption and digital transformation timeline",
-          "compliance_conscious_carol": "Regulatory compliance and food safety implementation phases",
-          "executive_leader_linda": "Association leadership and member value strategic planning"
-        }
-      }
-    },
-    "osa_results_pipeline_integration": {
-      "schema_compliance": "Output matches ResultsPageContent interface with strategy-specific metrics (overall progress, timeline confidence, plan confidence index)",
-      "data_flow": "Strategic roadmaps flow through osa_store_workflow_data → osa_send_data_to_osa_webhook → Results page strategy tier",
-      "tier_classification": "strategy tier for implementation roadmaps and strategic planning",
-      "strategic_metrics_structure": "Hero metrics focus on progress tracking, timeline confidence, and plan reliability based on actual data",
-      "canvas_intelligence": "Advanced Canvas Intelligence Framework with 4 specialized roadmap Canvas types for strategic visualization"
-    },
-    "agent_role_in_ecosystem": {
-      "primary_function": "Convert multi-agent insights into comprehensive implementation roadmaps with timeline visualization and resource planning",
-      "data_sources": "Insights from content_review, audience_suggester, experiment_blueprinter combined with current maturity level and resource constraints",
-      "output_consumers": "OSA Results pages strategy section, Canvas roadmap dashboards, executive strategic briefs",
-      "collaboration_agents": "Receives strategic insights from all other agents, provides implementation timelines to integration_health for execution tracking, creates strategic briefs via osa_compile_strategy_brief",
-      "advanced_features": "Dynamic Canvas Intelligence with automatic visualization recommendations based on roadmap complexity and user goals"
-    }
-  },
-  $2
+{
+  "schema_version": "1.0",
   "agent_type": "specialized",
   "name": "Roadmap Generator Agent",
   "output": {
     "type": "json",
     "schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ],
       "properties": {
         "hero": {
           "type": "object",
@@ -77,145 +28,41 @@ $1"_agent_standards_documentation": {
             "title": {
               "type": "string"
             },
-            "promise": {
-              "type": "string",
-              "maxLength": 200
-            },
             "metrics": {
               "type": "array",
-              "minItems": 3,
-              "maxItems": 3,
               "items": {
                 "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
                 "properties": {
+                  "hint": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "value": {
                     "type": "string"
-                  },
-                  "hint": {
-                    "type": "string"
                   }
-                },
-                "required": [
-                  "label",
-                  "value"
-                ]
-              }
+                }
+              },
+              "maxItems": 3,
+              "minItems": 3
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
             },
             "confidence": {
               "type": "number",
-              "minimum": 0,
-              "maximum": 100
+              "maximum": 100,
+              "minimum": 0
             },
             "confidenceNote": {
               "type": "string"
             }
-          }
-        },
-        "overview": {
-          "type": "object",
-          "required": [
-            "summary",
-            "keyPoints"
-          ],
-          "properties": {
-            "summary": {
-              "type": "string"
-            },
-            "keyPoints": {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 4,
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "insights": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "bullets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": [
-              "title",
-              "description",
-              "bullets"
-            ]
-          }
-        },
-        "opportunities": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "impactLevel": {
-                "enum": [
-                  "High",
-                  "Medium",
-                  "Low"
-                ]
-              },
-              "effortLevel": {
-                "enum": [
-                  "Low",
-                  "Medium",
-                  "High"
-                ]
-              },
-              "confidence": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 100
-              }
-            },
-            "required": [
-              "label",
-              "impactLevel",
-              "effortLevel",
-              "confidence"
-            ]
-          }
-        },
-        "nextSteps": {
-          "type": "array",
-          "minItems": 2,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "ownerHint": {
-                "type": "string"
-              },
-              "timeframeHint": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "label"
-            ]
           }
         },
         "meta": {
@@ -254,16 +101,112 @@ $1"_agent_standards_documentation": {
               "format": "date-time"
             }
           }
+        },
+        "insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 4,
+              "minItems": 2
+            }
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 2
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              }
+            }
+          },
+          "minItems": 1
         }
-      },
-      "required": [
-        "hero",
-        "overview",
-        "insights",
-        "opportunities",
-        "nextSteps",
-        "meta"
-      ]
+      }
     },
     "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
   },
@@ -305,28 +248,28 @@ $1"_agent_standards_documentation": {
     {
       "name": "canvas_visualization_preference",
       "type": "string",
-      "default": "auto_create",
+      "default": null,
       "required": false,
       "description": "Canvas creation preference: auto_create (default), ask_first, visual_heavy, minimal"
     },
     {
       "name": "results_delivery_preference",
       "type": "string",
-      "default": "both_platforms",
+      "default": null,
       "required": false,
       "description": "Results delivery: both_platforms (default), osa_only, cmp_integration, ask_first"
     },
     {
       "name": "complexity_level_preference",
       "type": "string",
-      "default": "expert",
+      "default": null,
       "required": false,
       "description": "Interface complexity: expert (default), progressive, simplified, customizable"
     },
     {
       "name": "confidence_threshold_for_actions",
       "type": "number",
-      "default": 80,
+      "default": null,
       "required": false,
       "description": "Minimum confidence level (0-100) required for automatic actions"
     }
@@ -359,51 +302,6 @@ $1"_agent_standards_documentation": {
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
-  "prompt_template": "**Role:** You are a strategic planning specialist focused on converting insights into actionable implementation roadmaps with advanced Canvas visualization intelligence.\n\n**Dual-Mode Operation:**\n**Data Mode**: Generate structured JSON for Results pages with roadmap insights and timeline analysis\n**Chat Mode**: Provide strategic planning guidance with dynamic Canvas recommendations and milestone visualizations\n\n**Objective:** Transform strategic insights and recommendations into comprehensive implementation roadmaps with [[timeline_horizon]]-month horizon, [[resource_constraints]] resource constraints, using [[priority_framework]] prioritization within [[milestone_granularity]] milestone tracking.
-
-**Critical Data-Driven Requirements:**
-
-You MUST ground all roadmap recommendations in actual DXP platform data:
-- Reference actual ODP audience segments and behavioral traits (not theoretical segments)
-- Cite actual CMS content performance metrics (pages, engagement, traffic)  
-- Reference actual WebX experiments (if applicable) - current tests, velocity, results
-- Use actual CMP campaign data (if applicable) - send times, open rates, segments
-- Analyze actual Content Recs topic performance (interactions, uniques, gaps)
-
-NEVER provide generic roadmap advice like:
-❌ "Improve your value proposition"
-❌ "Consider A/B testing your homepage"
-❌ "Segment your audience by demographics"
-
-ALWAYS provide data-driven roadmap recommendations like:
-✅ "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), create targeted navigation by Q2"
-✅ "Content topic 'Food Safety' shows 2.3x engagement vs baseline - expand this theme in Phase 1"
-✅ "Homepage experiment #4521 (hero CTA test) achieved 18% lift - apply to product pages in Q1"\\\\n\\\\n**Mode Detection Requirements:**\\\\n- Data Mode: Triggered when called via `osa_retrieve_workflow_context` or OSA webhook\\\\n- Data Mode: Output MUST be pure JSON matching ResultsPageContent schema\\\\n- Data Mode: NO conversational text, NO markdown formatting, ONLY valid JSON\\\\n- Chat Mode: Triggered by direct user conversation in Opal UI\\\\n- Chat Mode: Use natural language, ask follow-up questions, suggest Canvas visualizations\\\\n- Mode Verification: Workflow context present → Data Mode, Direct user question → Chat Mode\n\n**Advanced Canvas Intelligence Framework:**\n\n**1. Dynamic Canvas Recommendations**\n- Use `osa_suggest_canvas_visualization` to identify when roadmap timelines, resource allocation, or milestone tracking needs visual representation\n- Automatically recommend appropriate Canvas types based on data complexity and user goals\n\n**2. Specialized Roadmap Canvas Types**\n- **Roadmap Timeline Canvas**: Comprehensive project timeline with milestones, dependencies, and critical path visualization using `osa_create_roadmap_timeline_canvas`\n- **Milestone Tracker Canvas**: Interactive milestone tracking with progress indicators and completion status using `osa_create_milestone_tracker_canvas`\n- **Resource Allocation Canvas**: Visual resource planning with team assignments and capacity management using `osa_create_resource_allocation_canvas`\n- **Dependency Map Canvas**: Strategic dependency visualization showing task relationships and bottlenecks using `osa_create_dependency_map_canvas`\n\n**3. Canvas Intelligence Triggers**\n- Complex timelines (>6 months) → Auto-suggest Timeline Canvas\n- Multiple resource constraints → Auto-suggest Resource Allocation Canvas\n- Critical dependencies → Auto-suggest Dependency Map Canvas\n- Milestone-heavy projects → Auto-suggest Milestone Tracker Canvas\n\n**Input:**\n- timeline_horizon: [[timeline_horizon]]\n- resource_constraints: [[resource_constraints]]\n- priority_framework: [[priority_framework]]\n- milestone_granularity: [[milestone_granularity]]\n**Business Context (FreshProduce.com - IFPA):**\\\\n\\\\nFrom company-overview instruction:\\\\n- Industry: Fresh produce professional association (IFPA)\\\\n- Primary Goal: Member acquisition and engagement\\\\n- Target Roles: Buyers, Suppliers/Growers, Industry Professionals, Existing Members\\\\n\\\\nFrom marketing-strategy instruction:\\\\n- Key Segments: Commercial Buyers, Produce Suppliers/Growers, Industry Professionals, Association Members\\\\n- Primary KPIs: Membership conversion rate, content engagement score, event registration rate, member retention\\\\n- Content Pillars: Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development\\\\n\\\\nFrom content-guidelines instruction:\\\\n- Content Quality Scores: Accuracy, Tone (professional/helpful), Accessibility, Structure\\\\n- Freshness: Flag content >6 months for review\\\\n- Semantic Alignment: Score against Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol, Executive Leader Linda\\\\n\\\\nYOU MUST reference these specific details in recommendations, NOT generic placeholders.\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Before generating final JSON output, CALL `osa_validate_language_rules` tool MANDATORY\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence (0-100) based on DATA AVAILABILITY, not reasoning quality:
-
-High Confidence (80-100):
-- Complete DXP data available (ODP segments, CMS analytics, experiment results)
-- Historical performance data for comparison
-- Statistical significance in metrics
-
-Medium Confidence (60-79):
-- Partial DXP data available
-- Some performance benchmarks  
-- Reasonable sample sizes
-
-Moderate Confidence (40-59):
-- Limited DXP data
-- Early-stage implementation
-- Small sample sizes or short time windows
-
-Low Confidence (0-39):
-- Minimal DXP data available
-- New implementation (crawl maturity)
-- Theoretical recommendations based on best practices
-
-IMPORTANT: Low confidence is acceptable and honest. Use confidence degradation messages:
-- <40: "Building confidence as your DXP data accumulates. Recommendations based on industry best practices and your business goals."
-- 40-59: "Moderate confidence based on initial data patterns. Confidence will improve as more interaction data flows in."
-
-Updated confidence levels\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific strategy metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Progress\",\n            \"value\": \"25%\",\n            \"hint\": \"Foundation phase completion status\"\n      },\n      {\n            \"label\": \"Timeline Confidence\",\n            \"value\": \"60%\",\n            \"hint\": \"Schedule adherence tracking based on milestone data\"\n      },\n      {\n            \"label\": \"Plan Confidence Index\",\n            \"value\": \"35/100\",\n            \"hint\": \"Confidence level building as data flows in\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"strategy\",\n    \"agents\": [\"roadmap_generator\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
-  "internal_version": 6
+  "prompt_template": "**Role:** You are a strategic planning specialist focused on converting insights into actionable implementation roadmaps with advanced Canvas visualization intelligence.\n\n**Dual-Mode Operation:**\n**Data Mode**: Generate structured JSON for Results pages with roadmap insights and timeline analysis\n**Chat Mode**: Provide strategic planning guidance with dynamic Canvas recommendations and milestone visualizations\n\n**Objective:** Transform strategic insights and recommendations into comprehensive implementation roadmaps with [[timeline_horizon]]-month horizon, [[resource_constraints]] resource constraints, using [[priority_framework]] prioritization within [[milestone_granularity]] milestone tracking.\n\n**Advanced Canvas Intelligence Framework:**\n\n**1. Dynamic Canvas Recommendations**\n- Use `osa_suggest_canvas_visualization` to identify when roadmap timelines, resource allocation, or milestone tracking needs visual representation\n- Automatically recommend appropriate Canvas types based on data complexity and user goals\n\n**2. Specialized Roadmap Canvas Types**\n- **Roadmap Timeline Canvas**: Comprehensive project timeline with milestones, dependencies, and critical path visualization using `osa_create_roadmap_timeline_canvas`\n- **Milestone Tracker Canvas**: Interactive milestone tracking with progress indicators and completion status using `osa_create_milestone_tracker_canvas`\n- **Resource Allocation Canvas**: Visual resource planning with team assignments and capacity management using `osa_create_resource_allocation_canvas`\n- **Dependency Map Canvas**: Strategic dependency visualization showing task relationships and bottlenecks using `osa_create_dependency_map_canvas`\n\n**3. Canvas Intelligence Triggers**\n- Complex timelines (>6 months) → Auto-suggest Timeline Canvas\n- Multiple resource constraints → Auto-suggest Resource Allocation Canvas\n- Critical dependencies → Auto-suggest Dependency Map Canvas\n- Milestone-heavy projects → Auto-suggest Milestone Tracker Canvas\n\n**Input:**\n- timeline_horizon: [[timeline_horizon]]\n- resource_constraints: [[resource_constraints]]\n- priority_framework: [[priority_framework]]\n- milestone_granularity: [[milestone_granularity]]\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Use `osa_validate_language_rules` tool to validate all content before sending\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence based on data completeness (0-100)\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific strategy metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Progress\",\n            \"value\": \"25%\",\n            \"hint\": \"Foundation phase completion status\"\n      },\n      {\n            \"label\": \"Timeline Confidence\",\n            \"value\": \"60%\",\n            \"hint\": \"Schedule adherence tracking based on milestone data\"\n      },\n      {\n            \"label\": \"Plan Confidence Index\",\n            \"value\": \"35/100\",\n            \"hint\": \"Confidence level building as data flows in\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"strategy\",\n    \"agents\": [\"roadmap_generator\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 10
 }

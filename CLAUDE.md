@@ -108,6 +108,141 @@ The Claude Code system provides specialized agents for complex tasks. **Always u
 
 ## OPAL Agent Configuration Standards
 
+### 🔥 MANDATORY: OPAL Integration Validation Requirements
+
+**Critical integration patterns discovered through production debugging (2025-11-20):**
+
+#### ✅ 1. Tool Name Validation Requirements
+**REQUIRED**: Tool names in agent configurations must exactly match API endpoint paths:
+
+```typescript
+// ✅ CORRECT: Tool name matches endpoint path
+"enabled_tools": ["osa_send_data_to_osa_webhook"]
+// Must correspond to: /api/tools/osa_send_data_to_osa_webhook/route.ts
+
+// ❌ WRONG: Tool name mismatch causes integration failure
+"enabled_tools": ["send_data_to_osa_enhanced"]
+// Agent expects osa_send_data_to_osa_webhook but calls send_data_to_osa_enhanced
+```
+
+**Validation Process:**
+1. **Before any OPAL agent changes**: Use `opal-integration-validator` agent for end-to-end validation
+2. **Tool Discovery Check**: Verify `/api/tools/{tool_name}/route.ts` exists for each enabled_tools entry
+3. **Integration Health**: Target score 95/100+ (previous failure scored 85/100 due to missing endpoint)
+
+#### ✅ 2. Wrapper Endpoint Pattern for Integration Mismatches
+**PREFERRED SOLUTION**: When tool name mismatches occur, create wrapper endpoints instead of modifying agent configurations:
+
+```typescript
+// PREFERRED: Create wrapper that bridges the gap
+// File: /api/tools/osa_send_data_to_osa_webhook/route.ts
+export async function POST(request: NextRequest) {
+  // Transform OPAL parameters to Enhanced Tools format
+  const enhancedToolRequest = {
+    tool_name: 'send_data_to_osa_enhanced',
+    parameters: transformOpalToEnhanced(opalParams)
+  };
+
+  // Delegate to existing implementation
+  return fetch('/api/opal/enhanced-tools', {
+    method: 'POST',
+    body: JSON.stringify(enhancedToolRequest)
+  });
+}
+
+// AVOID: Changing all agent configurations (high risk, coordination overhead)
+```
+
+**Benefits of Wrapper Pattern:**
+- ✅ Preserves existing working infrastructure (`send_data_to_osa_enhanced`)
+- ✅ Zero impact on other integration modes (strategy workflows)
+- ✅ Single file change vs 9+ agent configuration updates
+- ✅ Maintains backward compatibility with OPAL tool specifications
+
+#### ✅ 3. Mandatory Correlation ID Tracking
+**REQUIRED**: All webhook and integration endpoints must implement correlation ID tracking for debugging:
+
+```typescript
+// REQUIRED: Generate correlation ID at request entry
+const correlationId = `opal-webhook-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+
+// REQUIRED: Log at key integration points
+console.log('🚀 [OPAL Webhook Tool] Request received', { correlationId });
+console.log('📤 [OPAL Webhook Tool] Calling enhanced tools', { correlationId });
+console.log('✅ [OPAL Webhook Tool] Success', { correlationId });
+
+// REQUIRED: Include in response headers
+return NextResponse.json(data, {
+  headers: {
+    'X-Correlation-ID': correlationId,
+    'X-Processing-Time': processingTime.toString()
+  }
+});
+```
+
+**Correlation ID Standards:**
+- **Format**: `{service}-{timestamp}-{random}` (e.g., `opal-webhook-1732123456-abc7def`)
+- **Propagation**: Forward through all service calls via `X-Correlation-ID` header
+- **Logging**: Include in all console.log statements for request tracing
+- **Response**: Always return in response headers for client debugging
+
+#### ✅ 4. Requirements Gathering Framework for Complex Integration Issues
+**MANDATORY PROCESS**: For integration failures, follow structured discovery approach:
+
+```typescript
+// Phase 1: Discovery & Scope Assessment (30 minutes)
+TodoWrite([
+  { content: "Use Explore agent to analyze integration components", status: "pending" },
+  { content: "Run opal-integration-validator for current health baseline", status: "pending" },
+  { content: "Document current error messages and failure points", status: "pending" }
+]);
+
+// Phase 2: Root Cause Analysis (30-60 minutes)
+TodoWrite([
+  { content: "Compare agent configurations vs actual API endpoints", status: "pending" },
+  { content: "Validate authentication flow and parameter schemas", status: "pending" },
+  { content: "Identify integration health score and specific failure modes", status: "pending" }
+]);
+
+// Phase 3: Solution Implementation (2-4 hours)
+TodoWrite([
+  { content: "Implement preferred solution (wrapper pattern vs config changes)", status: "pending" },
+  { content: "Add comprehensive testing and validation", status: "pending" },
+  { content: "Use opal-integration-validator to confirm 95/100+ health score", status: "pending" },
+  { content: "Use CLAUDE.md checker to validate all changes", status: "pending" }
+]);
+```
+
+**Requirements Documentation Structure:**
+- Create `requirements/{date}-{issue-id}/` directory with systematic analysis
+- Include: problem analysis, root cause discovery, implementation plan, validation results
+- Target: Transform integration issues from "I don't know" responses into actionable technical plans
+
+#### ✅ 5. opal-integration-validator Agent Usage Requirements
+**MANDATORY**: Use `opal-integration-validator` agent for all OPAL-related changes:
+
+```typescript
+// REQUIRED: Before any OPAL agent configuration changes
+Task({
+  subagent_type: "opal-integration-validator",
+  description: "Validate OPAL integration health",
+  prompt: "Perform comprehensive end-to-end validation of OPAL integration pipeline after Force Sync operations"
+});
+
+// REQUIRED: After implementing integration fixes
+Task({
+  subagent_type: "opal-integration-validator",
+  description: "Confirm integration health improvement",
+  prompt: "Validate that integration health score improved from baseline and all endpoints are functional"
+});
+```
+
+**Agent Usage Patterns:**
+- **Proactive Validation**: Run before making changes to establish baseline health score
+- **Post-Implementation**: Confirm fixes achieve 95/100+ integration health score
+- **Troubleshooting**: Use when integration failures occur to identify specific issues
+- **Quality Gates**: Required validation step for all OPAL integration work
+
 ### 🔥 MANDATORY: 5 Core Requirements for All OPAL Agents
 
 **Every OPAL agent configuration in `opal-config/opal-agents/` must implement these 5 standards:**

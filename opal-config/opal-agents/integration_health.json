@@ -1,69 +1,20 @@
-$1"_agent_standards_documentation": {
-    "overview": "This agent implements the 5 OPAL Agent Configuration Standards as the Master Orchestrator for dual-mode OPAL system intelligence, coordinating multi-agent workflows and managing OSA Results pipeline integration health.",
-    "standards_implemented": {
-      "1_data_driven_specificity": {
-        "requirement": "Ground all system health and orchestration recommendations in actual DXP platform performance data, never theoretical system metrics",
-        "implementation": "Critical Data-Driven Requirements section mandates referencing actual ODP system performance, CMS integration health, WebX platform status, CMP workflow performance, and agent success rates",
-        "examples": {
-          "correct": "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), optimize agent routing for buyer persona workflows",
-          "incorrect": "Improve your system integration"
-        }
-      },
-      "2_standardized_confidence_calculation": {
-        "requirement": "Calculate system health confidence based on actual uptime, integration success rates, and data quality rather than theoretical system design",
-        "implementation": "Confidence Scoring uses system performance metrics: High (80-100) = full system availability with complete data flows, Medium (60-79) = partial availability with some integration gaps, Moderate (40-59) = limited system data or recent issues, Low (0-39) = system instability or minimal integration data",
-        "orchestration_confidence": "Uses comprehensive system analytics tools including osa_analyze_agent_performance_metrics and osa_track_agent_performance_metrics for data-driven confidence assessment"
-      },
-      "3_mandatory_language_rules_validation": {
-        "requirement": "Validate all system orchestration outputs against OSA language rules, particularly avoiding cost terminology in system optimization recommendations",
-        "implementation": "Language Rules Compliance section mandates calling osa_validate_language_rules before final JSON output",
-        "system_language_rules": {
-          "forbidden": ["System cost optimization", "ROI of integrations", "Price of downtime"],
-          "preferred": ["System performance optimization", "Impact of integration health", "System availability optimization"]
-        }
-      },
-      "4_clear_mode_detection": {
-        "requirement": "Distinguish between structured system health JSON output and conversational orchestration guidance with Canvas dashboard recommendations",
-        "implementation": "Mode Detection Requirements: Data Mode (webhook/workflow) outputs pure JSON system health specifications, Chat Mode (direct conversation) provides system orchestration guidance with Canvas intelligence for system visualization",
-        "orchestration_modes": {
-          "data_mode": "Pure JSON with system health metrics, agent performance data, and integration status",
-          "chat_mode": "System orchestrator guidance with Canvas intelligence framework for system health dashboards and agent performance visualization"
-        }
-      },
-      "5_explicit_business_context": {
-        "requirement": "Reference specific FreshProduce.com/IFPA business context and member workflow optimization in system orchestration decisions",
-        "implementation": "Business Context section mandates referencing IFPA member acquisition workflows, association-specific KPIs (membership conversion, content engagement, event registration, member retention), and persona-specific agent routing optimization",
-        "orchestration_personas": {
-          "strategic_buyer_sarah": "Optimize agent routing for commercial buyer workflows and supplier evaluation tools",
-          "innovation_focused_frank": "Prioritize technology-focused agents and digital transformation workflow orchestration",
-          "compliance_conscious_carol": "Route regulatory compliance workflows and food safety system integrations first",
-          "executive_leader_linda": "Optimize executive dashboard integrations and strategic system intelligence workflows"
-        }
-      }
-    },
-    "osa_results_pipeline_integration": {
-      "schema_compliance": "Output matches ResultsPageContent interface with system-specific metrics (overall health score, system availability, integration issues)",
-      "data_flow": "System health intelligence flows through osa_store_workflow_data → osa_send_data_to_osa_webhook → Results page dxptools tier",
-      "tier_classification": "dxptools tier for comprehensive system orchestration and integration health monitoring",
-      "orchestration_metrics_structure": "Hero metrics focus on system health scores, availability percentages, and active issue counts based on actual system performance",
-      "master_orchestrator_role": "Coordinates all agent outputs, manages Canvas creation across agents, and provides predictive intelligence for optimal workflow routing"
-    },
-    "agent_role_in_ecosystem": {
-      "primary_function": "Master orchestrator managing dual-mode system intelligence, multi-agent coordination, and OSA brain learning from user interactions",
-      "data_sources": "System performance metrics from all DXP platforms, agent success rates, user interaction patterns, Canvas usage analytics, CMP workflow status",
-      "output_consumers": "OSA Results pages dxptools section, system health dashboards, Canvas orchestration intelligence, predictive agent routing system",
-      "coordination_capabilities": "Orchestrates all other agents via osa_orchestrate_multi_agent_workflows, manages failover with osa_manage_failover_routing, provides predictive intelligence with osa_predict_agent_routing_needs",
-      "advanced_intelligence": "Implements OSA brain learning with cross-session intelligence analysis, user feedback loop processing, and automated system optimization based on usage patterns"
-    }
-  },
-  $2
+{
+  "schema_version": "1.0",
   "agent_type": "specialized",
   "name": "Integration Health Agent",
   "output": {
     "type": "json",
     "schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ],
       "properties": {
         "hero": {
           "type": "object",
@@ -77,145 +28,41 @@ $1"_agent_standards_documentation": {
             "title": {
               "type": "string"
             },
-            "promise": {
-              "type": "string",
-              "maxLength": 200
-            },
             "metrics": {
               "type": "array",
-              "minItems": 3,
-              "maxItems": 3,
               "items": {
                 "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
                 "properties": {
+                  "hint": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "value": {
                     "type": "string"
-                  },
-                  "hint": {
-                    "type": "string"
                   }
-                },
-                "required": [
-                  "label",
-                  "value"
-                ]
-              }
+                }
+              },
+              "maxItems": 3,
+              "minItems": 3
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
             },
             "confidence": {
               "type": "number",
-              "minimum": 0,
-              "maximum": 100
+              "maximum": 100,
+              "minimum": 0
             },
             "confidenceNote": {
               "type": "string"
             }
-          }
-        },
-        "overview": {
-          "type": "object",
-          "required": [
-            "summary",
-            "keyPoints"
-          ],
-          "properties": {
-            "summary": {
-              "type": "string"
-            },
-            "keyPoints": {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 4,
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "insights": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "bullets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": [
-              "title",
-              "description",
-              "bullets"
-            ]
-          }
-        },
-        "opportunities": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "impactLevel": {
-                "enum": [
-                  "High",
-                  "Medium",
-                  "Low"
-                ]
-              },
-              "effortLevel": {
-                "enum": [
-                  "Low",
-                  "Medium",
-                  "High"
-                ]
-              },
-              "confidence": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 100
-              }
-            },
-            "required": [
-              "label",
-              "impactLevel",
-              "effortLevel",
-              "confidence"
-            ]
-          }
-        },
-        "nextSteps": {
-          "type": "array",
-          "minItems": 2,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "ownerHint": {
-                "type": "string"
-              },
-              "timeframeHint": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "label"
-            ]
           }
         },
         "meta": {
@@ -254,16 +101,112 @@ $1"_agent_standards_documentation": {
               "format": "date-time"
             }
           }
+        },
+        "insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 4,
+              "minItems": 2
+            }
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 2
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              }
+            }
+          },
+          "minItems": 1
         }
-      },
-      "required": [
-        "hero",
-        "overview",
-        "insights",
-        "opportunities",
-        "nextSteps",
-        "meta"
-      ]
+      }
     },
     "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
   },
@@ -305,98 +248,98 @@ $1"_agent_standards_documentation": {
     {
       "name": "orchestration_mode",
       "type": "string",
-      "default": "intelligent_routing",
+      "default": null,
       "required": false,
       "description": "Orchestration approach: intelligent_routing (default), multi_agent_coordination, session_learning, or comprehensive"
     },
     {
       "name": "learning_scope",
       "type": "string",
-      "default": "session_context",
+      "default": null,
       "required": false,
       "description": "Learning scope: session_context (default), cross_session_intelligence, user_pattern_analysis, or predictive_optimization"
     },
     {
       "name": "coordination_strategy",
       "type": "string",
-      "default": "dynamic_selection",
+      "default": null,
       "required": false,
       "description": "Agent coordination: dynamic_selection (default), load_balancing, failover_management, or performance_optimization"
     },
     {
       "name": "brain_learning_level",
       "type": "string",
-      "default": "adaptive_intelligence",
+      "default": null,
       "required": false,
       "description": "OSA brain learning: adaptive_intelligence (default), pattern_recognition, predictive_routing, or comprehensive_analytics"
     },
     {
       "name": "chat_interaction_style",
       "type": "string",
-      "default": "system_orchestrator",
+      "default": null,
       "required": false,
       "description": "Chat interaction style: system_orchestrator (default), technical_consultant, strategic_advisor, or educational"
     },
     {
       "name": "orchestration_education_level",
       "type": "string",
-      "default": "beginner_friendly",
+      "default": null,
       "required": false,
       "description": "Target education level: beginner_friendly (default), intermediate, advanced"
     },
     {
       "name": "visualization_focus",
       "type": "string",
-      "default": "system_health",
+      "default": null,
       "required": false,
       "description": "Visualization emphasis: system_health (default), agent_performance, user_analytics, or comprehensive_dashboard"
     },
     {
       "name": "follow_up_intelligence",
       "type": "string",
-      "default": "optimization_insights",
+      "default": null,
       "required": false,
       "description": "Follow-up focus: optimization_insights (default), system_recommendations, usage_analytics, or strategic_guidance"
     },
     {
       "name": "canvas_visualization_preference",
       "type": "string",
-      "default": "auto_create",
+      "default": null,
       "required": false,
       "description": "Canvas creation preference: auto_create (default), ask_first, visual_heavy, minimal"
     },
     {
       "name": "results_delivery_preference",
       "type": "string",
-      "default": "osa_only",
+      "default": null,
       "required": false,
       "description": "Results delivery: osa_only (default), cmp_integration, both_platforms, ask_first"
     },
     {
       "name": "complexity_level_preference",
       "type": "string",
-      "default": "expert",
+      "default": null,
       "required": false,
       "description": "Interface complexity: expert (default), progressive, simplified, customizable"
     },
     {
       "name": "confidence_threshold_for_actions",
       "type": "number",
-      "default": 90,
+      "default": null,
       "required": false,
       "description": "Minimum confidence level (0-100) required for automatic actions"
     },
     {
       "name": "workflow_coordination_mode",
       "type": "string",
-      "default": "intelligent_handoff",
+      "default": null,
       "required": false,
       "description": "Agent coordination: intelligent_handoff (default), parallel_execution, sequential_workflow, user_directed"
     },
     {
       "name": "cross_agent_memory_sharing",
       "type": "string",
-      "default": "contextual_insights",
+      "default": null,
       "required": false,
       "description": "Memory sharing: contextual_insights (default), full_history, key_findings_only, isolated"
     }
@@ -447,51 +390,6 @@ $1"_agent_standards_documentation": {
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
-  "prompt_template": "**Role:** You are the Master Orchestrator for the OPAL dual-mode system intelligence - an Optimizely Marketing and Growth expert specializing in system orchestration, multi-agent coordination, and OSA brain learning, speaking to someone new to marketing with actionable, clear next steps that will make a real difference in their goals.\n\n**Dual-Mode Operation:**\n**Data Mode**: Generate structured JSON for Results pages using comprehensive system health metrics and orchestration intelligence\n**Chat Mode**: Provide system orchestration guidance with performance visualizations and intelligent recommendations for optimal agent usage\\n\\n**Objective:** Orchestrate comprehensive dual-mode system intelligence across [[assessment_scope]] using [[orchestration_mode]] with [[learning_scope]] learning, [[coordination_strategy]] coordination, and [[brain_learning_level]] OSA brain optimization over [[performance_window]]-day window.
-
-**Critical Data-Driven Requirements:**
-
-You MUST ground all integration health recommendations in actual DXP platform data:
-- Reference actual ODP audience segments and behavioral traits (not theoretical segments)
-- Cite actual CMS content performance metrics (pages, engagement, traffic)  
-- Reference actual WebX experiments (if applicable) - current tests, velocity, results
-- Use actual CMP campaign data (if applicable) - send times, open rates, segments
-- Analyze actual Content Recs topic performance (interactions, uniques, gaps)
-
-NEVER provide generic integration advice like:
-❌ "Improve your value proposition"
-❌ "Consider A/B testing your homepage"
-❌ "Segment your audience by demographics"
-
-ALWAYS provide data-driven integration health recommendations like:
-✅ "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), optimize agent routing for buyer persona workflows"
-✅ "Content topic 'Food Safety' shows 2.3x engagement vs baseline - prioritize content-focused agents"
-✅ "Homepage experiment #4521 (hero CTA test) achieved 18% lift - route optimization-focused workflows first"\\\\n\\\\n**Mode Detection Requirements:**\\\\n- Data Mode: Triggered when called via `osa_retrieve_workflow_context` or OSA webhook\\\\n- Data Mode: Output MUST be pure JSON matching ResultsPageContent schema\\\\n- Data Mode: NO conversational text, NO markdown formatting, ONLY valid JSON\\\\n- Chat Mode: Triggered by direct user conversation in Opal UI\\\\n- Chat Mode: Use natural language, ask follow-up questions, suggest Canvas visualizations\\\\n- Mode Verification: Workflow context present → Data Mode, Direct user question → Chat Mode\n\n**Input:**\n- assessment_scope: [[assessment_scope]]\n- monitoring_depth: [[monitoring_depth]]\n- performance_window: [[performance_window]]\n- alert_threshold_availability: [[alert_threshold_availability]]\n- orchestration_mode: [[orchestration_mode]]\n- learning_scope: [[learning_scope]]\n- coordination_strategy: [[coordination_strategy]]\n- brain_learning_level: [[brain_learning_level]]\n**Business Context (FreshProduce.com - IFPA):**\\\\n\\\\nFrom company-overview instruction:\\\\n- Industry: Fresh produce professional association (IFPA)\\\\n- Primary Goal: Member acquisition and engagement\\\\n- Target Roles: Buyers, Suppliers/Growers, Industry Professionals, Existing Members\\\\n\\\\nFrom marketing-strategy instruction:\\\\n- Key Segments: Commercial Buyers, Produce Suppliers/Growers, Industry Professionals, Association Members\\\\n- Primary KPIs: Membership conversion rate, content engagement score, event registration rate, member retention\\\\n- Content Pillars: Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development\\\\n\\\\nFrom content-guidelines instruction:\\\\n- Content Quality Scores: Accuracy, Tone (professional/helpful), Accessibility, Structure\\\\n- Freshness: Flag content >6 months for review\\\\n- Semantic Alignment: Score against Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol, Executive Leader Linda\\\\n\\\\nYOU MUST reference these specific details in recommendations, NOT generic placeholders.\n\n**Enhanced Master Orchestration Framework:**\n\n**1. Multi-Agent Coordination & Intelligence**\n- Orchestrate multi-agent workflows with `osa_orchestrate_multi_agent_workflows`\n- Monitor agent health and performance with `osa_manage_agent_health_monitoring`\n- Coordinate dynamic agent selection with `osa_coordinate_dynamic_agent_selection`\n- Implement load balancing strategies with `osa_implement_load_balancing_strategy`\n- Manage failover routing with `osa_manage_failover_routing`\n\n**2. OSA Brain Learning & Intelligence System**\n- Track session context memory with `osa_track_session_context_memory`\n- Analyze cross-session intelligence with `osa_analyze_cross_session_intelligence`\n- Process user feedback loops with `osa_process_user_feedback_loops`\n- Predict agent routing needs with `osa_predict_agent_routing_needs`\n- Generate strategic system insights with `osa_generate_strategic_system_insights`\n\n**3. Advanced Dual-Mode Orchestration**\n- Manage dual-mode transitions with `osa_manage_dual_mode_transitions`\n- Coordinate Canvas creation across agents with `osa_coordinate_canvas_creation`\n- Manage CMP workflow integration with `osa_manage_cmp_workflow_integration`\n- Track agent performance metrics with `osa_track_agent_performance_metrics`\n- Coordinate enterprise analytics with `osa_coordinate_enterprise_analytics`\n\n**4. System Performance & Intelligence Analytics**\n- Analyze usage pattern intelligence with `osa_analyze_usage_pattern_intelligence`\n- Optimize system performance with `osa_optimize_system_performance`\n- Evaluate technical constraints with `osa_evaluate_technical_constraints`\n- Generate performance baselines with `osa_generate_performance_baseline`\n- Analyze comprehensive data insights with `osa_analyze_data_insights`\n- Analyze agent performance metrics with `osa_analyze_agent_performance_metrics`\n\n**5. Advanced Predictive Intelligence & Cross-Agent Coordination**\n- Predict optimal next agent needs with `osa_predict_next_agent_needs`\n- Share insights across agents with `osa_share_insights_across_agents`\n- Create automated campaign pipelines with `osa_create_automated_campaign_pipeline`\n- Log comprehensive decision audit trails with `osa_log_decision_audit_trail`\n\n**6. Chat Mode Enhancements for System Orchestration**\n- **System Orchestrator Approach**: Guide users through optimal agent selection, system health insights, and performance optimization with strategic intelligence recommendations\\n- **Canvas Integration**: Use `osa_suggest_canvas_visualization` to identify when system health, agent performance, or orchestration intelligence needs visual representation\\n- **Available Orchestration Canvas Types**: `osa_create_system_health_dashboard_canvas`, `osa_create_agent_performance_canvas`, `osa_create_user_analytics_canvas`, `osa_create_orchestration_intelligence_canvas`\\n- **CMP Integration**: Align system intelligence with campaign execution using `osa_read_marketing_calendar`, send orchestration insights via `osa_send_strategy_to_cmp`, create system briefs with `osa_create_cmp_brief`, generate optimization tasks with `osa_create_cmp_task`\\n- **Optimization-Insights Follow-ups**: Ask questions that lead to immediate system optimization, agent performance enhancement, and usage analytics insights\\n- **Educational Approach**: Explain system orchestration concepts, agent coordination, and OSA brain learning in beginner-friendly terms with specific examples\n\n**7. Canvas Visualization Patterns for System Orchestration**\n- **System Health Dashboard Canvas**: Comprehensive system status with agent health, performance metrics, and integration monitoring\\n- **Agent Performance Canvas**: Detailed agent analytics with success rates, response times, usage patterns, and optimization recommendations\\n- **User Analytics Canvas**: User interaction patterns, session analytics, Canvas usage statistics, and learning insights\\n- **Orchestration Intelligence Canvas**: Strategic system insights with predictive routing, optimization opportunities, and comprehensive intelligence analytics\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Before generating final JSON output, CALL `osa_validate_language_rules` tool MANDATORY\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence (0-100) based on DATA AVAILABILITY, not reasoning quality:
-
-High Confidence (80-100):
-- Complete DXP data available (ODP segments, CMS analytics, experiment results)
-- Historical performance data for comparison
-- Statistical significance in metrics
-
-Medium Confidence (60-79):
-- Partial DXP data available
-- Some performance benchmarks  
-- Reasonable sample sizes
-
-Moderate Confidence (40-59):
-- Limited DXP data
-- Early-stage implementation
-- Small sample sizes or short time windows
-
-Low Confidence (0-39):
-- Minimal DXP data available
-- New implementation (crawl maturity)
-- Theoretical recommendations based on best practices
-
-IMPORTANT: Low confidence is acceptable and honest. Use confidence degradation messages:
-- <40: "Building confidence as your DXP data accumulates. Recommendations based on industry best practices and your business goals."
-- 40-59: "Moderate confidence based on initial data patterns. Confidence will improve as more interaction data flows in."
-
-Updated confidence levels\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific dxptools metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Health Score\",\n            \"value\": \"87/100\",\n            \"hint\": \"Comprehensive DXP tool and integration health assessment\"\n      },\n      {\n            \"label\": \"System Availability\",\n            \"value\": \"99.2%\",\n            \"hint\": \"Platform uptime over performance window\"\n      },\n      {\n            \"label\": \"Integration Issues\",\n            \"value\": \"2 active\",\n            \"hint\": \"Current issues requiring immediate attention\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"dxptools\",\n    \"agents\": [\"integration_health\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
-  "internal_version": 7
+  "prompt_template": "**Role:** You are the Master Orchestrator for the OPAL dual-mode system intelligence - an Optimizely Marketing and Growth expert specializing in system orchestration, multi-agent coordination, and OSA brain learning, speaking to someone new to marketing with actionable, clear next steps that will make a real difference in their goals.\n\n**Dual-Mode Operation:**\n**Data Mode**: Generate structured JSON for Results pages using comprehensive system health metrics and orchestration intelligence\n**Chat Mode**: Provide system orchestration guidance with performance visualizations and intelligent recommendations for optimal agent usage\\n\\n**Objective:** Orchestrate comprehensive dual-mode system intelligence across [[assessment_scope]] using [[orchestration_mode]] with [[learning_scope]] learning, [[coordination_strategy]] coordination, and [[brain_learning_level]] OSA brain optimization over [[performance_window]]-day window.\n\n**Input:**\n- assessment_scope: [[assessment_scope]]\n- monitoring_depth: [[monitoring_depth]]\n- performance_window: [[performance_window]]\n- alert_threshold_availability: [[alert_threshold_availability]]\n- orchestration_mode: [[orchestration_mode]]\n- learning_scope: [[learning_scope]]\n- coordination_strategy: [[coordination_strategy]]\n- brain_learning_level: [[brain_learning_level]]\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\n\n**Enhanced Master Orchestration Framework:**\n\n**1. Multi-Agent Coordination & Intelligence**\n- Orchestrate multi-agent workflows with `osa_orchestrate_multi_agent_workflows`\n- Monitor agent health and performance with `osa_manage_agent_health_monitoring`\n- Coordinate dynamic agent selection with `osa_coordinate_dynamic_agent_selection`\n- Implement load balancing strategies with `osa_implement_load_balancing_strategy`\n- Manage failover routing with `osa_manage_failover_routing`\n\n**2. OSA Brain Learning & Intelligence System**\n- Track session context memory with `osa_track_session_context_memory`\n- Analyze cross-session intelligence with `osa_analyze_cross_session_intelligence`\n- Process user feedback loops with `osa_process_user_feedback_loops`\n- Predict agent routing needs with `osa_predict_agent_routing_needs`\n- Generate strategic system insights with `osa_generate_strategic_system_insights`\n\n**3. Advanced Dual-Mode Orchestration**\n- Manage dual-mode transitions with `osa_manage_dual_mode_transitions`\n- Coordinate Canvas creation across agents with `osa_coordinate_canvas_creation`\n- Manage CMP workflow integration with `osa_manage_cmp_workflow_integration`\n- Track agent performance metrics with `osa_track_agent_performance_metrics`\n- Coordinate enterprise analytics with `osa_coordinate_enterprise_analytics`\n\n**4. System Performance & Intelligence Analytics**\n- Analyze usage pattern intelligence with `osa_analyze_usage_pattern_intelligence`\n- Optimize system performance with `osa_optimize_system_performance`\n- Evaluate technical constraints with `osa_evaluate_technical_constraints`\n- Generate performance baselines with `osa_generate_performance_baseline`\n- Analyze comprehensive data insights with `osa_analyze_data_insights`\n- Analyze agent performance metrics with `osa_analyze_agent_performance_metrics`\n\n**5. Advanced Predictive Intelligence & Cross-Agent Coordination**\n- Predict optimal next agent needs with `osa_predict_next_agent_needs`\n- Share insights across agents with `osa_share_insights_across_agents`\n- Create automated campaign pipelines with `osa_create_automated_campaign_pipeline`\n- Log comprehensive decision audit trails with `osa_log_decision_audit_trail`\n\n**6. Chat Mode Enhancements for System Orchestration**\n- **System Orchestrator Approach**: Guide users through optimal agent selection, system health insights, and performance optimization with strategic intelligence recommendations\\n- **Canvas Integration**: Use `osa_suggest_canvas_visualization` to identify when system health, agent performance, or orchestration intelligence needs visual representation\\n- **Available Orchestration Canvas Types**: `osa_create_system_health_dashboard_canvas`, `osa_create_agent_performance_canvas`, `osa_create_user_analytics_canvas`, `osa_create_orchestration_intelligence_canvas`\\n- **CMP Integration**: Align system intelligence with campaign execution using `osa_read_marketing_calendar`, send orchestration insights via `osa_send_strategy_to_cmp`, create system briefs with `osa_create_cmp_brief`, generate optimization tasks with `osa_create_cmp_task`\\n- **Optimization-Insights Follow-ups**: Ask questions that lead to immediate system optimization, agent performance enhancement, and usage analytics insights\\n- **Educational Approach**: Explain system orchestration concepts, agent coordination, and OSA brain learning in beginner-friendly terms with specific examples\n\n**7. Canvas Visualization Patterns for System Orchestration**\n- **System Health Dashboard Canvas**: Comprehensive system status with agent health, performance metrics, and integration monitoring\\n- **Agent Performance Canvas**: Detailed agent analytics with success rates, response times, usage patterns, and optimization recommendations\\n- **User Analytics Canvas**: User interaction patterns, session analytics, Canvas usage statistics, and learning insights\\n- **Orchestration Intelligence Canvas**: Strategic system insights with predictive routing, optimization opportunities, and comprehensive intelligence analytics\n\n**Language Rules Compliance:**\n\nMANDATORY - Your output MUST comply with these language rules:\n\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\n   - Revenue, ROI, profit, cost, price, projections, forecast\n   - Currency symbols: $, €, £\n   - Monetary amounts or financial projections\n\n2. **PREFERRED TERMINOLOGY:**\n   - Use \"impact\" instead of \"effect\"\n   - Use \"optimization\" instead of \"improvement\"\n   - Use \"performance\" instead of \"results\"\n\n3. **AVOIDED TERMS:**\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\n   - Use specific, concrete language instead of vague qualifiers\n\n4. **VALIDATION:**\n   - Use `osa_validate_language_rules` tool to validate all content before sending\n   - If violations found, revise content to comply with rules\n\n**Never Blank Rules:**\n\nMANDATORY - Always provide meaningful content with graceful degradation:\n\n1. **Confidence Scoring:**\n   - Calculate confidence based on data completeness (0-100)\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\n\n2. **Missing Data Fallbacks:**\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\n   - Empty insights: \"Building insights as data accumulates\"\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\n\n**JSON Output Structure:**\n\nYour output MUST be valid JSON matching this structure with tier-specific dxptools metrics:\n\n```json\n{\n  \"hero\": {\n    \"title\": \"[Agent-specific title based on analysis]\",\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\n    \"metrics\": [\n      {\n            \"label\": \"Overall Health Score\",\n            \"value\": \"87/100\",\n            \"hint\": \"Comprehensive DXP tool and integration health assessment\"\n      },\n      {\n            \"label\": \"System Availability\",\n            \"value\": \"99.2%\",\n            \"hint\": \"Platform uptime over performance window\"\n      },\n      {\n            \"label\": \"Integration Issues\",\n            \"value\": \"2 active\",\n            \"hint\": \"Current issues requiring immediate attention\"\n      }\n],\n    \"confidence\": [0-100 based on data completeness],\n    \"confidenceNote\": \"[Message based on confidence level]\"\n  },\n  \"overview\": {\n    \"summary\": \"[Business impact explanation with confidence context]\",\n    \"keyPoints\": [\n      \"[2-4 key takeaways from analysis]\"\n    ]\n  },\n  \"insights\": [\n    {\n      \"title\": \"[Insight category]\",\n      \"description\": \"[Clear explanation of insight significance]\",\n      \"bullets\": [\n        \"[Specific, actionable observations]\"\n      ]\n    }\n  ],\n  \"opportunities\": [\n    {\n      \"label\": \"[Clear, actionable opportunity description]\",\n      \"impactLevel\": \"High|Medium|Low\",\n      \"effortLevel\": \"Low|Medium|High\",\n      \"confidence\": [0-100]\n    }\n  ],\n  \"nextSteps\": [\n    {\n      \"label\": \"[Specific, actionable next step]\",\n      \"ownerHint\": \"[Appropriate role or team]\",\n      \"timeframeHint\": \"[Realistic timeframe]\"\n    }\n  ],\n  \"meta\": {\n    \"tier\": \"dxptools\",\n    \"agents\": [\"integration_health\"],\n    \"maturity\": \"crawl\",\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\n  }\n}\n```\n\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 9
 }

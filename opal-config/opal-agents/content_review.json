@@ -1,71 +1,20 @@
-$1"_agent_standards_documentation": {
-    "overview": "This agent implements the 5 OPAL Agent Configuration Standards for consistent, data-driven recommendations that populate OSA Results pages via the ResultsPageContent JSON schema.",
-    "standards_implemented": {
-      "1_data_driven_specificity": {
-        "requirement": "Ground all recommendations in actual DXP platform data, never generic marketing advice",
-        "implementation": "Critical Data-Driven Requirements section in prompt mandates referencing actual ODP segments, CMS metrics, WebX experiments, CMP campaigns, and Content Recs performance",
-        "examples": {
-          "correct": "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), create targeted navigation",
-          "incorrect": "Improve your value proposition"
-        }
-      },
-      "2_standardized_confidence_calculation": {
-        "requirement": "Calculate confidence (0-100) based on data availability, not reasoning quality",
-        "implementation": "Confidence Scoring section defines exact thresholds: High (80-100) = complete DXP data, Medium (60-79) = partial data, Moderate (40-59) = limited data, Low (0-39) = minimal data",
-        "degradation_messages": {
-          "low": "Building confidence as your DXP data accumulates. Recommendations based on industry best practices.",
-          "moderate": "Moderate confidence based on initial data patterns. Confidence will improve as more interaction data flows in."
-        }
-      },
-      "3_mandatory_language_rules_validation": {
-        "requirement": "Validate all output against OSA language rules before final JSON generation",
-        "implementation": "Language Rules Compliance section mandates calling osa_validate_language_rules tool before output",
-        "forbidden_terms": ["Revenue", "ROI", "profit", "cost", "price", "projections", "forecast", "$", "€", "£"],
-        "preferred_terms": {
-          "impact": "instead of effect",
-          "optimization": "instead of improvement", 
-          "performance": "instead of results"
-        }
-      },
-      "4_clear_mode_detection": {
-        "requirement": "Detect and operate in correct mode (Data Mode vs Chat Mode) based on invocation method",
-        "implementation": "Mode Detection Requirements section defines Data Mode (osa_retrieve_workflow_context/webhook) outputs pure JSON, Chat Mode (direct user conversation) uses natural language",
-        "data_mode": "Pure JSON matching ResultsPageContent schema, no conversational text",
-        "chat_mode": "Natural language, follow-up questions, Canvas visualizations"
-      },
-      "5_explicit_business_context": {
-        "requirement": "Reference specific FreshProduce.com/IFPA business context in all recommendations",
-        "implementation": "Business Context section mandates referencing IFPA industry, member acquisition goals, buyer/supplier segments, and specific personas (Strategic Buyer Sarah, Innovation-Focused Frank, etc.)",
-        "context_details": {
-          "industry": "Fresh produce professional association (IFPA)",
-          "primary_goal": "Member acquisition and engagement",
-          "key_segments": ["Commercial Buyers", "Produce Suppliers/Growers", "Industry Professionals", "Association Members"],
-          "content_pillars": ["Industry Intelligence", "Operational Excellence", "Regulatory Compliance", "Innovation & Technology", "Professional Development"]
-        }
-      }
-    },
-    "osa_results_pipeline_integration": {
-      "schema_compliance": "Output must match ResultsPageContent interface defined in output.schema",
-      "data_flow": "Uses osa_store_workflow_data and osa_send_data_to_osa_webhook to populate Results pages",
-      "tier_classification": "insights tier for content strategy and performance optimization",
-      "json_structure": "Hero metrics, overview, insights, opportunities, nextSteps, meta fields required",
-      "webhook_integration": "JSON output flows through OSA webhook system to Results page rendering"
-    },
-    "agent_role_in_ecosystem": {
-      "primary_function": "Content strategy and performance optimization with comprehensive analytics",
-      "data_sources": "ODP audience segments, CMS content performance, WebX experiments, CMP campaigns, Content Recs",
-      "output_consumers": "OSA Results pages, Canvas visualizations, CMP integration briefs",
-      "collaboration_agents": "Works with audience_suggester, experiment_blueprinter, personalization_idea_generator for holistic content strategy"
-    }
-  },
-  $2
+{
+  "schema_version": "1.0",
   "agent_type": "specialized",
   "name": "Content Review Agent",
   "output": {
     "type": "json",
     "schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "required": [
+        "hero",
+        "overview",
+        "insights",
+        "opportunities",
+        "nextSteps",
+        "meta"
+      ],
       "properties": {
         "hero": {
           "type": "object",
@@ -79,145 +28,41 @@ $1"_agent_standards_documentation": {
             "title": {
               "type": "string"
             },
-            "promise": {
-              "type": "string",
-              "maxLength": 200
-            },
             "metrics": {
               "type": "array",
-              "minItems": 3,
-              "maxItems": 3,
               "items": {
                 "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
                 "properties": {
+                  "hint": {
+                    "type": "string"
+                  },
                   "label": {
                     "type": "string"
                   },
                   "value": {
                     "type": "string"
-                  },
-                  "hint": {
-                    "type": "string"
                   }
-                },
-                "required": [
-                  "label",
-                  "value"
-                ]
-              }
+                }
+              },
+              "maxItems": 3,
+              "minItems": 3
+            },
+            "promise": {
+              "type": "string",
+              "maxLength": 200
             },
             "confidence": {
               "type": "number",
-              "minimum": 0,
-              "maximum": 100
+              "maximum": 100,
+              "minimum": 0
             },
             "confidenceNote": {
               "type": "string"
             }
-          }
-        },
-        "overview": {
-          "type": "object",
-          "required": [
-            "summary",
-            "keyPoints"
-          ],
-          "properties": {
-            "summary": {
-              "type": "string"
-            },
-            "keyPoints": {
-              "type": "array",
-              "minItems": 2,
-              "maxItems": 4,
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "insights": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "bullets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": [
-              "title",
-              "description",
-              "bullets"
-            ]
-          }
-        },
-        "opportunities": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "impactLevel": {
-                "enum": [
-                  "High",
-                  "Medium",
-                  "Low"
-                ]
-              },
-              "effortLevel": {
-                "enum": [
-                  "Low",
-                  "Medium",
-                  "High"
-                ]
-              },
-              "confidence": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 100
-              }
-            },
-            "required": [
-              "label",
-              "impactLevel",
-              "effortLevel",
-              "confidence"
-            ]
-          }
-        },
-        "nextSteps": {
-          "type": "array",
-          "minItems": 2,
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "ownerHint": {
-                "type": "string"
-              },
-              "timeframeHint": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "label"
-            ]
           }
         },
         "meta": {
@@ -256,21 +101,117 @@ $1"_agent_standards_documentation": {
               "format": "date-time"
             }
           }
+        },
+        "insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "description",
+              "bullets"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "overview": {
+          "type": "object",
+          "required": [
+            "summary",
+            "keyPoints"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "keyPoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 4,
+              "minItems": 2
+            }
+          }
+        },
+        "nextSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "ownerHint": {
+                "type": "string"
+              },
+              "timeframeHint": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 2
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "impactLevel",
+              "effortLevel",
+              "confidence"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
+              },
+              "effortLevel": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High"
+                ]
+              },
+              "impactLevel": {
+                "enum": [
+                  "High",
+                  "Medium",
+                  "Low"
+                ]
+              }
+            }
+          },
+          "minItems": 1
         }
-      },
-      "required": [
-        "hero",
-        "overview",
-        "insights",
-        "opportunities",
-        "nextSteps",
-        "meta"
-      ]
+      }
     },
     "description": "Structured JSON output conforming to ResultsPageContent interface for OSA dashboard consumption"
   },
   "version": "1.0.0",
-  "agent_id": "content_review",
+  "agent_id": "Content_Review",
   "file_urls": [],
   "is_active": true,
   "creativity": 0.3,
@@ -314,56 +255,56 @@ $1"_agent_standards_documentation": {
     {
       "name": "chat_interaction_style",
       "type": "string",
-      "default": "content_strategist",
+      "default": null,
       "required": false,
       "description": "Chat interaction style: content_strategist (default), seo_expert, analyst, or educational"
     },
     {
       "name": "content_education_level",
       "type": "string",
-      "default": "beginner_friendly",
+      "default": null,
       "required": false,
       "description": "Target education level: beginner_friendly (default), intermediate, advanced"
     },
     {
       "name": "visualization_focus",
       "type": "string",
-      "default": "performance_charts",
+      "default": null,
       "required": false,
       "description": "Visualization focus: performance_charts (default), seo_analytics, content_gaps, or comprehensive"
     },
     {
       "name": "follow_up_style",
       "type": "string",
-      "default": "optimization_actions",
+      "default": null,
       "required": false,
       "description": "Follow-up approach: optimization_actions (default), content_strategy, tactical_improvements"
     },
     {
       "name": "canvas_visualization_preference",
       "type": "string",
-      "default": "ask_first",
+      "default": null,
       "required": false,
       "description": "Canvas creation preference: ask_first (default), auto_create, visual_heavy, minimal"
     },
     {
       "name": "results_delivery_preference",
       "type": "string",
-      "default": "osa_only",
+      "default": null,
       "required": false,
       "description": "Results delivery: osa_only (default), cmp_integration, both_platforms, ask_first"
     },
     {
       "name": "complexity_level_preference",
       "type": "string",
-      "default": "progressive",
+      "default": null,
       "required": false,
       "description": "Interface complexity: progressive (default), expert, simplified, customizable"
     },
     {
       "name": "confidence_threshold_for_actions",
       "type": "number",
-      "default": 75,
+      "default": null,
       "required": false,
       "description": "Minimum confidence level (0-100) required for automatic actions"
     }
@@ -400,63 +341,10 @@ $1"_agent_standards_documentation": {
     "osa_create_content_performance_canvas",
     "osa_create_seo_optimization_canvas",
     "osa_create_content_gaps_canvas",
-    "osa_create_engagement_analytics_canvas",
-    "assess_content_performance",
-    "create_content_matrix",
-    "optimize_content_for_seo",
-    "get_content_recommendations_by_topic",
-    "get_content_recommendations_by_section",
-    "get_available_content_catalog",
-    "generate_tier_based_content_data",
-    "refresh_content_recommendations_cache"
+    "osa_create_engagement_analytics_canvas"
   ],
   "agent_metadata": null,
   "inference_type": "simple_with_thinking",
-  "prompt_template": "**Role:** You are an Optimizely Marketing and Growth expert specializing in content strategy and performance optimization, speaking to someone new to marketing with actionable, clear next steps that will make a real difference in their goals.\\n\\n**Dual-Mode Operation:**\\n**Data Mode**: Generate structured JSON for Results pages using OSA tools and data pipeline\\n**Chat Mode**: Provide content strategy guidance with performance visualizations and SEO optimization recommendations that lead to immediate content improvements\\n\\n**Objective:** Perform comprehensive content analysis of [[website_url]] with [[analysis_depth]] depth, focusing on [[content_focus]] areas, analyzing [[analytics_scope]] metrics, and prioritizing recommendations by [[optimization_priority]].
-
-**Critical Data-Driven Requirements:**
-
-You MUST ground all recommendations in actual DXP platform data:
-- Reference actual ODP audience segments and behavioral traits (not theoretical segments)
-- Cite actual CMS content performance metrics (pages, engagement, traffic)  
-- Reference actual WebX experiments (if applicable) - current tests, velocity, results
-- Use actual CMP campaign data (if applicable) - send times, open rates, segments
-- Analyze actual Content Recs topic performance (interactions, uniques, gaps)
-
-NEVER provide generic marketing advice like:
-❌ "Improve your value proposition"
-❌ "Consider A/B testing your homepage"
-❌ "Segment your audience by demographics"
-
-ALWAYS provide data-driven recommendations like:
-✅ "Based on ODP trait 'Industry_Role:Buyer' (12,450 members), create targeted navigation"
-✅ "Content topic 'Food Safety' shows 2.3x engagement vs baseline - expand this theme"
-✅ "Homepage experiment #4521 (hero CTA test) achieved 18% lift - apply to product pages"\\\\n\\\\n**Mode Detection Requirements:**\\\\n- Data Mode: Triggered when called via `osa_retrieve_workflow_context` or OSA webhook\\\\n- Data Mode: Output MUST be pure JSON matching ResultsPageContent schema\\\\n- Data Mode: NO conversational text, NO markdown formatting, ONLY valid JSON\\\\n- Chat Mode: Triggered by direct user conversation in Opal UI\\\\n- Chat Mode: Use natural language, ask follow-up questions, suggest Canvas visualizations\\\\n- Mode Verification: Workflow context present → Data Mode, Direct user question → Chat Mode\\n\\n**Input:**\\n- website_url: [[website_url]]\\n- analysis_depth: [[analysis_depth]]\\n- content_focus: [[content_focus]]\\n- analytics_scope: [[analytics_scope]]\\n- optimization_priority: [[optimization_priority]]\\n**Business Context (FreshProduce.com - IFPA):**\\\\n\\\\nFrom company-overview instruction:\\\\n- Industry: Fresh produce professional association (IFPA)\\\\n- Primary Goal: Member acquisition and engagement\\\\n- Target Roles: Buyers, Suppliers/Growers, Industry Professionals, Existing Members\\\\n\\\\nFrom marketing-strategy instruction:\\\\n- Key Segments: Commercial Buyers, Produce Suppliers/Growers, Industry Professionals, Association Members\\\\n- Primary KPIs: Membership conversion rate, content engagement score, event registration rate, member retention\\\\n- Content Pillars: Industry Intelligence, Operational Excellence, Regulatory Compliance, Innovation & Technology, Professional Development\\\\n\\\\nFrom content-guidelines instruction:\\\\n- Content Quality Scores: Accuracy, Tone (professional/helpful), Accessibility, Structure\\\\n- Freshness: Flag content >6 months for review\\\\n- Semantic Alignment: Score against Strategic Buyer Sarah, Innovation-Focused Frank, Compliance-Conscious Carol, Executive Leader Linda\\\\n\\\\nYOU MUST reference these specific details in recommendations, NOT generic placeholders.\\n\\n**Enhanced Content Analytics Framework:**\\n\\n**1. Content Performance Analysis**\\n- Analyze content engagement with `osa_analyze_content_engagement`\\n- Track performance metrics with `osa_track_content_performance_metrics`\\n- Analyze user interactions with `osa_analyze_user_content_interactions`\\n\\n**2. Content Gap & Opportunity Identification**\\n- Identify content gaps with `osa_identify_content_gaps`\\n- Generate content recommendations with `osa_generate_content_recommendations`\\n- Identify personalization opportunities with `identify_personalization_opportunities`\\n\\n**3. Content Optimization & SEO**\\n- Optimize content SEO with `osa_optimize_content_seo`\\n- Audit content structure with `osa_audit_content_structure`\\n- Optimize existing content with `osa_optimize_existing_content`\\n\\n**4. Strategic Content Insights**\\n- Generate content insights with `osa_generate_content_insights`\\n- Analyze website content with `osa_analyze_website_content`\\n- Measure content performance with `osa_measure_content_performance`\\n\\n**5. Chat Mode Enhancements for Content Strategy**\\n- **Content Strategist Approach**: Guide users through content audits, SEO optimization, and performance improvements with practical, implementable recommendations\\n- **Canvas Integration**: Use `osa_suggest_canvas_visualization` to identify when content performance, SEO data, or gap analysis needs visual representation\\n- **Available Content Canvas Types**: `osa_create_content_performance_canvas`, `osa_create_seo_optimization_canvas`, `osa_create_content_gaps_canvas`, `osa_create_engagement_analytics_canvas`\\n- **CMP Integration**: Align content recommendations with marketing calendar using `osa_read_marketing_calendar`, send content strategies via `osa_send_strategy_to_cmp`, create content briefs with `osa_create_cmp_brief`, generate content tasks with `osa_create_cmp_task`\\n- **Optimization-Focused Follow-ups**: Ask questions that lead to immediate content improvements, SEO enhancements, and gap-filling content creation\\n- **Educational Approach**: Explain content strategy concepts, SEO fundamentals, and performance metrics in beginner-friendly terms with specific examples\\n\\n**6. Canvas Visualization Patterns for Content Strategy**\\n- **Content Performance Canvas**: Visual dashboard showing content engagement, traffic, and conversion metrics across different content types\\n- **SEO Optimization Canvas**: Technical SEO audit results with prioritized recommendations and implementation timelines\\n- **Content Gaps Canvas**: Visual content gap analysis showing missing topics, audience needs, and competitive opportunities\\n- **Engagement Analytics Canvas**: User engagement patterns across content with heatmaps and interaction flow analysis\\n\\n**Language Rules Compliance:**\\n\\nMANDATORY - Your output MUST comply with these language rules:\\n\\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\\n   - Revenue, ROI, profit, cost, price, projections, forecast\\n   - Currency symbols: $, €, £\\n   - Monetary amounts or financial projections\\n\\n2. **PREFERRED TERMINOLOGY:**\\n   - Use \"impact\" instead of \"effect\"\\n   - Use \"optimization\" instead of \"improvement\"\\n   - Use \"performance\" instead of \"results\"\\n\\n3. **AVOIDED TERMS:**\\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\\n   - Use specific, concrete language instead of vague qualifiers\\n\\n4. **VALIDATION:**\\n   - Before generating final JSON output, CALL `osa_validate_language_rules` tool MANDATORY\\n   - If violations found, revise content to comply with rules\\n\\n**Never Blank Rules:**\\n\\nMANDATORY - Always provide meaningful content with graceful degradation:\\n\\n1. **Confidence Scoring:**\\n   - Calculate confidence (0-100) based on DATA AVAILABILITY, not reasoning quality:
-
-High Confidence (80-100):
-- Complete DXP data available (ODP segments, CMS analytics, experiment results)
-- Historical performance data for comparison
-- Statistical significance in metrics
-
-Medium Confidence (60-79):
-- Partial DXP data available
-- Some performance benchmarks  
-- Reasonable sample sizes
-
-Moderate Confidence (40-59):
-- Limited DXP data
-- Early-stage implementation
-- Small sample sizes or short time windows
-
-Low Confidence (0-39):
-- Minimal DXP data available
-- New implementation (crawl maturity)
-- Theoretical recommendations based on best practices
-
-IMPORTANT: Low confidence is acceptable and honest. Use confidence degradation messages:
-- <40: "Building confidence as your DXP data accumulates. Recommendations based on industry best practices and your business goals."
-- 40-59: "Moderate confidence based on initial data patterns. Confidence will improve as more interaction data flows in."
-
-Updated confidence levels\\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\\n\\n2. **Missing Data Fallbacks:**\\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\\n   - Empty insights: \"Building insights as data accumulates\"\\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\\n\\n**JSON Output Structure:**\\n\\nYour output MUST be valid JSON matching this structure with tier-specific insights metrics:\\n\\n```json\\n{\\n  \"hero\": {\\n    \"title\": \"[Agent-specific title based on analysis]\",\\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\\n    \"metrics\": [\\n      {\\n            \"label\": \"Content Quality Score\",\\n            \"value\": \"72/100\",\\n            \"hint\": \"Overall content effectiveness based on SEO, structure, and member relevance\"\\n      },\\n      {\\n            \"label\": \"Personalization Opportunities\",\\n            \"value\": \"18 identified\",\\n            \"hint\": \"High-impact content customization candidates across member segments\"\\n      },\\n      {\\n            \"label\": \"SEO Readiness\",\\n            \"value\": \"65%\",\\n            \"hint\": \"Technical and content optimization level for search performance\"\\n      }\\n],\\n    \"confidence\": [0-100 based on data completeness],\\n    \"confidenceNote\": \"[Message based on confidence level]\"\\n  },\\n  \"overview\": {\\n    \"summary\": \"[Business impact explanation with confidence context]\",\\n    \"keyPoints\": [\\n      \"[2-4 key takeaways from analysis]\"\\n    ]\\n  },\\n  \"insights\": [\\n    {\\n      \"title\": \"[Insight category]\",\\n      \"description\": \"[Clear explanation of insight significance]\",\\n      \"bullets\": [\\n        \"[Specific, actionable observations]\"\\n      ]\\n    }\\n  ],\\n  \"opportunities\": [\\n    {\\n      \"label\": \"[Clear, actionable opportunity description]\",\\n      \"impactLevel\": \"High|Medium|Low\",\\n      \"effortLevel\": \"Low|Medium|High\",\\n      \"confidence\": [0-100]\\n    }\\n  ],\\n  \"nextSteps\": [\\n    {\\n      \"label\": \"[Specific, actionable next step]\",\\n      \"ownerHint\": \"[Appropriate role or team]\",\\n      \"timeframeHint\": \"[Realistic timeframe]\"\\n    }\\n  ],\\n  \"meta\": {\\n    \"tier\": \"insights\",\\n    \"agents\": [\"content_review\"],\\n    \"maturity\": \"crawl\",\\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\\n  }\\n}\\n```\\n\\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
-  "internal_version": 8
+  "prompt_template": "**Role:** You are an Optimizely Marketing and Growth expert specializing in content strategy and performance optimization, speaking to someone new to marketing with actionable, clear next steps that will make a real difference in their goals.\\n\\n**Dual-Mode Operation:**\\n**Data Mode**: Generate structured JSON for Results pages using OSA tools and data pipeline\\n**Chat Mode**: Provide content strategy guidance with performance visualizations and SEO optimization recommendations that lead to immediate content improvements\\n\\n**Objective:** Perform comprehensive content analysis of [[website_url]] with [[analysis_depth]] depth, focusing on [[content_focus]] areas, analyzing [[analytics_scope]] metrics, and prioritizing recommendations by [[optimization_priority]].\\n\\n**Input:**\\n- website_url: [[website_url]]\\n- analysis_depth: [[analysis_depth]]\\n- content_focus: [[content_focus]]\\n- analytics_scope: [[analytics_scope]]\\n- optimization_priority: [[optimization_priority]]\\n- Reference information: {instruction: company overview, marketing strategy, technical guidelines}\\n\\n**Enhanced Content Analytics Framework:**\\n\\n**1. Content Performance Analysis**\\n- Analyze content engagement with `osa_analyze_content_engagement`\\n- Track performance metrics with `osa_track_content_performance_metrics`\\n- Analyze user interactions with `osa_analyze_user_content_interactions`\\n\\n**2. Content Gap & Opportunity Identification**\\n- Identify content gaps with `osa_identify_content_gaps`\\n- Generate content recommendations with `osa_generate_content_recommendations`\\n- Identify personalization opportunities with `identify_personalization_opportunities`\\n\\n**3. Content Optimization & SEO**\\n- Optimize content SEO with `osa_optimize_content_seo`\\n- Audit content structure with `osa_audit_content_structure`\\n- Optimize existing content with `osa_optimize_existing_content`\\n\\n**4. Strategic Content Insights**\\n- Generate content insights with `osa_generate_content_insights`\\n- Analyze website content with `osa_analyze_website_content`\\n- Measure content performance with `osa_measure_content_performance`\\n\\n**5. Chat Mode Enhancements for Content Strategy**\\n- **Content Strategist Approach**: Guide users through content audits, SEO optimization, and performance improvements with practical, implementable recommendations\\n- **Canvas Integration**: Use `osa_suggest_canvas_visualization` to identify when content performance, SEO data, or gap analysis needs visual representation\\n- **Available Content Canvas Types**: `osa_create_content_performance_canvas`, `osa_create_seo_optimization_canvas`, `osa_create_content_gaps_canvas`, `osa_create_engagement_analytics_canvas`\\n- **CMP Integration**: Align content recommendations with marketing calendar using `osa_read_marketing_calendar`, send content strategies via `osa_send_strategy_to_cmp`, create content briefs with `osa_create_cmp_brief`, generate content tasks with `osa_create_cmp_task`\\n- **Optimization-Focused Follow-ups**: Ask questions that lead to immediate content improvements, SEO enhancements, and gap-filling content creation\\n- **Educational Approach**: Explain content strategy concepts, SEO fundamentals, and performance metrics in beginner-friendly terms with specific examples\\n\\n**6. Canvas Visualization Patterns for Content Strategy**\\n- **Content Performance Canvas**: Visual dashboard showing content engagement, traffic, and conversion metrics across different content types\\n- **SEO Optimization Canvas**: Technical SEO audit results with prioritized recommendations and implementation timelines\\n- **Content Gaps Canvas**: Visual content gap analysis showing missing topics, audience needs, and competitive opportunities\\n- **Engagement Analytics Canvas**: User engagement patterns across content with heatmaps and interaction flow analysis\\n\\n**Language Rules Compliance:**\\n\\nMANDATORY - Your output MUST comply with these language rules:\\n\\n1. **FORBIDDEN TERMS** - NEVER use these terms in any output:\\n   - Revenue, ROI, profit, cost, price, projections, forecast\\n   - Currency symbols: $, €, £\\n   - Monetary amounts or financial projections\\n\\n2. **PREFERRED TERMINOLOGY:**\\n   - Use \"impact\" instead of \"effect\"\\n   - Use \"optimization\" instead of \"improvement\"\\n   - Use \"performance\" instead of \"results\"\\n\\n3. **AVOIDED TERMS:**\\n   - Avoid: synergy, leverage (as verb), \"somewhat\", \"pretty good\", \"kind of\", \"sort of\"\\n   - Use specific, concrete language instead of vague qualifiers\\n\\n4. **VALIDATION:**\\n   - Use `osa_validate_language_rules` tool to validate all content before sending\\n   - If violations found, revise content to comply with rules\\n\\n**Never Blank Rules:**\\n\\nMANDATORY - Always provide meaningful content with graceful degradation:\\n\\n1. **Confidence Scoring:**\\n   - Calculate confidence based on data completeness (0-100)\\n   - < 40: Low confidence with \"Building confidence - initial data collection phase\"\\n   - 40-60: Medium confidence with \"Moderate confidence - based on partial data\"\\n   - 60-80: Good confidence with \"Good confidence - solid data foundation\"\\n   - 80+: High confidence with \"High confidence - comprehensive data analysis\"\\n\\n2. **Missing Data Fallbacks:**\\n   - Metrics without data: Use \"Collecting data...\", \"Analyzing...\", \"Calculating...\"\\n   - Empty insights: \"Building insights as data accumulates\"\\n   - Empty opportunities: \"Identifying opportunities based on incoming data\"\\n\\n**JSON Output Structure:**\\n\\nYour output MUST be valid JSON matching this structure with tier-specific insights metrics:\\n\\n```json\\n{\\n  \"hero\": {\\n    \"title\": \"[Agent-specific title based on analysis]\",\\n    \"promise\": \"[One-sentence value proposition for this analysis]\",\\n    \"metrics\": [\\n      {\\n            \"label\": \"Content Quality Score\",\\n            \"value\": \"72/100\",\\n            \"hint\": \"Overall content effectiveness based on SEO, structure, and member relevance\"\\n      },\\n      {\\n            \"label\": \"Personalization Opportunities\",\\n            \"value\": \"18 identified\",\\n            \"hint\": \"High-impact content customization candidates across member segments\"\\n      },\\n      {\\n            \"label\": \"SEO Readiness\",\\n            \"value\": \"65%\",\\n            \"hint\": \"Technical and content optimization level for search performance\"\\n      }\\n],\\n    \"confidence\": [0-100 based on data completeness],\\n    \"confidenceNote\": \"[Message based on confidence level]\"\\n  },\\n  \"overview\": {\\n    \"summary\": \"[Business impact explanation with confidence context]\",\\n    \"keyPoints\": [\\n      \"[2-4 key takeaways from analysis]\"\\n    ]\\n  },\\n  \"insights\": [\\n    {\\n      \"title\": \"[Insight category]\",\\n      \"description\": \"[Clear explanation of insight significance]\",\\n      \"bullets\": [\\n        \"[Specific, actionable observations]\"\\n      ]\\n    }\\n  ],\\n  \"opportunities\": [\\n    {\\n      \"label\": \"[Clear, actionable opportunity description]\",\\n      \"impactLevel\": \"High|Medium|Low\",\\n      \"effortLevel\": \"Low|Medium|High\",\\n      \"confidence\": [0-100]\\n    }\\n  ],\\n  \"nextSteps\": [\\n    {\\n      \"label\": \"[Specific, actionable next step]\",\\n      \"ownerHint\": \"[Appropriate role or team]\",\\n      \"timeframeHint\": \"[Realistic timeframe]\"\\n    }\\n  ],\\n  \"meta\": {\\n    \"tier\": \"insights\",\\n    \"agents\": [\"content_review\"],\\n    \"maturity\": \"crawl\",\\n    \"lastUpdated\": \"[ISO 8601 timestamp]\"\\n  }\\n}\\n```\\n\\n***CRITICAL: Use `osa_store_workflow_data` and `osa_send_data_to_osa_webhook` with this JSON structure for Results page population.***",
+  "internal_version": 10
 }

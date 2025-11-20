@@ -62,22 +62,26 @@
       }
     },
     {
+      "_comment_tool_name_mapping": "CRITICAL: Tool name must match API endpoint path exactly",
+      "_comment_endpoint_path": "Tool name 'osa_send_data_to_osa_webhook' → /api/tools/osa_send_data_to_osa_webhook/route.ts",
+      "_comment_integration_pattern": "This tool uses wrapper pattern to bridge OPAL → Enhanced Tools (send_data_to_osa_enhanced)",
+      "_comment_validation_requirement": "Before modifying: validate with opal-integration-validator agent",
       "name": "osa_send_data_to_osa_webhook",
-      "description": "Send agent data and results to OSA application via webhook for real-time updates",
+      "description": "Send agent data and results to OSA application via webhook for real-time updates (OPAL chat interface)",
       "input_schema": {
         "type": "object",
         "properties": {
           "agent_name": {
             "type": "string",
-            "description": "Name of the agent sending data (matches OSA endpoint schema)"
+            "description": "Name of the agent sending data (transforms to 'agent_id' in Enhanced Tools format)"
           },
           "execution_results": {
             "type": "object",
-            "description": "Agent execution results and insights (matches OSA endpoint schema)"
+            "description": "Agent execution results and insights (transforms to 'agent_data' in Enhanced Tools format)"
           },
           "workflow_id": {
             "type": "string",
-            "description": "Unique workflow execution identifier"
+            "description": "Unique workflow execution identifier (direct mapping to Enhanced Tools)"
           },
           "metadata": {
             "type": "object",
