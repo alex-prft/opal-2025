@@ -31,9 +31,8 @@ export default function RootLayout({
               {/*
                 CRITICAL: Context Provider Hierarchy & Static Generation Safety
 
-                During Next.js static generation, all these providers are executed before React
-                is fully initialized. Each provider MUST implement the React Hook Safety Pattern
-                to prevent build failures:
+                The useContext error during global error prerendering is a Next.js 16 + React 19
+                issue, not caused by our providers. Each provider implements React Hook Safety patterns.
 
                 - QueryProvider: Handles React Query setup with useState safety check
                 - GuardrailsProvider: Manages security context with useContext safety

@@ -31,6 +31,22 @@ export interface SyncStatus {
 }
 
 export function useForceSyncUnified() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return safe fallback object during static generation
+    return {
+      syncStatus: {
+        status: 'idle' as const,
+        progress: 0,
+        message: 'Unavailable during static generation'
+      },
+      startSync: async () => ({ success: false, error: 'Unavailable during static generation' }),
+      stopSync: () => {},
+      resetSync: () => {}
+    };
+  }
+
   const [syncStatus, setSyncStatus] = useState<SyncStatus>({
     status: 'idle',
     progress: 0,

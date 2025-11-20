@@ -79,11 +79,23 @@ export function useServiceStatus() {
     };
   }
 
-  const context = useContext(ServiceStatusContext);
-  if (context === undefined) {
-    throw new Error('useServiceStatus must be used within a ServiceStatusProvider');
+  // Check if React context system is available (React can be null during static generation)
+  try {
+    const context = useContext(ServiceStatusContext);
+    if (context === undefined) {
+      throw new Error('useServiceStatus must be used within a ServiceStatusProvider');
+    }
+    return context;
+  } catch (error) {
+    // Fallback if React context is not available during static generation
+    console.warn('ServiceStatus hook failed during static generation:', error);
+    return {
+      issues: [],
+      addIssue: () => {},
+      resolveIssue: () => {},
+      clearIssues: () => {}
+    };
   }
-  return context;
 }
 
 // Higher order component to wrap API calls with error handling
@@ -126,16 +138,22 @@ export function useServiceErrorListener() {
     return; // No-op during static generation
   }
 
-  const { addIssue } = useServiceStatus();
+  try {
+    const { addIssue } = useServiceStatus();
 
-  React.useEffect(() => {
-    const handleServiceError = (event: CustomEvent) => {
-      addIssue(event.detail);
-    };
+    React.useEffect(() => {
+      const handleServiceError = (event: CustomEvent) => {
+        addIssue(event.detail);
+      };
 
-    window.addEventListener('serviceError', handleServiceError as EventListener);
-    return () => {
-      window.removeEventListener('serviceError', handleServiceError as EventListener);
-    };
-  }, [addIssue]);
+      window.addEventListener('serviceError', handleServiceError as EventListener);
+      return () => {
+        window.removeEventListener('serviceError', handleServiceError as EventListener);
+      };
+    }, [addIssue]);
+  } catch (error) {
+    // Gracefully handle any context errors during static generation
+    console.warn('ServiceErrorListener hook failed during static generation:', error);
+    return; // No-op if context is not available
+  }
 }

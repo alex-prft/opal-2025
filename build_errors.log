@@ -1,0 +1,3 @@
+Error occurred prerendering page "/_global-error". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: Cannot read properties of null (reading 'useContext')
+Export encountered an error on /_global-error/page: /_global-error, exiting the build.

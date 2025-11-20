@@ -56,6 +56,36 @@ export function useTierOPALData(
   } = {}
 ): TierOPALDataResult {
 
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return safe fallback object during static generation
+    return {
+      tier1: {
+        data: null,
+        loading: false,
+        error: 'Unavailable during static generation',
+        metadata: undefined
+      },
+      tier2: {
+        data: null,
+        loading: false,
+        error: 'Unavailable during static generation',
+        metadata: undefined
+      },
+      tier3: {
+        data: null,
+        loading: false,
+        error: 'Unavailable during static generation',
+        metadata: undefined
+      },
+      isLoading: false,
+      hasError: false,
+      refresh: async () => {},
+      clearCache: () => {}
+    };
+  }
+
   const {
     refreshInterval = 60000, // 1 minute default
     enableAutoRefresh = true,

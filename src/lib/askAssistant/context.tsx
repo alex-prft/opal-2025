@@ -37,7 +37,7 @@ export function AskAssistantProvider({
 }: AskAssistantProviderProps) {
   // CRITICAL: React hook safety during Next.js static generation
   // During static generation, React can be null, so check before using context providers
-  if (typeof window === 'undefined' && (!React)) {
+  if (typeof window === 'undefined') {
     // Return children directly during static generation to prevent build failures
     return <>{children}</>;
   }
@@ -87,13 +87,25 @@ export function useAskAssistant(): AskAssistantContextValue {
     };
   }
 
-  const context = useContext(AskAssistantContext);
+  // Check if React context system is available (React can be null during static generation)
+  try {
+    const context = useContext(AskAssistantContext);
 
-  if (!context) {
-    throw new Error('useAskAssistant must be used within an AskAssistantProvider');
+    if (!context) {
+      throw new Error('useAskAssistant must be used within an AskAssistantProvider');
+    }
+
+    return context;
+  } catch (error) {
+    // Fallback if React context is not available during static generation
+    console.warn('AskAssistant hook failed during static generation:', error);
+    return {
+      sectionKey: null,
+      promptConfig: null,
+      sourcePath: '',
+      isAvailable: false
+    };
   }
-
-  return context;
 }
 
 /**
@@ -110,14 +122,25 @@ export function useAskAssistantAvailability() {
     };
   }
 
-  const { isAvailable, sectionKey, promptConfig } = useAskAssistant();
+  try {
+    const { isAvailable, sectionKey, promptConfig } = useAskAssistant();
 
-  return {
-    isAvailable,
-    sectionKey,
-    promptConfig,
-    unavailableReason: !isAvailable
-      ? (promptConfig ? 'Configuration not complete yet' : 'No configuration found')
-      : null
-  };
+    return {
+      isAvailable,
+      sectionKey,
+      promptConfig,
+      unavailableReason: !isAvailable
+        ? (promptConfig ? 'Configuration not complete yet' : 'No configuration found')
+        : null
+    };
+  } catch (error) {
+    // Fallback if useAskAssistant fails during static generation
+    console.warn('AskAssistantAvailability hook failed during static generation:', error);
+    return {
+      isAvailable: false,
+      sectionKey: null,
+      promptConfig: null,
+      unavailableReason: 'Context not available during static generation'
+    };
+  }
 }

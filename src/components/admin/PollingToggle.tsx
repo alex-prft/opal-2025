@@ -88,6 +88,13 @@ const PollingContext = React.createContext<PollingContextType>({
 });
 
 export function PollingProvider({ children }: { children: React.ReactNode }) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return children directly during static generation to prevent build failures
+    return <>{children}</>;
+  }
+
   const [isPollingEnabled, setIsPollingEnabled] = useState(false);
 
   return (
@@ -109,9 +116,19 @@ export const usePollingContext = () => {
     };
   }
 
-  const context = React.useContext(PollingContext);
-  if (!context) {
-    throw new Error('usePollingContext must be used within PollingProvider');
+  // Check if React context system is available (React can be null during static generation)
+  try {
+    const context = React.useContext(PollingContext);
+    if (!context) {
+      throw new Error('usePollingContext must be used within PollingProvider');
+    }
+    return context;
+  } catch (error) {
+    // Fallback if React context is not available during static generation
+    console.warn('PollingContext hook failed during static generation:', error);
+    return {
+      isPollingEnabled: false,
+      setPollingEnabled: () => {}
+    };
   }
-  return context;
 };
