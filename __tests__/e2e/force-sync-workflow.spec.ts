@@ -32,7 +32,7 @@ test.describe('Force Sync Workflow', () => {
     const forceSyncButton = page.locator('[data-testid="force-sync-trigger"]');
 
     await expect(forceSyncButton).toBeVisible();
-    await expect(forceSyncButton).toHaveText(/trigger sync/i);
+    await expect(forceSyncButton).toHaveText(/force sync/i);
     await expect(forceSyncButton).toBeEnabled();
   });
 

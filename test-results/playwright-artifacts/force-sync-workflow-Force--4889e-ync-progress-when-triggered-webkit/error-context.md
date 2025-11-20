@@ -1,0 +1,152 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e6] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e7]:
+      - img [ref=e8]
+    - generic [ref=e13]:
+      - button "Open issues overlay" [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: "0"
+          - generic [ref=e17]: "1"
+        - generic [ref=e18]: Issue
+      - button "Collapse issues badge" [ref=e19]:
+        - img [ref=e20]
+  - generic [ref=e22]:
+    - banner [ref=e23]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - link "Optimizely Strategy Assistant" [ref=e27]:
+            - /url: /engine/admin
+            - img "Optimizely Strategy Assistant" [ref=e29] [cursor=pointer]
+          - link "Admin Configuration Opal Strategy Assistant" [ref=e30]:
+            - /url: /engine/admin
+            - generic [ref=e31] [cursor=pointer]:
+              - heading "Admin Configuration" [level=1] [ref=e32]
+              - paragraph [ref=e33]: Opal Strategy Assistant
+        - generic [ref=e34]:
+          - button "Polling OFF" [ref=e36] [cursor=pointer]:
+            - img
+            - generic [ref=e37]: Polling OFF
+          - button "Force Sync" [ref=e38] [cursor=pointer]:
+            - img
+            - text: Force Sync
+          - link "View Results" [ref=e39]:
+            - /url: /engine/results
+            - button "View Results" [ref=e40] [cursor=pointer]:
+              - img
+              - text: View Results
+    - navigation [ref=e41]:
+      - generic [ref=e43]:
+        - link "OPAL Monitoring" [ref=e44]:
+          - /url: /engine/admin/opal-monitoring
+          - img [ref=e45]
+          - text: OPAL Monitoring
+        - link "Data Governance" [ref=e47]:
+          - /url: /engine/admin/governance
+          - img [ref=e48]
+          - text: Data Governance
+        - link "Confidence Scores" [ref=e50]:
+          - /url: /engine/admin/monitoring/confidence-scores
+          - img [ref=e51]
+          - text: Confidence Scores
+        - link "Strategy AI" [ref=e53]:
+          - /url: /engine/admin/strategy-ai
+          - img [ref=e54]
+          - text: Strategy AI
+        - link "Configurations" [ref=e57]:
+          - /url: /engine/admin/configurations
+          - img [ref=e58]
+          - text: Configurations
+        - link "Data Mapping" [ref=e61]:
+          - /url: /engine/admin/data-mapping
+          - img [ref=e62]
+          - text: Data Mapping
+        - link "Recommendation Engine" [ref=e64]:
+          - /url: /engine/admin/recommendation-engine
+          - img [ref=e65]
+          - text: Recommendation Engine
+    - main [ref=e66]:
+      - generic [ref=e67]:
+        - generic [ref=e68]:
+          - heading "Admin Dashboard" [level=1] [ref=e69]
+          - paragraph [ref=e70]: Monitor OPAL Strategy Assistant workflow triggers and agents in real-time
+        - generic [ref=e71]:
+          - generic [ref=e74]:
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - img [ref=e77]
+                - text: OSA Strategy Assistant Status
+              - generic [ref=e79]: Real-time health monitoring for personalization workflows and content strategy
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - generic [ref=e82]:
+                  - generic [ref=e83]:
+                    - img [ref=e84]
+                    - generic [ref=e87]: OSA workflow healthy
+                    - generic [ref=e88]: OK
+                  - generic [ref=e89]:
+                    - img [ref=e90]
+                    - generic [ref=e92]: "Last activity:"
+                    - generic [ref=e93]: 3d ago
+                - button "Refresh" [ref=e94] [cursor=pointer]:
+                  - img
+                  - text: Refresh
+              - generic [ref=e95]:
+                - generic [ref=e96]:
+                  - generic [ref=e97]: Last Webhook
+                  - generic [ref=e98]: 11/15/2025, 1:41:29 PM
+                - generic [ref=e99]:
+                  - generic [ref=e100]: Last Agent Data
+                  - generic [ref=e101]: 11/15/2025, 1:41:29 PM
+                - generic [ref=e102]:
+                  - generic [ref=e103]: Last Force Sync
+                  - generic [ref=e104]: 11/16/2025, 3:37:17 PM
+              - generic [ref=e106]:
+                - heading "OPAL Integration Pipeline" [level=4] [ref=e107]
+                - generic [ref=e108]:
+                  - img [ref=e109]
+                  - generic [ref=e111]: No integration validation
+              - generic [ref=e113]:
+                - heading "✅ Personalization Engine Active" [level=4] [ref=e114]
+                - paragraph [ref=e115]: Your personalization strategy is running smoothly. New content, experiments, and audience insights are flowing into the Strategy Assistant. Customer experiences are being optimized in real-time.
+                - generic [ref=e116]:
+                  - button "View OSA Logs" [ref=e117] [cursor=pointer]:
+                    - img
+                    - text: View OSA Logs
+                  - button "Refresh Status" [ref=e118] [cursor=pointer]:
+                    - img
+                    - text: Refresh Status
+              - generic [ref=e119]:
+                - text: Status is computed from the most recent workflow state combined with the latest webhook, agent data, and Force Sync timestamps exposed by
+                - code [ref=e120]: /api/admin/osa/recent-status
+                - text: .
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]:
+                - img [ref=e125]
+                - text: Diagnostics Panel
+              - generic [ref=e134]: Real-time webhook diagnostics and agent data flow troubleshooting
+            - generic [ref=e136]:
+              - generic [ref=e138]:
+                - button "Test Workflow" [ref=e139] [cursor=pointer]:
+                  - img
+                  - text: Test Workflow
+                - button "Refresh" [ref=e140] [cursor=pointer]:
+                  - img
+                  - text: Refresh
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - img [ref=e143]
+                  - generic [ref=e145]: "Error:"
+                - generic [ref=e146]: Failed to fetch diagnostics data
+  - generic [ref=e148] [cursor=pointer]:
+    - generic [ref=e149]: "🛡️ Guardrails: HEALTHY"
+    - generic [ref=e150]: ▶
+  - generic [ref=e151]:
+    - img [ref=e153]
+    - button "Open Tanstack query devtools" [ref=e221] [cursor=pointer]:
+      - img [ref=e222]
+  - alert [ref=e290]
+```

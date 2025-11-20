@@ -1,0 +1,306 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-20",
+  "total_patterns": 10,
+  "patterns": [
+    {
+      "pattern_id": "BUILD-001",
+      "severity": "P0",
+      "category": "Build Failure",
+      "error_signature": "Cannot read properties of null (reading 'useState'|'useContext')",
+      "description": "React hooks called during Next.js static generation before React is initialized",
+      "affected_areas": [
+        "Next.js 16 internal pages",
+        "Global error handling",
+        "Static generation phase"
+      ],
+      "detection_method": "npm run build fails with TypeError",
+      "recommended_fix_strategy": "Add typeof window === 'undefined' checks before using React hooks in providers",
+      "prevention_pattern": "Always wrap React hook usage with static generation guards",
+      "tests_to_run": [
+        "npm run build",
+        "Verify static page generation completes",
+        "Check .next/server/pages for generated pages"
+      ],
+      "code_example": {
+        "incorrect": "export function MyProvider({ children }) { const [state, setState] = useState(); /* ... */ }",
+        "correct": "export function MyProvider({ children }) { if (typeof window === 'undefined') return <>{children}</>; const [state, setState] = useState(); /* ... */ }"
+      },
+      "references": [
+        "docs/react-hook-static-generation-troubleshooting.md",
+        "CLAUDE.md - React Hook Safety During Static Generation"
+      ]
+    },
+    {
+      "pattern_id": "TYPE-001",
+      "severity": "P0",
+      "category": "Type Safety",
+      "error_signature": "typescript.*ignoreBuildErrors.*true",
+      "description": "TypeScript errors suppressed at build time, allowing runtime type errors",
+      "affected_areas": [
+        "next.config.js",
+        "All TypeScript files in project"
+      ],
+      "detection_method": "Check next.config.js for ignoreBuildErrors setting",
+      "recommended_fix_strategy": "Set ignoreBuildErrors: false and systematically fix type errors by category",
+      "prevention_pattern": "Never suppress TypeScript errors in production configuration",
+      "tests_to_run": [
+        "npx tsc --noEmit",
+        "npm run build with ignoreBuildErrors: false",
+        "Review error count: should be 0 for production"
+      ],
+      "impact_metrics": {
+        "total_errors_suppressed": 1798,
+        "error_categories": {
+          "TS2339": 332,
+          "TS2484": 142,
+          "TS2345": 118,
+          "TS7006": 104,
+          "TS2322": 98,
+          "TS2304": 78
+        }
+      }
+    },
+    {
+      "pattern_id": "IMPORT-001",
+      "severity": "P1",
+      "category": "Missing Imports",
+      "error_signature": "Cannot find name '(auditLogger|rollbackContent|getPageHistory)'",
+      "description": "Functions commented out but still referenced in code",
+      "affected_areas": [
+        "src/app/api/admin/results/rollback/route.ts"
+      ],
+      "detection_method": "TS2304: Cannot find name",
+      "recommended_fix_strategy": "Re-enable imports or remove function calls and add error responses",
+      "prevention_pattern": "Never commit commented-out imports with active usage",
+      "tests_to_run": [
+        "curl http://localhost:3000/api/admin/results/rollback",
+        "Verify endpoint returns proper response (not 500 error)",
+        "Check audit logs are created for rollback operations"
+      ],
+      "security_impact": "HIGH - Audit trail broken, data governance violation"
+    },
+    {
+      "pattern_id": "IMPORT-002",
+      "severity": "P1",
+      "category": "Incorrect Import Pattern",
+      "error_signature": "has no exported member 'secureSupabase'.*Did you mean.*default",
+      "description": "Named import used for default export (secureSupabase)",
+      "affected_areas": [
+        "src/app/api/agent-factory/create/route.ts"
+      ],
+      "detection_method": "TS2614: Module has no exported member",
+      "recommended_fix_strategy": "Change from named import { secureSupabase } to default import secureSupabase",
+      "prevention_pattern": "Follow CLAUDE.md secure database client pattern",
+      "tests_to_run": [
+        "npm run build",
+        "curl http://localhost:3000/api/agent-factory/create",
+        "Verify guardrails are active for database operations"
+      ],
+      "code_example": {
+        "incorrect": "import { secureSupabase } from '@/lib/database';",
+        "correct": "import secureSupabase from '@/lib/database';"
+      },
+      "security_impact": "HIGH - May bypass PII protection and audit logging"
+    },
+    {
+      "pattern_id": "TYPE-002",
+      "severity": "P1",
+      "category": "Supabase Type Narrowing",
+      "error_signature": "Property '.*' does not exist on type 'never'|Argument.*not assignable.*'never'",
+      "description": "Supabase query results typed as 'never' due to missing or outdated type definitions",
+      "affected_areas": [
+        "src/app/api/admin/osa/integration-status/route.ts",
+        "src/app/api/admin/osa/validate-integration/route.ts",
+        "src/app/api/admin/pii-scan/route.ts",
+        "src/app/api/admin/osa/recent-status/route.ts"
+      ],
+      "detection_method": "TS2339 with type 'never' in Supabase operations",
+      "recommended_fix_strategy": "Regenerate Supabase types: npx supabase gen types typescript",
+      "prevention_pattern": "Regenerate types after any schema changes",
+      "tests_to_run": [
+        "Verify tables exist in Supabase: opal_integration_validation, integration_health_reports, supabase_audit_log",
+        "npx tsc --noEmit | grep 'type.*never'",
+        "Test API endpoints that use these tables"
+      ],
+      "affected_tables": [
+        "opal_integration_validation",
+        "integration_health_reports",
+        "supabase_audit_log",
+        "webhook_events",
+        "opal_fallback_usage",
+        "ask_assistant_prompt_runs"
+      ]
+    },
+    {
+      "pattern_id": "TYPE-003",
+      "severity": "P1",
+      "category": "Incomplete Type Definitions",
+      "error_signature": "Property '(trigger_source|actionType|errorMessage)' does not exist on type",
+      "description": "Type definitions missing fields that are actually used in code",
+      "affected_areas": [
+        "WebhookEvent type definition",
+        "AuditLogEntry interface",
+        "FactoryError interface",
+        "WorkflowPhase enum"
+      ],
+      "detection_method": "TS2339: Property does not exist on type",
+      "recommended_fix_strategy": "Update type definitions to include all used fields",
+      "prevention_pattern": "Keep types in sync with database schema and actual usage",
+      "tests_to_run": [
+        "grep -r 'trigger_source' src/ to find all usage",
+        "Update types to match actual database columns",
+        "npx tsc --noEmit to verify"
+      ],
+      "code_example": {
+        "before": "interface WebhookEvent { id: string; status: string; }",
+        "after": "interface WebhookEvent { id: string; status: string; trigger_source?: string; received_at: string; completed_at?: string; created_at: string; started_at?: string; trigger_timestamp?: string; failed_at?: string; }"
+      }
+    },
+    {
+      "pattern_id": "TYPE-004",
+      "severity": "P1",
+      "category": "Implicit Any",
+      "error_signature": "Parameter '.*' implicitly has an 'any' type",
+      "description": "Function parameters without type annotations in strict mode",
+      "affected_areas": [
+        "src/app/api/cron/daily-validation-report/route.ts",
+        "src/app/api/admin/results/rollback/route.ts"
+      ],
+      "detection_method": "TS7006: Parameter implicitly has 'any' type",
+      "recommended_fix_strategy": "Add explicit type annotations to all function parameters",
+      "prevention_pattern": "Enable noImplicitAny in tsconfig.json (already enabled)",
+      "tests_to_run": [
+        "npx tsc --noEmit | grep TS7006",
+        "Add types and verify count reduces to 0"
+      ],
+      "count": 104,
+      "code_example": {
+        "incorrect": "array.filter((v) => v.status === 'active')",
+        "correct": "array.filter((v: ValidationRecord) => v.status === 'active')"
+      }
+    },
+    {
+      "pattern_id": "CONFIG-001",
+      "severity": "P1",
+      "category": "Validation Middleware",
+      "error_signature": "'params' does not exist in type 'ValidationMiddleware'",
+      "description": "Validation middleware configured with incorrect property names",
+      "affected_areas": [
+        "src/app/api/ask-assistant/runs/[promptId]/route.ts"
+      ],
+      "detection_method": "TS2353: Object literal may only specify known properties",
+      "recommended_fix_strategy": "Review ValidationMiddleware interface and use correct property names",
+      "prevention_pattern": "Check middleware type definitions before configuration",
+      "tests_to_run": [
+        "Test API with malformed promptId parameter",
+        "Verify validation rejects invalid inputs",
+        "Check for SQL injection protection"
+      ],
+      "security_impact": "HIGH - Route parameter validation may be broken"
+    },
+    {
+      "pattern_id": "LOGIC-001",
+      "severity": "P1",
+      "category": "Type Comparison Error",
+      "error_signature": "comparison appears to be unintentional.*types.*have no overlap",
+      "description": "Comparing value to impossible type (e.g., checking if 'dev'|'test' === 'production')",
+      "affected_areas": [
+        "src/app/admin.dev/opal-integration-test/page.dev.tsx"
+      ],
+      "detection_method": "TS2367: Comparison appears to be unintentional",
+      "recommended_fix_strategy": "Fix type definition to include all possible values or remove impossible comparison",
+      "prevention_pattern": "Review type definitions for environment variables",
+      "tests_to_run": [
+        "Test in all environments (dev, test, production)",
+        "Verify environment-specific code executes correctly"
+      ],
+      "security_impact": "MEDIUM - May expose dev features in wrong environments"
+    },
+    {
+      "pattern_id": "UI-001",
+      "severity": "P2",
+      "category": "Dynamic Tailwind Classes",
+      "error_signature": "Dynamic Tailwind class may be purged in production",
+      "description": "String interpolation in Tailwind class names prevents static analysis",
+      "affected_areas": [
+        "src/app/admin.dev/opal-monitoring/client-page.tsx",
+        "src/app/admin.dev/sub-agents/client-page.tsx",
+        "619+ other files"
+      ],
+      "detection_method": "error-check script warning",
+      "recommended_fix_strategy": "Use conditional full class names or add to safelist",
+      "prevention_pattern": "Never use template literals for Tailwind classes",
+      "tests_to_run": [
+        "npm run build",
+        "Visual regression testing in production build",
+        "Check for missing styles"
+      ],
+      "count": 622,
+      "code_example": {
+        "incorrect": "className={`text-${color}-500`}",
+        "correct": "className={color === 'red' ? 'text-red-500' : 'text-green-500'}"
+      },
+      "production_impact": "LOW - Most occurrences in /admin.dev/* paths (blocked in production)"
+    }
+  ],
+  "error_category_summary": {
+    "P0_Critical": 2,
+    "P1_High": 8,
+    "P2_Medium": 2,
+    "total_typescript_errors": 1798
+  },
+  "deployment_blockers": [
+    "BUILD-001",
+    "TYPE-001"
+  ],
+  "high_priority_fixes": [
+    "IMPORT-001",
+    "IMPORT-002",
+    "TYPE-002",
+    "TYPE-003",
+    "TYPE-004",
+    "CONFIG-001",
+    "LOGIC-001"
+  ],
+  "validation_commands": {
+    "full_type_check": "npx tsc --noEmit",
+    "build_test": "npm run build",
+    "error_detection": "npm run error-check",
+    "lint": "npm run lint",
+    "security_validation": "npm run validate:security",
+    "full_validation": "npm run validate:all"
+  },
+  "fix_priority_order": [
+    {
+      "priority": 1,
+      "patterns": ["BUILD-001", "TYPE-001"],
+      "reason": "Complete deployment blockers - build fails",
+      "estimated_hours": "8-16"
+    },
+    {
+      "priority": 2,
+      "patterns": ["IMPORT-001", "IMPORT-002"],
+      "reason": "Runtime crashes and security violations",
+      "estimated_hours": "4-8"
+    },
+    {
+      "priority": 3,
+      "patterns": ["TYPE-002", "TYPE-003", "TYPE-004"],
+      "reason": "Database operations and type safety",
+      "estimated_hours": "8-12"
+    },
+    {
+      "priority": 4,
+      "patterns": ["CONFIG-001", "LOGIC-001"],
+      "reason": "Validation and environment safety",
+      "estimated_hours": "4-6"
+    },
+    {
+      "priority": 5,
+      "patterns": ["UI-001"],
+      "reason": "UI consistency (post-launch)",
+      "estimated_hours": "4-8"
+    }
+  ]
+}

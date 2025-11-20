@@ -1,5 +1,7 @@
 # error fix command
 
+Think Hard
+
 - TRy a different approach to solve the issue and make the correct updates for me.
 
 - Please conduct a thorough and critical code review of the following changes. The primary objectives are to fix the above errors and issues:
@@ -22,6 +24,6 @@
 
 - Code Duplication: Are there opportunities to simplify or refactor the code to remove duplication and improve modularity?
 
-- Implement these changes to ensure these errors and requests are permanently resolved.
+IMPORTANT: Implement these changes to ensure these errors and requests are permanently resolved.
 
 - add this repeatable process to a series of unit tests in /tests/unit for this error

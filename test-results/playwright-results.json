@@ -1,0 +1,3076 @@
+{
+  "config": {
+    "configFile": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/playwright.config.ts",
+    "rootDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "project": "OSA Admin Dashboard",
+      "version": "0.1.0",
+      "environment": "development",
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/playwright-results.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "project": "OSA Admin Dashboard",
+          "version": "0.1.0",
+          "environment": "development",
+          "actualWorkers": 6
+        },
+        "id": "Microsoft Edge",
+        "name": "Microsoft Edge",
+        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 6,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://127.0.0.1:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "NODE_ENV": "test",
+        "OPAL_API_BASE": "https://api.opal.optimizely.com",
+        "OPAL_API_KEY": "test-api-key",
+        "OPAL_WORKSPACE_ID": "test-workspace",
+        "OPAL_STRATEGY_WORKFLOW_AUTH_KEY": "7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8",
+        "OSA_WEBHOOK_SHARED_SECRET": "50d0bf802e666d354c4f3c774be4768458b97b162f60a64663efc4e752778970"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "force-sync-workflow.spec.ts",
+      "file": "force-sync-workflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Force Sync Workflow",
+          "file": "force-sync-workflow.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display force sync trigger button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1757,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.309Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-81c7b2c7ac4fdb6dd065",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 16589,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "location": {
+                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "column": 71,
+                          "line": 84
+                        },
+                        "snippet": "  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 71,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:07.070Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "column": 71,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-6de7c4c7aa96620eb655",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-7192730aae0e01623e9b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-5daf76fed81df9ab536a",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-2fdb29ca44fe3e33a60c",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-97b52e1505092f527753",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            },
+            {
+              "title": "should display force sync trigger button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3249,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.241Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-b6e4d60e4a426157ccb6",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 11724,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "location": {
+                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "column": 71,
+                          "line": 84
+                        },
+                        "snippet": "  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 71,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:14.834Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "column": 71,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-e9be0f5d530beae8b29b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-fb5efcdd683c5ab44a0b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-2d7191d4061f2a34cc65",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-ca4782394d351482ad05",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-75fcf746082adc9aea7f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            },
+            {
+              "title": "should display force sync trigger button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3939,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.169Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-26bc3736001602b8d655",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 12605,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "location": {
+                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "column": 71,
+                          "line": 84
+                        },
+                        "snippet": "  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 71,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:10.321Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "column": 71,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-594c4abfa2e6bc0b20eb",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-aabf6a1a6fcaee62c640",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-f40220b75b92abcaefd3",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-35309bed9ce5216b702e",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-4dc7929056e991483400",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            },
+            {
+              "title": "should display force sync trigger button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2845,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.109Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-e05b50fed3a67380d7e8",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 12251,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "location": {
+                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "column": 71,
+                          "line": 84
+                        },
+                        "snippet": "  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 71,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:07.778Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "column": 71,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-48c7f30142887e6053de",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-3a20adce2477ba071cbc",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-40545331f44021976da0",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-56be1f6fdc46c4f9c906",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-5deda5e5de327a7baab1",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            },
+            {
+              "title": "should display force sync trigger button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 3701,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.241Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-7ec7e587f1b9e34bb486",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 12783,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "location": {
+                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "column": 71,
+                          "line": 84
+                        },
+                        "snippet": "  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 71,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:10.074Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "column": 71,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-f0030c2fcb11b509f409",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.082Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-8f416f62ec45409857f3",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-d94053a64fbdb39270ea",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-4daa89499e082b2c2d47",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-499152c27c468b775f0b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            },
+            {
+              "title": "should display force sync trigger button",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 1,
+                      "error": {
+                        "message": "Error: browserType.launch: Chromium distribution 'msedge' is not found at /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge\nRun \"npx playwright install msedge\"",
+                        "stack": "Error: browserType.launch: Chromium distribution 'msedge' is not found at /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge\nRun \"npx playwright install msedge\""
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browserType.launch: Chromium distribution 'msedge' is not found at /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge\nRun \"npx playwright install msedge\""
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "column": 16,
+                            "line": 19
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  17 |\n  18 |   test.afterAll(async () => {\n> 19 |     await page.close();\n     |                ^\n  20 |   });\n  21 |\n  22 |   test.beforeEach(async () => {\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:19:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.140Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-a16c9e32c98be80ebc70",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "should show force sync progress when triggered",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-435bca711d0ba749862a",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync cancellation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-4aeb0ef3416fe31379ac",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "should handle force sync errors gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-42c499282ef20dc0bcc2",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 155,
+              "column": 7
+            },
+            {
+              "title": "should show concurrent sync prevention",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-980cd5128532dd103aea",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 180,
+              "column": 7
+            },
+            {
+              "title": "should display force sync metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-b167cd0dad6a479d290b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 229,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Health Status Monitoring",
+          "file": "force-sync-workflow.spec.ts",
+          "line": 259,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-c4483c91ca44e7e9f544",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-56e7450d0fee2aec917f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-45df363a0b8fc10f45f7",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            },
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-82899a2bac32900b7f5f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-9bb285feee6a65ddb49d",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-2d0e9e2951684108a6b4",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            },
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-6c725ab67549b6372974",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-c4d0564c2760dde2ca72",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-dc78dabea45879e758fc",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            },
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-305a54a85247df6a2fe8",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-beb30c56362fb96cf8b4",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-9dc2a5b2c4d43f9be4bf",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            },
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-ea49b20af121b7da5de0",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-155f393e78bae8847356",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-bf3945a8af9e5d1998e9",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            },
+            {
+              "title": "should display health status components",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-9d0639deb2b81e5913d9",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 265,
+              "column": 7
+            },
+            {
+              "title": "should handle degraded health status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-c71ccc7c5c8288ad0bd1",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 319,
+              "column": 7
+            },
+            {
+              "title": "should show fallback data when health check fails",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-08ab7dfd043de0471663",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 367,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Agent Status Monitoring",
+          "file": "force-sync-workflow.spec.ts",
+          "line": 405,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-d263e062d34e18a57d0e",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-40cca04bcf71eacbc554",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            },
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-d48eb4524fe52edc2f89",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-8c68704535bac873fe34",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            },
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-e5ac1b7daf49d6d2763f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-2e5e27856c94585e874d",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            },
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-0b257c824e2a7a8cd532",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-35bd922ae8ce5fa191f4",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            },
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-bac7d4b8a89297ac8bc4",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-6ac41707cc06f75b8707",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            },
+            {
+              "title": "should display agent status grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-2990c367dee942dd8496",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 411,
+              "column": 7
+            },
+            {
+              "title": "should expand webhook events when requested",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-74a05e27f56eeb3f83df",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 471,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Responsive Design",
+          "file": "force-sync-workflow.spec.ts",
+          "line": 523,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-10fc8346f6c7acabc9bf",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-d686d2b0da8159a00854",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            },
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-7165ca8f4c4af7232c4f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:27.598Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-d5907ce0c5317830d52b",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            },
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-b46ff06b420216d129b3",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-3da4cb3496d4534a1b16",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            },
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-ba15032a01e3906f8763",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-f7acf346840219f62266",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            },
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-43da02d016b1fa0a09dd",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-12347be23f3e853e153f",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            },
+            {
+              "title": "should adapt to mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-089deef0cb96dd1e8939",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 524,
+              "column": 7
+            },
+            {
+              "title": "should show full features on desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Microsoft Edge",
+                  "projectName": "Microsoft Edge",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ac875db7038fc339c6cc-b240bf4137714259b8c4",
+              "file": "force-sync-workflow.spec.ts",
+              "line": 548,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-20T12:29:02.354Z",
+    "duration": 25272.232,
+    "expected": 5,
+    "skipped": 67,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

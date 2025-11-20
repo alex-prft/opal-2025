@@ -197,6 +197,7 @@ export default function ForceSyncButton({
                   disabled={isLoading || isActive}
                   size="sm"
                   className="flex-1"
+                  data-testid="force-sync-trigger"
                 >
                   {isLoading ? (
                     <>
@@ -250,6 +251,7 @@ export default function ForceSyncButton({
       size={buttonSize}
       variant="outline"
       className={`gap-2 ${className}`}
+      data-testid="force-sync-trigger"
     >
       {isActive ? (
         <>

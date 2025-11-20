@@ -1,0 +1,512 @@
+<testsuites id="" name="" tests="78" failures="6" skipped="67" errors="0" time="25.272232">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="chromium" tests="13" failures="1" skipped="11" time="18.346" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="1.757">
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="16.589">
+<failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
+<![CDATA[  [chromium] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="force-sync-progress"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('[data-testid="force-sync-progress"]')
+
+
+      82 |
+      83 |     // Should show loading state
+    > 84 |     await expect(page.locator('[data-testid="force-sync-progress"]')).toBeVisible();
+         |                                                                       ^
+      85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
+      86 |
+      87 |     // Should show progress updates
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="firefox" tests="13" failures="1" skipped="11" time="14.973" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.249">
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.724">
+<failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
+<![CDATA[  [firefox] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="force-sync-progress"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('[data-testid="force-sync-progress"]')
+
+
+      82 |
+      83 |     // Should show loading state
+    > 84 |     await expect(page.locator('[data-testid="force-sync-progress"]')).toBeVisible();
+         |                                                                       ^
+      85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
+      86 |
+      87 |     // Should show progress updates
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="webkit" tests="13" failures="1" skipped="11" time="16.544" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.939">
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.605">
+<failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
+<![CDATA[  [webkit] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="force-sync-progress"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('[data-testid="force-sync-progress"]')
+
+
+      82 |
+      83 |     // Should show loading state
+    > 84 |     await expect(page.locator('[data-testid="force-sync-progress"]')).toBeVisible();
+         |                                                                       ^
+      85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
+      86 |
+      87 |     // Should show progress updates
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Mobile Chrome" tests="13" failures="1" skipped="11" time="15.096" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="2.845">
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.251">
+<failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
+<![CDATA[  [Mobile Chrome] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="force-sync-progress"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('[data-testid="force-sync-progress"]')
+
+
+      82 |
+      83 |     // Should show loading state
+    > 84 |     await expect(page.locator('[data-testid="force-sync-progress"]')).toBeVisible();
+         |                                                                       ^
+      85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
+      86 |
+      87 |     // Should show progress updates
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png]]
+
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Mobile Safari" tests="13" failures="1" skipped="11" time="16.484" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.701">
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.783">
+<failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
+<![CDATA[  [Mobile Safari] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="force-sync-progress"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('[data-testid="force-sync-progress"]')
+
+
+      82 |
+      83 |     // Should show loading state
+    > 84 |     await expect(page.locator('[data-testid="force-sync-progress"]')).toBeVisible();
+         |                                                                       ^
+      85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
+      86 |
+      87 |     // Should show progress updates
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png]]
+
+[[ATTACHMENT|playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Microsoft Edge" tests="13" failures="1" skipped="12" time="0.001" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="0.001">
+<failure message="force-sync-workflow.spec.ts:31:7 should display force sync trigger button" type="FAILURE">
+<![CDATA[  [Microsoft Edge] › force-sync-workflow.spec.ts:31:7 › Force Sync Workflow › should display force sync trigger button 
+
+    Error: browserType.launch: Chromium distribution 'msedge' is not found at /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge
+    Run "npx playwright install msedge"
+
+    TypeError: Cannot read properties of undefined (reading 'close')
+
+      17 |
+      18 |   test.afterAll(async () => {
+    > 19 |     await page.close();
+         |                ^
+      20 |   });
+      21 |
+      22 |   test.beforeEach(async () => {
+        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:19:16
+]]>
+</failure>
+</testcase>
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync cancellation" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should handle force sync errors gracefully" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should show concurrent sync prevention" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Force Sync Workflow › should display force sync metrics" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should display health status components" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should handle degraded health status" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Health Status Monitoring › should show fallback data when health check fails" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should display agent status grid" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Agent Status Monitoring › should expand webhook events when requested" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should adapt to mobile viewport" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design › should show full features on desktop" classname="force-sync-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>
