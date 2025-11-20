@@ -1,9 +1,10 @@
-// CRITICAL: Explicit server component - prevent all client-side hydration
-// This fixes Next.js 16 + React 19 useEffect error during static generation
+// CRITICAL: Disable static generation completely to prevent React hook errors
+// This fixes Next.js 16 + React 19 useState/useContext errors during static generation
 import * as React from 'react';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const revalidate = false;
 
 export default function NotFound() {
   // Check if React hooks are available - during static generation they may not be
