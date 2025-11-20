@@ -559,6 +559,7 @@ export interface ResultsPageContent {
     dataSource: DataSource;
     languageValidation: LanguageValidation;
     contentFingerprint: string; // Hash for uniqueness validation
+    footnotes?: string[]; // Optional footnotes for data source disclaimers
   };
 }
 

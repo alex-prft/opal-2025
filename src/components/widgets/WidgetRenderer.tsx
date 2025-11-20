@@ -56,6 +56,7 @@ import { ContentOptimizationWidget } from './ContentOptimizationWidget';
 import { AIForSEOWidget } from './AIForSEOWidget';
 import { ContentOptimizationRecommendationsWidget } from './ContentOptimizationRecommendationsWidget';
 import { ContentSuggestionsWidget } from './ContentSuggestionsWidget';
+import { ODPWidget } from './ODPWidget';
 
 // Helper function to calculate confidence score and eliminate NaN
 function calculateConfidenceScore(scores: (number | undefined)[]): number {
@@ -191,23 +192,7 @@ const CMSWidget = ({ data, context, className }: any) => {
   );
 };
 
-const ODPWidget = ({ data, context, className }: any) => {
-  if (!data || Object.keys(data).length === 0) {
-    return (
-      <div className={className}>
-        <CompactDataNotAvailable
-          message="ODP platform data not available"
-          onRetry={() => window.location.reload()}
-        />
-      </div>
-    );
-  }
-  return (
-    <div className={className}>
-      <IntegrationHealthWidget data={data} className="odp-specialized" />
-    </div>
-  );
-};
+// ODPWidget is now imported from separate file - see imports at top
 
 const CMPWidget = ({ data, context, className }: any) => {
   if (!data || Object.keys(data).length === 0) {
@@ -693,7 +678,7 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
         return <CMSWidget data={mergedData} context={context} className="cms-container" />;
       }
       if (path.includes('odp')) {
-        return <ODPWidget data={mergedData} context={context} className="odp-container" />;
+        return <ODPWidget className="odp-container" tier2={context.detection.tier2} tier3={context.detection.tier3} />;
       }
       if (path.includes('cmp')) {
         return <CMPWidget data={mergedData} context={context} className="cmp-container" />;

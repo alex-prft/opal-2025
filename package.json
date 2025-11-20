@@ -27,6 +27,8 @@
     "validate:security:ci": "npx tsx scripts/validate-security.ts --ci",
     "validate:deployment": "npx tsx scripts/validate-deployment.ts",
     "validate:jsx-parsing": "node scripts/jsx-parsing-validator.js",
+    "test:odp": "npx tsx scripts/test-odp-opal-integration.ts",
+    "test:odp:verbose": "npx tsx scripts/test-odp-opal-integration.ts --verbose",
     "validate:all": "npm run validate:runtime-errors && npm run validate:security && npm run validate:deployment && npm run validate:jsx-parsing && npm run validate:opal && npm run validate:sop-all",
     "error-check": "node scripts/error-prevention.js",
     "error-check:fix": "node scripts/error-prevention.js --auto-fix",

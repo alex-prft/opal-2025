@@ -15,9 +15,9 @@ declare global {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
-  const jobId = params.jobId;
+  const { jobId } = await params;
 
   console.log(`📊 [Async Sync Status] Checking status for job: ${jobId}`);
 

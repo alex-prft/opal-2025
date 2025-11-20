@@ -10,9 +10,9 @@ import { opalWorkflowTracker } from '@/lib/monitoring/opal-workflow-tracker';
 export const dynamic = 'force-dynamic';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     workflowId: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {

@@ -328,7 +328,8 @@ class ResultsContentService {
       case 'cms':
         throw new Error('CMS adapter not implemented yet (Phase 2)');
       case 'odp':
-        throw new Error('ODP adapter not implemented yet (Phase 3)');
+        const { transformODPDashboard } = await import('@/lib/results/adapters/odp');
+        return await transformODPDashboard(rawData);
       case 'webx':
         throw new Error('WebX adapter not implemented yet (Phase 3)');
       case 'cmp':

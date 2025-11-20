@@ -578,6 +578,35 @@ export const FALLBACK_POLICIES: FallbackPolicy[] = [
         'Track conversion performance improvements'
       ]
     }
+  },
+
+  // ODP Data Platform Standard Fallback
+  {
+    id: 'odp-data-platform-standard',
+    name: 'ODP Data Platform Standard Fallback',
+    strategy: 'graceful-degradation',
+    confidence: 45,
+    timeoutMs: 5000,
+    retryAttempts: 2,
+    fallbackContent: {
+      heroMessage: 'ODP customer data platform analysis in progress',
+      overviewMessage: 'Customer data insights and audience segmentation analysis are being compiled from your Optimizely Data Platform.',
+      insightsPlaceholder: [
+        'Customer profile analysis being prepared',
+        'Audience segmentation insights being generated',
+        'Data quality assessment in progress'
+      ],
+      opportunitiesPlaceholder: [
+        'Customer profile optimization recommendations being developed',
+        'Audience segmentation opportunities being identified',
+        'Data quality improvement strategies being prepared'
+      ],
+      nextStepsPlaceholder: [
+        'Review customer profile completeness',
+        'Implement audience segmentation strategies',
+        'Monitor data quality improvements'
+      ]
+    }
   }
 ];
 
@@ -622,9 +651,10 @@ export function getSubPageMappings(parentMappingId: string): SubPageMapping[] {
   );
 }
 
-// Combined mappings export (Phase 1: Content Recs only)
+// Combined mappings export (Phase 1: Content Recs, Phase 3: ODP)
 export const ALL_MAPPINGS: ResultsPageMapping[] = [
-  CONTENT_RECS_PRIMARY_MAPPING
+  CONTENT_RECS_PRIMARY_MAPPING,
+  ...PHASE_3_MAPPINGS
 ];
 
 // Phase expansion placeholder (future phases will add more mappings)
@@ -633,7 +663,54 @@ export const PHASE_2_MAPPINGS: ResultsPageMapping[] = [
 ];
 
 export const PHASE_3_MAPPINGS: ResultsPageMapping[] = [
-  // ODP, WebX, CMP mappings will be added here
+  // ODP Data Platform Dashboard
+  {
+    id: 'odp-data-platform-dashboard',
+    routePattern: '/engine/results/optimizely-dxp-tools/odp/data-platform-dashboard',
+    sectionGroup: 'optimizely-dxp-tools',
+    primaryTopic: 'audiences',
+
+    opalAgents: {
+      primary: ['audience_suggester', 'integration_health'],
+      secondary: ['customer_journey']
+    },
+
+    dxpSources: ['odp'],
+
+    widgets: ['ODPWidget'],
+
+    contentRequirements: {
+      uniquenessLevel: 'high',
+      confidenceThreshold: 75,
+      mandatoryElements: [
+        'customer_metrics',
+        'audience_segments',
+        'data_quality',
+        'integration_status'
+      ],
+      prohibitedElements: [
+        'revenue_metrics',
+        'roi_calculations',
+        'financial_projections'
+      ],
+      crossPageDuplicationThreshold: 0.2
+    },
+
+    fallbackPolicyId: 'odp-data-platform-standard',
+
+    performance: {
+      maxLoadTime: 4000,
+      cacheStrategy: 'standard',
+      refreshFrequency: '2h'
+    },
+
+    meta: {
+      displayName: 'ODP Data Platform Dashboard',
+      description: 'Comprehensive customer data platform overview with audience insights and data quality metrics',
+      lastUpdated: '2024-11-18',
+      phase: 3
+    }
+  }
 ];
 
 // Default export for easy importing
