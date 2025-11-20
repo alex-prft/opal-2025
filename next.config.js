@@ -14,7 +14,10 @@ const nextConfig = {
       'lucide-react',
       '@radix-ui/react-icons',
       'date-fns'
-    ]
+    ],
+    // WORKAROUND: Disable React 19 canary features that cause useContext errors during static generation
+    // This prevents the "Cannot read properties of null (reading 'useContext')" error in global-error page
+    ppr: false,
   },
 
   // Server external packages (updated from deprecated serverComponentsExternalPackages)

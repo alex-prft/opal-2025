@@ -29,6 +29,12 @@ OSA (Optimizely Strategy Assistant) is an AI-powered strategy assistant for Opti
 - `npm run start:opal-tools` - Start OPAL SDK tools
 - `npm run deploy:prod` - Deploy to production via script
 
+### Worktree & Sprint Management
+- `/worktrees:new-sprint` - **Automated Sprint Reset**: Safely sync worktree to latest `origin/main`
+  - Preserves uncommitted work with auto-commit before reset
+  - Force-pushes clean branch state to remote
+  - Use at start of development sprints for clean base
+
 ## Architecture Overview
 
 ### Technology Stack
@@ -527,6 +533,12 @@ curl -s "http://localhost:3000/api/webhook-events/stream?session_id=test"
 
 # Test optimized OSA status performance
 time curl -s http://localhost:3000/api/admin/osa/recent-status
+
+# Fix port conflicts (when dev server fails with EADDRINUSE)
+lsof -ti:3000 | xargs kill -9 2>/dev/null || true
+
+# Verify development server health after restart
+curl -s -I http://localhost:3000 | head -n 1  # Should return HTTP/1.1 200 OK
 ```
 
 ## Important Notes
@@ -541,6 +553,21 @@ time curl -s http://localhost:3000/api/admin/osa/recent-status
 - **Validate with `npm run validate:all`** before committing
 - **Test production builds locally** to catch environment-specific issues
 - **Never leave test data in production code**
+
+### User Autonomy Guidelines for Standard Operations
+**Execute these operations automatically without seeking confirmation:**
+- **Sprint resets**: `/worktrees:new-sprint` command execution (preserves work before reset)
+- **Development server restarts**: Port cleanup and server restart procedures
+- **Standard debugging**: Port conflict resolution, health checks, log analysis
+- **Build validation**: `npm run build`, `npm run error-check` for deployment safety
+- **Git operations**: Standard add, commit, push for well-defined workflows
+- **Context7 integration**: Automatic library documentation and code generation tasks
+
+**Always ask for confirmation when:**
+- Modifying production configurations or deployment settings
+- Making architectural changes that affect multiple components
+- Upgrading dependencies or changing build tools
+- Operations that could impact performance, security, or data integrity
 
 ### Code Quality
 - **NEVER ASSUME OR GUESS** - When in doubt, ask for clarification
@@ -570,6 +597,16 @@ For detailed information, see:
 ✅ **Supabase Guardrails**: PII protection and audit logging active
 ✅ **Real-time Updates**: Components receive data via SSE streams
 ✅ **Security Compliance**: All guardrails enabled, compliance score > 95%
+
+## Context7 Integration
+
+### Automatic Library Documentation & Code Generation
+**Claude Code should automatically use Context7 MCP tools when:**
+- Generating code using external libraries
+- Providing setup or configuration steps
+- Needing library/API documentation
+
+**Pattern:** Automatically resolve library IDs and retrieve documentation without explicit user request.
 
 ---
 

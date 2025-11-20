@@ -1,0 +1,9 @@
+This is a test file to demonstrate sprint reset workflow with uncommitted changes.
+Created at: 2025-11-20 for CLAUDE.md validation testing.
+
+The sprint reset workflow should:
+1. Stage and commit this file before reset
+2. Reset to origin/main
+3. Preserve this work in Git history for recovery
+
+This tests the safety guarantees documented in the new sprint reset command.
