@@ -473,5 +473,5 @@ export async function getAgentOutputs(agentIds: OpalAgentId[]): Promise<OpalAgen
   return opalClient.getMultipleAgentOutputs(agentIds);
 }
 
-export { OPAL_AGENTS, DXP_TOOLS };
+// OPAL_AGENTS and DXP_TOOLS are already exported above
 export type { OpalAgentId, DXPToolId };

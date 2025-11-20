@@ -376,6 +376,5 @@ export class PIIScanner {
   }
 }
 
-// Export types and scanner
-export { PIIScanner };
+// Export types only (PIIScanner already exported as class)
 export type { PIIScanResult, PIIViolation, PIIType, PIIPattern };

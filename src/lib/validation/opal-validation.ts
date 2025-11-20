@@ -568,14 +568,5 @@ export function validateOSAWorkflowData(workflowData: any): WorkflowValidationRe
 }
 
 // ============================================================================
-// EXPORTED VALIDATION FUNCTIONS
+// All functions and constants are exported individually above
 // ============================================================================
-
-export {
-  validateAgentMetadata,
-  validateBaseExecutionResult,
-  validateAgentSpecificResults,
-  validateAgentData,
-  validateOSAWorkflowData,
-  OPAL_AGENT_CONFIGS
-};

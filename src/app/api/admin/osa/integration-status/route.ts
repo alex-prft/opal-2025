@@ -185,7 +185,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await supabase
       .from('opal_integration_validation')
-      .insert(record)
+      .insert(record as any)
       .select()
       .single();
 

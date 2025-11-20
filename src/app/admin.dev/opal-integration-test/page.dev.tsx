@@ -164,7 +164,7 @@ export default function OpalIntegrationTestPage() {
   const [selectedScenario, setSelectedScenario] = useState<TestScenario | null>(null);
   const [scenarioResults, setScenarioResults] = useState<Record<string, ValidationResult>>({});
 
-  const runValidation = (typeof window === 'undefined' || process.env.NODE_ENV === 'production')
+  const runValidation = (typeof window === 'undefined' || process.env.NODE_ENV !== 'development')
     ? async (input: any, testMode: 'manual' | 'mock' = 'manual') => {
         // Safe fallback during static generation
         console.warn('Validation unavailable during static generation');

@@ -651,12 +651,6 @@ export function getSubPageMappings(parentMappingId: string): SubPageMapping[] {
   );
 }
 
-// Combined mappings export (Phase 1: Content Recs, Phase 3: ODP)
-export const ALL_MAPPINGS: ResultsPageMapping[] = [
-  CONTENT_RECS_PRIMARY_MAPPING,
-  ...PHASE_3_MAPPINGS
-];
-
 // Phase expansion placeholder (future phases will add more mappings)
 export const PHASE_2_MAPPINGS: ResultsPageMapping[] = [
   // CMS mappings will be added here
@@ -712,6 +706,17 @@ export const PHASE_3_MAPPINGS: ResultsPageMapping[] = [
     }
   }
 ];
+
+// Combined mappings export (Phase 1: Content Recs, Phase 3: ODP)
+// NOTE: Using function to avoid Temporal Dead Zone (TDZ) errors during module initialization
+function getAllMappings(): ResultsPageMapping[] {
+  return [
+    CONTENT_RECS_PRIMARY_MAPPING,
+    ...PHASE_3_MAPPINGS
+  ];
+}
+
+export const ALL_MAPPINGS: ResultsPageMapping[] = getAllMappings();
 
 // Default export for easy importing
 export default {

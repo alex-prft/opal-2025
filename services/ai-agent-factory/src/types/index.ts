@@ -2,6 +2,16 @@
  * AI Agent Factory Types
  *
  * Core type definitions for the 6-phase agent creation workflow system
+ *
+ * 🚨 CRITICAL: This is the canonical type source for AI Agent Factory service.
+ * Changes to interfaces in this file affect main application integration points.
+ * Always verify type alignment between service usage and main app consumption
+ * after modifying these definitions.
+ *
+ * Key Integration Points:
+ * - AuditLogEntry: Used by main app for logging service actions
+ * - FactoryError: Consumed by error handling and monitoring systems
+ * - WorkflowPhase: Must align with service orchestrator state machine
  */
 
 import { z } from 'zod';
@@ -601,6 +611,7 @@ export interface AuditLogEntry {
   id: string;
   specificationId: string;
   action: string;
+  actionType?: 'create' | 'update' | 'delete' | 'read' | 'validate' | 'deploy';
   phase?: WorkflowPhase;
   userId?: string;
   details: Record<string, any>;

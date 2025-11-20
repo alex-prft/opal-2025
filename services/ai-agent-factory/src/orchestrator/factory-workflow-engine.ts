@@ -86,7 +86,7 @@ export class FactoryWorkflowEngine {
 
       // Mark as completed
       specification.status = 'completed';
-      specification.currentPhase = 'completed';
+      specification.currentPhase = 'delivery';
       await this.saveSpecification(specification);
 
       this.logger.success('✅ [CreateAgent] Agent creation completed successfully', {
@@ -614,8 +614,8 @@ export class FactoryWorkflowEngine {
     await this.supabaseClient.logError(specification.id, {
       errorType: 'system_error',
       phase: specification.currentPhase,
-      errorMessage: error.message,
-      errorDetails: { stack: error.stack },
+      message: error.message,
+      details: { stack: error.stack },
       recoverable: false,
       suggestedAction: 'Manual investigation required'
     });
@@ -637,8 +637,8 @@ export class FactoryWorkflowEngine {
     await this.supabaseClient.logError(specification.id, {
       errorType: 'system_error',
       phase,
-      errorMessage: error.message,
-      errorDetails: { stack: error.stack, context },
+      message: error.message,
+      details: { stack: error.stack, context },
       recoverable: context.retryCount < this.config.maxRetries,
       suggestedAction: context.retryCount < this.config.maxRetries ? 'Retry execution' : 'Manual review required'
     });

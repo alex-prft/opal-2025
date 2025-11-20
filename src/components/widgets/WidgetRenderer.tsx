@@ -564,7 +564,12 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
   };
 
   const renderNoDataState = () => {
-    const sectionName = context.detection.tier1Display || 'this section';
+    // Use consistent section name to avoid hydration mismatches
+    // Normalize tier1Display to prevent SSR/CSR differences
+    const rawSectionName = context.detection.tier1Display || context.detection.tier1 || 'Data';
+    const sectionName = typeof rawSectionName === 'string'
+      ? rawSectionName
+      : 'Data';
 
     return (
       <EmptyDataState
@@ -895,9 +900,15 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
  * Enhanced fallback widget for unrecognized sections with proper data handling
  */
 function GenericWidget({ data, section, className = '' }: { data: any; section: string; className?: string }) {
-  const sectionDisplay = section.split('-').map(word =>
-    word.charAt(0).toUpperCase() + word.slice(1)
-  ).join(' ');
+  // Normalize section display to prevent hydration mismatches
+  // Use consistent string processing to avoid SSR/CSR differences
+  const sectionDisplay = React.useMemo(() => {
+    if (!section || typeof section !== 'string') return 'Data';
+
+    return section.split('-').map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  }, [section]);
 
   // Handle no data case
   if (!data || Object.keys(data).length === 0) {

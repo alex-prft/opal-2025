@@ -38,7 +38,7 @@ OSA (Optimizely Strategy Assistant) is an AI-powered strategy assistant for Opti
 ## Architecture Overview
 
 ### Technology Stack
-- **Framework**: Next.js 16 with App Router
+- **Framework**: Next.js 15.0.3 with App Router (downgraded from 16 for React 19 compatibility)
 - **Language**: TypeScript with strict mode
 - **UI**: React 19, Tailwind CSS, Radix UI components
 - **Database**: Supabase (PostgreSQL) with enterprise guardrails
@@ -675,6 +675,103 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null || true
 # Verify development server health after restart
 curl -s -I http://localhost:3000 | head -n 1  # Should return HTTP/1.1 200 OK
 ```
+
+## Critical Development Guidelines
+
+### ⚠️ Framework Compatibility Management
+
+**MANDATORY**: Always validate framework version compatibility before upgrades to prevent complete build failures.
+
+**Next.js + React Compatibility Matrix:**
+- ✅ **Next.js 15.0.3 + React 19**: Current stable configuration
+- ❌ **Next.js 16.0.0-16.0.1 + React 19**: Known static generation issues
+- ✅ **Next.js 15.x + React 18**: Stable fallback option
+
+**Version Change Protocol:**
+1. Check [Next.js upgrade guide](https://nextjs.org/docs/upgrading) for official compatibility
+2. Avoid bleeding-edge versions (x.0.0, x.0.1) in production builds
+3. Test both `npm run build` AND `npm run dev` after version changes
+4. Use `--legacy-peer-deps` flag only for emergency downgrades
+
+### 🛡️ React Hook Safety During Static Generation
+
+**CRITICAL PATTERN**: All custom hooks and context providers MUST include static generation safety checks to prevent build failures.
+
+**Required Pattern:**
+```typescript
+export function useCustomHook() {
+  // CRITICAL: Check for React availability during static generation
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    return {
+      // Provide safe fallback object during build
+      data: null,
+      isLoading: false,
+      error: 'Hook unavailable during static generation'
+    };
+  }
+
+  // Normal hook implementation for runtime
+  const [data, setData] = useState(null);
+  return { data, isLoading: false, error: null };
+}
+```
+
+**When to Apply:**
+- All custom hooks using `useState`, `useContext`, `useEffect`
+- All React context providers in `src/lib/contexts/`
+- Components that might render during static generation
+
+**Performance Impact**: Zero runtime cost - checks only run during build phase
+
+### 🔧 Performance-Conscious Error Management
+
+**Efficient TypeScript Error Handling:**
+- ⚠️ **AVOID**: `npx tsc --noEmit` on repos with >500 errors (can hang terminal)
+- ✅ **USE**: `npx tsc --noEmit | head -20` for error sampling
+- ✅ **BATCH FIX**: Group errors by interface/type for efficient resolution
+
+**Safe Debugging Commands:**
+```bash
+# ✅ SAFE: Limited output for large repos
+npx tsc --noEmit 2>&1 | head -20 | grep "error TS"
+
+# ✅ SAFE: Count errors without full output
+npx tsc --noEmit 2>&1 | grep -c "error TS"
+
+# ⚠️ USE SPARINGLY: Full error list (can be overwhelming)
+npx tsc --noEmit
+```
+
+### 🏗️ Enhanced Build Validation Workflow
+
+**MANDATORY Pre-Push Validation:**
+```bash
+# Step 1: Critical error check (existing)
+npm run error-check
+
+# Step 2: Build validation (NEW - catches static generation issues)
+npm run build
+
+# Step 3: Only proceed if both pass
+git add . && git commit -m "message"
+```
+
+**Error Prioritization Protocol:**
+1. **P0 (Blocking)**: Build failures, missing imports, framework incompatibilities
+2. **P1 (Critical)**: Type errors affecting service integration, interface mismatches
+3. **P2 (Warnings)**: Linting issues, unused variables, implicit `any` types
+
+### 🔗 Service Integration Type Management
+
+**Critical Locations:**
+- `services/ai-agent-factory/src/types/index.ts`: Canonical type definitions
+- Changes here affect main application integration points
+- Always verify type alignment between services and main app usage
+
+**Best Practices:**
+- Fix interface changes consistently across all usage points
+- Use batch fixing for type-related errors (more efficient than one-by-one)
+- Test service integration after type definition changes
 
 ## Important Notes
 
