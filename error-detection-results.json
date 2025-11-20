@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-20T11:34:18.027Z",
+  "timestamp": "2025-11-20T12:46:14.200Z",
   "summary": {
     "errors": 1,
     "warnings": 622,
@@ -634,7 +634,7 @@
     {
       "type": "DYNAMIC_TAILWIND_CLASS",
       "file": "src/components/ForceSyncButton.tsx",
-      "line": 252,
+      "line": 253,
       "issue": "Dynamic Tailwind class may be purged in production",
       "fix": "Use explicit conditional logic instead of template literals"
     },
