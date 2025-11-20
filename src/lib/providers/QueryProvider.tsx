@@ -6,20 +6,23 @@ import React, { useState } from 'react';
 
 export function QueryProvider({ children }: { children: React.ReactNode }) {
   /**
-   * REACT HOOK SAFETY PATTERN
+   * REACT HOOK SAFETY PATTERN - CRITICAL FIX
    *
-   * Problem: Next.js static generation can execute this provider before React is initialized,
-   * causing "Cannot read properties of null (reading 'useState')" build failures.
+   * Problem: Next.js 16 + React 19 global-error prerendering calls useState before React is initialized,
+   * causing "Cannot read properties of null (reading 'useContext')" build failures.
    *
-   * Solution: Provide mock QueryClient during static generation so components can use React Query hooks safely.
-   * - During static generation: Provide static QueryClient instance
-   * - During runtime: Normal React Query provider behavior
+   * Solution: Check React availability before calling any hooks
+   * - During static generation OR when React is null: Return static QueryClient
+   * - During runtime with React available: Normal React Query provider behavior
    *
-   * Performance: Zero runtime impact - check only runs during build phase
+   * Performance: Zero runtime impact - checks only run during build phase
    * Reference: docs/react-hook-static-generation-troubleshooting.md
    */
-  if (typeof window === 'undefined') {
-    // Provide static QueryClient during static generation
+
+  // CRITICAL: Check if React hooks are available before using them
+  // During Next.js 16 global-error prerendering, React can be null
+  if (typeof window === 'undefined' && (!React || !(React as any).useState)) {
+    // React is not initialized - provide static QueryClient without hooks
     const staticQueryClient = new QueryClient({
       defaultOptions: {
         queries: {
@@ -39,6 +42,7 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
     );
   }
 
+  // Normal runtime behavior with useState (React is guaranteed to be available)
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {

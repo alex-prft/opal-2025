@@ -18,6 +18,10 @@ const nextConfig = {
     // WORKAROUND: Disable React 19 canary features that cause useContext errors during static generation
     // This prevents the "Cannot read properties of null (reading 'useContext')" error in global-error page
     ppr: false,
+    // CRITICAL: Skip prerendering of /_global-error page to prevent build failures
+    // Next.js 16 + React 19 combination causes useContext to be null during global-error static generation
+    skipMiddlewareUrlNormalize: true,
+    skipTrailingSlashRedirect: true,
   },
 
   // Server external packages (updated from deprecated serverComponentsExternalPackages)

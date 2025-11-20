@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
 import { GuardrailsProvider } from "@/lib/contexts/GuardrailsContext";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
+import { SafeProviderWrapper } from "@/lib/providers/SafeProviderWrapper";
 
 export const metadata: Metadata = {
   title: "Optimizely Strategy Assistant",
@@ -25,26 +26,30 @@ export default function RootLayout({
         className="antialiased"
         suppressHydrationWarning={true}
       >
-        <QueryProvider>
-          <GuardrailsProvider>
-            <AuthProvider>
-              {/*
-                CRITICAL: Context Provider Hierarchy & Static Generation Safety
+        <SafeProviderWrapper>
+          <QueryProvider>
+            <GuardrailsProvider>
+              <AuthProvider>
+                {/*
+                  CRITICAL: Context Provider Hierarchy & Static Generation Safety
 
-                The useContext error during global error prerendering is a Next.js 16 + React 19
-                issue, not caused by our providers. Each provider implements React Hook Safety patterns.
+                  SafeProviderWrapper: Outermost wrapper that prevents ALL provider execution
+                  during Next.js 16 global-error static generation. This prevents the
+                  "Cannot read properties of null (reading 'useContext')" build failure.
 
-                - QueryProvider: Handles React Query setup with useState safety check
-                - GuardrailsProvider: Manages security context with useContext safety
-                - AuthProvider: Handles authentication state with hook safety
+                  - SafeProviderWrapper: Checks React availability before rendering any providers
+                  - QueryProvider: Handles React Query setup with useState safety check
+                  - GuardrailsProvider: Manages security context with useContext safety
+                  - AuthProvider: Handles authentication state with hook safety
 
-                If you add new providers here, ensure they follow the pattern in:
-                docs/react-hook-static-generation-troubleshooting.md
-              */}
-              {children}
-            </AuthProvider>
-          </GuardrailsProvider>
-        </QueryProvider>
+                  If you add new providers here, ensure they follow the pattern in:
+                  docs/react-hook-static-generation-troubleshooting.md
+                */}
+                {children}
+              </AuthProvider>
+            </GuardrailsProvider>
+          </QueryProvider>
+        </SafeProviderWrapper>
       </body>
     </html>
   );

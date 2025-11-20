@@ -25,10 +25,11 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  // CRITICAL: React hook safety during Next.js static generation
-  // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined') {
-    // Return children directly during static generation to prevent build failures
+  // CRITICAL: React hook safety during Next.js 16 static generation
+  // During global-error prerendering, React can be null even on server side
+  // Check React availability BEFORE any hook usage
+  if (typeof window === 'undefined' && (!React || !(React as any).useState)) {
+    // React is not initialized - return children directly during static generation
     return <>{children}</>;
   }
 

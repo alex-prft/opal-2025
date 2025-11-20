@@ -1,0 +1,15 @@
+{
+  "id": "2025-11-20-1316-opal-chat-osa-json-integration",
+  "title": "OPAL Chat Interface OSA JSON Integration Fix",
+  "status": "ACTIVE",
+  "created": "2024-11-20T13:16:00Z",
+  "phase": "discovery",
+  "priority": "high",
+  "category": "OPAL Integration / Webhook Communication",
+  "description": "Fix OPAL chat interface to properly send JSON object to OSA webhook using osa_send_data_to_osa_webhook when triggered at the end of OPAL conversations",
+  "current_question": 1,
+  "discovery_answers": {},
+  "detail_answers": {},
+  "architect_role": "opal-integration-validator",
+  "scope": "webhook_communication_fix"
+}
