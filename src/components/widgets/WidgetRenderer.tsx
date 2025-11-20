@@ -34,27 +34,25 @@ import {
   CompactDataNotAvailable
 } from '@/components/ui/data-not-available';
 
-// Import SOP-validated widgets directly to avoid circular dependencies
-import { StrategyPlansWidget } from './StrategyPlansWidget';
-import { IntegrationHealthWidget } from './IntegrationHealthWidget';
-import { EngagementAnalyticsWidget } from './EngagementAnalyticsWidget';
-import { ExperimentationWidget } from './ExperimentationWidget';
+// Dynamic imports to prevent circular dependencies
+const StrategyPlansWidget = React.lazy(() => import('./StrategyPlansWidget').then(m => ({ default: m.StrategyPlansWidget })));
+const IntegrationHealthWidget = React.lazy(() => import('./IntegrationHealthWidget').then(m => ({ default: m.IntegrationHealthWidget })));
+const EngagementAnalyticsWidget = React.lazy(() => import('./EngagementAnalyticsWidget').then(m => ({ default: m.EngagementAnalyticsWidget })));
+const ExperimentationWidget = React.lazy(() => import('./ExperimentationWidget').then(m => ({ default: m.ExperimentationWidget })));
 
-// Import tier-2 specialized widgets
-import { PhasesWidget } from './tier2/PhasesWidget';
-import { WEBXWidget } from './tier2/WEBXWidget';
-import { RoadmapSpecializedWidget } from './tier2/RoadmapSpecializedWidget';
-import { MaturitySpecializedWidget } from './tier2/MaturitySpecializedWidget';
-import { OSAWidget } from './strategy/OSAWidget';
-import { QuickWinsWidget as QuickWinsEnhancedWidget } from './strategy/QuickWinsWidget';
-import { MaturityWidget as MaturityEnhancedWidget } from './strategy/MaturityWidget';
-import { PhasesEnhancedWidget } from './strategy/PhasesEnhancedWidget';
-import { RoadmapEnhancedWidget } from './strategy/RoadmapEnhancedWidget';
-import { ContentOptimizationWidget } from './ContentOptimizationWidget';
-import { AIForSEOWidget } from './AIForSEOWidget';
-import { ContentOptimizationRecommendationsWidget } from './ContentOptimizationRecommendationsWidget';
-import { ContentSuggestionsWidget } from './ContentSuggestionsWidget';
-import { ODPWidget } from './ODPWidget';
+// Dynamic imports for tier-2 specialized widgets
+const PhasesWidget = React.lazy(() => import('./tier2/PhasesWidget').then(m => ({ default: m.PhasesWidget })));
+const WEBXWidget = React.lazy(() => import('./tier2/WEBXWidget').then(m => ({ default: m.WEBXWidget })));
+const OSAWidget = React.lazy(() => import('./strategy/OSAWidget').then(m => ({ default: m.OSAWidget })));
+const QuickWinsEnhancedWidget = React.lazy(() => import('./strategy/QuickWinsWidget').then(m => ({ default: m.QuickWinsWidget })));
+const MaturityEnhancedWidget = React.lazy(() => import('./strategy/MaturityWidget').then(m => ({ default: m.MaturityWidget })));
+const PhasesEnhancedWidget = React.lazy(() => import('./strategy/PhasesEnhancedWidget').then(m => ({ default: m.PhasesEnhancedWidget })));
+const RoadmapEnhancedWidget = React.lazy(() => import('./strategy/RoadmapEnhancedWidget').then(m => ({ default: m.RoadmapEnhancedWidget })));
+const ContentOptimizationWidget = React.lazy(() => import('./ContentOptimizationWidget').then(m => ({ default: m.ContentOptimizationWidget })));
+const AIForSEOWidget = React.lazy(() => import('./AIForSEOWidget').then(m => ({ default: m.AIForSEOWidget })));
+const ContentOptimizationRecommendationsWidget = React.lazy(() => import('./ContentOptimizationRecommendationsWidget').then(m => ({ default: m.ContentOptimizationRecommendationsWidget })));
+const ContentSuggestionsWidget = React.lazy(() => import('./ContentSuggestionsWidget').then(m => ({ default: m.ContentSuggestionsWidget })));
+const ODPWidget = React.lazy(() => import('./ODPWidget').then(m => ({ default: m.ODPWidget })));
 
 // Helper function to calculate confidence score and eliminate NaN
 function calculateConfidenceScore(scores: (number | undefined)[]): number {
