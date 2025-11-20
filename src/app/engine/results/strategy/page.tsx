@@ -13,6 +13,29 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Target } from 'lucide-react';
 
 function StrategyPageContent() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!useEffect)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="container mx-auto p-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5 text-blue-600" />
+                Strategy Plans
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-muted-foreground">Loading strategy content...</div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   // Add tier2 class to body and set page title
   useEffect(() => {
     document.body.classList.add('results-tier2');

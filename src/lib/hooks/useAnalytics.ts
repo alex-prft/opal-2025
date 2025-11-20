@@ -29,6 +29,24 @@ interface AnalyticsConfig {
 }
 
 export function useAnalytics(config: AnalyticsConfig = {}) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React hooks are null and cause useState/useRef/useEffect errors
+  if (typeof window === 'undefined' && (!React || !useRef || !useCallback || !useEffect)) {
+    // Safe fallback for static generation - return mock analytics functions
+    return {
+      track: () => Promise.resolve(),
+      trackPageView: () => {},
+      trackTabChange: () => {},
+      trackRecommendationClick: () => {},
+      trackRecommendationDismiss: () => {},
+      trackFilterApplied: () => {},
+      trackCustomRuleCreated: () => {},
+      trackTimeSpent: () => {},
+      trackInteractionPattern: () => {},
+      sessionId: null
+    };
+  }
+
   const sessionIdRef = useRef<string>();
   const startTimeRef = useRef<number>(Date.now());
   const lastActivityRef = useRef<number>(Date.now());

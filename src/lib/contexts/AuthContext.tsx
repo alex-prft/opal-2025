@@ -10,13 +10,28 @@ interface AuthContextType {
   checkAuth: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// CRITICAL: Lazy initialization to prevent createContext during static generation
+// Do NOT call createContext at module load time - only when actually needed
+let AuthContext: React.Context<AuthContextType | undefined> | null = null;
+function getAuthContext() {
+  if (!AuthContext) {
+    AuthContext = createContext<AuthContextType | undefined>(undefined);
+  }
+  return AuthContext;
+}
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return children directly during static generation to prevent build failures
+    return <>{children}</>;
+  }
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -71,16 +86,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     checkAuth
   };
 
+  const Context = getAuthContext();
   return (
-    <AuthContext.Provider value={value}>
+    <Context.Provider value={value}>
       {children}
-    </AuthContext.Provider>
+    </Context.Provider>
   );
 }
 
 export function useAuth(): AuthContextType {
   // During static generation, React can be null, so check before using any hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return {
       isAuthenticated: false,
       isLoading: false,
@@ -91,7 +107,8 @@ export function useAuth(): AuthContextType {
 
   // Check if React context system is available (React can be null during static generation)
   try {
-    const context = useContext(AuthContext);
+    const Context = getAuthContext();
+    const context = useContext(Context);
     if (context === undefined) {
       throw new Error('useAuth must be used within an AuthProvider');
     }
@@ -115,7 +132,7 @@ export function useAuth(): AuthContextType {
 // Hook for checking if user is authenticated (with loading state)
 export function useAuthStatus(): { isAuthenticated: boolean; isLoading: boolean } {
   // During static generation, React can be null, so check before using any hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return { isAuthenticated: false, isLoading: false };
   }
 

@@ -36,11 +36,19 @@ interface GuardrailsContextType {
   logEvent: (event: Omit<AuditEvent, 'id' | 'created_at'>) => Promise<void>;
 }
 
-const GuardrailsContext = createContext<GuardrailsContextType | undefined>(undefined);
+// CRITICAL: Lazy initialization to prevent createContext during static generation
+// Do NOT call createContext at module load time - only when actually needed
+let GuardrailsContext: React.Context<GuardrailsContextType | undefined> | null = null;
+function getGuardrailsContext() {
+  if (!GuardrailsContext) {
+    GuardrailsContext = createContext<GuardrailsContextType | undefined>(undefined);
+  }
+  return GuardrailsContext;
+}
 
 export function useGuardrails() {
   // During static generation, React can be null, so check before using any hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return {
       isInitialized: false,
       health: null,
@@ -53,7 +61,8 @@ export function useGuardrails() {
 
   // Check if React context system is available (React can be null during static generation)
   try {
-    const context = useContext(GuardrailsContext);
+    const Context = getGuardrailsContext();
+    const context = useContext(Context);
     if (context === undefined) {
       throw new Error('useGuardrails must be used within a GuardrailsProvider');
     }
@@ -83,7 +92,7 @@ interface GuardrailsProviderProps {
 export function GuardrailsProvider({ children }: GuardrailsProviderProps) {
   // CRITICAL: React hook safety during Next.js static generation
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined' && (!React || !useState)) {
+  if (typeof window === 'undefined') {
     // Return children directly during static generation to prevent build failures
     return <>{children}</>;
   }
@@ -227,33 +236,41 @@ export function GuardrailsProvider({ children }: GuardrailsProviderProps) {
     logEvent
   };
 
+  const Context = getGuardrailsContext();
   return (
-    <GuardrailsContext.Provider value={contextValue}>
+    <Context.Provider value={contextValue}>
       {children}
       {/* Development/Admin UI for guardrails status */}
       {process.env.NODE_ENV === 'development' && (
-        <GuardrailsDevPanel 
-          health={health} 
+        <GuardrailsDevPanel
+          health={health}
           isInitialized={isInitialized}
           error={error}
         />
       )}
-    </GuardrailsContext.Provider>
+    </Context.Provider>
   );
 }
 
 /**
  * Development panel for monitoring guardrails status
  */
-function GuardrailsDevPanel({ 
-  health, 
-  isInitialized, 
-  error 
+function GuardrailsDevPanel({
+  health,
+  isInitialized,
+  error
 }: {
   health: GuardrailsHealth | null;
   isInitialized: boolean;
   error: string | null;
 }) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return null during static generation to prevent build failures
+    return null;
+  }
+
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   if (!health && !error) return null;

@@ -46,6 +46,27 @@ interface HealthStatus {
 }
 
 export default function DataGovernanceDashboard() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-green-600" />
+              Data Governance Dashboard
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-muted-foreground">Loading governance dashboard...</div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

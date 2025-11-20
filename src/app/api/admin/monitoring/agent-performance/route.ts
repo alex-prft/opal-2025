@@ -63,19 +63,19 @@ export async function GET() {
     // Calculate performance metrics for each agent
     const agentPerformance = knownAgents.map(agentName => {
       // Filter data for this agent
-      const agentCoordination = coordinationData?.filter(d => d.agent_name === agentName) || [];
-      const agentConfidence = confidenceData?.filter(d => d.agent_name === agentName) || [];
+      const agentCoordination = coordinationData?.filter((d: any) => d.agent_name === agentName) || [];
+      const agentConfidence = confidenceData?.filter((d: any) => d.agent_name === agentName) || [];
 
       // Calculate metrics
       const requestCount = agentCoordination.length;
-      const successfulRequests = agentCoordination.filter(d => d.status === 'completed').length;
+      const successfulRequests = agentCoordination.filter((d: any) => d.status === 'completed').length;
       const successRate = requestCount > 0 ? successfulRequests / requestCount : 0;
 
       // Calculate average confidence
       let averageConfidence = 0.75; // Default
       if (agentConfidence.length > 0) {
         const validScores = agentConfidence
-          .map(c => c.confidence_score)
+          .map((c: any) => c.confidence_score)
           .filter(score => typeof score === 'number' && !isNaN(score));
 
         if (validScores.length > 0) {
@@ -85,8 +85,8 @@ export async function GET() {
 
       // Calculate average response time (simulate from coordination data)
       const responseTimes = agentCoordination
-        .filter(d => d.completed_at)
-        .map(d => {
+        .filter((d: any) => d.completed_at)
+        .map((d: any) => {
           const start = new Date(d.created_at).getTime();
           const end = new Date(d.completed_at).getTime();
           return (end - start) / 1000; // Convert to seconds
@@ -108,7 +108,7 @@ export async function GET() {
 
       // Get last execution time
       const lastExecution = agentCoordination.length > 0
-        ? agentCoordination[0].created_at
+        ? (agentCoordination[0] as any).created_at
         : new Date(Date.now() - Math.random() * 60 * 60 * 1000).toISOString(); // Random within last hour
 
       return {

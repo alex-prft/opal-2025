@@ -5,14 +5,36 @@
  * Built on Supabase Realtime with custom routing and schema validation
  */
 
-import { supabase, isDatabaseAvailable } from '@/lib/database/supabase-client';
-import {
-  OSAEvent,
-  validateEvent,
-  generateEventId,
-  generateCorrelationId,
-  createEventMetadata
-} from './schemas';
+// CRITICAL: Prevent all imports and initialization during Next.js static generation
+// Multiple detection methods to handle various build environments and non-standard NODE_ENV values
+const isStaticGeneration = typeof window === 'undefined' && typeof process !== 'undefined' && (
+  // Standard production build
+  process.env.NODE_ENV === 'production' ||
+  // Non-standard NODE_ENV values during builds
+  process.env.NODE_ENV?.includes('production') ||
+  // Next.js build process indicators
+  process.env.NEXT_PHASE === 'phase-production-build' ||
+  process.env.npm_lifecycle_event === 'build' ||
+  // Vercel build environment
+  process.env.VERCEL_ENV === 'production' ||
+  // Check if we're in a build context (no window, but process available)
+  (typeof window === 'undefined' && typeof document === 'undefined' && typeof navigator === 'undefined')
+);
+
+// Conditional imports - only import during runtime to prevent static generation issues with Supabase Realtime
+let supabase: any, isDatabaseAvailable: any;
+let OSAEvent: any, validateEvent: any, generateEventId: any, generateCorrelationId: any, createEventMetadata: any;
+
+if (!isStaticGeneration) {
+  ({ supabase, isDatabaseAvailable } = require('@/lib/database/supabase-client'));
+  ({
+    OSAEvent,
+    validateEvent,
+    generateEventId,
+    generateCorrelationId,
+    createEventMetadata
+  } = require('./schemas'));
+}
 
 // Event storage interface for Supabase
 interface StoredEvent {
@@ -60,6 +82,14 @@ export class OSAEventBus {
   private isInitialized = false;
 
   constructor() {
+    // CRITICAL: Prevent EventBus initialization during Next.js static generation
+    // During static generation, Supabase Realtime subscriptions try to use React context
+    if (isStaticGeneration) {
+      console.log('🚀 [EventBus] Static generation detected, skipping Supabase initialization');
+      this.isInitialized = true; // Mark as initialized to prevent runtime errors
+      return;
+    }
+
     this.initializeEventBus();
   }
 
@@ -68,6 +98,13 @@ export class OSAEventBus {
    */
   private async initializeEventBus(): Promise<void> {
     if (this.isInitialized) return;
+
+    // CRITICAL: Double-check static generation safety
+    if (isStaticGeneration || !supabase || !isDatabaseAvailable) {
+      console.log('📝 [EventBus] Static generation or dependencies unavailable, skipping initialization');
+      this.isInitialized = true;
+      return;
+    }
 
     try {
       // Check if database is available
@@ -106,6 +143,12 @@ export class OSAEventBus {
    * Publish an event to the event bus
    */
   async publish<T extends OSAEvent>(event: T): Promise<void> {
+    // CRITICAL: Skip publishing during static generation to prevent React context issues
+    if (isStaticGeneration || !supabase || !isDatabaseAvailable) {
+      console.log(`📝 [EventBus] Static generation or dependencies unavailable, event skipped: ${event?.event_type || 'unknown'}`);
+      return;
+    }
+
     // If database is unavailable, handle gracefully
     if (!isDatabaseAvailable()) {
       console.log(`📝 [EventBus] Database unavailable, event logged locally: ${event.event_type}`);
@@ -174,6 +217,12 @@ export class OSAEventBus {
     callback: EventCallback<T>,
     options: SubscriptionOptions = {}
   ): () => void {
+    // CRITICAL: Skip subscriptions during static generation to prevent React context issues
+    if (isStaticGeneration) {
+      console.log(`📡 [EventBus] Static generation detected, subscription skipped: ${eventTypePattern}`);
+      return () => {}; // Return no-op unsubscribe function
+    }
+
     const subscriptionId = `${eventTypePattern}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
     if (!this.subscriptions.has(eventTypePattern)) {

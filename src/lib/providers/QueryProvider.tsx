@@ -18,7 +18,7 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
    * Performance: Zero runtime impact - check only runs during build phase
    * Reference: docs/react-hook-static-generation-troubleshooting.md
    */
-  if (typeof window === 'undefined' && (!React || !useState)) {
+  if (typeof window === 'undefined') {
     // Return children directly during static generation
     return <>{children}</>;
   }

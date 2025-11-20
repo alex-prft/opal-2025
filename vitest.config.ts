@@ -7,7 +7,7 @@ export default defineConfig({
     environment: 'node',
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx', 'tests/**/*.test.js'],
     exclude: ['node_modules', 'dist', '.next'],
-    reporter: ['verbose', 'json'],
+    reporters: ['verbose', 'json'],
     outputFile: 'test-results.json',
     timeout: 10000,
     setupFiles: ['tests/vitest-setup.ts']

@@ -38,6 +38,32 @@ interface JobStats {
 }
 
 export default function Phase2Dashboard() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <div className="container mx-auto p-6 space-y-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold">Phase 2 Dashboard</h1>
+            <p className="text-muted-foreground mt-2">
+              Loading comprehensive monitoring dashboard...
+            </p>
+          </div>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Loading Phase 2 Dashboard</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-muted-foreground">Initializing monitoring systems...</div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   // State management
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
   const [cacheStats, setCacheStats] = useState<CacheStats | null>(null);

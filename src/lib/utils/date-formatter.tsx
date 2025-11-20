@@ -17,6 +17,18 @@ export function useSafeDate(dateInput?: string | Date | null): {
   formattedDateTime: string | null;
   isLoaded: boolean;
 } {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React hooks are null and cause useState/useEffect errors
+  if (typeof window === 'undefined' && (!React || !useState || !useEffect)) {
+    // Safe fallback for static generation - return unloaded state
+    return {
+      formattedTime: null,
+      formattedDate: null,
+      formattedDateTime: null,
+      isLoaded: false,
+    };
+  }
+
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

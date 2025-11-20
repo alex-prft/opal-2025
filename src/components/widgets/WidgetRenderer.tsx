@@ -34,13 +34,11 @@ import {
   CompactDataNotAvailable
 } from '@/components/ui/data-not-available';
 
-// Import SOP-validated widgets
-import {
-  StrategyPlansWidget,
-  IntegrationHealthWidget,
-  EngagementAnalyticsWidget,
-  ExperimentationWidget
-} from './index';
+// Import SOP-validated widgets directly to avoid circular dependencies
+import { StrategyPlansWidget } from './StrategyPlansWidget';
+import { IntegrationHealthWidget } from './IntegrationHealthWidget';
+import { EngagementAnalyticsWidget } from './EngagementAnalyticsWidget';
+import { ExperimentationWidget } from './ExperimentationWidget';
 
 // Import tier-2 specialized widgets
 import { PhasesWidget } from './tier2/PhasesWidget';

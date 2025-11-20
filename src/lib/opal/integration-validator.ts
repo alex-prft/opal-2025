@@ -304,9 +304,10 @@ export async function getTenantValidationHistory(tenantId?: string, limit: numbe
  * Safe for static generation - checks React availability before using hooks
  */
 export function useValidationTrigger() {
-  // During static generation, React can be null, so check before using hooks
-  if (!React || typeof React.useState !== 'function') {
-    // Return safe fallback during static generation
+  // CRITICAL: Complete React hook safety during Next.js static generation
+  // During static generation, React context is null and causes useState errors
+  if (typeof window === 'undefined' && (!React || !React.useState)) {
+    // Safe fallback during static generation to prevent useState errors
     return {
       triggerValidation: async (input: ValidationTriggerInput) => ({ success: false, errors: ['Hook unavailable during static generation'] }),
       isValidating: false,

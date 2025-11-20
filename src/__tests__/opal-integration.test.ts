@@ -10,9 +10,10 @@ import { parseEnhancedToolRequest, parseWebhookEvent, generateDedupHash } from '
 import { loadOpalConfig } from '@/lib/config/opal-env';
 
 // Mock environment variables for testing
+const TEST_WEBHOOK_SECRET = process.env.TEST_WEBHOOK_SECRET || 'mock-test-webhook-secret-for-unit-testing-only';
 const mockEnvVars = {
   OSA_WEBHOOK_URL: 'https://test-app.vercel.app/api/webhooks/opal-workflow',
-  OSA_WEBHOOK_SECRET: 'test-webhook-secret-12345678901234567890123456789012',
+  OSA_WEBHOOK_SECRET: TEST_WEBHOOK_SECRET,
   OPAL_TOOLS_DISCOVERY_URL: 'https://test-app.vercel.app/api/opal/enhanced-tools',
   DEFAULT_ENVIRONMENT: 'development',
   DIAGNOSTICS_LIMIT_DEFAULT: '25',
@@ -37,7 +38,7 @@ describe('OPAL HMAC Security', () => {
       agent_id: 'test-agent',
       execution_status: 'success'
     });
-    const secret = 'test-secret-12345678901234567890123456789012';
+    const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
 
     test('should generate valid HMAC signature', () => {
       const result = generateHmacSignature(testPayload, secret, true);
@@ -99,7 +100,7 @@ describe('OPAL HMAC Security', () => {
   describe('Constant-time Comparison', () => {
     test('should use constant-time comparison for security', () => {
       const payload = 'test payload';
-      const secret = 'test-secret-12345678901234567890123456789012';
+      const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
 
       const result1 = generateHmacSignature(payload, secret);
       const result2 = generateHmacSignature(payload, secret);
@@ -363,7 +364,7 @@ describe('Error Handling', () => {
 describe('Performance Tests', () => {
   test('should generate signatures efficiently', () => {
     const payload = 'test payload '.repeat(1000); // Larger payload
-    const secret = 'test-secret-12345678901234567890123456789012';
+    const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
 
     const startTime = Date.now();
     for (let i = 0; i < 100; i++) {
@@ -376,7 +377,7 @@ describe('Performance Tests', () => {
 
   test('should verify signatures efficiently', () => {
     const payload = 'test payload';
-    const secret = 'test-secret-12345678901234567890123456789012';
+    const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
     const signature = generateHmacSignature(payload, secret);
 
     const startTime = Date.now();
@@ -553,7 +554,7 @@ describe('Health Monitoring Tests', () => {
 describe('Security Tests', () => {
   test('should prevent timing attacks with constant-time comparison', () => {
     const payload = 'sensitive data';
-    const secret = 'test-secret-12345678901234567890123456789012';
+    const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
     const validSignature = generateHmacSignature(payload, secret);
 
     // Create a signature that differs only in the last character
@@ -577,7 +578,7 @@ describe('Security Tests', () => {
 
   test('should reject replay attacks', () => {
     const payload = 'test payload';
-    const secret = 'test-secret-12345678901234567890123456789012';
+    const secret = process.env.TEST_SECRET || 'mock-test-hmac-secret-for-unit-testing-only-not-production';
     const oldTimestamp = Date.now() - 10 * 60 * 1000; // 10 minutes ago
 
     const signatureResult = generateHmacSignature(payload, secret, true);

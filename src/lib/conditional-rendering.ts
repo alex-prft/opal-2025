@@ -46,6 +46,22 @@ export interface ConditionalRenderingContext {
  * Enhanced URL Path Detection Hook
  */
 export function useUrlPathDetection(externalPathname?: string): TierDetectionResult {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return a safe fallback detection result during static generation to prevent build failures
+    return {
+      tier1: '',
+      tier2: '',
+      tier3: '',
+      tier1Display: '',
+      tier2Display: '',
+      tier3Display: '',
+      fullPath: externalPathname || '',
+      isValidTier: false
+    };
+  }
+
   const internalPathname = usePathname();
   const pathname = externalPathname || internalPathname;
   const [detection, setDetection] = useState<TierDetectionResult>({
@@ -182,6 +198,32 @@ function convertUrlToDisplayName(urlSegment: string, tierLevel: 'tier1' | 'tier2
  * Conditional Rendering Context Hook
  */
 export function useConditionalRenderingContext(pathname?: string): ConditionalRenderingContext {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return a safe fallback context during static generation to prevent build failures
+    return {
+      detection: {
+        tier1: '',
+        tier2: '',
+        tier3: '',
+        tier1Display: '',
+        tier2Display: '',
+        tier3Display: '',
+        fullPath: pathname || '',
+        isValidTier: false
+      },
+      widgets: {
+        tier2Container: '',
+        tier3Components: [],
+        layout: 'tabs'
+      },
+      dataProps: {},
+      shouldRenderTier2: false,
+      shouldRenderTier3: false
+    };
+  }
+
   console.log('[useConditionalRenderingContext] Hook called with pathname:', pathname);
 
   // Use synchronous path detection instead of problematic React hooks
@@ -441,6 +483,18 @@ export function useConditionalRenderer(): {
   getTier3Content: () => { contentId: string; title: string; dataKey: string } | null;
   getActiveLayout: () => 'tabs' | 'grid' | 'accordion' | 'cards';
 } {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return a safe fallback renderer during static generation to prevent build failures
+    return {
+      shouldRender: () => false,
+      getTier2Container: () => null,
+      getTier3Content: () => null,
+      getActiveLayout: () => 'tabs'
+    };
+  }
+
   const context = useConditionalRenderingContext();
 
   return {

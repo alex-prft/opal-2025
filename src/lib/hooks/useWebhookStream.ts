@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 export interface WebhookEvent {
   id: string;
@@ -37,6 +37,23 @@ export interface WebhookStreamState {
 }
 
 export function useWebhookStream(options: UseWebhookStreamOptions) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback hook result during static generation to prevent build failures
+    return {
+      connected: false,
+      events: [],
+      lastEvent: null,
+      error: 'WebhookStream unavailable during static generation',
+      connectionCount: 0,
+      connect: () => {},
+      disconnect: () => {},
+      clearEvents: () => {},
+      sendMessage: () => Promise.resolve()
+    };
+  }
+
   const {
     sessionId,
     workflowId,

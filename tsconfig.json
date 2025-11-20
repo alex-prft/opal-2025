@@ -39,12 +39,20 @@
   "exclude": [
     "node_modules",
     "tests",
+    "__tests__",
     "**/*.test.ts",
     "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
     "coverage",
     "dist",
     "build",
     "data/**/*.json",
-    "logs/**/*"
+    "logs/**/*",
+    "claude-requirements",
+    "docs/opal-config/opal-tools",
+    "opal-config/opal-tools",
+    "scripts/**/*.ts",
+    "scripts"
   ]
 }

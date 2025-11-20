@@ -1,14 +1,24 @@
 // Phase 2: Background Job System for Cache Management
 // Handles scheduled validation, cache warming, and cross-page synchronization
 
-import { supabase, isDatabaseAvailable } from '@/lib/database/supabase-client';
-import { intelligentCache } from '@/lib/cache/intelligent-cache-system';
-import { phase1Pipeline } from '@/lib/validation/phase1-integration';
+// CRITICAL: Prevent all imports and initialization during Next.js static generation
+// This prevents useContext errors when modules are imported during build time
+const isStaticGeneration = typeof window === 'undefined' && typeof process !== 'undefined' && process.env.NODE_ENV === 'production';
+
+// Conditional imports - only import during runtime to prevent static generation issues
+let supabase: any, isDatabaseAvailable: any, intelligentCache: any, phase1Pipeline: any, DEFAULT_BACKGROUND_JOB_CONFIG: any;
+
+if (!isStaticGeneration) {
+  ({ supabase, isDatabaseAvailable } = require('@/lib/database/supabase-client'));
+  ({ intelligentCache } = require('@/lib/cache/intelligent-cache-system'));
+  ({ phase1Pipeline } = require('@/lib/validation/phase1-integration'));
+  ({ DEFAULT_BACKGROUND_JOB_CONFIG } = require('@/lib/types/phase2-database'));
+}
+
 import type {
   BackgroundJob,
   BackgroundJobConfig
 } from '@/lib/types/phase2-database';
-import { DEFAULT_BACKGROUND_JOB_CONFIG } from '@/lib/types/phase2-database';
 
 export interface JobExecutionResult {
   job_id: string;
@@ -44,6 +54,12 @@ export class BackgroundJobSystem implements JobScheduler {
   private jobStats = new Map<string, any>();
 
   constructor(config: Partial<BackgroundJobConfig> = {}) {
+    // During static generation, skip all initialization to prevent React hook errors
+    if (isStaticGeneration || !DEFAULT_BACKGROUND_JOB_CONFIG) {
+      this.config = {} as BackgroundJobConfig;
+      return;
+    }
+
     this.config = {
       ...DEFAULT_BACKGROUND_JOB_CONFIG,
       ...config
@@ -51,9 +67,9 @@ export class BackgroundJobSystem implements JobScheduler {
 
     console.log(`⚙️ [Jobs] Background job system initialized`);
     console.log(`⚙️ [Jobs] Configuration:`, {
-      cache_validation: this.config.cache_validation.enabled ? this.config.cache_validation.schedule : 'disabled',
-      cache_warming: this.config.cache_warming.on_startup ? 'on_startup' : 'disabled',
-      cross_page_sync: this.config.cross_page_sync.enabled ? this.config.cross_page_sync.schedule : 'disabled'
+      cache_validation: this.config.cache_validation?.enabled ? this.config.cache_validation.schedule : 'disabled',
+      cache_warming: this.config.cache_warming?.on_startup ? 'on_startup' : 'disabled',
+      cross_page_sync: this.config.cross_page_sync?.enabled ? this.config.cross_page_sync.schedule : 'disabled'
     });
   }
 
@@ -637,6 +653,18 @@ export class BackgroundJobSystem implements JobScheduler {
    * Get job system statistics
    */
   getJobSystemStatistics(): any {
+    // During static generation, return safe fallback statistics
+    if (isStaticGeneration || !this.config || Object.keys(this.config).length === 0) {
+      return {
+        running: false,
+        active_jobs: [],
+        scheduled_jobs: [],
+        job_stats: {},
+        configuration: {},
+        static_generation_mode: true
+      };
+    }
+
     return {
       running: this.running,
       active_jobs: Array.from(this.activeJobs),
@@ -673,7 +701,12 @@ export class BackgroundJobSystem implements JobScheduler {
 export const backgroundJobSystem = new BackgroundJobSystem();
 
 // Auto-start job system (can be controlled via environment variable)
-if (process.env.NODE_ENV !== 'test' && process.env.DISABLE_BACKGROUND_JOBS !== 'true') {
+// CRITICAL: Prevent auto-start during Next.js static generation to avoid React hook errors
+if (
+  typeof window !== 'undefined' && // Only start in browser environment
+  process.env.NODE_ENV !== 'test' &&
+  process.env.DISABLE_BACKGROUND_JOBS !== 'true'
+) {
   // Start with a small delay to allow other systems to initialize
   setTimeout(async () => {
     try {

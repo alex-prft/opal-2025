@@ -77,7 +77,7 @@ async function getSecurityMetrics(days: number) {
       period_days: days,
       security_events: securitySummary?.length || 0,
       suspicious_ips: suspiciousActivity?.length || 0,
-      threat_levels: securitySummary?.reduce((acc: any, event) => {
+      threat_levels: securitySummary?.reduce((acc: any, event: any) => {
         acc[event.threat_level] = (acc[event.threat_level] || 0) + event.event_count;
         return acc;
       }, {}) || {},
@@ -112,7 +112,7 @@ async function getPIIComplianceMetrics(days: number) {
       total_scans: complianceReport.total_scans,
       violations_found: complianceReport.violations_found,
       compliance_rate: complianceReport.compliance_rate,
-      violation_breakdown: complianceStatus?.reduce((acc: any, status) => {
+      violation_breakdown: complianceStatus?.reduce((acc: any, status: any) => {
         acc[status.compliance_status] = (acc[status.compliance_status] || 0) + status.violation_count;
         return acc;
       }, {}) || {},

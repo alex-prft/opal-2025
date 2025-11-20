@@ -74,6 +74,22 @@ interface ContentRendererProps {
 }
 
 function ContentRenderer({ tier1Name, tier2Name, tier3Name, mappingType }: ContentRendererProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Loading Content...</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-muted-foreground">Initializing content renderer...</div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const pathname = usePathname();
   const context = useConditionalRenderingContext();
 

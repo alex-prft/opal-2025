@@ -96,11 +96,11 @@ const nextConfig = {
 
   // Output optimization for production
   output: 'standalone',
-  
+
   // Disable unnecessary features to reduce compilation time
   poweredByHeader: false,
   compress: true,
-  
+
   // React strict mode for better development experience
   reactStrictMode: true,
   typescript: {
@@ -145,11 +145,15 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    // Exclude dev pages in production
+    // Exclude dev and admin pages in production
     if (process.env.NODE_ENV === 'production') {
       return [
         {
           source: '/dev/:path*',
+          destination: '/404',
+        },
+        {
+          source: '/admin/:path*',
           destination: '/404',
         },
       ];

@@ -332,6 +332,17 @@ export function withContentRendererErrorBoundary<P extends object>(
  * Hook for accessing error boundary context
  */
 export function useContentRendererErrorReporting() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !React.useCallback)) {
+    // Return a safe fallback during static generation
+    return {
+      reportError: (error: Error, context?: any) => {
+        console.warn('Error reporting unavailable during static generation:', error);
+      }
+    };
+  }
+
   const reportError = React.useCallback((error: Error, context?: any) => {
     console.error('Manual error report:', error, context);
 

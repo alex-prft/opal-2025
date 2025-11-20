@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const record = data[0];
+    const record = data[0] as any;
 
     // Shape this for consumption by monitoring dashboards
     return NextResponse.json({

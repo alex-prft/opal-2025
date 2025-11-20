@@ -86,6 +86,27 @@ interface SystemHealthMetrics {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 export default function RealTimeAnalyticsDashboard() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+              <BarChart3 className="h-8 w-8 text-blue-600" />
+              Real-Time Analytics Dashboard
+            </h1>
+            <p className="text-gray-600 mt-1">
+              Loading analytics dashboard...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const [activeTab, setActiveTab] = useState('events');
   const [isConnected, setIsConnected] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);

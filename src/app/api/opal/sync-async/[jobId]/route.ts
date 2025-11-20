@@ -139,9 +139,9 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
-  const jobId = params.jobId;
+  const { jobId } = await params;
 
   console.log(`🗑️ [Async Sync Status] Cancelling job: ${jobId}`);
 

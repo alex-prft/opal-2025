@@ -35,6 +35,13 @@ export function AskAssistantProvider({
   sectionKey,
   sourcePath = ''
 }: AskAssistantProviderProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using context providers
+  if (typeof window === 'undefined' && (!React)) {
+    // Return children directly during static generation to prevent build failures
+    return <>{children}</>;
+  }
+
   const promptConfig = getAskAssistantConfig(sectionKey);
   // Always available now that getAskAssistantConfig always returns a configuration
   const isAvailable = true;
@@ -71,7 +78,7 @@ export function AskAssistantProvider({
  */
 export function useAskAssistant(): AskAssistantContextValue {
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return {
       sectionKey: null,
       promptConfig: null,
@@ -94,7 +101,7 @@ export function useAskAssistant(): AskAssistantContextValue {
  */
 export function useAskAssistantAvailability() {
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return {
       isAvailable: false,
       sectionKey: null,

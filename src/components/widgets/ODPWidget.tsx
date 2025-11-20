@@ -34,6 +34,25 @@ interface ODPWidgetProps {
 }
 
 export function ODPWidget({ className = '', tier2, tier3 }: ODPWidgetProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-5 w-5 text-purple-600" />
+            ODP Data Platform
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-muted-foreground">Loading ODP insights...</div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const pathname = usePathname();
   const [content, setContent] = useState<ResultsPageContent | null>(null);
   const [loading, setLoading] = useState(true);

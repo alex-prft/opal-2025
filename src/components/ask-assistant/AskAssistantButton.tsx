@@ -25,6 +25,23 @@ export function AskAssistantButton({
   variant = 'outline',
   size = 'default'
 }: AskAssistantButtonProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a simple button during static generation to prevent build failures
+    return (
+      <Button
+        variant={variant}
+        size={size}
+        className={className}
+        disabled
+      >
+        <MessageSquare className="h-4 w-4 mr-2" />
+        Ask Assistant
+      </Button>
+    );
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Safely get context with error handling

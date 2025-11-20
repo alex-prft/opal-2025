@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -22,6 +22,26 @@ import { useRouter } from 'next/navigation';
 import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
 
 export default function EnginePage() {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined' && (!React || !useState)) {
+    // Return a safe fallback component during static generation to prevent build failures
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Strategy Engine
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              Loading strategy engine...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const [workflowResult, setWorkflowResult] = useState<OSAWorkflowOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingAnimation, setShowLoadingAnimation] = useState(false);

@@ -24,6 +24,13 @@ interface ServiceStatusProviderProps {
 }
 
 export function ServiceStatusProvider({ children }: ServiceStatusProviderProps) {
+  // CRITICAL: React hook safety during Next.js static generation
+  // During static generation, React can be null, so check before using hooks
+  if (typeof window === 'undefined') {
+    // Return children directly during static generation to prevent build failures
+    return <>{children}</>;
+  }
+
   const [issues, setIssues] = useState<ServiceIssue[]>([]);
 
   const addIssue = (issue: Omit<ServiceIssue, 'timestamp'>) => {
@@ -63,7 +70,7 @@ export function ServiceStatusProvider({ children }: ServiceStatusProviderProps) 
 
 export function useServiceStatus() {
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined' && (!React || !useContext)) {
+  if (typeof window === 'undefined') {
     return {
       issues: [],
       addIssue: () => {},
@@ -115,7 +122,7 @@ export function withErrorHandling<T extends (...args: any[]) => Promise<any>>(
 // Custom hook to add service error listener
 export function useServiceErrorListener() {
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined' && (!React || !React.useEffect)) {
+  if (typeof window === 'undefined') {
     return; // No-op during static generation
   }
 

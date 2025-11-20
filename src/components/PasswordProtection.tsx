@@ -13,7 +13,8 @@ interface PasswordProtectionProps {
   onAuthenticated: () => void;
 }
 
-const CORRECT_PASSWORD = 'PerficientPoweredit';
+// Use environment variable for password protection
+const CORRECT_PASSWORD = process.env.NEXT_PUBLIC_ACCESS_PASSWORD || 'default-dev-password';
 const STORAGE_KEY = 'opal_engine_auth';
 
 export default function PasswordProtection({ children, onAuthenticated }: PasswordProtectionProps) {
