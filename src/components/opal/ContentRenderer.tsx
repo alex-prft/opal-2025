@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ContentRendererErrorBoundary } from '@/components/shared/ContentRendererErrorBoundary';
 import { usePathname } from 'next/navigation';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useConditionalRenderingContext } from '@/lib/conditional-rendering';
