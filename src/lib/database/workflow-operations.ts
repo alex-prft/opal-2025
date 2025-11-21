@@ -696,6 +696,115 @@ export class WorkflowDatabaseOperations {
     return insights;
   }
 
+  /**
+   * Get the latest agent execution data for a specific agent
+   * This method retrieves real OPAL execution results from the database
+   * 
+   * @param agentName - Name of the agent (e.g., 'geo_audit', 'audience_suggester')
+   * @param limit - Maximum number of executions to return (default: 1 for latest)
+   * @returns Agent execution data with results
+   */
+  async getLatestAgentExecution(agentName: string, limit: number = 1): Promise<any> {
+    const startTime = Date.now();
+
+    try {
+      console.log(`🔍 [DB] Retrieving latest ${limit} execution(s) for agent: ${agentName}`);
+
+      // Get the most recent agent execution(s) for this agent
+      const { data: executions, error } = await supabase
+        .from('opal_agent_executions')
+        .select(`
+          *,
+          opal_workflows!inner(
+            workflow_id,
+            session_id,
+            status,
+            created_at
+          )
+        `)
+        .eq('agent_name', agentName)
+        .eq('status', 'completed') // Only get successful executions
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.error(`❌ [DB] Error retrieving agent execution for ${agentName}:`, error);
+        handleDatabaseError(error, `agent execution retrieval for ${agentName}`);
+      }
+
+      if (!executions || executions.length === 0) {
+        console.warn(`⚠️ [DB] No completed executions found for agent: ${agentName}`);
+        return null;
+      }
+
+      const execution = executions[0]; // Get the latest execution
+      
+      console.log(`✅ [DB] Retrieved agent execution for ${agentName}`, {
+        execution_id: execution.execution_id,
+        workflow_id: execution.workflow_id,
+        created_at: execution.created_at,
+        duration_ms: execution.duration_ms,
+        processing_time_ms: Date.now() - startTime
+      });
+
+      // Parse the agent_data field which contains the actual execution results
+      let agentData = null;
+      if (execution.agent_data) {
+        try {
+          agentData = typeof execution.agent_data === 'string' 
+            ? JSON.parse(execution.agent_data) 
+            : execution.agent_data;
+        } catch (parseError) {
+          console.error(`❌ [DB] Error parsing agent_data for ${agentName}:`, parseError);
+          agentData = execution.agent_data; // Use raw data if parsing fails
+        }
+      }
+
+      // Return structured response with both execution metadata and results
+      return {
+        execution_id: execution.execution_id,
+        workflow_id: execution.workflow_id,
+        session_id: execution.opal_workflows?.session_id,
+        agent_name: execution.agent_name,
+        status: execution.status,
+        created_at: execution.created_at,
+        updated_at: execution.updated_at,
+        duration_ms: execution.duration_ms,
+        execution_order: execution.execution_order,
+        // The actual agent results (this is what OPAL stores)
+        agent_data: agentData,
+        // Workflow context
+        workflow: execution.opal_workflows,
+        // Processing metadata
+        retrieved_at: new Date().toISOString(),
+        processing_time_ms: Date.now() - startTime
+      };
+
+    } catch (error) {
+      console.error(`❌ [DB] Unexpected error retrieving agent execution for ${agentName}:`, error);
+      handleDatabaseError(error, `agent execution retrieval for ${agentName}`);
+    }
+  }
+
+  /**
+   * Get multiple recent agent executions for analysis or comparison
+   * Useful for trend analysis and debugging data consistency
+   * 
+   * @param agentName - Name of the agent
+   * @param limit - Number of executions to retrieve (default: 5)
+   * @returns Array of agent execution data
+   */
+  async getRecentAgentExecutions(agentName: string, limit: number = 5): Promise<any[]> {
+    const result = await this.getLatestAgentExecution(agentName, limit);
+    
+    // If limit is 1, wrap in array for consistency
+    if (limit === 1) {
+      return result ? [result] : [];
+    }
+    
+    return result || [];
+  }
+
   private extractKnowledgeFromContext(workflowId: string, context: Record<string, any>): Array<any> {
     const knowledgeEntries = [];
 
