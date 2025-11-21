@@ -20,6 +20,46 @@ import { NextRequest, NextResponse } from 'next/server';
  *
  * Returns comprehensive tool discovery information for OPAL integration
  */
+/**
+ * Validates Bearer token authentication for OPAL discovery endpoint
+ * Supports multiple authentication modes for different environments
+ */
+function validateBearerToken(authHeader: string | null): { valid: boolean; reason?: string } {
+  // Allow access without authentication in development for testing
+  if (process.env.NODE_ENV === 'development' && !process.env.OPAL_DISCOVERY_TOKEN) {
+    return { valid: true };
+  }
+
+  // Check for Authorization header
+  if (!authHeader) {
+    return { valid: false, reason: 'Missing Authorization header' };
+  }
+
+  // Extract Bearer token
+  const tokenMatch = authHeader.match(/^Bearer\s+(.+)$/i);
+  if (!tokenMatch) {
+    return { valid: false, reason: 'Invalid Authorization format. Expected: Bearer <token>' };
+  }
+
+  const providedToken = tokenMatch[1];
+
+  // Get expected token from environment
+  const expectedToken = process.env.OPAL_DISCOVERY_TOKEN || process.env.OPAL_TOOLS_AUTH_TOKEN;
+
+  if (!expectedToken) {
+    // No token configured - allow access with warning
+    console.warn('⚠️ [OPAL Discovery] No authentication token configured in environment');
+    return { valid: true };
+  }
+
+  // Validate token
+  if (providedToken !== expectedToken) {
+    return { valid: false, reason: 'Invalid authentication token' };
+  }
+
+  return { valid: true };
+}
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
   const correlationId = `discovery-${Date.now()}-${Math.random().toString(36).substring(7)}`;
@@ -28,8 +68,42 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     console.log('🔍 [OPAL Discovery] Discovery request received', {
       correlationId,
       userAgent: request.headers.get('user-agent'),
-      origin: request.headers.get('origin')
+      origin: request.headers.get('origin'),
+      hasAuth: !!request.headers.get('authorization')
     });
+
+    // Validate Bearer token authentication
+    const authHeader = request.headers.get('authorization');
+    const authValidation = validateBearerToken(authHeader);
+
+    if (!authValidation.valid) {
+      console.warn('🚫 [OPAL Discovery] Authentication failed', {
+        correlationId,
+        reason: authValidation.reason,
+        authHeaderPresent: !!authHeader
+      });
+
+      return NextResponse.json({
+        error: 'Authentication required',
+        message: authValidation.reason || 'Valid Bearer token required',
+        correlation_id: correlationId,
+        timestamp: new Date().toISOString(),
+        authentication: {
+          required: true,
+          format: 'Bearer <token>',
+          header: 'Authorization'
+        }
+      }, {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Correlation-ID': correlationId,
+          'WWW-Authenticate': 'Bearer realm="OPAL Tools Discovery"'
+        }
+      });
+    }
+
+    console.log('✅ [OPAL Discovery] Authentication successful', { correlationId });
 
     // In development, we can try to use the running Express server
     // In production/serverless, we'll provide a static discovery response

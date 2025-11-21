@@ -11,13 +11,30 @@ app.use(express.json());
 app.use(cors());
 app.use("/public", express.static("public"));
 
-// Basic auth (optional, recommended in prod)
+// Authentication middleware (Bearer token + Basic auth fallback)
 app.use((req, res, next) => {
   if (req.path.startsWith("/public/") || req.path === "/rick.gif") {
     return next(); // allow public assets
   }
 
-  // Use env vars in real life
+  // Check for Bearer token first (preferred for OPAL)
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.substring(7); // Remove "Bearer " prefix
+    const expectedToken = process.env.OPAL_DISCOVERY_TOKEN || process.env.OPAL_TOOLS_AUTH_TOKEN;
+
+    if (expectedToken && token === expectedToken) {
+      console.log('✅ [OPAL Tools] Bearer token authentication successful');
+      return next();
+    } else if (expectedToken) {
+      return res.status(401).json({
+        error: 'Invalid Bearer token',
+        message: 'Please provide a valid Bearer token in Authorization header'
+      });
+    }
+  }
+
+  // Fallback to Basic auth for backwards compatibility
   const USER = process.env.OPAL_TOOLS_USER || "admin";
   const PASS = process.env.OPAL_TOOLS_PASS || "password";
 

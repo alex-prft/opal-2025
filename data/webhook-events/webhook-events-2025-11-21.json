@@ -486,5 +486,71 @@
         "target_environment": "development"
       }
     }
+  },
+  {
+    "id": "event-1763742359294-togie",
+    "workflow_id": "test_workflow_1763742356902",
+    "agent_id": "test_agent",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T16:25:59.294Z",
+    "processing_time_ms": 35,
+    "error_details": null,
+    "payload_size_bytes": 535,
+    "dedup_hash": "2182a194eea0c5ba6ed7214f6a15ddece6bfe7ddd4ffcc60b86bb35b3f28b281",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test_workflow_1763742356902",
+      "agent_id": "test_agent",
+      "agent_data": {
+        "test": "data"
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T16:25:58.761Z",
+      "metadata": {
+        "execution_status": "completed",
+        "timestamp": "2025-11-21T16:25:56.902Z",
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763742358037-qtwd8j",
+        "original_timestamp": "2025-11-21T16:25:56.902Z",
+        "attempt_id": "enhanced-tools-1763742358757-50jtqv-attempt-1",
+        "target_environment": "development"
+      }
+    }
+  },
+  {
+    "id": "event-1763742395006-ylnnkh",
+    "workflow_id": "test_workflow_1763742394860",
+    "agent_id": "test_agent",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T16:26:35.006Z",
+    "processing_time_ms": 6,
+    "error_details": null,
+    "payload_size_bytes": 535,
+    "dedup_hash": "4361c0afb0e90a77c5bff0a4bb15952bf6b50dab818070f7bc314b7cab82e86d",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test_workflow_1763742394860",
+      "agent_id": "test_agent",
+      "agent_data": {
+        "test": "data"
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T16:26:34.954Z",
+      "metadata": {
+        "execution_status": "completed",
+        "timestamp": "2025-11-21T16:26:34.860Z",
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763742394906-outg7f",
+        "original_timestamp": "2025-11-21T16:26:34.860Z",
+        "attempt_id": "enhanced-tools-1763742394953-qichfo-attempt-1",
+        "target_environment": "development"
+      }
+    }
   }
 ]
