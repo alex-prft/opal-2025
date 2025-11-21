@@ -388,5 +388,103 @@
         "target_environment": "production"
       }
     }
+  },
+  {
+    "id": "event-1763713420708-wlgsx",
+    "workflow_id": "test-workflow-123",
+    "agent_id": "test_agent",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T08:23:40.708Z",
+    "processing_time_ms": 52,
+    "error_details": null,
+    "payload_size_bytes": 570,
+    "dedup_hash": "4fed7f4a167bac785ba9da14e5d92dce844ba218b4913000c7472f45cb107c35",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-workflow-123",
+      "agent_id": "test_agent",
+      "agent_data": {
+        "test": true,
+        "data": "sample"
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T08:23:40.160Z",
+      "metadata": {
+        "execution_status": "completed",
+        "execution_time_ms": 1500,
+        "timestamp": "2025-11-21T08:23:39Z",
+        "success": true,
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763713419558-iqoly",
+        "original_timestamp": "2025-11-21T08:23:39Z",
+        "attempt_id": "enhanced-tools-1763713420156-6dcqf8-attempt-1",
+        "target_environment": "development"
+      }
+    }
+  },
+  {
+    "id": "event-1763713943451-9p2os",
+    "workflow_id": "test-workflow",
+    "agent_id": "test_agent",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T08:32:23.451Z",
+    "processing_time_ms": 28,
+    "error_details": null,
+    "payload_size_bytes": 480,
+    "dedup_hash": "2697e8e73376603830fc3e1dad1d493f54c052de9feb5e0a8f4424093497a4aa",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-workflow",
+      "agent_id": "test_agent",
+      "agent_data": {
+        "test": true
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T08:32:23.413Z",
+      "metadata": {
+        "execution_status": "completed",
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763713943392-p0iwp9",
+        "original_timestamp": "2025-11-21T08:32:23.394Z",
+        "attempt_id": "enhanced-tools-1763713943409-x0etvv-attempt-1",
+        "target_environment": "development"
+      }
+    }
+  },
+  {
+    "id": "event-1763713950853-2gvbhg",
+    "workflow_id": "test",
+    "agent_id": "test",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T08:32:30.853Z",
+    "processing_time_ms": 8,
+    "error_details": null,
+    "payload_size_bytes": 453,
+    "dedup_hash": "22a4eadf55a04d64d2970f5fefc72bf7858e489c9f190af7b8fda2e1a0647fe1",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test",
+      "agent_id": "test",
+      "agent_data": {},
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T08:32:30.836Z",
+      "metadata": {
+        "execution_status": "completed",
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763713950823-66kg4i",
+        "original_timestamp": "2025-11-21T08:32:30.825Z",
+        "attempt_id": "enhanced-tools-1763713950834-cywnn-attempt-1",
+        "target_environment": "development"
+      }
+    }
   }
 ]

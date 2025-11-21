@@ -1,5 +1,7 @@
 'use client';
 
+import * as React from 'react';
+
 /**
  * Global Error Handler for Next.js 16.0.1
  *
@@ -13,11 +15,12 @@
  * 1. Uses 'use client' to prevent server-side rendering
  * 2. Uses force-dynamic to skip static generation entirely
  * 3. Provides minimal HTML-only error UI without React hooks or context
+ * 4. Includes React safety checks for static generation compatibility
  */
 
 // CRITICAL: Force dynamic rendering to prevent static generation errors
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+export const revalidate = 0;
 
 export default function GlobalError({
   error,
@@ -26,6 +29,26 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // CRITICAL: React safety check during static generation
+  if (typeof window === 'undefined' && (!React || !React.useContext)) {
+    return (
+      <html>
+        <body>
+          <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#f9fafb',
+            fontFamily: 'system-ui, sans-serif',
+            padding: '16px'
+          }}>
+            <h1 style={{ color: '#dc2626' }}>Error</h1>
+          </div>
+        </body>
+      </html>
+    );
+  }
   return (
     <html>
       <body>
