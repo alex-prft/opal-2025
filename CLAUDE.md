@@ -38,7 +38,7 @@ OSA (Optimizely Strategy Assistant) is an AI-powered strategy assistant for Opti
 ## Architecture Overview
 
 ### Technology Stack
-- **Framework**: Next.js 15.0.3 with App Router (downgraded from 16 for React 19 compatibility)
+- **Framework**: Next.js 16.0.1 with App Router
 - **Language**: TypeScript with strict mode
 - **UI**: React 19, Tailwind CSS, Radix UI components
 - **Database**: Supabase (PostgreSQL) with enterprise guardrails
@@ -439,6 +439,181 @@ TodoWrite([
   { content: "Use results-content-optimizer to ensure content alignment", status: "pending", activeForm: "Using results-content-optimizer to ensure content alignment" },
   { content: "Use CLAUDE.md checker to validate all changes", status: "pending", activeForm: "Using CLAUDE.md checker to validate all changes" }
 ]);
+```
+
+## Data Pipeline Integration Patterns
+
+### 🔥 OPAL Data Pipeline Debugging Protocol (2025-11-20 Session)
+
+**Critical Issue Pattern**: OPAL agents execute successfully with proper Results page JSON format, but API endpoints return different hardcoded mock data instead of real execution results.
+
+#### ✅ 1. Data Pipeline Discrepancy Detection
+**MANDATORY WORKFLOW**: When investigating execution vs API data mismatches:
+
+```typescript
+// Phase 1: Verify OPAL Execution Data (5-10 minutes)
+TodoWrite([
+  { content: "Check OPAL execution logs for successful agent runs", status: "pending", activeForm: "Checking OPAL execution logs for successful agent runs" },
+  { content: "Verify execution results structure matches expected Results page format", status: "pending", activeForm: "Verifying execution results structure matches expected Results page format" },
+  { content: "Document actual execution data vs API endpoint response", status: "pending", activeForm: "Documenting actual execution data vs API endpoint response" }
+]);
+
+// Phase 2: Database Integration Analysis (15-20 minutes)
+TodoWrite([
+  { content: "Check if API endpoint queries database or returns mock data", status: "pending", activeForm: "Checking if API endpoint queries database or returns mock data" },
+  { content: "Verify database table structure and recent execution records", status: "pending", activeForm: "Verifying database table structure and recent execution records" },
+  { content: "Implement database-first API pattern with graceful fallback", status: "pending", activeForm: "Implementing database-first API pattern with graceful fallback" }
+]);
+```
+
+#### ✅ 2. Database Integration Safety Patterns
+**REQUIRED**: All OPAL data APIs must implement database-first pattern with mock fallback:
+
+```typescript
+// ✅ CORRECT: Database-first with graceful fallback
+// NOTE: getLatestAgentExecution() method should be added to WorkflowDatabaseOperations class
+export async function GET(request: NextRequest) {
+  const startTime = Date.now();
+  let agentData: any = null;
+  let dataSource = 'unknown';
+
+  try {
+    // Try to get real OPAL execution data from database first
+    const dbOps = new WorkflowDatabaseOperations();
+    const realExecution = await dbOps.getLatestAgentExecution(agentId);
+
+    if (realExecution && realExecution.agent_data) {
+      agentData = {
+        dataSentToOSA: realExecution.agent_data,
+        execution_metadata: {
+          execution_id: realExecution.execution_id,
+          workflow_id: realExecution.workflow_id,
+          data_source: 'opal_database'
+        }
+      };
+      dataSource = 'opal_database';
+    }
+  } catch (dbError) {
+    console.warn(`⚠️ [Agent Data API] Database query failed for ${agentId}, falling back to mock data:`, dbError);
+  }
+
+  // Fallback to mock data if no real data available
+  if (!agentData) {
+    const mockData = AGENT_DATA[agentId as keyof typeof AGENT_DATA];
+    agentData = mockData;
+    dataSource = 'mock_data';
+  }
+
+  return NextResponse.json({
+    success: true,
+    agent_id: agentId,
+    ...agentData,
+    _metadata: {
+      data_source: dataSource,  // CRITICAL: Always indicate data source
+      processing_time_ms: Date.now() - startTime,
+      timestamp: new Date().toISOString()
+    }
+  });
+}
+
+// ❌ WRONG: Mock-only API without database integration
+export async function GET(request: NextRequest) {
+  const mockData = AGENT_DATA[agentId];  // Never queries real data
+  return NextResponse.json(mockData);
+}
+```
+
+#### ✅ 3. API Response Metadata Standards
+**MANDATORY**: All API endpoints must include debugging and monitoring metadata:
+
+```typescript
+// REQUIRED: Standard metadata structure
+const responseMetadata = {
+  data_source: 'opal_database' | 'mock_data' | 'cache' | 'fallback',
+  processing_time_ms: number,
+  timestamp: string (ISO),
+  correlation_id?: string,        // For distributed tracing
+  query_performance?: {           // For database queries
+    records_found: number,
+    query_time_ms: number
+  },
+  cache_info?: {                  // For cached responses
+    cache_hit: boolean,
+    cache_age_ms: number
+  }
+};
+
+// REQUIRED: Response format with metadata
+return NextResponse.json({
+  success: true,
+  // ... actual response data
+  _metadata: responseMetadata
+}, {
+  headers: {
+    'X-Data-Source': dataSource,
+    'X-Processing-Time': processingTime.toString(),
+    'X-Correlation-ID': correlationId || 'none'
+  }
+});
+```
+
+#### ✅ 4. Database Query Performance Guardrails
+**MANDATORY**: All database operations must include performance safeguards:
+
+```typescript
+// ✅ CORRECT: Performance-safe database queries
+async getLatestAgentExecution(agentName: string, limit: number = 1): Promise<any> {
+  const startTime = Date.now();
+
+  try {
+    console.log(`🔍 [DB] Retrieving latest ${limit} execution(s) for agent: ${agentName}`);
+
+    const { data: executions, error } = await supabase
+      .from('opal_agent_executions')
+      .select(`*,opal_workflows!inner(workflow_id,session_id,status,created_at)`)
+      .eq('agent_name', agentName)
+      .eq('status', 'completed')          // CRITICAL: Filter for performance
+      .order('created_at', { ascending: false })
+      .limit(limit);                      // CRITICAL: Always use limits
+
+    if (error) throw error;
+
+    const queryTime = Date.now() - startTime;
+    console.log(`✅ [DB] Query completed in ${queryTime}ms, found ${executions?.length || 0} executions`);
+
+    return executions?.[0] || null;
+  } catch (error) {
+    const queryTime = Date.now() - startTime;
+    console.error(`❌ [DB] Query failed after ${queryTime}ms:`, error);
+    throw error;
+  }
+}
+
+// ❌ WRONG: Unoptimized database queries
+async getAgentData(agentName: string) {
+  const { data } = await supabase
+    .from('opal_agent_executions')
+    .select('*')                         // No specific filtering
+    .eq('agent_name', agentName);        // No limit, no status filter
+  return data;                           // Could return thousands of records
+}
+```
+
+#### ✅ 5. Import Management Rules
+**CRITICAL**: Prevent compilation failures from duplicate imports:
+
+```typescript
+// ✅ CORRECT: Consolidated imports
+import { NextRequest, NextResponse } from 'next/server';
+import { WorkflowDatabaseOperations } from '@/lib/database/workflow-operations';
+
+// ❌ WRONG: Duplicate imports cause compilation errors
+import { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';  // Duplicate import
+import { NextRequest, NextResponse } from 'next/server';  // Another duplicate
+
+// REQUIRED: Import validation before commits
+// Check with: npx tsc --noEmit | grep "duplicate identifier"
 ```
 
 ## Essential Development Patterns

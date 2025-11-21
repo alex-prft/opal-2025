@@ -57,6 +57,26 @@ const EnhancedToolRequestSchema = z.object({
 });
 
 /**
+ * Maps OPAL execution status values to Enhanced Tools expected values
+ *
+ * @param opalStatus - OPAL execution status
+ * @returns Enhanced Tools compatible status
+ */
+function mapOpalStatusToEnhanced(opalStatus?: string): string {
+  const statusMap: Record<string, string> = {
+    'completed': 'success',
+    'failed': 'failure',
+    'in_progress': 'pending',
+    'partial': 'pending',
+    // Add timeout mapping for edge cases
+    'timeout': 'timeout'
+  };
+
+  // Default to 'success' if status is not provided or not recognized
+  return statusMap[opalStatus || ''] || 'success';
+}
+
+/**
  * POST /api/tools/osa_send_data_to_osa_webhook
  *
  * Receives OPAL agent webhook calls and transforms them to enhanced tool format
@@ -114,9 +134,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         // (Enhanced Tools expects 'agent_id', OPAL provides 'agent_name')
         agent_id: opalParams.agent_name,
 
-        // Status normalization: Default to 'completed' if not provided
-        // (Enhanced Tools requires execution_status, OPAL may omit it)
-        execution_status: opalParams.metadata.execution_status || 'completed',
+        // Status normalization: Map OPAL status values to Enhanced Tools expected values
+        // OPAL: "completed" | "failed" | "in_progress" | "partial"
+        // Enhanced Tools: "success" | "failure" | "pending" | "timeout"
+        execution_status: mapOpalStatusToEnhanced(opalParams.metadata.execution_status),
 
         // Data payload mapping: OPAL execution_results → Enhanced agent_data
         // (Different naming convention between OPAL and Enhanced Tools)
