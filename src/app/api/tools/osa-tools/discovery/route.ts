@@ -14,188 +14,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { readdir } from 'fs/promises';
-import { join } from 'path';
 
 /**
  * GET /api/tools/osa-tools/discovery
  *
  * Returns comprehensive tool discovery information for OPAL integration
  */
-/**
- * Dynamically discovers all available OSA tools by scanning the filesystem
- * @returns Array of OPAL-compatible tool definitions
- */
-async function discoverOSATools(): Promise<any[]> {
-  const correlationId = `discovery-scan-${Date.now()}`;
-  console.log('🔍 [Dynamic Discovery] Starting OSA tool scan', { correlationId });
-
-  try {
-    const toolsBasePath = process.cwd() + '/src/app/api/tools';
-    const toolDirs = await readdir(toolsBasePath, { withFileTypes: true });
-    const discoveredTools: any[] = [];
-
-    for (const dirent of toolDirs) {
-      // Only scan directories that start with 'osa_'
-      if (dirent.isDirectory() && dirent.name.startsWith('osa_')) {
-        const toolPath = join(toolsBasePath, dirent.name, 'route.ts');
-
-        try {
-          // Check if route.ts exists for this tool
-          const fs = await import('fs/promises');
-          await fs.access(toolPath);
-
-          // Create tool definition based on naming conventions
-          const toolName = dirent.name;
-          const toolDefinition = createToolDefinition(toolName);
-          discoveredTools.push(toolDefinition);
-
-          console.log('✅ [Dynamic Discovery] Found tool:', { toolName, correlationId });
-        } catch (toolError) {
-          console.warn('⚠️ [Dynamic Discovery] Tool directory without route.ts:', { toolName: dirent.name, correlationId });
-        }
-      }
-    }
-
-    console.log('🔍 [Dynamic Discovery] Scan complete', {
-      correlationId,
-      total_tools_found: discoveredTools.length,
-      tools: discoveredTools.map(t => t.name)
-    });
-
-    return discoveredTools;
-  } catch (error) {
-    console.error('❌ [Dynamic Discovery] Scan failed:', {
-      correlationId,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    });
-
-    // Return empty array on failure - fallback to static discovery
-    return [];
-  }
-}
-
-/**
- * Creates a tool definition based on tool name and common patterns
- * @param toolName - Name of the tool (e.g., 'osa_fetch_audience_segments')
- * @returns OPAL-compatible tool definition
- */
-function createToolDefinition(toolName: string): any {
-  const baseDefinition = {
-    name: toolName,
-    version: "1.0.0",
-    parameters: [
-      { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
-    ]
-  };
-
-  // Tool-specific definitions with descriptions and parameters
-  const toolDefinitions: Record<string, any> = {
-    osa_fetch_audience_segments: {
-      description: "Retrieves existing audience segments from Optimizely ODP including metadata, performance data, and implementation roadmaps for OSA strategy development.",
-      parameters: [
-        { name: "member_tiers", type: "list", required: false, description: "Member tier segments to include" },
-        { name: "engagement_levels", type: "list", required: false, description: "Engagement level filters" },
-        { name: "behavioral_patterns", type: "list", required: false, description: "Behavioral pattern criteria" },
-        { name: "geographic_filters", type: "dictionary", required: false, description: "Geographic targeting filters" },
-        { name: "include_size_estimates", type: "boolean", required: false, description: "Include segment size estimates" },
-        { name: "include_attributes", type: "boolean", required: false, description: "Include detailed segment attributes" },
-        { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" },
-        { name: "projectId", type: "string", required: false, description: "ODP project identifier" },
-        { name: "limit", type: "number", required: false, description: "Max number of segments to return" },
-        { name: "page", type: "number", required: false, description: "Page of results to fetch" }
-      ]
-    },
-    osa_send_data_to_osa_webhook: {
-      description: "Send agent data and results to OSA application via webhook for real-time updates. Bridges OPAL chat interface calls to enhanced tools infrastructure.",
-      parameters: [
-        { name: "agent_name", type: "string", required: true, description: "Name of the agent sending data" },
-        { name: "execution_results", type: "dictionary", required: true, description: "Agent execution results and insights" },
-        { name: "workflow_id", type: "string", required: true, description: "Unique workflow execution identifier" },
-        { name: "metadata", type: "dictionary", required: true, description: "Agent execution metadata" },
-        { name: "webhook_endpoint", type: "string", required: false, description: "OSA webhook endpoint path" }
-      ]
-    },
-    osa_analyze_member_behavior: {
-      description: "Analyze member behavioral patterns, engagement metrics, and provide predictive insights for personalization and retention strategies.",
-      parameters: [
-        { name: "member_segment", type: "string", required: false, description: "Target member segment for analysis" },
-        { name: "analysis_timeframe", type: "string", required: false, description: "Timeframe for behavioral analysis" },
-        { name: "behavioral_focus", type: "list", required: false, description: "Specific behavioral aspects to focus on" },
-        { name: "include_predictive_insights", type: "boolean", required: false, description: "Include AI-powered predictive insights" },
-        { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
-      ]
-    },
-    osa_validate_language_rules: {
-      description: "Validate content against language rules for readability, inclusivity, professionalism, and accuracy compliance.",
-      parameters: [
-        { name: "content_text", type: "string", required: true, description: "Text content to validate" },
-        { name: "content_type", type: "string", required: false, description: "Type of content being validated" },
-        { name: "target_audience", type: "string", required: false, description: "Target audience for content" },
-        { name: "validation_level", type: "string", required: false, description: "Level of validation strictness" },
-        { name: "custom_rules", type: "list", required: false, description: "Additional custom validation rules" }
-      ]
-    },
-    osa_store_workflow_data: {
-      description: "Store workflow execution data and metadata for analysis and reporting",
-      parameters: [
-        { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" },
-        { name: "workflow_data", type: "dictionary", required: true, description: "Workflow data to store" }
-      ]
-    },
-    osa_create_dynamic_segments: {
-      description: "Create dynamic audience segments based on behavioral criteria",
-      parameters: [
-        { name: "segment_criteria", type: "dictionary", required: true, description: "Segmentation criteria" },
-        { name: "segment_name", type: "string", required: true, description: "Name for the new segment" }
-      ]
-    },
-    osa_retrieve_workflow_context: {
-      description: "Retrieve workflow execution context and metadata",
-      parameters: [
-        { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" }
-      ]
-    },
-    osa_analyze_data_insights: {
-      description: "Analyze data patterns and generate actionable insights",
-      parameters: [
-        { name: "data_source", type: "string", required: true, description: "Data source to analyze" },
-        { name: "analysis_type", type: "string", required: false, description: "Type of analysis" }
-      ]
-    },
-    osa_calculate_segment_statistical_power: {
-      description: "Calculate statistical power for segment analysis",
-      parameters: [
-        { name: "segment_size", type: "number", required: true, description: "Segment size" },
-        { name: "effect_size", type: "number", required: true, description: "Expected effect size" }
-      ]
-    },
-    osa_get_member_journey_data: {
-      description: "Retrieve member journey data and touchpoint analysis",
-      parameters: [
-        { name: "member_id", type: "string", required: false, description: "Member identifier" },
-        { name: "journey_stage", type: "string", required: false, description: "Specific journey stage" }
-      ]
-    }
-  };
-
-  // Use specific definition if available, otherwise create a generic one
-  const specificDef = toolDefinitions[toolName];
-  if (specificDef) {
-    return { ...baseDefinition, ...specificDef };
-  }
-
-  // Generic definition for tools not in the specific definitions
-  return {
-    ...baseDefinition,
-    description: `${toolName.replace(/_/g, ' ').replace(/^osa /, 'OSA ')} tool for OPAL agent integration`,
-    parameters: [
-      { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" },
-      { name: "data", type: "dictionary", required: false, description: "Tool-specific data parameters" }
-    ]
-  };
-}
-
 /**
  * Validates Bearer token authentication for OPAL discovery endpoint
  * Supports multiple authentication modes for different environments
@@ -312,18 +136,116 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }
     }
 
-    // Fallback to dynamic discovery data
+    // Fallback to static discovery data
     if (!discoveryData) {
-      console.log('🔍 [OPAL Discovery] Using dynamic OSA tool discovery', { correlationId });
-
-      // Use dynamic tool discovery instead of static array
-      const toolsArray = await discoverOSATools();
-
-      console.log('✅ [OPAL Discovery] Dynamic discovery complete', {
-        correlationId,
-        tools_discovered: toolsArray.length,
-        tool_names: toolsArray.map(t => t.name)
-      });
+      const toolsArray = [
+          {
+            name: "osa_fetch_audience_segments",
+            description: "Retrieves existing audience segments from Optimizely ODP including metadata, performance data, and implementation roadmaps for OSA strategy development.",
+            version: "1.0.0",
+            parameters: [
+              { name: "member_tiers", type: "list", required: false, description: "Member tier segments to include" },
+              { name: "engagement_levels", type: "list", required: false, description: "Engagement level filters" },
+              { name: "behavioral_patterns", type: "list", required: false, description: "Behavioral pattern criteria" },
+              { name: "geographic_filters", type: "dictionary", required: false, description: "Geographic targeting filters" },
+              { name: "include_size_estimates", type: "boolean", required: false, description: "Include segment size estimates" },
+              { name: "include_attributes", type: "boolean", required: false, description: "Include detailed segment attributes" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" },
+              { name: "projectId", type: "string", required: false, description: "ODP project identifier" },
+              { name: "limit", type: "number", required: false, description: "Max number of segments to return" },
+              { name: "page", type: "number", required: false, description: "Page of results to fetch" }
+            ]
+          },
+          {
+            name: "osa_send_data_to_osa_webhook",
+            description: "Send agent data and results to OSA application via webhook for real-time updates. Bridges OPAL chat interface calls to enhanced tools infrastructure.",
+            version: "1.0.0",
+            parameters: [
+              { name: "agent_name", type: "string", required: true, description: "Name of the agent sending data" },
+              { name: "execution_results", type: "dictionary", required: true, description: "Agent execution results and insights" },
+              { name: "workflow_id", type: "string", required: true, description: "Unique workflow execution identifier" },
+              { name: "metadata", type: "dictionary", required: true, description: "Agent execution metadata" },
+              { name: "webhook_endpoint", type: "string", required: false, description: "OSA webhook endpoint path" }
+            ]
+          },
+          {
+            name: "osa_analyze_member_behavior",
+            description: "Analyze member behavioral patterns, engagement metrics, and provide predictive insights for personalization and retention strategies.",
+            version: "1.0.0",
+            parameters: [
+              { name: "member_segment", type: "string", required: false, description: "Target member segment for analysis" },
+              { name: "analysis_timeframe", type: "string", required: false, description: "Timeframe for behavioral analysis" },
+              { name: "behavioral_focus", type: "list", required: false, description: "Specific behavioral aspects to focus on" },
+              { name: "include_predictive_insights", type: "boolean", required: false, description: "Include AI-powered predictive insights" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_validate_language_rules",
+            description: "Validate content against language rules for readability, inclusivity, professionalism, and accuracy compliance.",
+            version: "1.0.0",
+            parameters: [
+              { name: "content_text", type: "string", required: true, description: "Text content to validate" },
+              { name: "content_type", type: "string", required: false, description: "Type of content being validated" },
+              { name: "target_audience", type: "string", required: false, description: "Target audience for content" },
+              { name: "validation_level", type: "string", required: false, description: "Level of validation strictness" },
+              { name: "custom_rules", type: "list", required: false, description: "Additional custom validation rules" }
+            ]
+          },
+          {
+            name: "osa_store_workflow_data",
+            description: "Store workflow execution data and metadata for analysis and reporting",
+            version: "1.0.0",
+            parameters: [
+              { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" },
+              { name: "workflow_data", type: "dictionary", required: true, description: "Workflow data to store" }
+            ]
+          },
+          {
+            name: "osa_create_dynamic_segments",
+            description: "Create dynamic audience segments based on behavioral criteria",
+            version: "1.0.0",
+            parameters: [
+              { name: "segment_criteria", type: "dictionary", required: true, description: "Segmentation criteria" },
+              { name: "segment_name", type: "string", required: true, description: "Name for the new segment" }
+            ]
+          },
+          {
+            name: "osa_retrieve_workflow_context",
+            description: "Retrieve workflow execution context and metadata",
+            version: "1.0.0",
+            parameters: [
+              { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" }
+            ]
+          },
+          {
+            name: "osa_analyze_data_insights",
+            description: "Analyze data patterns and generate actionable insights",
+            version: "1.0.0",
+            parameters: [
+              { name: "data_source", type: "string", required: true, description: "Data source to analyze" },
+              { name: "analysis_type", type: "string", required: false, description: "Type of analysis" }
+            ]
+          },
+          {
+            name: "osa_calculate_segment_statistical_power",
+            description: "Calculate statistical power for segment analysis",
+            version: "1.0.0",
+            parameters: [
+              { name: "segment_size", type: "number", required: true, description: "Segment size" },
+              { name: "effect_size", type: "number", required: true, description: "Expected effect size" }
+            ]
+          },
+          {
+            name: "osa_get_member_journey_data",
+            description: "Retrieve member journey data and touchpoint analysis",
+            version: "1.0.0",
+            parameters: [
+              { name: "member_id", type: "string", required: false, description: "Member identifier" },
+              { name: "journey_stage", type: "string", required: false, description: "Specific journey stage" }
+            ]
+          }
+      ];
 
       // OPAL-Compatible Discovery Format
       discoveryData = {
@@ -332,29 +254,23 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         discovery_info: {
           service_name: "OSA OPAL Tools Registry",
           version: "1.0.0",
-          total_tools: toolsArray.length,
+          total_tools: 10,
           sdk_version: "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
           discovery_url: request.url,
           environment: process.env.NODE_ENV || 'development',
-          discovery_method: "dynamic_filesystem_scan",
           capabilities: [
             "audience_segmentation",
             "behavioral_analysis",
             "workflow_management",
             "data_validation",
             "webhook_integration",
-            "predictive_insights",
-            "canvas_visualization",
-            "content_strategy",
-            "cmp_integration",
-            "performance_analytics"
+            "predictive_insights"
           ],
           integration_health: {
-            status: toolsArray.length > 0 ? "healthy" : "degraded",
+            status: "healthy",
             last_check: new Date().toISOString(),
-            tools_registered: toolsArray.length,
-            tools_available: toolsArray.length,
-            dynamic_discovery: true
+            tools_registered: 10,
+            tools_available: 10
           }
         }
       };
