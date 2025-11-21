@@ -55,15 +55,10 @@ export async function GET(request: NextRequest) {
     }
 
     if (!data || data.length === 0) {
-      return NextResponse.json({
-        success: true,
-        integrationStatus: null,  // Null indicates no data available yet
-        meta: {
-          reason: 'no_records',
-          hint: 'No validation records exist yet. Run Force Sync to generate integration validation data.',
-          suggestion: 'This is expected if no Force Sync workflows have completed recently.'
-        }
-      }, { status: 200 });
+      return NextResponse.json(
+        { success: false, error: 'No integration validation record found' },
+        { status: 404 }
+      );
     }
 
     const record = data[0] as any;
