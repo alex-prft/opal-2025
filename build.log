@@ -1,0 +1,241 @@
+
+> osa@0.1.0 build
+> next build
+
+ ⚠ You are using a non-standard "NODE_ENV" value in your environment. This creates inconsistencies in the project and is strongly advised against. Read more: https://nextjs.org/docs/messages/non-standard-node-env
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'skipMiddlewareUrlNormalize', 'skipTrailingSlashRedirect' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ⚠ `experimental.skipMiddlewareUrlNormalize` has been moved to `skipMiddlewareUrlNormalize`. Please update your next.config.js file accordingly.
+ ⚠ `experimental.skipTrailingSlashRedirect` has been moved to `skipTrailingSlashRedirect`. Please update your next.config.js file accordingly.
+   ▲ Next.js 16.0.1 (Turbopack)
+   - Environments: .env.production.local, .env.local
+   - Experiments (use with caution):
+     ✓ optimizeCss
+     · optimizePackageImports
+     ? skipMiddlewareUrlNormalize (invalid experimental key)
+     ? skipTrailingSlashRedirect (invalid experimental key)
+     · webVitalsAttribution
+
+   Creating an optimized production build ...
+
+
+Source path: ./src/app/globals.css
+Setting up new context...
+Finding changed files: 130.377ms
+Reading changed files: 1.056s
+Sorting candidates: 52.512ms
+Generate rules: 544.728ms
+Build stylesheet: 5.446ms
+Potential classes:  35404
+Active contexts:  1
+JIT TOTAL: 2.011s
+
+
+ ✓ Compiled successfully in 24.3s
+   Skipping validation of types
+   Collecting page data ...
+📈 [Metrics] Registered metric: osa_pii_protections_total (counter)
+📈 [Metrics] Registered metric: osa_pii_protection_duration_ms (histogram)
+📈 [Metrics] Registered metric: osa_webhooks_processed_total (counter)
+📈 [Metrics] Registered metric: osa_webhook_processing_duration_ms (histogram)
+📈 [Metrics] Registered metric: osa_agent_executions_total (counter)
+📈 [Metrics] Registered metric: osa_agent_execution_duration_ms (histogram)
+📈 [Metrics] Registered metric: osa_system_health (gauge)
+📈 [Metrics] Registered metric: osa_api_requests_total (counter)
+📈 [Metrics] Registered metric: osa_api_response_duration_ms (histogram)
+📈 [Metrics] Registered metric: osa_uptime_seconds (gauge)
+📊 [Metrics] Metrics Manager initialized with Prometheus compatibility
+📈 [Prometheus] Registered metric: osa_pii_protections_total (counter)
+📈 [Prometheus] Registered metric: osa_pii_protection_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_agent_executions_total (counter)
+📈 [Prometheus] Registered metric: osa_agent_execution_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_agent_confidence_score (gauge)
+📈 [Prometheus] Registered metric: osa_webhooks_processed_total (counter)
+📈 [Prometheus] Registered metric: osa_webhook_processing_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_webhook_payload_size_bytes (histogram)
+📈 [Prometheus] Registered metric: osa_system_health_score (gauge)
+📈 [Prometheus] Registered metric: osa_database_connections_active (gauge)
+📈 [Prometheus] Registered metric: osa_cache_operations_total (counter)
+📈 [Prometheus] Registered metric: osa_cache_hit_ratio (gauge)
+📈 [Prometheus] Registered metric: osa_api_requests_total (counter)
+📈 [Prometheus] Registered metric: osa_api_request_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_api_concurrent_requests (gauge)
+📈 [Prometheus] Registered metric: osa_strategy_recommendations_generated_total (counter)
+📈 [Prometheus] Registered metric: osa_user_sessions_total (counter)
+📈 [Prometheus] Registered metric: osa_compliance_violations_total (counter)
+📊 [Prometheus] Professional metrics collector initialized with prom-client
+🔗 [WebhookDelivery] Service initialized with enterprise retry logic
+✅ [FileStorage] Storage directories initialized
+GA4 not configured, will use mock data
+📊 Database connection pooling enabled for OPAL data store
+📊 Database connection pooling enabled for OPAL data store
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+✅ [FileStorage] Storage directories initialized
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+⚠️ [Claude] No API key provided - Claude enhancements will be disabled
+🤖 [Claude] Integration initialized with model: claude-3-sonnet-20240229
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+📡 [EventStreaming] Webhook event streaming system initialized
+📊 [EventStreaming] Metrics collection started
+🧹 [EventStreaming] Event cleanup started
+⚠️ [Claude] No API key provided - Claude enhancements will be disabled
+🤖 [Claude] Integration initialized with model: claude-3-sonnet-20240229
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+📊 Database connection pooling enabled for OPAL data store
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+⚠️ [Claude] No API key provided - Claude enhancements will be disabled
+🤖 [Claude] Integration initialized with model: claude-3-sonnet-20240229
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+⚠️ [Claude] No API key provided - Claude enhancements will be disabled
+🤖 [Claude] Integration initialized with model: claude-3-sonnet-20240229
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+🔐 [WebhookSec] Security system initialized with HMAC and rate limiting
+🔗 [CrossPage] Dependency system initialized
+🌐 [Phase3Webhook] Enhanced webhook pipeline initialized
+📡 [EventStreaming] Webhook event streaming system initialized
+📊 [EventStreaming] Metrics collection started
+🧹 [EventStreaming] Event cleanup started
+🔄 [CacheCoordinator] Webhook cache coordination system initialized
+📈 [Prometheus] Registered metric: osa_pii_protections_total (counter)
+📈 [Prometheus] Registered metric: osa_pii_protection_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_agent_executions_total (counter)
+📈 [Prometheus] Registered metric: osa_agent_execution_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_agent_confidence_score (gauge)
+📈 [Prometheus] Registered metric: osa_webhooks_processed_total (counter)
+📈 [Prometheus] Registered metric: osa_webhook_processing_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_webhook_payload_size_bytes (histogram)
+📈 [Prometheus] Registered metric: osa_system_health_score (gauge)
+📈 [Prometheus] Registered metric: osa_database_connections_active (gauge)
+📈 [Prometheus] Registered metric: osa_cache_operations_total (counter)
+📈 [Prometheus] Registered metric: osa_cache_hit_ratio (gauge)
+📈 [Prometheus] Registered metric: osa_api_requests_total (counter)
+📈 [Prometheus] Registered metric: osa_api_request_duration_seconds (histogram)
+📈 [Prometheus] Registered metric: osa_api_concurrent_requests (gauge)
+📈 [Prometheus] Registered metric: osa_strategy_recommendations_generated_total (counter)
+📈 [Prometheus] Registered metric: osa_user_sessions_total (counter)
+📈 [Prometheus] Registered metric: osa_compliance_violations_total (counter)
+📊 [Prometheus] Professional metrics collector initialized with prom-client
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+✅ [FileStorage] Storage directories initialized
+✅ [FileStorage] Storage directories initialized
+ ⚠ Using edge runtime on a page currently disables static generation for that page
+   Generating static pages (0/159) ...
+🔧 [Safety] Environment configuration: {
+  USE_REAL_OPAL_DATA: false,
+  NODE_ENV: 'production',
+  database_available: true
+}
+⚠️ [Claude] No API key provided - Claude enhancements will be disabled
+🤖 [Claude] Integration initialized with model: claude-3-sonnet-20240229
+💾 [Cache] Intelligent cache system initialized
+💾 [Cache] Tier configuration: {
+  tier1: '300s TTL, 15m validation',
+  tier2: '600s TTL, 30m validation',
+  tier3: '900s TTL, 45m validation'
+}
+📡 [EventStreaming] Webhook event streaming system initialized
+📊 [EventStreaming] Metrics collection started
+🧹 [EventStreaming] Event cleanup started
+🔐 [WebhookSec] Security system initialized with HMAC and rate limiting
+🔗 [CrossPage] Dependency system initialized
+🌐 [Phase3Webhook] Enhanced webhook pipeline initialized
+🔄 [CacheCoordinator] Webhook cache coordination system initialized
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+   Generating static pages (39/159) 
+GA4 not configured, will use mock data
+✅ [FileStorage] Storage directories initialized
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.
+📊 Database connection pooling enabled for OPAL data store
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <V>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
+Each child in a list should have a unique "key" prop.
+
+Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
+Error occurred prerendering page "/_not-found". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: Cannot read properties of null (reading 'useState')
+    at u (.next/server/chunks/ssr/src_lib_04b1b67a._.js:1:29276) {
+  digest: '2292598989'
+}
+Export encountered an error on /_not-found/page: /_not-found, exiting the build.
+🚀 [EventBus] Static generation detected, skipping Supabase initialization
+ ⨯ Next.js build worker exited with code: 1 and signal: null

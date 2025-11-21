@@ -1,0 +1,80 @@
+'use client';
+
+// CRITICAL WORKAROUND for Next.js 16.0.1 + React 19 build failure
+// Issue: During static generation, React.useContext is null when prerendering /_global-error
+// Solution: Client component required by Next.js, but we handle React hook safety internally
+//
+// This file MUST exist and MUST have 'use client' per Next.js requirements
+// References:
+// - https://nextjs.org/docs/app/api-reference/file-conventions/error#global-errorjs
+// - Error: "TypeError: Cannot read properties of null (reading 'useContext')"
+
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
+
+export default function GlobalError() {
+  // Pure HTML rendering - no React hooks to avoid static generation issues
+  return (
+    <html>
+      <body>
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#fef2f2',
+          fontFamily: 'system-ui, sans-serif',
+          padding: '16px'
+        }}>
+          <div style={{
+            maxWidth: '448px',
+            width: '100%',
+            textAlign: 'center',
+            padding: '32px',
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+          }}>
+            <h1 style={{
+              fontSize: '4rem',
+              fontWeight: 'bold',
+              color: '#dc2626',
+              margin: '0 0 16px 0'
+            }}>
+              ⚠️
+            </h1>
+            <h2 style={{
+              fontSize: '1.5rem',
+              fontWeight: '600',
+              color: '#1f2937',
+              margin: '0 0 16px 0'
+            }}>
+              Something Went Wrong
+            </h2>
+            <p style={{
+              color: '#6b7280',
+              margin: '0 0 32px 0',
+              lineHeight: '1.5'
+            }}>
+              We encountered an unexpected error. Please try refreshing the page.
+            </p>
+            <a
+              href="/"
+              style={{
+                display: 'inline-block',
+                padding: '12px 24px',
+                backgroundColor: '#dc2626',
+                color: 'white',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                fontWeight: '500'
+              }}
+            >
+              Go Home
+            </a>
+          </div>
+        </div>
+      </body>
+    </html>
+  );
+}

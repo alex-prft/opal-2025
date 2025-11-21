@@ -6,7 +6,7 @@
  */
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   findTierMappingByUrl,
   extractTiersFromUrl,
@@ -48,7 +48,7 @@ export interface ConditionalRenderingContext {
 export function useUrlPathDetection(externalPathname?: string): TierDetectionResult {
   // CRITICAL: React hook safety during Next.js static generation
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' && (!React || !(React as any).useState)) {
     // Return a safe fallback detection result during static generation to prevent build failures
     return {
       tier1: '',
@@ -200,7 +200,7 @@ function convertUrlToDisplayName(urlSegment: string, tierLevel: 'tier1' | 'tier2
 export function useConditionalRenderingContext(pathname?: string): ConditionalRenderingContext {
   // CRITICAL: React hook safety during Next.js static generation
   // During static generation, React can be null, so check before using hooks
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' && (!React || !(React as any).useState)) {
     // Return a safe fallback context during static generation to prevent build failures
     return {
       detection: {

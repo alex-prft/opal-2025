@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * SafeProviderWrapper - CRITICAL WORKAROUND for Next.js 16 + React 19 Build Failure
  *
@@ -7,30 +5,20 @@
  * all providers in layout.tsx, causing "Cannot read properties of null (reading 'useContext')"
  * errors even when providers have internal safety guards.
  *
- * Solution: Wrap ALL providers in a component that COMPLETELY skips provider initialization
- * during static generation. This prevents Next.js from ever reaching the provider code that
- * uses React hooks.
+ * Solution: This is now a SERVER COMPONENT (no 'use client') that acts as a pass-through.
+ * All child providers must have their own React hook safety guards.
  *
- * This wrapper MUST be the outermost provider in layout.tsx to intercept static generation
- * before any other providers are evaluated.
+ * REMOVED: 'use client' directive - this wrapper no longer needs to be a client component
+ * since all child providers have individual safety checks.
  */
 
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface SafeProviderWrapperProps {
   children: ReactNode;
 }
 
 export function SafeProviderWrapper({ children }: SafeProviderWrapperProps) {
-  // CRITICAL: During Next.js 16 global-error prerendering, React.useContext can be null
-  // We MUST check React availability before rendering ANY child providers
-  if (typeof window === 'undefined' && (!React || !(React as any).useState)) {
-    // React hooks are not available - skip ALL provider initialization
-    // Return children directly to allow static generation to complete
-    console.log('[SafeProviderWrapper] Static generation detected - skipping providers');
-    return <>{children}</>;
-  }
-
-  // React is available - proceed with normal provider initialization
+  // Simple pass-through wrapper - all safety checks are in individual providers
   return <>{children}</>;
 }
