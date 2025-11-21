@@ -1,0 +1,150 @@
+{
+  "opal_integration": {
+    "version": "1.0.0",
+    "created": "2025-11-21T16:15:00Z",
+    "description": "Complete OPAL integration configuration for OSA custom tools",
+    "integration_health_target": 95
+  },
+  "discovery_endpoint": {
+    "url": "https://opal-2025.vercel.app/api/tools/osa-tools/discovery",
+    "authentication": {
+      "type": "bearer",
+      "token": "e0d762e632798f12a1026a1d66f6e0d6abcbff5dcf0f2589c9f0f7a752d1668d",
+      "header_format": "Authorization: Bearer {token}"
+    },
+    "health_check": {
+      "enabled": true,
+      "interval_seconds": 300,
+      "timeout_seconds": 30
+    }
+  },
+  "tools_configuration": {
+    "total_tools": 10,
+    "categories": [
+      "audience_segmentation",
+      "behavioral_analysis",
+      "workflow_management",
+      "data_validation",
+      "webhook_integration",
+      "predictive_insights"
+    ],
+    "enabled_tools": [
+      {
+        "name": "osa_fetch_audience_segments",
+        "description": "Retrieves audience segments from Optimizely ODP with targeting criteria",
+        "priority": "high",
+        "use_cases": ["audience_analysis", "segment_discovery", "targeting_strategy"]
+      },
+      {
+        "name": "osa_send_data_to_osa_webhook",
+        "description": "Send agent data to OSA via webhook for real-time updates",
+        "priority": "critical",
+        "use_cases": ["workflow_completion", "data_sharing", "result_delivery"]
+      },
+      {
+        "name": "osa_analyze_member_behavior",
+        "description": "Analyze member behavioral patterns with predictive insights",
+        "priority": "high",
+        "use_cases": ["behavioral_analysis", "engagement_tracking", "retention_strategy"]
+      },
+      {
+        "name": "osa_validate_language_rules",
+        "description": "Validate content for compliance, readability, and inclusivity",
+        "priority": "medium",
+        "use_cases": ["content_validation", "compliance_check", "quality_assurance"]
+      },
+      {
+        "name": "osa_store_workflow_data",
+        "description": "Store workflow execution data for analysis and reporting",
+        "priority": "medium",
+        "use_cases": ["data_persistence", "analytics", "audit_trail"]
+      },
+      {
+        "name": "osa_create_dynamic_segments",
+        "description": "Create dynamic audience segments based on behavioral criteria",
+        "priority": "medium",
+        "use_cases": ["segment_creation", "dynamic_targeting", "personalization"]
+      },
+      {
+        "name": "osa_retrieve_workflow_context",
+        "description": "Retrieve workflow execution context and metadata",
+        "priority": "low",
+        "use_cases": ["context_retrieval", "workflow_tracking", "debugging"]
+      },
+      {
+        "name": "osa_analyze_data_insights",
+        "description": "Analyze data patterns and generate actionable insights",
+        "priority": "medium",
+        "use_cases": ["data_analysis", "insight_generation", "trend_analysis"]
+      },
+      {
+        "name": "osa_calculate_segment_statistical_power",
+        "description": "Calculate statistical power for segment analysis",
+        "priority": "low",
+        "use_cases": ["statistical_analysis", "experiment_planning", "sample_sizing"]
+      },
+      {
+        "name": "osa_get_member_journey_data",
+        "description": "Retrieve member journey data and touchpoint analysis",
+        "priority": "medium",
+        "use_cases": ["journey_mapping", "touchpoint_analysis", "customer_experience"]
+      }
+    ]
+  },
+  "agent_configurations": {
+    "audience_suggester": {
+      "enabled_tools": ["osa_fetch_audience_segments", "osa_analyze_member_behavior", "osa_send_data_to_osa_webhook"],
+      "webhook_delivery": true,
+      "confidence_threshold": 0.8
+    },
+    "content_optimizer": {
+      "enabled_tools": ["osa_validate_language_rules", "osa_analyze_data_insights", "osa_send_data_to_osa_webhook"],
+      "webhook_delivery": true,
+      "confidence_threshold": 0.75
+    },
+    "workflow_manager": {
+      "enabled_tools": ["osa_store_workflow_data", "osa_retrieve_workflow_context", "osa_send_data_to_osa_webhook"],
+      "webhook_delivery": true,
+      "confidence_threshold": 0.9
+    },
+    "behavioral_analyst": {
+      "enabled_tools": ["osa_analyze_member_behavior", "osa_get_member_journey_data", "osa_send_data_to_osa_webhook"],
+      "webhook_delivery": true,
+      "confidence_threshold": 0.85
+    },
+    "segment_strategist": {
+      "enabled_tools": ["osa_create_dynamic_segments", "osa_calculate_segment_statistical_power", "osa_send_data_to_osa_webhook"],
+      "webhook_delivery": true,
+      "confidence_threshold": 0.8
+    }
+  },
+  "webhook_configuration": {
+    "osa_webhook_url": "https://opal-2025.vercel.app/api/webhooks/opal-workflow",
+    "authentication": {
+      "hmac_secret": "use_environment_variable_OPAL_WEBHOOK_HMAC_SECRET",
+      "bearer_token": "use_environment_variable_OPAL_WEBHOOK_AUTH_KEY"
+    },
+    "retry_policy": {
+      "max_retries": 3,
+      "retry_delay_ms": 1000,
+      "exponential_backoff": true
+    },
+    "timeout_ms": 30000
+  },
+  "monitoring": {
+    "correlation_tracking": true,
+    "performance_metrics": true,
+    "error_reporting": true,
+    "health_checks": {
+      "discovery_endpoint": true,
+      "individual_tools": true,
+      "webhook_delivery": true
+    }
+  },
+  "business_context": {
+    "industry": "Fresh produce professional association (IFPA)",
+    "target_segments": ["Commercial Buyers", "Produce Suppliers/Growers", "Industry Professionals"],
+    "key_personas": ["Strategic Buyer Sarah", "Innovation-Focused Frank", "Compliance-Conscious Carol"],
+    "primary_kpis": ["Membership conversion rate", "Content engagement score", "Event registration rate"]
+  }
+}
