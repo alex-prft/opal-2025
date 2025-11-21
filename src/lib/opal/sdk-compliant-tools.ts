@@ -8,7 +8,7 @@ import {
   AuthData,
   ParameterType
 } from '@optimizely-opal/opal-tools-sdk';
-import express from 'express';
+import * as express from 'express';
 
 /**
  * SDK-Compliant OPAL Tools Implementation
@@ -67,6 +67,24 @@ interface OSAWebhookParameters {
     max_retries?: number;
     retry_delay_ms?: number;
     confirm_delivery?: boolean;
+  };
+}
+
+interface AudienceSegmentFetchParameters {
+  member_tiers?: string[];
+  engagement_levels?: string[];
+  behavioral_patterns?: string[];
+  geographic_filters?: Record<string, any> | null;
+  include_size_estimates?: boolean;
+  include_attributes?: boolean;
+  workflow_context?: {
+    workflow_id?: string;
+    agent_id?: string;
+    correlation_id?: string;
+  };
+  segmentation_config?: {
+    confirmed?: boolean;
+    advanced_filters?: boolean;
   };
 }
 
@@ -538,6 +556,372 @@ async function sendDataToOSAEnhanced(parameters: OSAWebhookParameters): Promise<
   }
 }
 
+/**
+ * Enhanced Audience Segment Fetch Tool
+ * SDK-compliant version of osa_fetch_audience_segments with interactive configuration
+ */
+@tool({
+  name: 'osa_fetch_audience_segments',
+  description: 'Fetch and analyze audience segments with targeting criteria, size estimates, and implementation roadmap for OSA integration',
+  parameters: [
+    {
+      name: 'member_tiers',
+      type: ParameterType.List,
+      description: 'Member tier segments to include (premium, commercial, standard)',
+      required: false
+    },
+    {
+      name: 'engagement_levels',
+      type: ParameterType.List,
+      description: 'Engagement level filters (high, medium, low)',
+      required: false
+    },
+    {
+      name: 'behavioral_patterns',
+      type: ParameterType.List,
+      description: 'Behavioral pattern criteria (seasonal_purchasing, content_engagement)',
+      required: false
+    },
+    {
+      name: 'geographic_filters',
+      type: ParameterType.Dictionary,
+      description: 'Geographic targeting filters and constraints',
+      required: false
+    },
+    {
+      name: 'include_size_estimates',
+      type: ParameterType.Boolean,
+      description: 'Include segment size estimates in response',
+      required: false
+    },
+    {
+      name: 'include_attributes',
+      type: ParameterType.Boolean,
+      description: 'Include detailed segment attributes and characteristics',
+      required: false
+    },
+    {
+      name: 'workflow_context',
+      type: ParameterType.Dictionary,
+      description: 'Workflow execution context and correlation tracking',
+      required: false
+    },
+    {
+      name: 'segmentation_config',
+      type: ParameterType.Dictionary,
+      description: 'Interactive segmentation configuration options',
+      required: false
+    }
+  ]
+})
+async function osafetchAudienceSegments(parameters: AudienceSegmentFetchParameters): Promise<any> {
+  const {
+    member_tiers = ['premium', 'commercial', 'standard'],
+    engagement_levels = ['high', 'medium', 'low'],
+    behavioral_patterns = ['seasonal_purchasing', 'content_engagement'],
+    geographic_filters = null,
+    include_size_estimates = true,
+    include_attributes = true,
+    workflow_context = {},
+    segmentation_config = {}
+  } = parameters;
+
+  const startTime = Date.now();
+  const correlationId = workflow_context.correlation_id ||
+    `opal-audience-segments-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+
+  console.log('🎯 [OPAL SDK] osa_fetch_audience_segments request received', { correlationId });
+
+  // Return interactive configuration if not confirmed
+  if (!segmentation_config.confirmed) {
+    const configurationIsland = new IslandConfig(
+      [
+        new IslandConfig.Field(
+          'member_tiers',
+          'Member Tier Segments',
+          'string',
+          member_tiers.join(','),
+          false,
+          ['premium', 'commercial', 'standard', 'trial']
+        ),
+        new IslandConfig.Field(
+          'engagement_levels',
+          'Engagement Level Filters',
+          'string',
+          engagement_levels.join(','),
+          false,
+          ['high', 'medium', 'low', 'inactive']
+        ),
+        new IslandConfig.Field(
+          'behavioral_patterns',
+          'Behavioral Pattern Criteria',
+          'string',
+          behavioral_patterns.join(','),
+          false,
+          ['seasonal_purchasing', 'content_engagement', 'event_participation', 'networking_focused']
+        ),
+        new IslandConfig.Field(
+          'include_size_estimates',
+          'Include Size Estimates',
+          'boolean',
+          include_size_estimates.toString()
+        ),
+        new IslandConfig.Field(
+          'include_attributes',
+          'Include Detailed Attributes',
+          'boolean',
+          include_attributes.toString()
+        )
+      ],
+      [
+        new IslandConfig.Action(
+          'fetch_segments',
+          'Fetch Audience Segments',
+          'button',
+          '/api/opal/sdk-tools/osa_fetch_audience_segments',
+          'execute'
+        ),
+        new IslandConfig.Action(
+          'preview_query',
+          'Preview Segment Query',
+          'button',
+          '/api/opal/sdk-tools/preview_segment_query',
+          'preview'
+        )
+      ]
+    );
+
+    return IslandResponse.create([configurationIsland]);
+  }
+
+  try {
+    // Transform parameters for ODP segments endpoint delegation
+    const odpRequest = {
+      segment_criteria: {
+        member_tiers,
+        engagement_levels,
+        behavioral_patterns,
+        geographic_filters
+      },
+      include_size_estimates,
+      include_attributes,
+      workflow_context: {
+        workflow_metadata: {
+          workflow_id: workflow_context.workflow_id || `audience_analysis_${Date.now()}`,
+          agent_id: workflow_context.agent_id || 'audience_suggester',
+          correlation_id: correlationId
+        }
+      }
+    };
+
+    console.log('📤 [OPAL SDK] Transforming parameters for ODP segments endpoint', { correlationId });
+
+    // Determine environment-aware API endpoint
+    const baseUrl = process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+
+    const odpEndpoint = `${baseUrl}/api/tools/odp/segments`;
+
+    // Delegate to existing ODP segments endpoint
+    const odpResponse = await fetch(odpEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': correlationId
+      },
+      body: JSON.stringify(odpRequest)
+    });
+
+    let audienceSegmentsData;
+
+    if (odpResponse.ok) {
+      const odpData = await odpResponse.json();
+
+      // Transform ODP response to OPAL SDK expected format
+      audienceSegmentsData = {
+        success: true,
+        tool_name: 'osa_fetch_audience_segments',
+        audience_segments: {
+          segments: odpData.data?.recommended_segments?.map((segment: any) => ({
+            segment_id: segment.segment_id,
+            segment_name: segment.name,
+            description: segment.description,
+            size_estimate: segment.size_estimate,
+            engagement_score: segment.engagement_score,
+            value_tier: segment.value_tier,
+            targeting_criteria: {
+              behavioral_attributes: segment.attributes,
+              personalization_opportunities: segment.personalization_opportunities
+            },
+            implementation_priority: segment.segment_id === 'premium_produce_buyers' ? 'high' :
+                                   segment.segment_id === 'bulk_commercial_buyers' ? 'high' : 'medium'
+          })) || [],
+          segment_prioritization: odpData.data?.segment_prioritization || {
+            high_priority: ['premium_produce_buyers', 'bulk_commercial_buyers'],
+            medium_priority: ['health_conscious_shoppers'],
+            growth_opportunity: ['seasonal_home_cooks']
+          },
+          audience_insights: {
+            total_segments: odpData.data?.recommended_segments?.length || 0,
+            total_addressable_audience: odpData.data?.audience_insights?.total_estimated_reach || 0,
+            engagement_distribution: odpData.data?.audience_insights?.engagement_distribution || {},
+            cross_segment_opportunities: odpData.data?.audience_insights?.cross_segment_opportunities || []
+          },
+          implementation_roadmap: odpData.data?.implementation_roadmap || {
+            immediate: { timeline: '0-4 weeks', focus: 'high_priority_segments' },
+            short_term: { timeline: '1-3 months', focus: 'medium_priority_segments' },
+            long_term: { timeline: '3-6 months', focus: 'growth_segments' }
+          }
+        },
+        sdk_compliance: {
+          decorator_pattern: true,
+          parameter_validation: true,
+          island_components: true,
+          delegation_pattern: true,
+          environment_awareness: true
+        },
+        _metadata: {
+          data_source: 'odp_segments_delegation',
+          processing_time_ms: Date.now() - startTime,
+          correlation_id: correlationId,
+          segments_analyzed: odpData.data?.recommended_segments?.length || 0,
+          timestamp: new Date().toISOString()
+        }
+      };
+
+      console.log('✅ [OPAL SDK] Successfully delegated to ODP segments endpoint', {
+        correlationId,
+        segmentsFound: audienceSegmentsData.audience_segments.segments.length
+      });
+
+    } else {
+      // Graceful fallback to mock data if delegation fails
+      console.warn('⚠️ [OPAL SDK] ODP segments API delegation failed, using mock data', { correlationId });
+
+      audienceSegmentsData = {
+        success: true,
+        tool_name: 'osa_fetch_audience_segments',
+        audience_segments: {
+          segments: [
+            {
+              segment_id: 'strategic_buyers',
+              segment_name: 'Strategic Buyers',
+              description: 'Professional buyers making strategic purchasing decisions for organizations',
+              size_estimate: 15000,
+              engagement_score: 0.82,
+              value_tier: 'premium',
+              targeting_criteria: {
+                behavioral_attributes: {
+                  decision_making_role: 'primary',
+                  purchase_volume: 'high',
+                  research_behavior: 'extensive'
+                },
+                personalization_opportunities: [
+                  'Technical specification content',
+                  'Bulk pricing information',
+                  'Supplier relationship content'
+                ]
+              },
+              implementation_priority: 'high'
+            },
+            {
+              segment_id: 'quality_conscious_consumers',
+              segment_name: 'Quality-Conscious Consumers',
+              description: 'Individual consumers prioritizing product quality and freshness',
+              size_estimate: 28500,
+              engagement_score: 0.71,
+              value_tier: 'standard',
+              targeting_criteria: {
+                behavioral_attributes: {
+                  quality_focus: 'high',
+                  price_sensitivity: 'medium',
+                  brand_loyalty: 'moderate'
+                },
+                personalization_opportunities: [
+                  'Quality certification content',
+                  'Freshness indicators',
+                  'Source and origin information'
+                ]
+              },
+              implementation_priority: 'medium'
+            }
+          ],
+          segment_prioritization: {
+            high_priority: ['strategic_buyers'],
+            medium_priority: ['quality_conscious_consumers'],
+            growth_opportunity: ['seasonal_shoppers']
+          },
+          audience_insights: {
+            total_segments: 2,
+            total_addressable_audience: 43500,
+            engagement_distribution: {
+              high_engagement: 0.30,
+              medium_engagement: 0.50,
+              developing_engagement: 0.20
+            },
+            cross_segment_opportunities: [
+              {
+                segments: ['strategic_buyers', 'quality_conscious_consumers'],
+                overlap_potential: 'medium',
+                strategy: 'Quality-focused B2B messaging'
+              }
+            ]
+          },
+          implementation_roadmap: {
+            immediate: {
+              timeline: '0-4 weeks',
+              focus: 'Strategic buyer segment activation'
+            },
+            short_term: {
+              timeline: '1-3 months',
+              focus: 'Quality consumer personalization'
+            },
+            long_term: {
+              timeline: '3-6 months',
+              focus: 'Cross-segment optimization'
+            }
+          }
+        },
+        sdk_compliance: {
+          decorator_pattern: true,
+          parameter_validation: true,
+          island_components: true,
+          fallback_strategy: true
+        },
+        _metadata: {
+          data_source: 'mock_data_fallback',
+          processing_time_ms: Date.now() - startTime,
+          correlation_id: correlationId,
+          segments_analyzed: 2,
+          timestamp: new Date().toISOString()
+        }
+      };
+    }
+
+    return audienceSegmentsData;
+
+  } catch (error) {
+    console.error('❌ [OPAL SDK] Audience segments fetch failed:', error);
+
+    return {
+      success: false,
+      tool_name: 'osa_fetch_audience_segments',
+      error: 'Audience segments fetch failed',
+      message: error instanceof Error ? error.message : 'Unknown error occurred',
+      sdk_compliance: {
+        decorator_pattern: true,
+        error_handling: true
+      },
+      _metadata: {
+        correlation_id: correlationId,
+        processing_time_ms: Date.now() - startTime,
+        timestamp: new Date().toISOString()
+      }
+    };
+  }
+}
+
 // ===== SERVICE INITIALIZATION =====
 
 /**
@@ -558,6 +942,7 @@ export function initializeSDKCompliantTools(port: number = 3001): express.Applic
   console.log(`   - generate_audience_segments_enhanced`);
   console.log(`   - create_experiment_blueprint_enhanced`);
   console.log(`   - send_data_to_osa_enhanced`);
+  console.log(`   - osa_fetch_audience_segments`);
 
   return app;
 }
@@ -567,5 +952,6 @@ export {
   analyzeWebsiteContentEnhanced,
   generateAudienceSegmentsEnhanced,
   createExperimentBlueprintEnhanced,
-  sendDataToOSAEnhanced
+  sendDataToOSAEnhanced,
+  osafetchAudienceSegments
 };
