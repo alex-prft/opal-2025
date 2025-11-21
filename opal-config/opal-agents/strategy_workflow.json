@@ -1,0 +1,313 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "workflow",
+  "name": "strategy_workflow",
+  "description": "Webhook to collect data from all the DXP tools and send to our application",
+  "version": "",
+  "agent_id": "strategy_workflow",
+  "objective": "",
+  "plan": "",
+  "is_active": true,
+  "is_deleted": false,
+  "agent_metadata": {
+    "edges": [
+      {
+        "id": "47d0191b-2862-484b-b7b6-bab691a137e8",
+        "source": "be20473d-cce1-418f-96ab-053e1d2bac0e",
+        "target": "07b0d610-230f-4173-91d6-c138af6d3e94"
+      },
+      {
+        "id": "74a9acfc-27ac-43e4-9a73-3fa6b2dcb111",
+        "source": "07b0d610-230f-4173-91d6-c138af6d3e94",
+        "target": "611456f6-f37d-455a-a047-196e4264d160"
+      },
+      {
+        "id": "84e46c44-02e6-4807-a77e-d8926c377089",
+        "source": "110c863b-72e4-4fac-b943-9699dde3ec24",
+        "target": "7554a4f1-0118-46ff-bf1f-525a63ed8007"
+      },
+      {
+        "id": "e3f44330-b5d3-4cca-b36f-5566ff585458",
+        "source": "e8561594-e646-44bc-8abd-a978068523f4",
+        "target": "2f88cfac-5046-40c6-b5c9-63365efe7e94"
+      },
+      {
+        "id": "b1c8336b-3424-4bcb-a2ea-0b93a650c1d8",
+        "source": "2f88cfac-5046-40c6-b5c9-63365efe7e94",
+        "target": "be20473d-cce1-418f-96ab-053e1d2bac0e"
+      },
+      {
+        "id": "79935e1d-459a-4250-a3f4-e26291ae7e46",
+        "source": "7554a4f1-0118-46ff-bf1f-525a63ed8007",
+        "target": "0372e57c-43a5-4b8f-a2cd-cffad3da49ef"
+      },
+      {
+        "id": "d227b111-7522-41a3-8a16-6e885f9b7fb5",
+        "source": "611456f6-f37d-455a-a047-196e4264d160",
+        "target": "f0fd2708-c78c-4d7a-ae98-d9359eaa0ce8"
+      },
+      {
+        "id": "ecf66f4c-3980-4f83-9b40-a2eb07bc2469",
+        "source": "0372e57c-43a5-4b8f-a2cd-cffad3da49ef",
+        "target": "e8561594-e646-44bc-8abd-a978068523f4"
+      },
+      {
+        "id": "e87509cd-0894-490d-9965-c3bec82848af",
+        "source": "ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14",
+        "target": "110c863b-72e4-4fac-b943-9699dde3ec24"
+      },
+      {
+        "id": "84b1e186-a474-4b26-a605-e3c53c7d206b",
+        "source": "4c849fd1-ac76-4253-8a82-f2f90fe08a8c",
+        "target": "110c863b-72e4-4fac-b943-9699dde3ec24"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 405,
+          "y": 105
+        }
+      },
+      {
+        "id": "4c849fd1-ac76-4253-8a82-f2f90fe08a8c",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 495,
+          "y": 555
+        }
+      },
+      {
+        "id": "be20473d-cce1-418f-96ab-053e1d2bac0e",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1935,
+          "y": 315
+        }
+      },
+      {
+        "id": "07b0d610-230f-4173-91d6-c138af6d3e94",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 2205,
+          "y": 315
+        }
+      },
+      {
+        "id": "110c863b-72e4-4fac-b943-9699dde3ec24",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 570,
+          "y": 315
+        }
+      },
+      {
+        "id": "e8561594-e646-44bc-8abd-a978068523f4",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1395,
+          "y": 315
+        }
+      },
+      {
+        "id": "2f88cfac-5046-40c6-b5c9-63365efe7e94",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1665,
+          "y": 315
+        }
+      },
+      {
+        "id": "7554a4f1-0118-46ff-bf1f-525a63ed8007",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 840,
+          "y": 315
+        }
+      },
+      {
+        "id": "611456f6-f37d-455a-a047-196e4264d160",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 2475,
+          "y": 315
+        }
+      },
+      {
+        "id": "0372e57c-43a5-4b8f-a2cd-cffad3da49ef",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 1125,
+          "y": 315
+        }
+      },
+      {
+        "id": "f0fd2708-c78c-4d7a-ae98-d9359eaa0ce8",
+        "measured": {
+          "width": 248,
+          "height": 108
+        },
+        "position": {
+          "x": 2745,
+          "y": 315
+        }
+      }
+    ]
+  },
+  "internal_version": 19,
+  "steps": [
+    {
+      "step_id": "be20473d-cce1-418f-96ab-053e1d2bac0e",
+      "step_type": "specialized",
+      "name": "Personalization Idea Generator Agent",
+      "description": "Generates strategic personalization ideas mapped to specific audience segments, with detailed implementation specifications and content requirements. Builds upon content, technical, and audience insights.",
+      "agent_id": "personalization_idea_generator",
+      "parameters_schema": {},
+      "next_step_id": "07b0d610-230f-4173-91d6-c138af6d3e94",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "07b0d610-230f-4173-91d6-c138af6d3e94",
+      "step_type": "specialized",
+      "name": "Customer Journey Agent",
+      "description": "Analyzes customer journey patterns, identifies drop-off points, maps touchpoint experiences, and generates optimization recommendations for improved customer experience across all interaction channels.",
+      "agent_id": "customer_journey",
+      "parameters_schema": {},
+      "next_step_id": "611456f6-f37d-455a-a047-196e4264d160",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "110c863b-72e4-4fac-b943-9699dde3ec24",
+      "step_type": "specialized",
+      "name": "Integration Health Agent",
+      "description": "Monitors and analyzes the health, performance, and integration status of Optimizely DXP tools and supporting technology stack, providing optimization recommendations and readiness assessments for strategic initiatives.",
+      "agent_id": "integration_health",
+      "parameters_schema": {},
+      "next_step_id": "7554a4f1-0118-46ff-bf1f-525a63ed8007",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "e8561594-e646-44bc-8abd-a978068523f4",
+      "step_type": "specialized",
+      "name": "Audience Suggester Agent",
+      "description": "Generates high-value audience segments for personalization based on ODP traits, Salesforce data, and content/technical analysis. Creates actionable segments with clear personalization opportunities.",
+      "agent_id": "audience_suggester",
+      "parameters_schema": {},
+      "next_step_id": "2f88cfac-5046-40c6-b5c9-63365efe7e94",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "2f88cfac-5046-40c6-b5c9-63365efe7e94",
+      "step_type": "specialized",
+      "name": "Experiment Blueprinter Agent",
+      "description": "Converts ideas into rigorous experiment specifications with statistical power analysis, hypothesis frameworks, and detailed implementation blueprints for A/B testing.",
+      "agent_id": "experiment_blueprinter",
+      "parameters_schema": {},
+      "next_step_id": "be20473d-cce1-418f-96ab-053e1d2bac0e",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "7554a4f1-0118-46ff-bf1f-525a63ed8007",
+      "step_type": "specialized",
+      "name": "Content Review Agent",
+      "description": "Analyzes website content to identify optimization opportunities, content gaps, and personalization potential. Provides foundational insights for audience segmentation and strategy development.",
+      "agent_id": "Content_Review",
+      "parameters_schema": {},
+      "next_step_id": "0372e57c-43a5-4b8f-a2cd-cffad3da49ef",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "611456f6-f37d-455a-a047-196e4264d160",
+      "step_type": "specialized",
+      "name": "Roadmap Generator Agent",
+      "description": "Converts strategic insights and recommendations into comprehensive implementation roadmaps with timeline visualization, milestone tracking, resource allocation planning, and dependency management for OSA strategy execution.",
+      "agent_id": "roadmap_generator",
+      "parameters_schema": {},
+      "next_step_id": "f0fd2708-c78c-4d7a-ae98-d9359eaa0ce8",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "0372e57c-43a5-4b8f-a2cd-cffad3da49ef",
+      "step_type": "specialized",
+      "name": "GEO Audit Agent",
+      "description": "Performs comprehensive GEO (Generative Engine Optimization) audit to optimize content for AI search engines and improve discoverability. Analyzes technical SEO, schema markup, and AI citation readiness.",
+      "agent_id": "geo_audit",
+      "parameters_schema": {},
+      "next_step_id": "e8561594-e646-44bc-8abd-a978068523f4",
+      "timeout_seconds": 3600
+    },
+    {
+      "step_id": "f0fd2708-c78c-4d7a-ae98-d9359eaa0ce8",
+      "step_type": "specialized",
+      "name": "CMP Organizer Agent",
+      "description": "Compiles and organizes results from all workflow agents into executive-ready strategy briefs and CMP-ready campaign specifications for stakeholder review and implementation.",
+      "agent_id": "cmp_organizer",
+      "parameters_schema": {},
+      "next_step_id": null,
+      "timeout_seconds": 3600
+    }
+  ],
+  "specialized_agents_required": [
+    "customer_journey",
+    "personalization_idea_generator",
+    "audience_suggester",
+    "Content_Review",
+    "roadmap_generator",
+    "geo_audit",
+    "experiment_blueprinter",
+    "cmp_organizer",
+    "integration_health"
+  ],
+  "triggers": [
+    {
+      "trigger_id": "ba71d62d-aa74-4bbf-9ab8-a1a11ed4bf14",
+      "trigger_type": "webhook",
+      "name": "OPAL Strategy Assistant Workflow",
+      "description": "Triggers OPAL AI workflow for Optimizely Strategy Assistant with   personalization recommendations and data analysis",
+      "is_active": true,
+      "auth_key": "7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8",
+      "auth_header_name": "Authorization",
+      "auth_header_format": "Bearer {token}",
+      "payload_content_type": "application/json"
+    },
+    {
+      "trigger_id": "4c849fd1-ac76-4253-8a82-f2f90fe08a8c",
+      "trigger_type": "message",
+      "name": "Chat Input",
+      "description": "Trigger when user sends a message",
+      "is_active": true
+    }
+  ]
+}
