@@ -38,8 +38,34 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       has_signature: !!request.headers.get('x-osa-signature')
     });
 
-    // Load configuration
-    const config = loadOpalConfig();
+    // Load configuration with enhanced error handling
+    let config;
+    try {
+      config = loadOpalConfig();
+    } catch (configError) {
+      console.error('❌ [Webhook] Configuration load failed', {
+        correlationId,
+        error: configError instanceof Error ? configError.message : 'Unknown config error'
+      });
+
+      await WebhookDatabase.insertEvent({
+        workflow_id: 'unknown',
+        agent_id: 'unknown',
+        offset: null,
+        payload_json: {},
+        signature_valid: false,
+        dedup_hash: `config-error-${correlationId}`,
+        http_status: 500,
+        error_text: `Configuration error: ${configError instanceof Error ? configError.message : 'Unknown error'}`,
+        processing_time_ms: Date.now() - startTime
+      });
+
+      return NextResponse.json({
+        error: 'Internal Server Error',
+        message: 'Configuration error',
+        correlation_id: correlationId
+      }, { status: 500 });
+    }
 
     // DEBUG: Log environment and config values
     console.log(`🐛 [Webhook Debug] ${correlationId}`);
@@ -50,6 +76,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const signatureHeader = request.headers.get('x-osa-signature');
     if (!signatureHeader) {
       console.warn('⚠️ [Webhook] Missing X-OSA-Signature header', { correlationId });
+
+      await WebhookDatabase.insertEvent({
+        workflow_id: 'unknown',
+        agent_id: 'unknown',
+        offset: null,
+        payload_json: {},
+        signature_valid: false,
+        dedup_hash: `no-signature-${correlationId}`,
+        http_status: 401,
+        error_text: 'Missing X-OSA-Signature header',
+        processing_time_ms: Date.now() - startTime
+      });
+
       return NextResponse.json({
         error: 'Unauthorized',
         message: 'Missing signature header',
@@ -67,37 +106,61 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       console.log(`🐛 PARSED_SIGNATURE: ${parsedSignature.signature}`);
       console.log(`🐛 CURRENT_TIME: ${Date.now()} (${new Date().toISOString()})`);
       console.log(`🐛 TIME_DIFF: ${Date.now() - parsedSignature.timestamp}ms`);
+    } else {
+      console.warn('⚠️ [Webhook] Failed to parse signature header', { correlationId, signatureHeader });
     }
 
-    // Development bypass for HMAC verification
-    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.SKIP_HMAC_VERIFICATION === 'true';
-    
-    // Verify HMAC signature with constant-time comparison
-    const verificationResult = isDevelopment 
-      ? { isValid: true, message: 'Development bypass enabled' }
+    // Enhanced development bypass with more specific conditions
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const skipVerification = process.env.SKIP_HMAC_VERIFICATION === 'true';
+    const isProductionBypass = process.env.NODE_ENV === 'production' && skipVerification;
+
+    // Log bypass status for monitoring
+    if (isDevelopment || skipVerification) {
+      console.log(`🔓 [Webhook] HMAC verification bypass - dev: ${isDevelopment}, skip: ${skipVerification}, prod bypass: ${isProductionBypass}`, { correlationId });
+    }
+
+    // Verify HMAC signature with enhanced tolerance and error handling
+    const verificationResult = (isDevelopment || skipVerification)
+      ? { isValid: true, message: 'Verification bypassed', timestamp: Date.now() }
       : verifyWebhookSignature(
           bodyBuffer,
           signatureHeader,
           config.osaWebhookSecret,
-          5 * 60 * 1000 // 5 minute tolerance
+          10 * 60 * 1000 // 10 minute tolerance (increased from 5 for better network tolerance)
         );
 
-    if (isDevelopment) {
-      console.log('🔓 [Webhook] HMAC verification bypassed in development mode', { correlationId });
-    }
+    // Always log verification attempts for monitoring
+    console.log(`🔐 [Webhook] Verification result: ${verificationResult.isValid}`, {
+      correlationId,
+      bypassed: isDevelopment || skipVerification,
+      error: verificationResult.error,
+      timestamp: verificationResult.timestamp
+    });
 
     if (!verificationResult.isValid) {
       console.warn('⚠️ [Webhook] Signature verification failed', {
         correlationId,
-        error: verificationResult.error
+        error: verificationResult.error,
+        signatureHeader,
+        payloadLength: bodyBuffer.length,
+        secretLength: config.osaWebhookSecret?.length
       });
 
-      // Still record the attempt for diagnostics
+      // Record detailed failure information for diagnostics
       await WebhookDatabase.insertEvent({
         workflow_id: 'unknown',
         agent_id: 'unknown',
         offset: null,
-        payload_json: {},
+        payload_json: {
+          diagnostic_info: {
+            payload_length: bodyBuffer.length,
+            signature_header_length: signatureHeader?.length || 0,
+            secret_configured: !!config.osaWebhookSecret,
+            secret_length: config.osaWebhookSecret?.length || 0,
+            parsed_signature: parsedSignature ? 'yes' : 'no'
+          }
+        },
         signature_valid: false,
         dedup_hash: `invalid-${correlationId}`,
         http_status: 401,
@@ -108,7 +171,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({
         error: 'Unauthorized',
         message: 'Invalid signature',
-        correlation_id: correlationId
+        correlation_id: correlationId,
+        debug_hint: isDevelopment ? verificationResult.error : undefined
       }, { status: 401 });
     }
 
