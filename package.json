@@ -132,7 +132,10 @@
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^13.0.0",
     "ws": "^8.18.3",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "typescript": "^5.9.3",
+    "@types/react": "^19",
+    "@types/react-dom": "^19"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",
@@ -144,8 +147,6 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.19.25",
     "@types/node-fetch": "^2.6.13",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "@types/swagger-ui-react": "^5.18.0",
     "dotenv": "^17.2.3",
     "eslint": "^9",
@@ -156,7 +157,6 @@
     "node-fetch": "^3.3.2",
     "ts-jest": "^29.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
     "vitest": "^1.6.0",
     "web-streams-polyfill": "^4.2.0"
   }
