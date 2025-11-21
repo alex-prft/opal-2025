@@ -33,8 +33,7 @@ import {
   RefreshCw,
   BookOpen,
   MessageSquare,
-  PieChart,
-  DollarSign
+  PieChart
 } from 'lucide-react';
 import KPISummaryWidget from './KPISummaryWidget';
 import { ContentPerformanceMetricsWidget } from '@/components/widgets/ContentPerformanceMetricsWidget';
