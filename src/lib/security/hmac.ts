@@ -5,6 +5,15 @@
 
 import { createHmac, timingSafeEqual } from 'crypto';
 
+// Environment-aware debug logging (CLAUDE.md compliance)
+const DEBUG_MODE = process.env.NODE_ENV === 'development' || process.env.DEBUG === 'true';
+
+const debugLog = (message: string, ...args: any[]) => {
+  if (DEBUG_MODE) {
+    console.log(message, ...args);
+  }
+};
+
 export interface HmacSignatureResult {
   signature: string;
   timestamp: number;
@@ -71,7 +80,7 @@ export function verifyHmacSignature(
   maxAgeMs: number = 10 * 60 * 1000 // 10 minutes (increased from 5 for better tolerance)
 ): HmacVerificationResult {
   try {
-    console.log(`🐛 [HMAC Verify] Starting verification with timestamp: ${timestamp}, includeTimestamp: ${!!timestamp}`);
+    debugLog(`🐛 [HMAC Verify] Starting verification with timestamp: ${timestamp}, includeTimestamp: ${!!timestamp}`);
 
     // Validate inputs
     if (!payload) {
@@ -92,9 +101,9 @@ export function verifyHmacSignature(
     // Generate expected signature using the original timestamp from the request
     const expected = generateHmacSignature(payload, secret, !!timestamp, timestamp);
 
-    console.log(`🐛 [HMAC Verify] Expected signature: ${expected.signature}`);
-    console.log(`🐛 [HMAC Verify] Expected timestamp: ${expected.timestamp}`);
-    console.log(`🐛 [HMAC Verify] Received signature: ${signature}`);
+    debugLog(`🐛 [HMAC Verify] Expected signature: ${expected.signature}`);
+    debugLog(`🐛 [HMAC Verify] Expected timestamp: ${expected.timestamp}`);
+    debugLog(`🐛 [HMAC Verify] Received signature: ${signature}`);
 
     // Prepare buffers for constant-time comparison
     let receivedBuffer: Buffer;
@@ -112,7 +121,7 @@ export function verifyHmacSignature(
 
     // Ensure buffers are the same length for constant-time comparison
     if (receivedBuffer.length !== expectedBuffer.length) {
-      console.log(`🐛 [HMAC Verify] Length mismatch - received: ${receivedBuffer.length}, expected: ${expectedBuffer.length}`);
+      debugLog(`🐛 [HMAC Verify] Length mismatch - received: ${receivedBuffer.length}, expected: ${expectedBuffer.length}`);
       return {
         isValid: false,
         error: `Signature length mismatch (received: ${receivedBuffer.length}, expected: ${expectedBuffer.length})`
@@ -121,7 +130,7 @@ export function verifyHmacSignature(
 
     // Perform constant-time comparison
     const isSignatureValid = timingSafeEqual(receivedBuffer, expectedBuffer);
-    console.log(`🐛 [HMAC Verify] Signature comparison result: ${isSignatureValid}`);
+    debugLog(`🐛 [HMAC Verify] Signature comparison result: ${isSignatureValid}`);
 
     if (!isSignatureValid) {
       return {
@@ -135,7 +144,7 @@ export function verifyHmacSignature(
       const now = Date.now();
       const age = now - timestamp;
 
-      console.log(`🐛 [HMAC Verify] Timestamp validation - now: ${now}, timestamp: ${timestamp}, age: ${age}ms, maxAge: ${maxAgeMs}ms`);
+      debugLog(`🐛 [HMAC Verify] Timestamp validation - now: ${now}, timestamp: ${timestamp}, age: ${age}ms, maxAge: ${maxAgeMs}ms`);
 
       if (age < -60000) { // Allow 1 minute clock drift in the future
         return {
@@ -151,13 +160,13 @@ export function verifyHmacSignature(
         };
       }
 
-      // Warn about clock drift but don't fail
+      // Warn about clock drift but don't fail (always log warnings)
       if (age < 0) {
         console.warn(`⚠️ [HMAC Verify] Clock drift detected: timestamp ${Math.abs(age)}ms in future (within tolerance)`);
       }
     }
 
-    console.log(`✅ [HMAC Verify] Verification successful`);
+    debugLog(`✅ [HMAC Verify] Verification successful`);
     return {
       isValid: true,
       timestamp
@@ -182,24 +191,24 @@ export function verifyHmacSignature(
 export function parseSignatureHeader(signatureHeader: string): { timestamp: number; signature: string } | null {
   try {
     if (!signatureHeader || typeof signatureHeader !== 'string') {
-      console.log(`🐛 [HMAC Parse] Invalid header type: ${typeof signatureHeader}`);
+      debugLog(`🐛 [HMAC Parse] Invalid header type: ${typeof signatureHeader}`);
       return null;
     }
 
     // Normalize whitespace and split by comma
     const parts = signatureHeader.trim().split(',').map(p => p.trim());
-    console.log(`🐛 [HMAC Parse] Header parts: ${JSON.stringify(parts)}`);
+    debugLog(`🐛 [HMAC Parse] Header parts: ${JSON.stringify(parts)}`);
 
     const timestampPart = parts.find(p => p.startsWith('t='));
     const signaturePart = parts.find(p => p.startsWith('v1='));
 
     if (!timestampPart) {
-      console.log(`🐛 [HMAC Parse] Missing timestamp part in: ${signatureHeader}`);
+      debugLog(`🐛 [HMAC Parse] Missing timestamp part in: ${signatureHeader}`);
       return null;
     }
 
     if (!signaturePart) {
-      console.log(`🐛 [HMAC Parse] Missing signature part in: ${signatureHeader}`);
+      debugLog(`🐛 [HMAC Parse] Missing signature part in: ${signatureHeader}`);
       return null;
     }
 
@@ -208,25 +217,25 @@ export function parseSignatureHeader(signatureHeader: string): { timestamp: numb
     const timestamp = parseInt(timestampStr, 10);
 
     if (isNaN(timestamp)) {
-      console.log(`🐛 [HMAC Parse] Invalid timestamp: ${timestampStr}`);
+      debugLog(`🐛 [HMAC Parse] Invalid timestamp: ${timestampStr}`);
       return null;
     }
 
     if (!signature || signature.length === 0) {
-      console.log(`🐛 [HMAC Parse] Empty signature`);
+      debugLog(`🐛 [HMAC Parse] Empty signature`);
       return null;
     }
 
     // Validate signature format (should be hex)
     if (!/^[0-9a-fA-F]+$/.test(signature)) {
-      console.log(`🐛 [HMAC Parse] Invalid signature format: ${signature}`);
+      debugLog(`🐛 [HMAC Parse] Invalid signature format: ${signature}`);
       return null;
     }
 
-    console.log(`🐛 [HMAC Parse] Successfully parsed - timestamp: ${timestamp}, signature length: ${signature.length}`);
+    debugLog(`🐛 [HMAC Parse] Successfully parsed - timestamp: ${timestamp}, signature length: ${signature.length}`);
     return { timestamp, signature };
   } catch (error) {
-    console.log(`🐛 [HMAC Parse] Parse error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    debugLog(`🐛 [HMAC Parse] Parse error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     return null;
   }
 }
