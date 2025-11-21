@@ -1,9 +1,9 @@
 // src/main.ts
 import 'reflect-metadata';
 import { ToolsService } from "@optimizely-opal/opal-tools-sdk";
-import cors from "cors";
-import express from "express";
-import basicAuth from "express-basic-auth";
+import * as cors from "cors";
+import * as express from "express";
+import * as basicAuth from "express-basic-auth";
 
 // Create Express app
 const app = express();
@@ -32,62 +32,14 @@ const toolsService = new ToolsService(app);
 
 // ===== IMPORT ALL TOOLS HERE (each file registers itself) =====
 
-// Core OSA Tools
+// Core OSA Tools (implemented)
 import "./tools/osa_fetch_audience_segments";
 import "./tools/osa_send_data_to_osa_webhook";
 import "./tools/osa_analyze_member_behavior";
-import "./tools/osa_store_workflow_data";
-import "./tools/osa_create_dynamic_segments";
 import "./tools/osa_validate_language_rules";
-import "./tools/osa_retrieve_workflow_context";
 
-// Data Analysis Tools
-import "./tools/osa_analyze_data_insights";
-import "./tools/osa_calculate_segment_statistical_power";
-import "./tools/osa_get_member_journey_data";
-import "./tools/osa_export_segment_targeting_logic";
-import "./tools/osa_generate_behavioral_insights";
-import "./tools/osa_track_engagement_patterns";
-import "./tools/osa_analyze_conversion_paths";
-
-// Segment Management Tools
-import "./tools/osa_generate_segment_profiles";
-import "./tools/osa_optimize_audience_targeting";
-import "./tools/osa_analyze_lifecycle_stages";
-import "./tools/osa_analyze_audience_cohorts";
-
-// Content Tools
-import "./tools/osa_analyze_website_content";
-import "./tools/create_content_matrix";
-import "./tools/get_content_recommendations_by_topic";
-import "./tools/get_content_recommendations_by_section";
-
-// Experimentation Tools
-import "./tools/osa_design_experiments";
-import "./tools/osa_generate_performance_baseline";
-
-// Campaign Management Platform Integration Tools
-import "./tools/osa_read_marketing_calendar";
-import "./tools/osa_send_strategy_to_cmp";
-import "./tools/osa_create_cmp_brief";
-import "./tools/osa_create_cmp_task";
-
-// Canvas Visualization Tools
-import "./tools/osa_suggest_canvas_visualization";
-import "./tools/osa_create_audience_dashboard_canvas";
-import "./tools/osa_create_segment_comparison_canvas";
-import "./tools/osa_create_behavioral_funnel_canvas";
-import "./tools/osa_create_engagement_heatmap_canvas";
-
-// General Platform Tools
-import "./tools/data_insights";
-import "./tools/notify";
-import "./tools/cmp";
-import "./tools/ai_experimentation";
-import "./tools/ai_personalization";
-import "./tools/experiments";
-import "./tools/audience";
-import "./tools/content";
+// Batch Placeholder Tools (temporary - will be split into individual files)
+import "./tools/placeholder-tools-batch";
 
 console.log('🚀 [OPAL Tools Registry] All tools have been imported and registered');
 console.log('📋 [OPAL Tools Registry] Discovery endpoint will be available at /discovery');
