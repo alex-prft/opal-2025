@@ -35,18 +35,18 @@ We use a simple, opinionated branching model:
 
 This repository uses Git worktrees for parallel development:
 
-- **Main Worktree**: `/my-nextjs-app` (main branch)
+- **Main Worktree**: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app` (main branch)
 
   - Stable, production-ready code
   - Used for final merges and production deployments
 
-- **Claude Worktree**: `/dev/my-nextjs-app-claude` (claude-lab branch)
+- **Claude Worktree**: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude` (claude-lab branch)
 
   - **DEFAULT workspace for AI-assisted development**
   - Where Claude Code operates by default
   - Normal sprint work and experiments
 
-- **Bugfix Worktree**: `/dev/my-nextjs-app-bugfix` (bugfix-lab branch)
+- **Bugfix Worktree**: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix` (bugfix-lab branch)
   - Emergency hotfixes only
   - Used only when explicitly working on production issues
 
@@ -111,7 +111,7 @@ Use this flow at the end of each sprint or major feature cycle.
 
 ```bash
 # Claude Code works here by default:
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 
 # Normal development flow:
 git status                          # Check current state
@@ -129,7 +129,7 @@ Before merging `claude-lab` into `main`, ensure code quality:
 
 ```bash
 # In Claude worktree:
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 
 # 1. Sync with main
 git fetch origin main
@@ -172,7 +172,7 @@ After PR approval:
 
 ```bash
 # Switch to main worktree for merge:
-cd /path/to/my-nextjs-app
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
 
 # Update main and merge
 git pull origin main
@@ -190,7 +190,7 @@ git push origin main
 
 ```bash
 # In main worktree:
-cd /path/to/my-nextjs-app
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
 
 # Deploy to production
 npm run deploy:prod
@@ -224,7 +224,7 @@ Before starting hotfix:
 
 ```bash
 # Switch to bugfix worktree:
-cd /path/to/dev/my-nextjs-app-bugfix
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix
 
 # Start from latest main
 git checkout bugfix-lab
@@ -276,7 +276,7 @@ After expedited review:
 
 ```bash
 # Switch to main worktree:
-cd /path/to/my-nextjs-app
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
 
 # Fast-track merge
 git pull origin main
@@ -300,7 +300,7 @@ After hotfix is deployed and verified:
 
 ```bash
 # Sync claude-lab with hotfix
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 git pull origin main
 git rebase origin/main
 
@@ -320,7 +320,7 @@ For larger features that need isolation from `claude-lab`:
 
 ```bash
 # From Claude worktree:
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 
 # Create feature branch from claude-lab
 git checkout claude-lab
@@ -397,7 +397,7 @@ If production deployment fails:
 
 ```bash
 # In main worktree:
-cd /path/to/my-nextjs-app
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
 
 # Revert to last known good commit
 git log --oneline -10              # Find last good commit
@@ -427,10 +427,10 @@ If worktrees become inconsistent:
 git stash
 
 # Remove corrupted worktree:
-git worktree remove /path/to/corrupted-worktree
+git worktree remove /Users/alexharris/Documents/AI-Dev/corrupted-worktree
 
 # Recreate worktree:
-git worktree add /path/to/new-worktree branch-name
+git worktree add /Users/alexharris/Documents/AI-Dev/new-worktree branch-name
 
 # Restore work:
 git stash pop
@@ -482,7 +482,7 @@ Before any merge to `main`, ensure:
 
 ```bash
 # In Claude worktree:
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 
 # Rebase approach (preferred):
 git fetch origin main
@@ -544,15 +544,15 @@ npx vercel --prod --yes
 # Each worktree can run dev server independently:
 
 # Claude worktree (default port 3000):
-cd /path/to/dev/my-nextjs-app-claude
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
 npm run dev
 
 # Main worktree (different port):
-cd /path/to/my-nextjs-app
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
 npm run dev -- --port 3001
 
 # Bugfix worktree (different port):
-cd /path/to/dev/my-nextjs-app-bugfix
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix
 npm run dev -- --port 3002
 ```
 

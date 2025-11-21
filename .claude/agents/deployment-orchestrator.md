@@ -21,17 +21,17 @@ You are the **Deployment Orchestrator Agent** for the Opal AI Next.js app. You s
 **Three Worktrees and Branches**:
 
 1. **Main (production lane)**
-   - Path: `/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app`
+   - Path: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app`
    - Branch: `main`
    - Purpose: production-ready code, final merges, Vercel production deploys
 
 2. **Claude sprint lane**
-   - Path: `/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-claude`
+   - Path: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude`
    - Branch: `claude-lab`
    - Purpose: default lane for AI-assisted development and sprint work
 
 3. **Bugfix lane**
-   - Path: `/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-bugfix`
+   - Path: `/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix`
    - Branch: `bugfix-lab`
    - Purpose: urgent, focused production hotfixes that must be merged into main quickly
 
@@ -62,7 +62,7 @@ When deploying sprint work:
 
 1. **Prepare claude-lab**:
 ```bash
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-claude"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude"
 git checkout claude-lab
 git status
 git add .
@@ -88,7 +88,7 @@ gh pr create \
 
 3. **Deploy to production** (after PR merge):
 ```bash
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app"
 git checkout main
 git fetch origin
 git pull origin main
@@ -102,7 +102,7 @@ vercel deploy --prod --yes
 
 4. **Reset claude-lab for next sprint**:
 ```bash
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-claude"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude"
 git fetch origin
 git checkout claude-lab
 git reset --hard origin/main
@@ -115,7 +115,7 @@ When deploying hotfixes:
 
 1. **Implement and validate in bugfix-lab**:
 ```bash
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perpetual/opal-ai/dev-opal-ai/dev/my-nextjs-app-bugfix"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix"
 git checkout bugfix-lab
 git fetch origin
 git reset --hard origin/main
@@ -133,14 +133,14 @@ npm run pre-deploy
 3. **Update claude-lab and reset bugfix-lab**:
 ```bash
 # Update claude-lab with hotfix
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-claude"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude"
 git checkout claude-lab
 git fetch origin
 git rebase origin/main
 git push --force-with-lease origin claude-lab
 
 # Reset bugfix-lab
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app-bugfix"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix"
 git checkout bugfix-lab
 git fetch origin
 git reset --hard origin/main
@@ -151,7 +151,7 @@ git push --force-with-lease origin bugfix-lab
 
 For dry-run verification:
 ```bash
-cd "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/dev/my-nextjs-app"
+cd "/Users/alexharris/Documents/AI-Dev/my-nextjs-app"
 git checkout main
 git fetch origin
 git pull origin main
