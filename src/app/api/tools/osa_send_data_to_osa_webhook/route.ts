@@ -188,11 +188,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       endpoint: '/api/opal/enhanced-tools'
     });
 
+    // DEBUG: Log the actual request payload being sent
+    const requestPayload = JSON.stringify(enhancedToolRequest, null, 2);
+    console.log('🔍 [DEBUG] Actual request payload being sent:', {
+      correlationId,
+      payload: requestPayload.substring(0, 500) + (requestPayload.length > 500 ? '...' : ''),
+      execution_status_in_payload: enhancedToolRequest.parameters.execution_status
+    });
+
     const enhancedToolsUrl = new URL('/api/opal/enhanced-tools', request.url);
     const enhancedResponse = await fetch(enhancedToolsUrl.toString(), {
       method: 'POST',
       headers: forwardHeaders,
-      body: JSON.stringify(enhancedToolRequest),
+      body: requestPayload,
       signal: AbortSignal.timeout(30000) // 30 second timeout
     });
 

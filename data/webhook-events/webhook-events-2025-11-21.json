@@ -46,5 +46,347 @@
     "payload_json": {
       "raw": "{\"workflow_id\":\"test-workflow-1763694059464\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T03:00:59.462Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T03:01:01.623Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T03:00:59.464Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763694061611-an9sp\",\"original_timestamp\":\"2025-11-21T03:00:59.464Z\",\"attempt_id\":\"enhanced-tools-1763694061622-e5yqa-attempt-1\",\"target_environment\":\"development\"}}"
     }
+  },
+  {
+    "id": "event-1763700704368-kio58s",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:51:44.368Z",
+    "processing_time_ms": 7,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2465,
+    "dedup_hash": "parse-error-webhook-1763700704361-syvjy4",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700701144\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:51:41.143Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:51:43.606Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:51:41.144Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700702875-c338tr\",\"original_timestamp\":\"2025-11-21T04:51:41.144Z\",\"attempt_id\":\"enhanced-tools-1763700703599-rxqsn-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700704952-rht0ne",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:51:44.952Z",
+    "processing_time_ms": 5,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2465,
+    "dedup_hash": "parse-error-webhook-1763700704947-8atuea",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700701144\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:51:41.143Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:51:44.936Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:51:41.144Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700704922-0zetde\",\"original_timestamp\":\"2025-11-21T04:51:41.144Z\",\"attempt_id\":\"enhanced-tools-1763700704934-xk2jy-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700705509-kgit75",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:51:45.509Z",
+    "processing_time_ms": 4,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2465,
+    "dedup_hash": "parse-error-webhook-1763700705505-urolh7",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700701144\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:51:41.143Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:51:45.495Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:51:41.144Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700705484-5rsry\",\"original_timestamp\":\"2025-11-21T04:51:41.144Z\",\"attempt_id\":\"enhanced-tools-1763700705493-tsn5xh-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700771852-bchyuo",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:52:51.852Z",
+    "processing_time_ms": 4,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2465,
+    "dedup_hash": "parse-error-webhook-1763700771848-smjpgq",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700771619\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:52:51.617Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:52:51.837Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:52:51.619Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700771812-4k5x7\",\"original_timestamp\":\"2025-11-21T04:52:51.619Z\",\"attempt_id\":\"enhanced-tools-1763700771835-h7746h-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700772411-qjtoa",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:52:52.411Z",
+    "processing_time_ms": 5,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2466,
+    "dedup_hash": "parse-error-webhook-1763700772406-ua8z5i",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700771619\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:52:51.617Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:52:52.399Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:52:51.619Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700772387-c6znds\",\"original_timestamp\":\"2025-11-21T04:52:51.619Z\",\"attempt_id\":\"enhanced-tools-1763700772397-p4td2r-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700772958-sd11zm",
+    "workflow_id": "unknown",
+    "agent_id": "unknown",
+    "status": "failure",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:52:52.958Z",
+    "processing_time_ms": 3,
+    "error_details": "Payload parsing failed: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"null\",\n    \"path\": [\n      \"offset\"\n    ],\n    \"message\": \"Expected number, received null\"\n  }\n]",
+    "payload_size_bytes": 2465,
+    "dedup_hash": "parse-error-webhook-1763700772954-53nfg9",
+    "http_status": 400,
+    "payload_json": {
+      "raw": "{\"workflow_id\":\"test-workflow-1763700771619\",\"agent_id\":\"audience_suggester\",\"agent_data\":{\"hero\":{\"title\":\"Audience Segmentation Strategy\",\"promise\":\"Data-driven segmentation approach for targeted campaigns\",\"confidence\":85,\"metrics\":[{\"label\":\"Segments Identified\",\"value\":\"4 key groups\",\"hint\":\"Primary audience categories\"},{\"label\":\"Reach Potential\",\"value\":\"12,500 members\",\"hint\":\"Total addressable audience\"},{\"label\":\"Engagement Score\",\"value\":\"High\",\"hint\":\"Based on historical interaction data\"}]},\"overview\":{\"summary\":\"Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.\",\"keyPoints\":[\"Strategic Buyer Sarah segment shows highest conversion rates\",\"Innovation-Focused Frank requires technical content approach\",\"Mobile-first experience critical for 65% of audience\"]},\"insights\":[{\"title\":\"Behavioral Segmentation\",\"description\":\"Four distinct user personas identified through data analysis\",\"bullets\":[\"Strategic buyers prioritize ROI and efficiency metrics\",\"Innovation adopters seek cutting-edge features and early access\",\"Value-conscious users focus on cost-effectiveness and reliability\"]}],\"opportunities\":[{\"label\":\"Personalized content streams for each segment\",\"impactLevel\":\"High\",\"effortLevel\":\"Medium\",\"confidence\":78},{\"label\":\"Dynamic messaging based on user behavior patterns\",\"impactLevel\":\"High\",\"effortLevel\":\"Low\",\"confidence\":92}],\"nextSteps\":[{\"label\":\"Implement segment-specific landing page variants\",\"ownerHint\":\"Marketing Team\",\"timeframeHint\":\"2-3 weeks\"},{\"label\":\"Set up behavioral trigger campaigns\",\"ownerHint\":\"CRM Team\",\"timeframeHint\":\"1 week\"}],\"meta\":{\"tier\":\"optimization\",\"agents\":[\"audience_suggester\"],\"maturity\":\"walk\",\"lastUpdated\":\"2025-11-21T04:52:51.617Z\"}},\"execution_status\":\"success\",\"offset\":null,\"timestamp\":\"2025-11-21T04:52:52.947Z\",\"metadata\":{\"execution_status\":\"completed\",\"execution_time_ms\":2340,\"timestamp\":\"2025-11-21T04:52:51.619Z\",\"success\":true,\"source\":\"opal_enhanced_tools\",\"webhook_endpoint\":\"webhooks/opal-workflow\",\"correlation_id\":\"opal-webhook-1763700772937-j806e\",\"original_timestamp\":\"2025-11-21T04:52:51.619Z\",\"attempt_id\":\"enhanced-tools-1763700772945-pgaqbb-attempt-1\",\"target_environment\":\"development\"}}"
+    }
+  },
+  {
+    "id": "event-1763700836671-tkhvn9",
+    "workflow_id": "test-workflow-1763700836244",
+    "agent_id": "audience_suggester",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:53:56.671Z",
+    "processing_time_ms": 12,
+    "error_details": null,
+    "payload_size_bytes": 2242,
+    "dedup_hash": "6b7f7c128884ef1ce34aedf67f91909dccba8d6d5e8e1b7e8960c84a4b6ad4e6",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-workflow-1763700836244",
+      "agent_id": "audience_suggester",
+      "agent_data": {
+        "hero": {
+          "title": "Audience Segmentation Strategy",
+          "promise": "Data-driven segmentation approach for targeted campaigns",
+          "confidence": 85,
+          "metrics": [
+            {
+              "label": "Segments Identified",
+              "value": "4 key groups",
+              "hint": "Primary audience categories"
+            },
+            {
+              "label": "Reach Potential",
+              "value": "12,500 members",
+              "hint": "Total addressable audience"
+            },
+            {
+              "label": "Engagement Score",
+              "value": "High",
+              "hint": "Based on historical interaction data"
+            }
+          ]
+        },
+        "overview": {
+          "summary": "Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.",
+          "keyPoints": [
+            "Strategic Buyer Sarah segment shows highest conversion rates",
+            "Innovation-Focused Frank requires technical content approach",
+            "Mobile-first experience critical for 65% of audience"
+          ]
+        },
+        "insights": [
+          {
+            "title": "Behavioral Segmentation",
+            "description": "Four distinct user personas identified through data analysis",
+            "bullets": [
+              "Strategic buyers prioritize ROI and efficiency metrics",
+              "Innovation adopters seek cutting-edge features and early access",
+              "Value-conscious users focus on cost-effectiveness and reliability"
+            ]
+          }
+        ],
+        "opportunities": [
+          {
+            "label": "Personalized content streams for each segment",
+            "impactLevel": "High",
+            "effortLevel": "Medium",
+            "confidence": 78
+          },
+          {
+            "label": "Dynamic messaging based on user behavior patterns",
+            "impactLevel": "High",
+            "effortLevel": "Low",
+            "confidence": 92
+          }
+        ],
+        "nextSteps": [
+          {
+            "label": "Implement segment-specific landing page variants",
+            "ownerHint": "Marketing Team",
+            "timeframeHint": "2-3 weeks"
+          },
+          {
+            "label": "Set up behavioral trigger campaigns",
+            "ownerHint": "CRM Team",
+            "timeframeHint": "1 week"
+          }
+        ],
+        "meta": {
+          "tier": "optimization",
+          "agents": [
+            "audience_suggester"
+          ],
+          "maturity": "walk",
+          "lastUpdated": "2025-11-21T04:53:56.243Z"
+        }
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T04:53:56.418Z",
+      "metadata": {
+        "execution_status": "completed",
+        "execution_time_ms": 2340,
+        "timestamp": "2025-11-21T04:53:56.244Z",
+        "success": true,
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763700836271-o3g6rf",
+        "original_timestamp": "2025-11-21T04:53:56.244Z",
+        "attempt_id": "enhanced-tools-1763700836410-58m2js-attempt-1",
+        "target_environment": "development"
+      }
+    }
+  },
+  {
+    "id": "event-1763700853299-c8lvf",
+    "workflow_id": "test-workflow-1763700853222",
+    "agent_id": "audience_suggester",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:54:13.299Z",
+    "processing_time_ms": 10,
+    "error_details": null,
+    "payload_size_bytes": 2241,
+    "dedup_hash": "e9c0b379450896cc18e144bd5ec268ce5b57f80f374f790f25155b704ebc23c5",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "test-workflow-1763700853222",
+      "agent_id": "audience_suggester",
+      "agent_data": {
+        "hero": {
+          "title": "Audience Segmentation Strategy",
+          "promise": "Data-driven segmentation approach for targeted campaigns",
+          "confidence": 85,
+          "metrics": [
+            {
+              "label": "Segments Identified",
+              "value": "4 key groups",
+              "hint": "Primary audience categories"
+            },
+            {
+              "label": "Reach Potential",
+              "value": "12,500 members",
+              "hint": "Total addressable audience"
+            },
+            {
+              "label": "Engagement Score",
+              "value": "High",
+              "hint": "Based on historical interaction data"
+            }
+          ]
+        },
+        "overview": {
+          "summary": "Comprehensive audience analysis reveals distinct behavioral segments with high engagement potential.",
+          "keyPoints": [
+            "Strategic Buyer Sarah segment shows highest conversion rates",
+            "Innovation-Focused Frank requires technical content approach",
+            "Mobile-first experience critical for 65% of audience"
+          ]
+        },
+        "insights": [
+          {
+            "title": "Behavioral Segmentation",
+            "description": "Four distinct user personas identified through data analysis",
+            "bullets": [
+              "Strategic buyers prioritize ROI and efficiency metrics",
+              "Innovation adopters seek cutting-edge features and early access",
+              "Value-conscious users focus on cost-effectiveness and reliability"
+            ]
+          }
+        ],
+        "opportunities": [
+          {
+            "label": "Personalized content streams for each segment",
+            "impactLevel": "High",
+            "effortLevel": "Medium",
+            "confidence": 78
+          },
+          {
+            "label": "Dynamic messaging based on user behavior patterns",
+            "impactLevel": "High",
+            "effortLevel": "Low",
+            "confidence": 92
+          }
+        ],
+        "nextSteps": [
+          {
+            "label": "Implement segment-specific landing page variants",
+            "ownerHint": "Marketing Team",
+            "timeframeHint": "2-3 weeks"
+          },
+          {
+            "label": "Set up behavioral trigger campaigns",
+            "ownerHint": "CRM Team",
+            "timeframeHint": "1 week"
+          }
+        ],
+        "meta": {
+          "tier": "optimization",
+          "agents": [
+            "audience_suggester"
+          ],
+          "maturity": "walk",
+          "lastUpdated": "2025-11-21T04:54:13.221Z"
+        }
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T04:54:13.275Z",
+      "metadata": {
+        "execution_status": "completed",
+        "execution_time_ms": 2340,
+        "timestamp": "2025-11-21T04:54:13.222Z",
+        "success": true,
+        "source": "opal_enhanced_tools",
+        "webhook_endpoint": "webhooks/opal-workflow",
+        "correlation_id": "opal-webhook-1763700853257-hs9sqi",
+        "original_timestamp": "2025-11-21T04:54:13.222Z",
+        "attempt_id": "enhanced-tools-1763700853272-6rhid-attempt-1",
+        "target_environment": "development"
+      }
+    }
+  },
+  {
+    "id": "event-1763701136150-u778w",
+    "workflow_id": "validation-test-123",
+    "agent_id": "audience_suggester",
+    "status": "success",
+    "signature_valid": true,
+    "received_at": "2025-11-21T04:58:56.150Z",
+    "processing_time_ms": 10,
+    "error_details": null,
+    "payload_size_bytes": 324,
+    "dedup_hash": "abce83d33a8ad08b48a1233714826c6a695e0a36e6e12d75dbb627ec5075c2bf",
+    "http_status": 202,
+    "payload_json": {
+      "workflow_id": "validation-test-123",
+      "agent_id": "audience_suggester",
+      "agent_data": {
+        "test": "validation"
+      },
+      "execution_status": "success",
+      "offset": null,
+      "timestamp": "2025-11-21T04:58:56.126Z",
+      "metadata": {
+        "source": "opal_enhanced_tools",
+        "attempt_id": "enhanced-tools-1763701136125-f4ubg-attempt-1",
+        "target_environment": "production"
+      }
+    }
   }
 ]

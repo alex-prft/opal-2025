@@ -31,7 +31,7 @@ export const WebhookEventSchema = z.object({
   agent_id: z.string().min(1),
   agent_data: AgentDataSchema,
   execution_status: z.enum(['success', 'failure', 'pending', 'timeout']),
-  offset: z.number().int().min(0).optional(),
+  offset: z.number().int().min(0).nullable().optional(),
   timestamp: z.string().datetime().optional(),
   metadata: z.record(z.unknown()).optional()
 });
