@@ -181,22 +181,52 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       timestamp: verificationResult.timestamp
     });
 
-    // Parse and validate webhook payload
+    // Parse and validate webhook payload with enhanced error handling
     let webhookEvent;
     try {
       const payloadData = JSON.parse(bodyText);
-      webhookEvent = parseWebhookEvent(payloadData);
-    } catch (parseError) {
-      console.error('❌ [Webhook] Payload parsing failed', {
+      console.log('🔍 [Webhook] Parsed payload structure:', {
         correlationId,
-        error: parseError instanceof Error ? parseError.message : 'Unknown parsing error'
+        workflow_id: payloadData?.workflow_id,
+        agent_id: payloadData?.agent_id,
+        offset: payloadData?.offset,
+        offset_type: typeof payloadData?.offset,
+        execution_status: payloadData?.execution_status,
+        has_agent_data: !!payloadData?.agent_data
       });
 
+      webhookEvent = parseWebhookEvent(payloadData);
+    } catch (parseError) {
+      // Enhanced error logging for debugging
+      console.error('❌ [Webhook] Payload parsing failed', {
+        correlationId,
+        error: parseError instanceof Error ? parseError.message : 'Unknown parsing error',
+        payload_preview: bodyText.substring(0, 500),
+        content_type: request.headers.get('content-type'),
+        user_agent: request.headers.get('user-agent')
+      });
+
+      // Try to extract basic info even if parsing fails
+      let basicInfo = { workflow_id: 'unknown', agent_id: 'unknown' };
+      try {
+        const rawPayload = JSON.parse(bodyText);
+        basicInfo = {
+          workflow_id: rawPayload?.workflow_id || 'unknown',
+          agent_id: rawPayload?.agent_id || 'unknown'
+        };
+      } catch (jsonError) {
+        console.error('❌ [Webhook] JSON parsing also failed', { correlationId, jsonError });
+      }
+
       await WebhookDatabase.insertEvent({
-        workflow_id: 'unknown',
-        agent_id: 'unknown',
+        workflow_id: basicInfo.workflow_id,
+        agent_id: basicInfo.agent_id,
         offset: null,
-        payload_json: { raw: bodyText },
+        payload_json: {
+          raw: bodyText,
+          parse_error: parseError instanceof Error ? parseError.message : 'Unknown error',
+          parsed_basic_info: basicInfo
+        },
         signature_valid: true,
         dedup_hash: `parse-error-${correlationId}`,
         http_status: 400,
@@ -207,7 +237,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({
         error: 'Bad Request',
         message: 'Invalid payload format',
-        correlation_id: correlationId
+        correlation_id: correlationId,
+        debug_hint: isDevelopment ? parseError instanceof Error ? parseError.message : 'Unknown parsing error' : undefined
       }, { status: 400 });
     }
 

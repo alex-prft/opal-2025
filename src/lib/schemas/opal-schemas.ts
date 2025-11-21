@@ -26,14 +26,26 @@ export const EnhancedToolExecuteSchema = z.object({
 });
 
 // Webhook event payload schema (what we receive from OPAL agents)
+// Enhanced to properly handle OPAL's actual payload structure
 export const WebhookEventSchema = z.object({
   workflow_id: z.string().min(1),
   agent_id: z.string().min(1),
   agent_data: AgentDataSchema,
   execution_status: z.enum(['success', 'failure', 'pending', 'timeout']),
-  offset: z.number().int().min(0).nullable().optional(),
+  // OPAL often sends null for offset, so we handle it flexibly
+  offset: z.union([
+    z.number().int().min(0),
+    z.null(),
+    z.undefined()
+  ]).optional().transform((val) => {
+    // Convert null or undefined to null for database storage
+    return val === undefined ? null : val;
+  }),
   timestamp: z.string().datetime().optional(),
-  metadata: z.record(z.unknown()).optional()
+  metadata: z.record(z.unknown()).optional(),
+  // Additional fields that OPAL might send
+  correlation_id: z.string().optional(),
+  environment: z.string().optional()
 });
 
 // Tool discovery response schema
