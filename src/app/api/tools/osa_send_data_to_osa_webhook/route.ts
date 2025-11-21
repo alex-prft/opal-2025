@@ -83,6 +83,13 @@ function mapOpalStatusToEnhanced(opalStatus?: string): string {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
+
+  // CORRELATION ID PROPAGATION REQUIREMENTS (CLAUDE.md):
+  // 1. Format: {service}-{timestamp}-{random} for distributed tracing
+  // 2. Include in ALL console.log statements throughout request lifecycle
+  // 3. Forward via X-Correlation-ID header to Enhanced Tools API
+  // 4. Return in response headers for client debugging
+  // 5. Used to trace request flow: OPAL → Wrapper → Enhanced Tools → Webhook Pipeline
   const correlationId = `opal-webhook-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
   try {

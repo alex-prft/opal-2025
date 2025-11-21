@@ -110,7 +110,7 @@ The Claude Code system provides specialized agents for complex tasks. **Always u
 
 ### 🔥 MANDATORY: OPAL Integration Validation Requirements
 
-**Critical integration patterns discovered through production debugging (2025-11-20):**
+**Critical integration patterns discovered through production debugging (2025-11-20, validated 2025-11-21):**
 
 #### ✅ 1. Tool Name Validation Requirements
 **REQUIRED**: Tool names in agent configurations must exactly match API endpoint paths:
@@ -242,6 +242,48 @@ Task({
 - **Post-Implementation**: Confirm fixes achieve 95/100+ integration health score
 - **Troubleshooting**: Use when integration failures occur to identify specific issues
 - **Quality Gates**: Required validation step for all OPAL integration work
+
+#### ✅ 6. Template Literal Safety Guidelines for Next.js API Routes
+**CRITICAL**: Prevent Turbopack compilation failures with proper conditional syntax:
+
+```typescript
+// ✅ CORRECT: Use standard JavaScript logical operators
+if (!workflow_id || !requesting_agent) {
+  return NextResponse.json({ success: false, error: "Missing required parameters" });
+}
+
+// ❌ WRONG: Backslash escaping causes "Expected unicode escape" compilation errors
+if (\!workflow_id || \!requesting_agent) {  // Will fail to compile
+  // Never use backslash escaping with logical operators in Next.js API routes
+}
+```
+
+**Template Literal Safety Rules:**
+- **Never use** `\!` - Use `!` for logical NOT operations
+- **Never use** `\&&` - Use `&&` for logical AND operations
+- **Never use** `\||` - Use `||` for logical OR operations
+- **Test compilation** immediately after API route changes with `npm run dev`
+- **Validation**: All API routes must compile without "Expected unicode escape" errors
+
+#### ✅ 7. Performance Guardrails for OPAL Operations
+**MANDATORY**: Protect system performance during OPAL integration work:
+
+```typescript
+// ✅ PREFERRED: Targeted operations
+curl -s -I http://localhost:3000/api/tools/{specific_endpoint}  // Test single endpoint
+grep -r "correlation.*id" src/app/api/tools/                    // Targeted search
+
+// ⚠️ USE SPARINGLY: Expensive operations (ask user first)
+find . -name "*.ts" -exec grep -l "pattern" {} \;             // Full repo search
+npm audit fix --force                                          // Dependency changes
+```
+
+**Performance Protection Rules:**
+- **Always ask user permission** before repository-wide searches or mass file operations
+- **Prefer targeted validation** over comprehensive system scans
+- **Use correlation ID tracking** to monitor performance impact of integration changes
+- **Monitor response times** - target <50ms for OPAL wrapper endpoints
+- **Avoid debug logging in production** - use environment-aware logging patterns
 
 ### 🔥 MANDATORY: 5 Core Requirements for All OPAL Agents
 

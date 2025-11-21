@@ -1,6 +1,20 @@
 // Database Operations for Opal Workflow Management
 // Implements all CRUD operations for workflow orchestration and DXP insights storage
 // Updated: Database error handling now uses fallback behavior instead of throwing errors
+//
+// PERFORMANCE ASSUMPTIONS & QUERY LIMITS:
+// - ALL queries use explicit LIMIT clauses (default: 1 for single record, 10 for lists)
+// - Database operations target <100ms for standard queries, <200ms for complex joins
+// - Query timeout protection: All operations implement graceful fallback behavior
+// - Memory safety: Large result sets filtered by status='completed' and ordering
+// - Connection pooling: Supabase manages connection limits (max concurrent: ~100)
+//
+// QUERY PERFORMANCE GUARDRAILS:
+// 1. ALWAYS use .limit() - Never fetch unlimited records
+// 2. Filter by status/date ranges to reduce data scanning
+// 3. Use .order() for consistent pagination and performance
+// 4. Include error handling with fallback to graceful degradation
+// 5. Log query performance metrics for monitoring (startTime/endTime pattern)
 
 import { createSupabaseAdmin, handleDatabaseError } from './supabase-client';
 import type { Database } from '@/lib/types/database';
