@@ -11,18 +11,44 @@ export const EnvironmentSchema = z.enum(['development', 'staging', 'production']
 // Base agent data schema
 export const AgentDataSchema = z.record(z.unknown()).optional();
 
+// Phase 3 Tool Names - All supported OPAL tools
+const Phase3ToolNames = z.enum([
+  // Legacy tool
+  'send_data_to_osa_enhanced',
+  // Phase 3 Tools - Tier 1: Universal Tools
+  'osa_retrieve_workflow_context',
+  'osa_store_workflow_data',
+  'osa_send_data_to_osa_webhook',
+  // Phase 3 Tools - Tier 2: High-Frequency Cross-Agent Tools
+  'osa_dxp_analyze_insights',
+  'osa_dxp_behavioral_insights',
+  'osa_odp_audience_segments',
+  'osa_odp_generate_segment',
+  'osa_cmp_send_strategy',
+  'osa_cmp_get_calendar',
+  // Phase 3 Tools - Tier 3: Content-Impact Tools
+  'osa_canvas_engagement',
+  'osa_canvas_behavioral',
+  'osa_canvas_audience',
+  'osa_audit_content_structure',
+  'osa_analyze_website_content',
+  'get_content_recommendations_by_topic',
+  'osa_compile_final_results'
+]);
+
 // Enhanced tool execution request schema
 export const EnhancedToolExecuteSchema = z.object({
-  tool_name: z.literal('send_data_to_osa_enhanced'),
+  tool_name: Phase3ToolNames,
   parameters: z.object({
-    workflow_id: z.string().min(1, 'workflow_id is required'),
-    agent_id: z.string().min(1, 'agent_id is required'),
+    // Core parameters (required for legacy compatibility)
+    workflow_id: z.string().min(1, 'workflow_id is required').optional(),
+    agent_id: z.string().min(1, 'agent_id is required').optional(),
     agent_data: AgentDataSchema,
-    execution_status: z.enum(['success', 'failure', 'pending', 'timeout']),
+    execution_status: z.enum(['success', 'failure', 'pending', 'timeout']).optional(),
     target_environment: EnvironmentSchema.optional().default('production'),
     offset: z.number().int().min(0).optional(),
     metadata: z.record(z.unknown()).optional()
-  })
+  }).passthrough() // Allow additional parameters for Phase 3 tools
 });
 
 // Webhook event payload schema (what we receive from OPAL agents)

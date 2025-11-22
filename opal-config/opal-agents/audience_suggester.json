@@ -305,7 +305,13 @@
     "create_content_matrix",
     "get_content_recommendations_by_topic",
     "get_content_recommendations_by_section",
-    "create_canvas"
+    "create_canvas",
+    "osa_dxp_analyze_insights",
+    "osa_dxp_behavioral_insights",
+    "osa_odp_audience_segments",
+    "osa_odp_generate_segment",
+    "osa_canvas_audience",
+    "osa_cmp_get_calendar"
   ],
   "agent_metadata": null,
   "inference_type": "complex_with_thinking",
