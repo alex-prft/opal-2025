@@ -167,7 +167,7 @@ export class WebhookEventOperations {
   }
 
   /**
-   * Simple mock event retrieval (temporary for debugging)
+   * Simple mock event fetching (temporary for debugging)
    */
   async getEvents(): Promise<any[]> {
     console.log(`📖 [MockDB] Retrieved ${mockEvents.length} events`);
