@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { FactoryWorkflowEngine } from '../../../../../services/ai-agent-factory/src/orchestrator/factory-workflow-engine';
 import { AgentRequirementsSchema } from '../../../../../services/ai-agent-factory/src/types';
-import { secureSupabase } from '@/lib/database';
+import { supabase as secureSupabase } from '@/lib/database';
 
 // Request validation schema
 const CreateAgentRequestSchema = z.object({
