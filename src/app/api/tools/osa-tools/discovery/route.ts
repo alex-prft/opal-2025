@@ -140,109 +140,190 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     if (!discoveryData) {
       const toolsArray = [
           {
-            name: "osa_fetch_audience_segments",
-            description: "Retrieves existing audience segments from Optimizely ODP including metadata, performance data, and implementation roadmaps for OSA strategy development.",
-            version: "1.0.0",
+            name: "osa_cms_analyze_content",
+            description: "Analyze CMS content performance, structure, and optimization opportunities with fresh produce industry context",
+            version: "3.0.0",
             parameters: [
-              { name: "member_tiers", type: "list", required: false, description: "Member tier segments to include" },
-              { name: "engagement_levels", type: "list", required: false, description: "Engagement level filters" },
-              { name: "behavioral_patterns", type: "list", required: false, description: "Behavioral pattern criteria" },
-              { name: "geographic_filters", type: "dictionary", required: false, description: "Geographic targeting filters" },
-              { name: "include_size_estimates", type: "boolean", required: false, description: "Include segment size estimates" },
-              { name: "include_attributes", type: "boolean", required: false, description: "Include detailed segment attributes" },
-              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" },
-              { name: "projectId", type: "string", required: false, description: "ODP project identifier" },
-              { name: "limit", type: "number", required: false, description: "Max number of segments to return" },
-              { name: "page", type: "number", required: false, description: "Page of results to fetch" }
-            ]
-          },
-          {
-            name: "osa_send_data_to_osa_webhook",
-            description: "Send agent data and results to OSA application via webhook for real-time updates. Bridges OPAL chat interface calls to enhanced tools infrastructure.",
-            version: "1.0.0",
-            parameters: [
-              { name: "agent_name", type: "string", required: true, description: "Name of the agent sending data" },
-              { name: "execution_results", type: "dictionary", required: true, description: "Agent execution results and insights" },
-              { name: "workflow_id", type: "string", required: true, description: "Unique workflow execution identifier" },
-              { name: "metadata", type: "dictionary", required: true, description: "Agent execution metadata" },
-              { name: "webhook_endpoint", type: "string", required: false, description: "OSA webhook endpoint path" }
-            ]
-          },
-          {
-            name: "osa_analyze_member_behavior",
-            description: "Analyze member behavioral patterns, engagement metrics, and provide predictive insights for personalization and retention strategies.",
-            version: "1.0.0",
-            parameters: [
-              { name: "member_segment", type: "string", required: false, description: "Target member segment for analysis" },
-              { name: "analysis_timeframe", type: "string", required: false, description: "Timeframe for behavioral analysis" },
-              { name: "behavioral_focus", type: "list", required: false, description: "Specific behavioral aspects to focus on" },
-              { name: "include_predictive_insights", type: "boolean", required: false, description: "Include AI-powered predictive insights" },
+              { name: "content_type", type: "string", required: false, description: "Type of content to analyze (articles, pages, resources)" },
+              { name: "performance_metrics", type: "list", required: false, description: "Performance metrics to evaluate" },
+              { name: "analysis_depth", type: "string", required: false, description: "Depth of analysis (basic, comprehensive, expert)" },
               { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_validate_language_rules",
-            description: "Validate content against language rules for readability, inclusivity, professionalism, and accuracy compliance.",
-            version: "1.0.0",
+            name: "osa_cms_content_structure",
+            description: "Analyze and optimize CMS content structure for fresh produce industry standards and IFPA compliance",
+            version: "3.0.0",
             parameters: [
-              { name: "content_text", type: "string", required: true, description: "Text content to validate" },
-              { name: "content_type", type: "string", required: false, description: "Type of content being validated" },
-              { name: "target_audience", type: "string", required: false, description: "Target audience for content" },
-              { name: "validation_level", type: "string", required: false, description: "Level of validation strictness" },
-              { name: "custom_rules", type: "list", required: false, description: "Additional custom validation rules" }
+              { name: "structure_scope", type: "string", required: false, description: "Scope of structure analysis" },
+              { name: "include_taxonomy_analysis", type: "boolean", required: false, description: "Include content taxonomy analysis" },
+              { name: "optimization_focus", type: "string", required: false, description: "Primary optimization focus area" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_store_workflow_data",
-            description: "Store workflow execution data and metadata for analysis and reporting",
-            version: "1.0.0",
+            name: "osa_contentrecs_topic",
+            description: "Generate content recommendations based on topic analysis and fresh produce industry trends",
+            version: "3.0.0",
             parameters: [
-              { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" },
-              { name: "workflow_data", type: "dictionary", required: true, description: "Workflow data to store" }
+              { name: "topic_category", type: "string", required: false, description: "Content topic category to analyze" },
+              { name: "content_format", type: "string", required: false, description: "Preferred content format" },
+              { name: "seasonal_relevance", type: "boolean", required: false, description: "Include seasonal produce considerations" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_create_dynamic_segments",
-            description: "Create dynamic audience segments based on behavioral criteria",
-            version: "1.0.0",
+            name: "osa_cmp_send_strategy",
+            description: "Send comprehensive marketing strategy recommendations to CMP with fresh produce campaign optimization",
+            version: "3.0.0",
             parameters: [
-              { name: "segment_criteria", type: "dictionary", required: true, description: "Segmentation criteria" },
-              { name: "segment_name", type: "string", required: true, description: "Name for the new segment" }
+              { name: "strategy_type", type: "string", required: false, description: "Type of marketing strategy" },
+              { name: "campaign_scope", type: "string", required: false, description: "Campaign scope and reach" },
+              { name: "include_seasonal_strategies", type: "boolean", required: false, description: "Include seasonal produce marketing strategies" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_retrieve_workflow_context",
-            description: "Retrieve workflow execution context and metadata",
-            version: "1.0.0",
+            name: "osa_cmp_get_calendar",
+            description: "Retrieve marketing calendar with seasonal fresh produce cycles and IFPA event integration",
+            version: "3.0.0",
             parameters: [
-              { name: "workflow_id", type: "string", required: true, description: "Workflow identifier" }
+              { name: "calendar_scope", type: "string", required: false, description: "Calendar timeframe and scope" },
+              { name: "time_horizon", type: "string", required: false, description: "Planning time horizon" },
+              { name: "include_seasonal_events", type: "boolean", required: false, description: "Include seasonal produce events" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_analyze_data_insights",
-            description: "Analyze data patterns and generate actionable insights",
-            version: "1.0.0",
+            name: "osa_canvas_audience",
+            description: "Generate audience segmentation Canvas visualizations with IFPA member categorization",
+            version: "3.0.0",
             parameters: [
-              { name: "data_source", type: "string", required: true, description: "Data source to analyze" },
-              { name: "analysis_type", type: "string", required: false, description: "Type of analysis" }
+              { name: "audience_scope", type: "string", required: false, description: "Audience segmentation scope" },
+              { name: "visualization_style", type: "string", required: false, description: "Canvas visualization style" },
+              { name: "include_industry_context", type: "boolean", required: false, description: "Include fresh produce industry context" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_calculate_segment_statistical_power",
-            description: "Calculate statistical power for segment analysis",
-            version: "1.0.0",
+            name: "osa_canvas_engagement",
+            description: "Generate engagement pattern visualizations with Canvas-style charts for fresh produce analytics",
+            version: "3.0.0",
             parameters: [
-              { name: "segment_size", type: "number", required: true, description: "Segment size" },
-              { name: "effect_size", type: "number", required: true, description: "Expected effect size" }
+              { name: "visualization_type", type: "string", required: false, description: "Type of engagement visualization" },
+              { name: "data_source", type: "string", required: false, description: "Engagement data source" },
+              { name: "include_seasonal_overlays", type: "boolean", required: false, description: "Include seasonal engagement patterns" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           },
           {
-            name: "osa_get_member_journey_data",
-            description: "Retrieve member journey data and touchpoint analysis",
-            version: "1.0.0",
+            name: "osa_canvas_behavioral",
+            description: "Create behavioral pattern Canvas visualizations for member journey analysis and fresh produce professional workflows",
+            version: "3.0.0",
             parameters: [
-              { name: "member_id", type: "string", required: false, description: "Member identifier" },
-              { name: "journey_stage", type: "string", required: false, description: "Specific journey stage" }
+              { name: "pattern_type", type: "string", required: false, description: "Type of behavioral pattern" },
+              { name: "analysis_depth", type: "string", required: false, description: "Depth of behavioral analysis" },
+              { name: "include_member_segmentation", type: "boolean", required: false, description: "Include member segmentation analysis" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_dxp_analyze_insights",
+            description: "Analyze DXP behavioral insights and user engagement patterns with fresh produce industry context",
+            version: "3.0.0",
+            parameters: [
+              { name: "analysis_scope", type: "string", required: false, description: "Scope of DXP analysis" },
+              { name: "include_behavioral_analysis", type: "boolean", required: false, description: "Include behavioral pattern analysis" },
+              { name: "include_engagement_insights", type: "boolean", required: false, description: "Include engagement insights" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_dxp_behavioral_insights",
+            description: "Generate behavioral pattern analysis from DXP data for fresh produce professional workflows",
+            version: "3.0.0",
+            parameters: [
+              { name: "behavioral_scope", type: "string", required: false, description: "Scope of behavioral analysis" },
+              { name: "analysis_period", type: "string", required: false, description: "Time period for analysis" },
+              { name: "include_seasonal_patterns", type: "boolean", required: false, description: "Include seasonal behavioral patterns" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_odp_audience_segments",
+            description: "Retrieve and analyze ODP audience segments with IFPA member targeting and fresh produce context",
+            version: "3.0.0",
+            parameters: [
+              { name: "segmentation_scope", type: "string", required: false, description: "Scope of audience segmentation" },
+              { name: "include_performance_metrics", type: "boolean", required: false, description: "Include segment performance metrics" },
+              { name: "segment_types", type: "list", required: false, description: "Types of segments to analyze" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_odp_generate_segment",
+            description: "Generate new audience segment profiles based on fresh produce industry criteria and member behavior",
+            version: "3.0.0",
+            parameters: [
+              { name: "segment_criteria", type: "dictionary", required: false, description: "Criteria for segment generation" },
+              { name: "target_audience_type", type: "string", required: false, description: "Target audience type" },
+              { name: "include_seasonal_targeting", type: "boolean", required: false, description: "Include seasonal targeting criteria" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_opal_send_to_osa",
+            description: "Send OPAL execution results and data directly to OSA system for integration and processing",
+            version: "3.0.0",
+            parameters: [
+              { name: "execution_data", type: "dictionary", required: true, description: "OPAL execution data to send" },
+              { name: "target_system", type: "string", required: false, description: "Target OSA system component" },
+              { name: "priority_level", type: "string", required: false, description: "Processing priority level" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_opal_validate_data",
+            description: "Validate OPAL execution data for consistency, completeness, and business rule compliance",
+            version: "3.0.0",
+            parameters: [
+              { name: "validation_data", type: "dictionary", required: true, description: "Data to validate" },
+              { name: "validation_rules", type: "list", required: false, description: "Specific validation rules to apply" },
+              { name: "compliance_level", type: "string", required: false, description: "Level of compliance validation" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
+            ]
+          },
+          {
+            name: "osa_opal_store_workflow_data",
+            description: "Store and persist OPAL workflow execution data with comprehensive metadata tracking",
+            version: "3.0.0",
+            parameters: [
+              { name: "workflow_id", type: "string", required: true, description: "Unique workflow identifier" },
+              { name: "agent_name", type: "string", required: true, description: "Name of the executing agent" },
+              { name: "execution_data", type: "dictionary", required: true, description: "Workflow execution data" },
+              { name: "storage_tier", type: "string", required: false, description: "Storage tier preference" }
+            ]
+          },
+          {
+            name: "osa_opal_workflow_context",
+            description: "Retrieve comprehensive OPAL workflow context and execution state information",
+            version: "3.0.0",
+            parameters: [
+              { name: "workflow_id", type: "string", required: true, description: "Unique workflow identifier" },
+              { name: "context_scope", type: "string", required: false, description: "Scope of context to retrieve" },
+              { name: "include_execution_history", type: "boolean", required: false, description: "Include execution history" }
+            ]
+          },
+          {
+            name: "osa_opal_final_results",
+            description: "Compile comprehensive final results with executive summary, implementation roadmap, and fresh produce metrics",
+            version: "3.0.0",
+            parameters: [
+              { name: "compilation_scope", type: "string", required: false, description: "Scope of results compilation" },
+              { name: "include_executive_summary", type: "boolean", required: false, description: "Include executive summary" },
+              { name: "include_implementation_roadmap", type: "boolean", required: false, description: "Include implementation roadmap" },
+              { name: "include_performance_metrics", type: "boolean", required: false, description: "Include performance metrics" },
+              { name: "workflow_id", type: "string", required: false, description: "Workflow identifier for correlation tracking" }
             ]
           }
       ];
@@ -253,8 +334,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         tools: toolsArray, // Keep backward compatibility
         discovery_info: {
           service_name: "OSA OPAL Tools Registry",
-          version: "1.0.0",
-          total_tools: 10,
+          version: "3.0.0",
+          total_tools: 17,
           sdk_version: "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
           discovery_url: request.url,
           environment: process.env.NODE_ENV || 'development',
@@ -269,8 +350,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           integration_health: {
             status: "healthy",
             last_check: new Date().toISOString(),
-            tools_registered: 10,
-            tools_available: 10
+            tools_registered: 17,
+            tools_available: 17
           }
         }
       };

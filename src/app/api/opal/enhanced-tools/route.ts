@@ -140,50 +140,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           }
         },
         // Phase 3 Tools - Tier 1: Universal Tools
-        {
-          name: 'osa_retrieve_workflow_context',
-          description: 'Retrieve comprehensive workflow context and execution state for OPAL operations',
-          version: '3.0.0',
-          parameters: {
-            type: 'object',
-            properties: {
-              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
-              context_scope: { type: 'string', description: 'Scope of context to retrieve (full, minimal, metadata)', required: false },
-              include_execution_history: { type: 'boolean', description: 'Whether to include execution history in response', required: false }
-            },
-            required: ['workflow_id']
-          }
-        },
-        {
-          name: 'osa_store_workflow_data',
-          description: 'Store and persist workflow execution data with comprehensive metadata tracking',
-          version: '3.0.0',
-          parameters: {
-            type: 'object',
-            properties: {
-              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
-              agent_name: { type: 'string', description: 'Name of the OPAL agent generating the data', required: true },
-              execution_data: { type: 'object', description: 'Agent execution results and metadata', required: true },
-              storage_tier: { type: 'string', description: 'Storage tier preference (standard, archive, ephemeral)', required: false }
-            },
-            required: ['workflow_id', 'agent_name', 'execution_data']
-          }
-        },
-        {
-          name: 'osa_send_data_to_osa_webhook',
-          description: 'Send agent data and results to OSA application via webhook for real-time updates',
-          version: '3.0.0',
-          parameters: {
-            type: 'object',
-            properties: {
-              agent_name: { type: 'string', description: 'Name of the OPAL agent sending data', required: true },
-              execution_results: { type: 'object', description: 'Agent execution results and output data', required: true },
-              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
-              metadata: { type: 'object', description: 'Additional execution metadata and context', required: true }
-            },
-            required: ['agent_name', 'execution_results', 'workflow_id', 'metadata']
-          }
-        },
         // Phase 3 Tools - Tier 2: High-Frequency Cross-Agent Tools
         {
           name: 'osa_dxp_analyze_insights',
@@ -371,19 +327,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           }
         },
         {
-          name: 'osa_cma_analyze_content',
-          description: 'Analyze content performance and effectiveness using CMA (Content Management Analytics)',
-          version: '3.0.0',
-          parameters: {
-            type: 'object',
-            properties: {
-              content_type: { type: 'string', required: false },
-              performance_metrics: { type: 'array', required: false },
-              analysis_depth: { type: 'string', required: false }
-            }
-          }
-        },
-        {
           name: 'osa_cms_content_structure',
           description: 'Analyze and optimize CMS content structure for fresh produce industry standards',
           version: '3.0.0',
@@ -406,19 +349,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               topic_category: { type: 'string', required: false },
               content_format: { type: 'string', required: false },
               seasonal_relevance: { type: 'boolean', required: false }
-            }
-          }
-        },
-        {
-          name: 'osa_fetch_audience_segments',
-          description: 'Fetch and analyze audience segments with comprehensive demographic and behavioral data',
-          version: '3.0.0',
-          parameters: {
-            type: 'object',
-            properties: {
-              segment_criteria: { type: 'string', required: false },
-              include_behavioral_data: { type: 'boolean', required: false },
-              data_freshness: { type: 'string', required: false }
             }
           }
         },
