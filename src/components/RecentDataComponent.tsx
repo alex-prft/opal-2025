@@ -4,10 +4,9 @@ import { Activity, Calendar, RefreshCw, CheckCircle, XCircle, AlertCircle, Exter
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useRecentOsaStatus } from '@/hooks/useRecentOsaStatus';
+import { useRecentOsaStatus, UseRecentOsaStatusResult } from '@/hooks/useRecentOsaStatus';
 import { useLatestIntegrationStatus } from '@/hooks/useIntegrationStatus';
 import { IntegrationStatusBadge } from '@/components/admin/IntegrationStatusBadge';
-import type { UseQueryResult } from '@tanstack/react-query';
 
 type DisplayStatus = 'none' | 'processing' | 'success' | 'failed';
 
@@ -32,7 +31,7 @@ export default function RecentDataComponent({
     isLoading,
     error,
     refetch,
-  }: UseQueryResult<OsaRecentStatus, Error> = useRecentOsaStatus();
+  }: UseRecentOsaStatusResult = useRecentOsaStatus();
 
   // Integration status for OPAL ↔ OSA validation
   const { 
