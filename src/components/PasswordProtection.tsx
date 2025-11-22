@@ -15,6 +15,13 @@ interface PasswordProtectionProps {
 
 // Use environment variable for password protection
 const CORRECT_PASSWORD = process.env.NEXT_PUBLIC_ACCESS_PASSWORD || 'default-dev-password';
+
+// Define valid passwords for Strategy Engine access
+const VALID_PASSWORDS = [
+  'PerficentPoweredit',
+  'PerficientPoweredit',
+  CORRECT_PASSWORD  // Include the environment password as fallback
+];
 const STORAGE_KEY = 'opal_engine_auth';
 
 export default function PasswordProtection({ children, onAuthenticated }: PasswordProtectionProps) {
@@ -51,7 +58,7 @@ export default function PasswordProtection({ children, onAuthenticated }: Passwo
     e.preventDefault();
     setError('');
 
-    if (password === CORRECT_PASSWORD) {
+    if (VALID_PASSWORDS.includes(password)) {
       setIsAuthenticated(true);
 
       if (rememberMe) {
