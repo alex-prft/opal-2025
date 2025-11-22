@@ -1,1 +1,0 @@
-run opal-integration-validator for current sprint
