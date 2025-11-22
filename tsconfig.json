@@ -51,6 +51,7 @@
     "**/*.test.tsx",
     "**/*.spec.ts",
     "**/*.spec.tsx",
+    "playwright.config.ts",
     "coverage",
     "dist",
     "build",
