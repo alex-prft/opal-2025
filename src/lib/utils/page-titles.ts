@@ -68,8 +68,6 @@ export const PAGE_TITLE_MAPPINGS = {
   '/engine/admin/widgets': 'Widgets',
   '/engine/admin/data-mapping': 'Data Mapping',
   '/engine/admin/logs': 'System Logs',
-  '/engine/admin/monitoring/confidence-scores': 'Confidence Scores',
-  '/engine/admin/governance': 'Governance',
   '/admin/opal-monitoring': 'OPAL Monitoring',
   '/admin/sub-agents': 'Sub-Agents',
   '/admin/opal-integration-test': 'OPAL Integration Test',
