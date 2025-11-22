@@ -112,11 +112,6 @@ const nextConfig = {
   // React strict mode for better development experience
   reactStrictMode: true,
 
-  // Skip TypeScript type checking during build (for faster deployment)
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
   async redirects() {
     return [
       // Strategy Plans redirects - from clean URLs to working URLs with special characters
