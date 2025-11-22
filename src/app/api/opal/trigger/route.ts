@@ -20,6 +20,15 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body: TriggerWorkflowRequest = await request.json();
 
+    // Handle canonical workflow special case for demo
+    if (body.workflow_name === 'canonical_workflow') {
+      // Set canonical agents and ensure workflow_id is set
+      body.agents = ['audience_suggester', 'content_review'];
+      body.workflow_id = body.workflow_id ?? `canonical_${Date.now()}`;
+
+      console.log(`🎯 [API] Canonical workflow triggered with agents: ${body.agents.join(', ')}`);
+    }
+
     if (!body.formData) {
       return NextResponse.json({
         success: false,
