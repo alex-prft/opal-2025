@@ -858,6 +858,41 @@ export interface Database {
           created_at?: string;
         };
       };
+      ask_assistant_prompt_runs: {
+        Row: {
+          id: string;
+          user_id: string;
+          section_key: string;
+          source_path: string;
+          prompt: string;
+          source_config_id?: string;
+          used_expert_example: boolean;
+          selected_recommended_prompt?: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          section_key: string;
+          source_path?: string;
+          prompt: string;
+          source_config_id?: string;
+          used_expert_example?: boolean;
+          selected_recommended_prompt?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          section_key?: string;
+          source_path?: string;
+          prompt?: string;
+          source_config_id?: string;
+          used_expert_example?: boolean;
+          selected_recommended_prompt?: string;
+          created_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;

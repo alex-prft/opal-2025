@@ -12,7 +12,7 @@
  * - Future custom tool development guidelines
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { NextRequest } from 'next/server';
 import { GET, OPTIONS, POST } from '@/app/api/opal/discovery/route';
 
@@ -31,12 +31,12 @@ function createMockRequest(method: string = 'GET', userAgent?: string): NextRequ
 describe('OPAL Discovery Fix - Functions Array Format', () => {
   beforeEach(() => {
     // Clear console mocks
-    vi.clearAllMocks();
+    jest.clearAllMocks();
 
     // Mock console methods to prevent test output noise
-    vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   describe('Critical Fix Validation', () => {
