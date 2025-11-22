@@ -658,6 +658,151 @@ import { NextRequest, NextResponse } from 'next/server';  // Another duplicate
 // Check with: npx tsc --noEmit | grep "duplicate identifier"
 ```
 
+## Production Hotfix Patterns
+
+### 🔥 MANDATORY: Configuration-First Debugging for API 404 Errors
+
+**Critical Pattern Discovered**: When API endpoints return 404 in production, always check configuration files before searching for missing implementations. Security measures often inadvertently block legitimate endpoints.
+
+**Production API 404 Troubleshooting Protocol:**
+```typescript
+// Phase 1: Configuration Validation (5 minutes)
+TodoWrite([
+  { content: "Check next.config.js rewrite rules for overly broad patterns", status: "in_progress", activeForm: "Checking next.config.js rewrite rules" },
+  { content: "Verify API route exists and compiles successfully", status: "pending", activeForm: "Verifying API route existence" },
+  { content: "Test endpoint in development vs production mode", status: "pending", activeForm: "Testing endpoint across environments" }
+]);
+
+// Phase 2: Surgical Fix Implementation (10-15 minutes)
+TodoWrite([
+  { content: "Apply targeted regex fix to preserve security while enabling API access", status: "pending", activeForm: "Applying surgical configuration fix" },
+  { content: "Validate production build includes API routes", status: "pending", activeForm: "Validating production build" },
+  { content: "Test both positive (blocks UI) and negative (allows API) cases", status: "pending", activeForm: "Testing configuration edge cases" }
+]);
+```
+
+#### ✅ Next.js Security Pattern for Selective Route Blocking
+**REQUIRED**: Use negative lookahead regex to block admin UI while preserving API access:
+
+```typescript
+// ✅ CORRECT: Selective blocking with negative lookahead
+{
+  source: '/admin/:path((?!api).*)',  // Blocks UI, allows API
+  destination: '/404',
+},
+
+// ❌ WRONG: Overly broad pattern blocks everything
+{
+  source: '/admin/:path*',  // Blocks ALL admin routes including API
+  destination: '/404',
+},
+
+// VALIDATION: Test patterns
+// Should Block: /admin/dashboard, /admin/users, /admin/settings
+// Should Allow: /api/admin/osa/integration-status, /api/admin/health
+```
+
+#### ✅ Worktree Context Verification Protocol
+**MANDATORY**: Always verify current working context before implementing hotfixes:
+
+```bash
+# REQUIRED: Verify worktree context before any changes
+cd "/correct/worktree/path" && git branch --show-current
+pwd  # Confirm directory matches intended target
+
+# PATTERN: Deployment orchestrator handles transitions safely
+Task({
+  subagent_type: "deployment-orchestrator",
+  description: "Switch to bugfix worktree",
+  prompt: "Handle worktree transition to bugfix-lab for hotfix implementation"
+});
+```
+
+#### ✅ Production Build vs Linting Distinction
+**CRITICAL**: During hotfixes, distinguish between compilation success and linting failures:
+
+```bash
+# LOOK FOR: Compilation success indicator (deployment-ready)
+✓ Compiled successfully
+
+# IGNORE DURING HOTFIXES: Linting errors (address separately)
+Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+# PATTERN: Filter build output for deployment-critical information
+npm run build | grep -E "(api/admin|Route:|build:|Failed|✓)"
+```
+
+#### ✅ Hotfix Quality Standards Balance
+**REQUIRED**: Emergency fixes prioritize functionality restoration over perfect code quality:
+
+- **Compilation Success**: MANDATORY - fixes must build and deploy
+- **Security Preservation**: MANDATORY - maintain existing security measures
+- **Targeted Changes**: PREFERRED - minimal, surgical modifications
+- **Comprehensive Testing**: REQUIRED - verify both positive and negative cases
+- **Linting Perfection**: DEFERRED - address in separate quality improvement cycles
+
+### 🔥 MANDATORY: Agent Coordination for Critical Issues
+
+**Pattern**: Use specialized agents for comprehensive analysis followed by targeted implementation:
+
+```typescript
+// REQUIRED: Use code-review-debugger for production issue analysis
+Task({
+  subagent_type: "code-review-debugger",
+  description: "Debug 404 API endpoint error",
+  prompt: "Analyze 404 error for /api/admin/osa/integration-status and provide concrete fix"
+});
+
+// REQUIRED: Use deployment-orchestrator for worktree coordination
+Task({
+  subagent_type: "deployment-orchestrator",
+  description: "Handle hotfix deployment workflow",
+  prompt: "Coordinate hotfix from bugfix-lab to main branch with proper validation"
+});
+```
+
+**Agent Specialization Benefits:**
+- **Comprehensive Analysis**: Code-review-debugger provides deep root cause investigation
+- **Safe Implementation**: Deployment-orchestrator ensures proper workflow coordination
+- **Quality Assurance**: Specialized validation prevents common hotfix mistakes
+- **Documentation**: Agents generate detailed analysis for future reference
+
+### 🔥 MANDATORY: Hotfix Commit Documentation Standards
+
+**REQUIRED**: All production hotfixes must include comprehensive commit messages:
+
+```bash
+# PATTERN: Structured hotfix commit with full context
+git commit -m "$(cat <<'EOF'
+Hotfix: [Brief description of what was fixed]
+
+## Root Cause
+[Detailed technical explanation of why the issue occurred]
+
+## Solution
+[Specific implementation details and technical approach]
+
+## Impact
+✅ [What functionality is restored]
+✅ [What security measures are preserved]
+✅ [What existing functionality remains unchanged]
+
+## Files Modified
+- [file]: [specific change description]
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**Documentation Requirements:**
+- **Root Cause Analysis**: Why the issue occurred (prevents recurrence)
+- **Solution Rationale**: Why this approach over alternatives
+- **Impact Assessment**: What was fixed and what remains functional
+- **Change Scope**: Specific files and modifications for future reference
+
 ## Essential Development Patterns
 
 ### Performance-First Development
@@ -891,6 +1036,26 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null || true
 
 # Verify development server health after restart
 curl -s -I http://localhost:3000 | head -n 1  # Should return HTTP/1.1 200 OK
+```
+
+### Production Hotfix Debugging
+```bash
+# Filter production build output for critical information
+npm run build | grep -E "(api/admin|Route:|build:|Failed|✓)"
+
+# Verify worktree context during hotfixes
+cd "/target/worktree/path" && git branch --show-current && pwd
+
+# Test API endpoint accessibility in production mode
+npm run build && npm run start &
+sleep 5 && curl -s -I http://localhost:3000/api/admin/osa/integration-status
+
+# Validate next.config.js rewrite patterns
+# Should block: curl -s -I http://localhost:3000/admin/dashboard (expect 404)
+# Should allow: curl -s -I http://localhost:3000/api/admin/health (expect 200)
+
+# Quick production build validation (distinguishes compilation from linting)
+npm run build 2>&1 | head -10 | grep -E "(✓ Compiled|Failed to compile)"
 ```
 
 ## Critical Development Guidelines
