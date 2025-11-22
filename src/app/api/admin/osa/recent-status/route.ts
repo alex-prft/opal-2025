@@ -89,7 +89,7 @@ async function getLastWebhookTimestamp(supabase: ReturnType<typeof createSupabas
       return null;
     }
 
-    return data.received_at;
+    return (data as any)?.received_at;
 
   } catch (error) {
     console.warn('Error getting last webhook timestamp:', error);
@@ -126,7 +126,7 @@ async function getLastAgentDataTimestamp(supabase: ReturnType<typeof createSupab
       return agentEvent?.received_at || null;
     }
 
-    return data.completed_at;
+    return (data as any)?.completed_at;
 
   } catch (error) {
     console.warn('Error getting last agent data timestamp:', error);
@@ -149,7 +149,7 @@ async function getLastForceSyncTimestamp(supabase: ReturnType<typeof createSupab
       .single();
 
     if (!error && data) {
-      return data.created_at;
+      return (data as any)?.created_at;
     }
 
     // Fallback: check webhook events for force sync patterns
@@ -163,8 +163,8 @@ async function getLastForceSyncTimestamp(supabase: ReturnType<typeof createSupab
       event.event_type === 'force_sync' ||
       event.event_type === 'manual_sync' ||
       (event.workflow_id && event.workflow_id.includes('force-sync')) ||
-      event.trigger_source === 'manual_sync' ||
-      event.trigger_source === 'force_sync'
+      (event as any).trigger_source === 'manual_sync' ||
+      (event as any).trigger_source === 'force_sync'
     );
 
     return forceSyncEvent?.received_at || null;
@@ -195,12 +195,12 @@ async function getCurrentWorkflowStatus(supabase: ReturnType<typeof createSupaba
     const workflow = data;
 
     // Check if workflow is currently running
-    if (workflow.status === 'running' ||
-        (workflow.status === 'triggered' && workflow.started_at)) {
+    if ((workflow as any).status === 'running' ||
+        ((workflow as any).status === 'triggered' && (workflow as any).started_at)) {
 
       // Consider a workflow stale if it's been running for more than 30 minutes
       const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
-      const startTime = new Date(workflow.started_at || workflow.trigger_timestamp);
+      const startTime = new Date((workflow as any).started_at || (workflow as any).trigger_timestamp);
 
       if (startTime < thirtyMinutesAgo) {
         return 'failed'; // Assume failed if running too long
@@ -210,11 +210,11 @@ async function getCurrentWorkflowStatus(supabase: ReturnType<typeof createSupaba
     }
 
     // Check final status
-    if (workflow.status === 'completed') {
+    if ((workflow as any).status === 'completed') {
       return 'completed';
     }
 
-    if (workflow.status === 'failed' || workflow.failed_at) {
+    if ((workflow as any).status === 'failed' || (workflow as any).failed_at) {
       return 'failed';
     }
 

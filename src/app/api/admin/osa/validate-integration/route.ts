@@ -116,10 +116,10 @@ export async function GET(request: NextRequest) {
         success: true,
         message: `Found ${pendingRuns.length} pending validations (dry run)`,
         pendingRuns: pendingRuns.map(run => ({
-          workflowId: run.force_sync_workflow_id,
-          correlationId: run.opal_correlation_id,
-          tenantId: run.tenant_id,
-          createdAt: run.created_at
+          workflowId: (run as any).force_sync_workflow_id,
+          correlationId: (run as any).opal_correlation_id,
+          tenantId: (run as any).tenant_id,
+          createdAt: (run as any).created_at
         })),
         pendingCount: pendingRuns.length,
         validatedCount: 0
@@ -132,36 +132,36 @@ export async function GET(request: NextRequest) {
 
     for (const run of pendingRuns) {
       try {
-        console.log(`🔄 [Integration Validator] Validating ${run.force_sync_workflow_id}...`);
-        
+        console.log(`🔄 [Integration Validator] Validating ${(run as any).force_sync_workflow_id}...`);
+
         const validationResult = await validator.validateWorkflow({
-          forceSyncWorkflowId: run.force_sync_workflow_id,
-          opalCorrelationId: run.opal_correlation_id,
-          tenantId: run.tenant_id
+          forceSyncWorkflowId: (run as any).force_sync_workflow_id,
+          opalCorrelationId: (run as any).opal_correlation_id,
+          tenantId: (run as any).tenant_id
         });
 
         // Mark as validated in force_sync_runs table
-        await supabase
+        await (supabase as any)
           .from('force_sync_runs')
-          .update({ 
-            validation_status: 'validated', 
-            updated_at: new Date().toISOString() 
+          .update({
+            validation_status: 'validated',
+            updated_at: new Date().toISOString()
           })
-          .eq('force_sync_workflow_id', run.force_sync_workflow_id);
+          .eq('force_sync_workflow_id', (run as any).force_sync_workflow_id);
 
         results.push({
-          workflowId: run.force_sync_workflow_id,
+          workflowId: (run as any).force_sync_workflow_id,
           status: validationResult.overallStatus,
           success: validationResult.success
         });
 
-        console.log(`✅ [Integration Validator] Validated ${run.force_sync_workflow_id}: ${validationResult.overallStatus}`);
+        console.log(`✅ [Integration Validator] Validated ${(run as any).force_sync_workflow_id}: ${validationResult.overallStatus}`);
 
       } catch (error: any) {
-        console.error(`❌ [Integration Validator] Failed to validate ${run.force_sync_workflow_id}:`, error);
+        console.error(`❌ [Integration Validator] Failed to validate ${(run as any).force_sync_workflow_id}:`, error);
         
         results.push({
-          workflowId: run.force_sync_workflow_id,
+          workflowId: (run as any).force_sync_workflow_id,
           status: 'error',
           success: false,
           error: error.message
