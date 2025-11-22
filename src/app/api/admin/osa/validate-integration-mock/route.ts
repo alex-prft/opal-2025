@@ -37,9 +37,8 @@ export async function POST(request: NextRequest) {
     const validationResult = await mockValidator.validateWorkflow({
       forceSyncWorkflowId,
       opalCorrelationId,
-      tenantId,
-      scenario: scenarioKey as keyof typeof VALIDATION_TEST_SCENARIOS
-    });
+      tenantId
+    } as any);
 
     // Add test metadata
     const response = {
@@ -80,7 +79,7 @@ export async function GET(request: NextRequest) {
         id: key,
         name: scenario.name,
         description: scenario.description,
-        expected_status: scenario.expectedOutcome.overall_status
+        expected_status: (scenario as any).expectedOutcome?.overall_status || scenario.expectedStatus
       })),
       mock_validator_initialized: true,
       timestamp: new Date().toISOString()

@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Integration validation record created',
-      recordId: data.id
+      recordId: (data as any)?.id
     });
   } catch (err: any) {
     console.error('[integration-status] POST error', err);

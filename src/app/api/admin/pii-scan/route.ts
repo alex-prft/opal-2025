@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Log the scan to audit table
-    await supabase
+    await (supabase as any)
       .from('supabase_audit_log')
       .insert({
         table_name: 'pii_scan_request',

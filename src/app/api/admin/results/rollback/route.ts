@@ -17,26 +17,50 @@ import { NextRequest, NextResponse } from 'next/server';
 // } from '../../../../../../services/results-content-optimizer/audit-logger';
 import { validatePageId } from '../../../../../opal/mapping/page-agent-mappings';
 
-// =============================================================================
-// Request/Response Types
-// =============================================================================
-
-// Temporary types while audit-logger import is disabled
+// Temporary type definitions until audit-logger imports are restored
 interface RollbackRequest {
   pageId: string;
-  targetTimestamp?: string;
+  targetTimestamp: string;
   reason: string;
+  requestedBy: string;
   dryRun?: boolean;
 }
 
 interface RollbackResult {
   success: boolean;
-  pageId: string;
-  rolledBackTo: string;
-  backupPath: string;
-  restoredContent?: any;
   message: string;
+  pageId?: string;
+  rolledBackTo?: string;
+  backupPath?: string;
 }
+
+// Temporary mock implementations until audit-logger imports are restored
+const auditLogger = {
+  listBackups: async (pageId: string) => {
+    console.warn('Mock auditLogger.listBackups called - audit-logger imports are disabled');
+    return [];
+  }
+};
+
+const rollbackContent = async (request: RollbackRequest): Promise<RollbackResult> => {
+  console.warn('Mock rollbackContent called - audit-logger imports are disabled');
+  return {
+    success: false,
+    message: 'Rollback functionality temporarily disabled - audit-logger imports are commented out',
+    pageId: request.pageId,
+    rolledBackTo: '',
+    backupPath: ''
+  };
+};
+
+const getPageHistory = async (pageId: string) => {
+  console.warn('Mock getPageHistory called - audit-logger imports are disabled');
+  return [];
+};
+
+// =============================================================================
+// Request/Response Types
+// =============================================================================
 
 interface RollbackContentRequest {
   pageId: string;
@@ -125,9 +149,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Perform rollback
     const rollbackRequest: RollbackRequest = {
       pageId: body.pageId,
-      targetTimestamp: body.targetTimestamp,
+      targetTimestamp: body.targetTimestamp || new Date().toISOString(),
       reason: body.reason,
-      requestedBy: body.requestedBy,
+      requestedBy: body.requestedBy || 'unknown',
       dryRun: body.dryRun || false
     };
 
@@ -137,11 +161,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       success: rollbackResult.success,
       message: rollbackResult.message,
       rollback_result: rollbackResult,
-      available_backups: backups.map(backup => ({
-        timestamp: backup.timestamp,
-        confidence_score: backup.originalContent.dataLineage.confidenceScore,
-        backup_path: backup.backupPath,
-        reason: backup.reason
+      available_backups: backups.map((backup: any) => ({
+        timestamp: backup?.timestamp || new Date().toISOString(),
+        confidence_score: backup?.originalContent?.dataLineage?.confidenceScore || 0,
+        backup_path: backup?.backupPath || '',
+        reason: backup?.reason || 'Unknown'
       }))
     };
 
@@ -198,20 +222,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const response: PageHistoryResponse = {
       success: true,
       pageId,
-      history: history.map(entry => ({
-        timestamp: entry.timestamp,
-        operation: entry.operation,
-        result: entry.result,
-        confidence_score: entry.details.confidenceScore,
-        triggered_by: entry.details.triggeredBy,
-        processing_time_ms: entry.details.processingTimeMs,
-        backup_path: entry.details.backupPath
+      history: history.map((entry: any) => ({
+        timestamp: entry?.timestamp || new Date().toISOString(),
+        operation: entry?.operation || 'unknown',
+        result: entry?.result || 'unknown',
+        confidence_score: entry?.details?.confidenceScore || 0,
+        triggered_by: entry?.details?.triggeredBy || 'unknown',
+        processing_time_ms: entry?.details?.processingTimeMs || 0,
+        backup_path: entry?.details?.backupPath || ''
       })),
-      available_backups: backups.map(backup => ({
-        timestamp: backup.timestamp,
-        confidence_score: backup.originalContent.dataLineage.confidenceScore,
-        backup_path: backup.backupPath,
-        reason: backup.reason
+      available_backups: backups.map((backup: any) => ({
+        timestamp: backup?.timestamp || new Date().toISOString(),
+        confidence_score: backup?.originalContent?.dataLineage?.confidenceScore || 0,
+        backup_path: backup?.backupPath || '',
+        reason: backup?.reason || 'Unknown'
       }))
     };
 
