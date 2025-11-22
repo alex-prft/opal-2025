@@ -121,7 +121,7 @@ setup_vercel_auth() {
     echo
     echo "4. For GitHub Actions, add it as a repository secret:"
     echo "   - Go to ${GITHUB_REPO}/settings/secrets/actions"
-    echo "   - Add VERCEL_TOKEN with your token value"
+    echo "   - Add it as a repository secret"
     echo
 
     # Interactive fallback for local development
