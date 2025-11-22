@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export interface IntegrationStatus {
   overallStatus: 'green' | 'red' | 'yellow';
@@ -51,6 +51,13 @@ export interface IntegrationStatusResponse {
   hint?: string;
 }
 
+export interface UseIntegrationStatusResult {
+  data: IntegrationStatusResponse | undefined;
+  isLoading: boolean;
+  error: Error | null;
+  refetch: () => void;
+}
+
 export function useIntegrationStatus(
   forceSyncWorkflowId?: string,
   tenantId?: string,
@@ -59,10 +66,38 @@ export function useIntegrationStatus(
     staleTime?: number;
     refetchInterval?: number;
   }
-) {
-  return useQuery<IntegrationStatusResponse>({
-    queryKey: ['osa-integration-status', forceSyncWorkflowId, tenantId],
-    queryFn: async () => {
+): UseIntegrationStatusResult {
+  const {
+    enabled = true,
+    staleTime = 2 * 60 * 1000, // 2 minutes default
+    refetchInterval = false
+  } = options || {};
+
+  const [data, setData] = useState<IntegrationStatusResponse | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const lastFetchRef = useRef<number>(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const fetchData = useCallback(async (retryCount = 0) => {
+    // Check if data is still fresh
+    const now = Date.now();
+    if (data && (now - lastFetchRef.current) < staleTime) {
+      return;
+    }
+
+    // Abort previous request if still pending
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+    setIsLoading(true);
+    setError(null);
+
+    try {
       const params = new URLSearchParams();
       if (forceSyncWorkflowId) {
         params.append('forceSyncWorkflowId', forceSyncWorkflowId);
@@ -72,39 +107,97 @@ export function useIntegrationStatus(
       }
 
       const url = `/api/admin/osa/integration-status${params.toString() ? `?${params.toString()}` : ''}`;
-      const res = await fetch(url);
-      const data = await res.json();
+      const res = await fetch(url, {
+        signal: abortControllerRef.current.signal
+      });
+      const responseData = await res.json();
 
       // Handle expected fallback responses gracefully
       if (!res.ok) {
         // Check if this is an expected fallback response (503 with fallback flag)
-        if (res.status === 503 && data.fallback === true) {
+        if (res.status === 503 && responseData.fallback === true) {
           // Return the fallback response data instead of throwing
-          return {
+          const fallbackData = {
             success: false,
-            error: data.error,
+            error: responseData.error,
             fallback: true,
-            hint: data.hint
+            hint: responseData.hint
           };
+          setData(fallbackData);
+          lastFetchRef.current = now;
+          return;
         }
 
         // For other non-OK responses, throw an error
         throw new Error(`Failed to load integration status: ${res.status} ${res.statusText}`);
       }
 
-      return data;
-    },
-    staleTime: options?.staleTime ?? 2 * 60 * 1000, // 2 minutes default
-    refetchInterval: options?.refetchInterval ?? false, // No auto-refetch by default
-    enabled: options?.enabled ?? true,
-    retry: (failureCount, error) => {
+      setData(responseData);
+      lastFetchRef.current = now;
+      setError(null);
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return; // Request was cancelled, don't update state
+      }
+
+      const error = err instanceof Error ? err : new Error('Unknown error');
+
       // Don't retry on 404 (no records found)
       if (error.message.includes('404')) {
-        return false;
+        setError(error);
+        return;
       }
-      return failureCount < 3;
+
+      // Retry logic: max 3 retries
+      if (retryCount < 3) {
+        setTimeout(() => {
+          fetchData(retryCount + 1);
+        }, 1000 * (retryCount + 1));
+      } else {
+        setError(error);
+      }
+    } finally {
+      setIsLoading(false);
+      abortControllerRef.current = null;
     }
-  });
+  }, [forceSyncWorkflowId, tenantId, data, staleTime]);
+
+  const refetch = useCallback(() => {
+    // Clear stale data timestamp to force refetch
+    lastFetchRef.current = 0;
+    fetchData();
+  }, [fetchData]);
+
+  // Initial fetch and enabled state handling
+  useEffect(() => {
+    if (!enabled) return;
+
+    fetchData();
+
+    // Setup interval if specified
+    if (refetchInterval && typeof refetchInterval === 'number') {
+      intervalRef.current = setInterval(() => {
+        fetchData();
+      }, refetchInterval);
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [enabled, fetchData, refetchInterval]);
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch,
+  };
 }
 
 export function useLatestIntegrationStatus() {
@@ -123,84 +216,192 @@ export function useForceSyncValidation(
     pollUntilComplete?: boolean;
     maxPollDuration?: number; // in milliseconds
   }
-) {
-  const { pollUntilComplete = false, maxPollDuration = 5 * 60 * 1000 } = options || {};
+): UseIntegrationStatusResult {
+  const {
+    pollUntilComplete = false,
+    maxPollDuration = 5 * 60 * 1000
+  } = options || {};
 
-  return useQuery<IntegrationStatusResponse>({
-    queryKey: ['force-sync-validation', forceSyncWorkflowId],
-    queryFn: async () => {
-      const res = await fetch(`/api/admin/osa/integration-status?forceSyncWorkflowId=${encodeURIComponent(forceSyncWorkflowId)}`);
-      const data = await res.json();
+  const [data, setData] = useState<IntegrationStatusResponse | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const lastFetchRef = useRef<number>(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const maxPollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const staleTime = 30 * 1000; // 30 seconds
+
+  const shouldContinuePolling = useCallback((responseData: IntegrationStatusResponse | undefined) => {
+    if (!pollUntilComplete || !responseData?.success || !responseData.integrationStatus) {
+      return false;
+    }
+
+    const status = responseData.integrationStatus.overallStatus;
+    return status === 'yellow' ||
+           !responseData.integrationStatus.forceSync?.status ||
+           responseData.integrationStatus.forceSync.status === 'running';
+  }, [pollUntilComplete]);
+
+  const fetchData = useCallback(async (retryCount = 0) => {
+    // Check if data is still fresh
+    const now = Date.now();
+    if (data && (now - lastFetchRef.current) < staleTime) {
+      return;
+    }
+
+    // Abort previous request if still pending
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(
+        `/api/admin/osa/integration-status?forceSyncWorkflowId=${encodeURIComponent(forceSyncWorkflowId)}`,
+        { signal: abortControllerRef.current.signal }
+      );
+      const responseData = await res.json();
 
       // Handle expected fallback responses gracefully
       if (!res.ok) {
         // Check if this is an expected fallback response (503 with fallback flag)
-        if (res.status === 503 && data.fallback === true) {
+        if (res.status === 503 && responseData.fallback === true) {
           // Return the fallback response data instead of throwing
-          return {
+          const fallbackData = {
             success: false,
-            error: data.error,
+            error: responseData.error,
             fallback: true,
-            hint: data.hint
+            hint: responseData.hint
           };
+          setData(fallbackData);
+          lastFetchRef.current = now;
+          return;
         }
 
         // For other non-OK responses, throw an error
         throw new Error(`Failed to load Force Sync validation: ${res.status} ${res.statusText}`);
       }
 
-      return data;
-    },
-    enabled: !!forceSyncWorkflowId,
-    staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: (query) => {
-      const data = query.state.data;
-      // If polling is enabled and status is not final, keep polling
-      if (pollUntilComplete && data?.success && data.integrationStatus) {
-        const status = data.integrationStatus.overallStatus;
-        if (status === 'yellow' || !data.integrationStatus.forceSync?.status ||
-            data.integrationStatus.forceSync.status === 'running') {
-          return 10 * 1000; // Poll every 10 seconds
-        }
+      setData(responseData);
+      lastFetchRef.current = now;
+      setError(null);
+
+      // Setup polling if needed
+      if (shouldContinuePolling(responseData)) {
+        intervalRef.current = setTimeout(() => {
+          fetchData();
+        }, 10 * 1000); // Poll every 10 seconds
       }
-      return false; // Stop polling
-    },
-    refetchIntervalInBackground: false,
-    retry: 3
-  });
+
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return; // Request was cancelled, don't update state
+      }
+
+      const error = err instanceof Error ? err : new Error('Unknown error');
+
+      // Retry logic: max 3 retries
+      if (retryCount < 3) {
+        setTimeout(() => {
+          fetchData(retryCount + 1);
+        }, 1000 * (retryCount + 1));
+      } else {
+        setError(error);
+      }
+    } finally {
+      setIsLoading(false);
+      abortControllerRef.current = null;
+    }
+  }, [forceSyncWorkflowId, data, staleTime, shouldContinuePolling]);
+
+  const refetch = useCallback(() => {
+    // Clear stale data timestamp to force refetch
+    lastFetchRef.current = 0;
+    fetchData();
+  }, [fetchData]);
+
+  // Initial fetch and enabled state handling
+  useEffect(() => {
+    if (!forceSyncWorkflowId) return;
+
+    fetchData();
+
+    // Setup max polling duration timeout
+    if (pollUntilComplete) {
+      maxPollTimeoutRef.current = setTimeout(() => {
+        if (intervalRef.current) {
+          clearTimeout(intervalRef.current);
+          intervalRef.current = null;
+        }
+      }, maxPollDuration);
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      if (intervalRef.current) {
+        clearTimeout(intervalRef.current);
+      }
+      if (maxPollTimeoutRef.current) {
+        clearTimeout(maxPollTimeoutRef.current);
+      }
+    };
+  }, [forceSyncWorkflowId, fetchData, pollUntilComplete, maxPollDuration]);
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch,
+  };
+}
+
+export interface CreateIntegrationValidationData {
+  tenantId?: string;
+  forceSyncWorkflowId: string;
+  opalCorrelationId?: string;
+  overallStatus: 'green' | 'red' | 'yellow';
+  summary: string;
+  forceSyncData?: any;
+  opalData?: any;
+  osaData?: any;
+  healthData?: any;
+  errors?: any;
+}
+
+export interface UseCreateIntegrationValidationResult {
+  mutateAsync: (validationData: CreateIntegrationValidationData) => Promise<any>;
 }
 
 /**
  * Mutation hook for creating integration validation records
  */
-export function useCreateIntegrationValidation() {
-  return {
-    mutateAsync: async (validationData: {
-      tenantId?: string;
-      forceSyncWorkflowId: string;
-      opalCorrelationId?: string;
-      overallStatus: 'green' | 'red' | 'yellow';
-      summary: string;
-      forceSyncData?: any;
-      opalData?: any;
-      osaData?: any;
-      healthData?: any;
-      errors?: any;
-    }) => {
-      const res = await fetch('/api/admin/osa/integration-status', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(validationData),
-      });
+export function useCreateIntegrationValidation(): UseCreateIntegrationValidationResult {
+  const mutateAsync = useCallback(async (validationData: CreateIntegrationValidationData) => {
+    const res = await fetch('/api/admin/osa/integration-status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(validationData),
+    });
 
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${res.status}: ${res.statusText}`);
-      }
-
-      return res.json();
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${res.status}: ${res.statusText}`);
     }
+
+    return res.json();
+  }, []);
+
+  return {
+    mutateAsync
   };
 }
