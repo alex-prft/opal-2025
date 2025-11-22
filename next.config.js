@@ -161,7 +161,7 @@ const nextConfig = {
           destination: '/404',
         },
         {
-          source: '/admin/:path*',
+          source: '/admin/:path((?!api).*)',
           destination: '/404',
         },
       ];
