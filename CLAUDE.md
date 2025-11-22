@@ -1026,6 +1026,8 @@ git add . && git commit -m "message"
 
 ## Documentation Index
 
+**ALWAYS ADD IMPORTANT DOCS HERE!** When you create or discover:
+`docs` - New documents
 For detailed information, see:
 - **Agent Integration**: `docs/agent-integration-patterns.md` - Comprehensive agent usage patterns and quality control framework
 - **Quality Control**: `docs/quality-control-framework-gotchas.md` - Troubleshooting, gotchas, and best practices
