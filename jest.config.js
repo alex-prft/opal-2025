@@ -88,8 +88,18 @@ const config = {
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      useESM: true,
+      tsconfig: {
+        module: 'ESNext'
+      }
+    }],
+    '^.+\\.(js|jsx)$': 'babel-jest'
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(.*\\.mjs$))'
+  ],
+  extensionsToTreatAsEsm: ['.ts'],
   // Enhanced configuration for production readiness
   clearMocks: true,
   restoreMocks: true,

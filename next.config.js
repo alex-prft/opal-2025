@@ -111,9 +111,6 @@ const nextConfig = {
 
   // React strict mode for better development experience
   reactStrictMode: true,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 
   async redirects() {
     return [
