@@ -175,7 +175,7 @@ export const EXPANDED_TIER_RULES: TierRenderingRule[] = [
     },
 
     widgets: {
-      primary: "IntegrationHealthWidget",
+      primary: "EngagementAnalyticsWidget",
       secondary: ["ContentInventoryWidget", "ContentPerformanceWidget"],
       props: {
         inventoryData: "contentInventoryData",
@@ -238,7 +238,7 @@ export const EXPANDED_TIER_RULES: TierRenderingRule[] = [
     },
 
     widgets: {
-      primary: "IntegrationHealthWidget",
+      primary: "EngagementAnalyticsWidget",
       secondary: ["ExperimentMonitoringWidget", "StatisticalAnalysisWidget"],
       props: {
         activeExperiments: "activeExperimentData",

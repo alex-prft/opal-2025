@@ -241,14 +241,6 @@ export function GuardrailsProvider({ children }: GuardrailsProviderProps) {
   return (
     <Context.Provider value={contextValue}>
       {children}
-      {/* Development/Admin UI for guardrails status */}
-      {process.env.NODE_ENV === 'development' && (
-        <GuardrailsDevPanel
-          health={health}
-          isInitialized={isInitialized}
-          error={error}
-        />
-      )}
     </Context.Provider>
   );
 }

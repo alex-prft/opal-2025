@@ -36,7 +36,6 @@ import {
 
 // Dynamic imports to prevent circular dependencies
 const StrategyPlansWidget = React.lazy(() => import('./StrategyPlansWidget').then(m => ({ default: m.StrategyPlansWidget })));
-const IntegrationHealthWidget = React.lazy(() => import('./IntegrationHealthWidget').then(m => ({ default: m.IntegrationHealthWidget })));
 const EngagementAnalyticsWidget = React.lazy(() => import('./EngagementAnalyticsWidget').then(m => ({ default: m.EngagementAnalyticsWidget })));
 const ExperimentationWidget = React.lazy(() => import('./ExperimentationWidget').then(m => ({ default: m.ExperimentationWidget })));
 
@@ -165,7 +164,7 @@ const ContentRecsWidget = ({ data, context, className }: any) => {
   }
   return (
     <div className={className}>
-      <IntegrationHealthWidget data={data} className="content-recs-specialized" />
+      <EngagementAnalyticsWidget data={data} className="content-recs-specialized" />
     </div>
   );
 };
@@ -183,7 +182,7 @@ const CMSWidget = ({ data, context, className }: any) => {
   }
   return (
     <div className={className}>
-      <IntegrationHealthWidget data={data} className="cms-specialized" />
+      <EngagementAnalyticsWidget data={data} className="cms-specialized" />
     </div>
   );
 };
@@ -203,7 +202,7 @@ const CMPWidget = ({ data, context, className }: any) => {
   }
   return (
     <div className={className}>
-      <IntegrationHealthWidget data={data} className="cmp-specialized" />
+      <EngagementAnalyticsWidget data={data} className="cmp-specialized" />
     </div>
   );
 };
@@ -685,7 +684,7 @@ export function WidgetRenderer({ tier2, tier3, className = '' }: WidgetRendererP
         return <CMPWidget data={mergedData} context={context} className="cmp-container" />;
       }
       // Fallback to general DXP tools widget (already SOP-validated via HOC)
-      return <IntegrationHealthWidget data={mergedData} className={className} pageId={`${context.detection.tier1}-${context.detection.tier2 || 'integration'}-${context.detection.tier3 || 'main'}`} />;
+      return <EngagementAnalyticsWidget data={mergedData} className={className} pageId={`${context.detection.tier1}-${context.detection.tier2 || 'integration'}-${context.detection.tier3 || 'main'}`} />;
     }
 
     // Analytics Insights tier-2 containers

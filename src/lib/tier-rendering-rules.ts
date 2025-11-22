@@ -306,7 +306,7 @@ export const BASE_TIER_RENDERING_RULES: TierRenderingRule[] = [
     },
 
     widgets: {
-      primary: "IntegrationHealthWidget",
+      primary: "EngagementAnalyticsWidget",
       secondary: ["VisitorAnalyticsWidget", "ContentPerformanceWidget"],
       props: {
         visitorData: "visitorAnalytics",
@@ -591,7 +591,7 @@ export function getWidgetsForTier(tier1: string, tier2?: string, tier3?: string)
     case 'Strategy Plans':
       return ['StrategyPlansWidget'];
     case 'Optimizely DXP Tools':
-      return ['IntegrationHealthWidget'];
+      return ['EngagementAnalyticsWidget'];
     case 'Analytics Insights':
       return ['EngagementAnalyticsWidget'];
     case 'Experience Optimization':

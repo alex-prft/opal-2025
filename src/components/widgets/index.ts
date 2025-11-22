@@ -7,7 +7,6 @@
 
 // Export original widgets directly
 export { StrategyPlansWidget } from './StrategyPlansWidget';
-export { IntegrationHealthWidget } from './IntegrationHealthWidget';
 export { EngagementAnalyticsWidget } from './EngagementAnalyticsWidget';
 export { ExperimentationWidget } from './ExperimentationWidget';
 export { ContentRecommendationsDashboardWidget } from './ContentRecommendationsDashboardWidget';
@@ -18,10 +17,6 @@ export {
   StrategyPlansWidget as _StrategyPlansWidget
 } from './StrategyPlansWidget';
 
-export {
-  IntegrationHealthWidget as _UnvalidatedIntegrationHealthWidget,
-  IntegrationHealthWidget as _IntegrationHealthWidget
-} from './IntegrationHealthWidget';
 
 export {
   EngagementAnalyticsWidget as _UnvalidatedEngagementAnalyticsWidget,

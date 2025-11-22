@@ -74,7 +74,7 @@ export const WIDGET_CONFIG: WidgetConfig[] = [
     section: "optimizely-dxp-tools",
     widgets: [
       {
-        name: "IntegrationHealthWidget",
+        name: "EngagementAnalyticsWidget",
         props: {
           integrationStatus: "integrationStatus",
           performanceData: "performanceData",
