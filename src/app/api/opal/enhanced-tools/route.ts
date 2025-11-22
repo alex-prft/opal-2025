@@ -1,6 +1,54 @@
 /**
  * OPAL Enhanced Tools API Endpoint
  * Production-grade OPAL tool discovery and execution with comprehensive error handling
+ *
+ * ============================================================================
+ * CRITICAL: Tool Schema Requirements for TypeScript Validation
+ * ============================================================================
+ *
+ * This endpoint defines tool schemas that MUST include comprehensive description
+ * fields for every parameter to prevent TypeScript compilation failures.
+ *
+ * DEPLOYMENT CRITICAL: Missing description fields cause 1,000+ cascade TypeScript
+ * errors that block production builds. PR #26 resolved these by adding proper
+ * schema descriptions and configuring TypeScript build optimization.
+ *
+ * REQUIRED SCHEMA PATTERN:
+ * {
+ *   name: 'tool_name',
+ *   description: 'Comprehensive tool description with industry context',
+ *   version: '3.0.0',  // MANDATORY: Version for compatibility tracking
+ *   parameters: {
+ *     type: 'object',
+ *     properties: {
+ *       param_name: {
+ *         type: 'string',
+ *         description: 'MANDATORY: Specific parameter description', // ← CRITICAL
+ *         required: true
+ *       }
+ *     },
+ *     required: ['param_name']  // MUST match properties with required: true
+ *   }
+ * }
+ *
+ * FORBIDDEN PATTERNS (cause TypeScript errors):
+ * - { type: 'string', required: true }  // Missing description field
+ * - Generic descriptions like "Tool parameter"
+ * - Inconsistent required arrays vs properties
+ *
+ * VALIDATION COMMANDS:
+ * - npm run build (must pass without TypeScript errors)
+ * - grep -r "Property 'description' is missing" build-output (should be empty)
+ *
+ * FRESH PRODUCE INDUSTRY CONTEXT:
+ * All tool descriptions must include FreshProduce.com/IFPA alignment with:
+ * - Target personas (Strategic Buyer Sarah, Innovation-Focused Frank, etc.)
+ * - Industry standards (IFPA certification, food safety, quality assessments)
+ * - Business KPIs (membership conversion, content engagement, event registration)
+ *
+ * AGENT DISCOVERY IMPACT:
+ * Comprehensive schemas improve OPAL agent tool discovery and execution success.
+ * Poor schemas reduce integration health scores and agent effectiveness.
  */
 
 import { NextRequest, NextResponse } from 'next/server';

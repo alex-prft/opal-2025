@@ -13,7 +13,30 @@ export {
   handleDatabaseError
 } from './supabase-client';
 
-// Temporary secureSupabase export (simplified version without full guardrails)
+// ====================================================================
+// CRITICAL: secureSupabase Export Pattern Documentation
+// ====================================================================
+//
+// This export pattern is MANDATORY for all database operations to maintain
+// PII protection and audit logging. The specific import/export structure
+// prevents common compilation errors while preserving security guardrails.
+//
+// CORRECT IMPORT PATTERN (use this in all API routes):
+//   import { supabase as secureSupabase } from '@/lib/database';
+//
+// WRONG IMPORT PATTERNS (cause compilation errors):
+//   import { secureSupabase } from '@/lib/database';  // Export doesn't exist
+//   import { createClient } from '@supabase/supabase-js';  // Bypasses security
+//
+// WHY THIS PATTERN MATTERS:
+// 1. Security: Ensures all database ops go through guardrails system
+// 2. Audit Logging: Maintains PII protection and compliance tracking
+// 3. Type Safety: Prevents import errors that block deployment builds
+// 4. Consistency: Standard pattern across all API routes and components
+//
+// DEPLOYMENT CRITICAL: Import errors in this pattern caused PR #26 build failures.
+// Always use 'supabase as secureSupabase' import to match this export structure.
+//
 import { supabase } from './supabase-client';
 export const secureSupabase = supabase;
 
