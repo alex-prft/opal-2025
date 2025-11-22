@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="OSA Admin Dashboard API Tests" tests="39" failures="2" errors="0" time="14.851">
-  <testsuite name="RecentDataComponent Status Logic" errors="0" failures="0" skipped="0" timestamp="2025-11-22T14:05:04" time="0.621" tests="16">
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" name="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" time="0.04">
+<testsuites name="OSA Admin Dashboard API Tests" tests="39" failures="2" errors="0" time="15.803">
+  <testsuite name="RecentDataComponent Status Logic" errors="0" failures="0" skipped="0" timestamp="2025-11-22T14:57:35" time="0.526" tests="16">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" name="RecentDataComponent Status Logic getDisplayStatus should return failed when there is an error" time="0.011">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" name="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" name="RecentDataComponent Status Logic getDisplayStatus should return processing when loading and no osa status" time="0">
     </testcase>
     <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" name="RecentDataComponent Status Logic getDisplayStatus should return none when no osa status and not loading" time="0">
     </testcase>
     <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" name="RecentDataComponent Status Logic getDisplayStatus should return processing when workflow status is running" time="0.002">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" name="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" time="0">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" name="RecentDataComponent Status Logic getDisplayStatus should return success when workflow status is completed" time="0.001">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" name="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" name="RecentDataComponent Status Logic getDisplayStatus should return failed when workflow status is failed" time="0">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" time="0">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent webhook data" time="0.001">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" name="RecentDataComponent Status Logic getDisplayStatus should return success for idle status with recent agent data" time="0">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" name="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" time="0">
+    <testcase classname="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" name="RecentDataComponent Status Logic getDisplayStatus should return none for idle status with no recent data" time="0.001">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" name="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" name="RecentDataComponent Status Logic getLastActivityTime should return null when no osa status" time="0.002">
     </testcase>
     <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" name="RecentDataComponent Status Logic getLastActivityTime should return null when all timestamps are null" time="0">
     </testcase>
     <testcase classname="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" name="RecentDataComponent Status Logic getLastActivityTime should return the most recent timestamp" time="0.001">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" name="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" name="RecentDataComponent Status Logic getLastActivityTime should handle mixed null and timestamp values" time="0">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" name="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" time="0.001">
+    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" name="RecentDataComponent Status Logic Real-world scenarios should handle typical success scenario" time="0">
     </testcase>
-    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" name="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" time="0">
+    <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" name="RecentDataComponent Status Logic Real-world scenarios should handle fresh system with no data" time="0.001">
     </testcase>
     <testcase classname="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" name="RecentDataComponent Status Logic Real-world scenarios should handle active workflow processing" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="Vercel Authorization Regression Tests" errors="0" failures="2" skipped="0" timestamp="2025-11-22T14:05:04" time="1.063" tests="23">
-    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" time="0.019">
+  <testsuite name="Vercel Authorization Regression Tests" errors="0" failures="2" skipped="0" timestamp="2025-11-22T14:57:35" time="1.417" tests="23">
+    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent missing VERCEL_TOKEN issues" time="0.033">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" time="0.002">
+    <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent interactive authentication prompts in CI" time="0.022">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent recurring token expiration issues" name="Vercel Authorization Regression Tests Authorization Configuration Prevention should prevent recurring token expiration issues" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" name="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" time="0.01">
+    <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" name="Vercel Authorization Regression Tests Project Linking Validation should validate Vercel project is properly linked" time="0.014">
       <failure>Error: expect(received).toBe(expected) // Object.is equality
 
 Expected: &quot;ifpa-strategy&quot;
-Received: &quot;my-nextjs-app-bugfix&quot;
-    at Object.toBe (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/tests/unit/vercel-auth-regression.test.js:75:41)
-    at Promise.then.completed (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/utils.js:298:28)
+Received: &quot;my-nextjs-app-claude&quot;
+    at Object.toBe (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/tests/unit/vercel-auth-regression.test.js:75:41)
+    at Promise.then.completed (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:316:40)
+    at callAsyncCircusFn (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:316:40)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at _runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:121:9)
-    at run (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    at _runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Project Linking Validation should prevent project unlinking issues" name="Vercel Authorization Regression Tests Project Linking Validation should prevent project unlinking issues" time="0.002">
     </testcase>
@@ -69,7 +69,7 @@ Received: &quot;my-nextjs-app-bugfix&quot;
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Environment-Specific Authorization should handle different environments correctly" name="Vercel Authorization Regression Tests Environment-Specific Authorization should handle different environments correctly" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" name="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" time="0.009">
+    <testcase classname="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" name="Vercel Authorization Regression Tests Environment-Specific Authorization should prevent local development token leakage" time="0.011">
       <failure>Error: expect(received).toContain(expected) // indexOf
 
 Expected substring: &quot;generate-&quot;
@@ -87,54 +87,54 @@ JWT_SECRET=your_jwt_secret_here·
 NEXT_PUBLIC_API_URL=http://localhost:3000
 NODE_ENV=development
 &quot;
-    at toContain (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/tests/unit/vercel-auth-regression.test.js:134:65)
+    at toContain (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/tests/unit/vercel-auth-regression.test.js:134:65)
     at Array.forEach (&lt;anonymous&gt;)
-    at Object.forEach (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/tests/unit/vercel-auth-regression.test.js:126:16)
-    at Promise.then.completed (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/utils.js:298:28)
+    at Object.forEach (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/tests/unit/vercel-auth-regression.test.js:126:16)
+    at Promise.then.completed (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/utils.js:298:28)
     at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:316:40)
+    at callAsyncCircusFn (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:316:40)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at _runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:121:9)
-    at run (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-bugfix/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+    at _runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" name="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" time="0.001">
+    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" name="Vercel Authorization Regression Tests Deployment Command Validation should use consistent Vercel deployment commands" time="0">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should prevent scope and team configuration issues" name="Vercel Authorization Regression Tests Deployment Command Validation should prevent scope and team configuration issues" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" name="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" time="0">
+    <testcase classname="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" name="Vercel Authorization Regression Tests Deployment Command Validation should handle deployment command failures gracefully" time="0.001">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Token Security and Management should prevent token exposure in logs" name="Vercel Authorization Regression Tests Token Security and Management should prevent token exposure in logs" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" name="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" time="0.001">
+    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" name="Vercel Authorization Regression Tests Token Security and Management should validate token format and requirements" time="0">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" name="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" time="0">
+    <testcase classname="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" name="Vercel Authorization Regression Tests Token Security and Management should provide secure token storage guidance" time="0.001">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have clear documentation for authorization setup" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have clear documentation for authorization setup" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" time="0.001">
+    <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should validate all required secrets are documented" time="0">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have automated testing for deployment configuration" name="Vercel Authorization Regression Tests Regression Prevention Mechanisms should have automated testing for deployment configuration" time="0.001">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" time="0.001">
+    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent production URL configuration errors" time="0">
     </testcase>
     <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should validate GitHub repository URL consistency" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should validate GitHub repository URL consistency" time="0">
     </testcase>
-    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" time="0.001">
+    <testcase classname="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" name="Vercel Authorization Regression Tests Production URL and Endpoint Validation should prevent localhost configuration in production" time="0">
     </testcase>
-    <testcase classname="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" name="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" time="0">
+    <testcase classname="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" name="Authorization Error Recovery Tests should provide recovery instructions for common auth failures" time="0.001">
     </testcase>
-    <testcase classname="Authorization Error Recovery Tests should handle token expiration gracefully" name="Authorization Error Recovery Tests should handle token expiration gracefully" time="0.004">
+    <testcase classname="Authorization Error Recovery Tests should handle token expiration gracefully" name="Authorization Error Recovery Tests should handle token expiration gracefully" time="0">
     </testcase>
-    <testcase classname="Authorization Error Recovery Tests should provide alternative authentication methods" name="Authorization Error Recovery Tests should provide alternative authentication methods" time="0.007">
+    <testcase classname="Authorization Error Recovery Tests should provide alternative authentication methods" name="Authorization Error Recovery Tests should provide alternative authentication methods" time="0">
     </testcase>
   </testsuite>
 </testsuites>

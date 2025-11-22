@@ -3,10 +3,17 @@
  *
  * This route is designed to NEVER return 500 errors and always provide fallback data.
  * Every operation is wrapped in try-catch blocks with comprehensive error handling.
+ *
+ * P0-002: Database Integration - IMPLEMENTED ✅
+ * - Prioritizes real OPAL execution data from WorkflowDatabaseOperations.getLatestAgentExecution()
+ * - Falls back to agent execution if no database data available
+ * - Includes comprehensive debugging metadata and correlation tracking
+ * - Maintains bulletproof fallback system for maximum reliability
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { agentCoordinator } from '@/lib/orchestration/agent-coordinator';
+import { WorkflowDatabaseOperations } from '@/lib/database/workflow-operations';
 
 // Enhanced types for bulletproof operation
 interface BulletproofAgentRequest {
@@ -447,26 +454,63 @@ export async function GET(
     }
   }
 
-  // Agent execution if no cache hit
+  // P0-002: Database integration - Try real OPAL execution data first
   if (!agentResponse) {
     try {
-      console.log(`[Bulletproof API] ${requestId} - Executing agent ${agent} for ${page_id}`);
+      console.log(`[Bulletproof API] ${requestId} - Checking database for real OPAL execution data for ${agent}:${page_id}`);
 
-      const agentRequest: BulletproofAgentRequest = {
-        agentType: agent,
-        pageId: page_id,
-        workflowId: workflow_id,
-        requestId: requestId,
-        priority: 1,
-        timeout: 30000 // 30 second timeout
-      };
+      // Try to get real OPAL execution data from database
+      try {
+        const dbOps = new WorkflowDatabaseOperations();
+        const realExecution = await dbOps.getLatestAgentExecution(agent, 1);
 
-      agentResponse = await executeAgentSafely(agentRequest, agent, page_id, workflow_id, requestId);
+        if (realExecution && realExecution.agent_data) {
+          console.log(`[Bulletproof API] ${requestId} - Found real OPAL execution data for ${agent}`);
 
-      if (agentResponse) {
-        executionPath = 'agent_execution_success';
-      } else {
-        executionPath = 'agent_execution_failed';
+          agentResponse = {
+            success: true,
+            data: realExecution.agent_data,
+            confidence_score: 0.95, // Higher confidence for real data
+            execution_time: Date.now(),
+            execution_metadata: {
+              execution_id: realExecution.execution_id,
+              workflow_id: realExecution.workflow_id,
+              data_source: 'opal_database',
+              created_at: realExecution.created_at
+            }
+          };
+          executionPath = 'database_execution_success';
+        } else {
+          console.log(`[Bulletproof API] ${requestId} - No real OPAL execution data found, proceeding with agent execution`);
+        }
+      } catch (dbError) {
+        errorCount++;
+        const errorMsg = `Database query failed: ${dbError instanceof Error ? dbError.message : 'Unknown database error'}`;
+        console.warn(`[Bulletproof API] ${requestId} - ${errorMsg}`);
+        warnings.push(errorMsg);
+        executionPath = 'database_query_failed';
+      }
+
+      // If no database data, fall back to agent execution
+      if (!agentResponse) {
+        console.log(`[Bulletproof API] ${requestId} - Executing agent ${agent} for ${page_id}`);
+
+        const agentRequest: BulletproofAgentRequest = {
+          agentType: agent,
+          pageId: page_id,
+          workflowId: workflow_id,
+          requestId: requestId,
+          priority: 1,
+          timeout: 30000 // 30 second timeout
+        };
+
+        agentResponse = await executeAgentSafely(agentRequest, agent, page_id, workflow_id, requestId);
+
+        if (agentResponse) {
+          executionPath = 'agent_execution_success';
+        } else {
+          executionPath = 'agent_execution_failed';
+        }
       }
 
     } catch (executionError) {
@@ -499,10 +543,20 @@ export async function GET(
           fallback_used: false,
           execution_path: executionPath,
           request_id: requestId,
-          error_count: errorCount
+          error_count: errorCount,
+          data_source: executionPath.includes('database') ? 'opal_database' : 'agent_execution'
         },
+        execution_metadata: agentResponse.execution_metadata || null,
         warnings: warnings.length > 0 ? warnings : undefined
-      }, { status: 200 });
+      }, {
+        status: 200,
+        headers: {
+          'X-Data-Source': executionPath.includes('database') ? 'opal_database' : 'agent_execution',
+          'X-Execution-Path': executionPath,
+          'X-Processing-Time': responseTime.toString(),
+          'X-Correlation-ID': requestId
+        }
+      });
 
     } else {
       // Fallback response

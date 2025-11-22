@@ -18,7 +18,8 @@ const PromptIdParamsSchema = z.object({
 const getHandler = createApiHandler({
   endpoint: '/api/ask-assistant/runs/[promptId]',
   validation: {
-    params: PromptIdParamsSchema
+    // Note: Route params are handled in the handler function directly
+    // ValidationMiddleware only supports body, query, and headers
   },
   rateLimit: rateLimitConfigs.normal,
   requireAuth: false, // TODO: Enable auth when user system is implemented
