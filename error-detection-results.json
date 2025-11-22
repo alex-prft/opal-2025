@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "timestamp": "2025-11-22T16:29:19.163Z",
+=======
+  "timestamp": "2025-11-22T15:50:30.288Z",
+>>>>>>> origin/main
   "summary": {
     "errors": 1,
     "warnings": 614,

@@ -28,6 +28,31 @@ interface FailedValidation {
   layer_failures: string[];
 }
 
+interface ValidationRecord {
+  id: string;
+  created_at: string;
+  overall_status: 'green' | 'yellow' | 'red';
+  force_sync_workflow_id: string;
+  opal_correlation_id: string;
+  validation_summary: string;
+  validation_duration_ms?: number;
+  layer_1_status?: string;
+  layer_2_status?: string;
+  layer_3_status?: string;
+  layer_4_status?: string;
+}
+
+interface ReportData {
+  current_stats: ValidationStats;
+  previous_stats: ValidationStats;
+  trends: TrendData;
+  failed_validations: FailedValidation[];
+  report_period: {
+    start: string;
+    end: string;
+  };
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Verify this is a legitimate cron request
@@ -77,7 +102,7 @@ async function generateDailyReport() {
   const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
   const last48Hours = new Date(Date.now() - 48 * 60 * 60 * 1000);
 
-  let allValidations = [];
+  let allValidations: ValidationRecord[] = [];
 
   try {
     // Fetch recent validations
@@ -136,7 +161,7 @@ async function generateDailyReport() {
   };
 }
 
-function calculateValidationStats(validations: any[]): ValidationStats {
+function calculateValidationStats(validations: ValidationRecord[]): ValidationStats {
   const totalValidations = validations.length;
   const successCount = validations.filter(v => v.overall_status === 'green').length;
   const warningCount = validations.filter(v => v.overall_status === 'yellow').length;
@@ -184,7 +209,7 @@ function calculateTrends(current: ValidationStats, previous: ValidationStats): T
   };
 }
 
-function getLayerFailures(validation: any): string[] {
+function getLayerFailures(validation: ValidationRecord): string[] {
   const failures = [];
   
   if (validation.layer_1_status === 'error') failures.push('Force Sync');
@@ -195,7 +220,7 @@ function getLayerFailures(validation: any): string[] {
   return failures;
 }
 
-async function sendDailyReportEmail(reportData: any) {
+async function sendDailyReportEmail(reportData: ReportData) {
   const currentTime = new Date();
   const timeLabel = currentTime.getHours() === 1 ? 'Morning Report (1:30 AM)' : 'Business Hours Report (9:30 AM)';
   
@@ -250,7 +275,7 @@ async function sendDailyReportEmail(reportData: any) {
   }
 }
 
-function generateEmailText(reportData: any, timeLabel: string): string {
+function generateEmailText(reportData: ReportData, timeLabel: string): string {
   const { current_stats, trends, failed_validations } = reportData;
   
   const trendText = trends.success_rate_trend === 'up' ? 'Improving' : 
@@ -316,7 +341,7 @@ This is an automated report from the OPAL Integration Validator system.
   return textContent;
 }
 
-function generateEmailHTML(reportData: any, timeLabel: string): string {
+function generateEmailHTML(reportData: ReportData, timeLabel: string): string {
   const { current_stats, trends, failed_validations } = reportData;
   
   const trendIcon = trends.success_rate_trend === 'up' ? '📈' : 
@@ -424,9 +449,9 @@ function generateEmailHTML(reportData: any, timeLabel: string): string {
   `;
 }
 
-function generateFallbackValidationData() {
+function generateFallbackValidationData(): ValidationRecord[] {
   const now = new Date();
-  const fallbackValidations = [];
+  const fallbackValidations: ValidationRecord[] = [];
 
   // Generate some mock validation data for the last 48 hours
   for (let i = 0; i < 10; i++) {
@@ -459,7 +484,7 @@ function generateFallbackValidationData() {
   return fallbackValidations;
 }
 
-async function sendErrorNotification(error: any) {
+async function sendErrorNotification(error: Error | unknown) {
   console.error('[Daily Report] Sending error notification');
 
   // Send simplified error notification

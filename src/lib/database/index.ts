@@ -13,6 +13,10 @@ export {
   handleDatabaseError
 } from './supabase-client';
 
+// Temporary secureSupabase export (simplified version without full guardrails)
+import { supabase } from './supabase-client';
+export const secureSupabase = supabase;
+
 // Webhook operations (needed for Recent Data component)
 export { WebhookEventOperations } from './webhook-events';
 
