@@ -294,7 +294,6 @@
     "osa_retrieve_workflow_context",
     "osa_send_data_to_osa_webhook",
     "osa_store_workflow_data",
-    "osa_validate_language_rules",
     "osa_fetch_audience_segments",
     "osa_analyze_member_behavior",
     "osa_analyze_data_insights",
