@@ -1,7 +1,7 @@
 {
   "config": {
-    "configFile": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/playwright.config.ts",
-    "rootDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+    "configFile": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/playwright.config.ts",
+    "rootDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
     "forbidOnly": false,
     "fullyParallel": true,
     "globalSetup": null,
@@ -13,7 +13,7 @@
     "metadata": {
       "project": "OSA Admin Dashboard",
       "version": "0.1.0",
-      "environment": "development",
+      "environment": "test",
       "actualWorkers": 6
     },
     "preserveOutput": "always",
@@ -44,18 +44,18 @@
     "quiet": false,
     "projects": [
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -63,18 +63,18 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "firefox",
         "name": "firefox",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -82,18 +82,18 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -101,18 +101,18 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -120,18 +120,18 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "Mobile Safari",
         "name": "Mobile Safari",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -139,18 +139,18 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts",
+        "outputDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "project": "OSA Admin Dashboard",
           "version": "0.1.0",
-          "environment": "development",
+          "environment": "test",
           "actualWorkers": 6
         },
         "id": "Microsoft Edge",
         "name": "Microsoft Edge",
-        "testDir": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e",
+        "testDir": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -173,8 +173,8 @@
         "OPAL_API_BASE": "https://api.opal.optimizely.com",
         "OPAL_API_KEY": "test-api-key",
         "OPAL_WORKSPACE_ID": "test-workspace",
-        "OPAL_STRATEGY_WORKFLOW_AUTH_KEY": "7963389d868f19c75b64115deeb48021c4f81b5fe3935ad8",
-        "OSA_WEBHOOK_SHARED_SECRET": "50d0bf802e666d354c4f3c774be4768458b97b162f60a64663efc4e752778970"
+        "OPAL_STRATEGY_WORKFLOW_AUTH_KEY": "test-auth-key",
+        "OSA_WEBHOOK_SHARED_SECRET": "test-webhook-secret"
       }
     }
   },
@@ -208,12 +208,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1757,
+                      "duration": 1769,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.309Z",
+                      "startTime": "2025-11-22T12:53:28.363Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -242,12 +242,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 16589,
+                      "duration": 11882,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
                         "location": {
-                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                           "column": 71,
                           "line": 84
                         },
@@ -256,32 +256,32 @@
                       "errors": [
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 71,
                             "line": 84
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:07.070Z",
+                      "startTime": "2025-11-22T12:53:33.472Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/error-context.md"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/error-context.md"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                         "column": 71,
                         "line": 84
                       }
@@ -316,7 +316,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.592Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -350,7 +350,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.592Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -384,7 +384,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.592Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -418,7 +418,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.592Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -447,12 +447,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3249,
+                      "duration": 2171,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.241Z",
+                      "startTime": "2025-11-22T12:53:28.368Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -481,12 +481,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 11724,
+                      "duration": 12321,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
                         "location": {
-                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                           "column": 71,
                           "line": 84
                         },
@@ -495,32 +495,32 @@
                       "errors": [
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 71,
                             "line": 84
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:14.834Z",
+                      "startTime": "2025-11-22T12:53:45.376Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/error-context.md"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/error-context.md"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                         "column": 71,
                         "line": 84
                       }
@@ -555,7 +555,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -589,7 +589,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -623,7 +623,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -657,7 +657,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -686,12 +686,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3939,
+                      "duration": 2908,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.169Z",
+                      "startTime": "2025-11-22T12:53:28.329Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -720,12 +720,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 12605,
+                      "duration": 11943,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
                         "location": {
-                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                           "column": 71,
                           "line": 84
                         },
@@ -734,32 +734,32 @@
                       "errors": [
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 71,
                             "line": 84
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:10.321Z",
+                      "startTime": "2025-11-22T12:53:39.493Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/error-context.md"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/error-context.md"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                         "column": 71,
                         "line": 84
                       }
@@ -794,7 +794,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.606Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -828,7 +828,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.606Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -862,7 +862,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.606Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -896,7 +896,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.606Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -925,12 +925,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2845,
+                      "duration": 1931,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.109Z",
+                      "startTime": "2025-11-22T12:53:28.319Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -959,12 +959,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "failed",
-                      "duration": 12251,
+                      "duration": 11910,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
                         "location": {
-                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                           "column": 71,
                           "line": 84
                         },
@@ -973,32 +973,32 @@
                       "errors": [
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 71,
                             "line": 84
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:07.778Z",
+                      "startTime": "2025-11-22T12:53:33.635Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/error-context.md"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/error-context.md"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                         "column": 71,
                         "line": 84
                       }
@@ -1033,7 +1033,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1067,7 +1067,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1101,7 +1101,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1135,7 +1135,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1164,12 +1164,12 @@
                       "workerIndex": 4,
                       "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 3701,
+                      "duration": 2880,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.241Z",
+                      "startTime": "2025-11-22T12:53:28.304Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1198,12 +1198,12 @@
                       "workerIndex": 4,
                       "parallelIndex": 4,
                       "status": "failed",
-                      "duration": 12783,
+                      "duration": 11708,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71",
                         "location": {
-                          "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                          "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                           "column": 71,
                           "line": 84
                         },
@@ -1212,32 +1212,32 @@
                       "errors": [
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 71,
                             "line": 84
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-testid=\"force-sync-progress\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-testid=\"force-sync-progress\"]')\u001b[22m\n\n\n  82 |\n  83 |     // Should show loading state\n> 84 |     await expect(page.locator('[data-testid=\"force-sync-progress\"]')).toBeVisible();\n     |                                                                       ^\n  85 |     await expect(page.locator('[data-testid=\"force-sync-progress-bar\"]')).toBeVisible();\n  86 |\n  87 |     // Should show progress updates\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:10.074Z",
+                      "startTime": "2025-11-22T12:53:39.515Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/error-context.md"
+                          "path": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/error-context.md"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                        "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                         "column": 71,
                         "line": 84
                       }
@@ -1272,7 +1272,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.082Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1306,7 +1306,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1340,7 +1340,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1374,7 +1374,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1414,17 +1414,17 @@
                         },
                         {
                           "location": {
-                            "file": "/Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts",
+                            "file": "/Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts",
                             "column": 16,
                             "line": 19
                           },
-                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  17 |\n  18 |   test.afterAll(async () => {\n> 19 |     await page.close();\n     |                ^\n  20 |   });\n  21 |\n  22 |   test.beforeEach(async () => {\n    at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:19:16"
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  17 |\n  18 |   test.afterAll(async () => {\n> 19 |     await page.close();\n     |                ^\n  20 |   });\n  21 |\n  22 |   test.beforeEach(async () => {\n    at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:19:16"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.140Z",
+                      "startTime": "2025-11-22T12:53:28.356Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1458,7 +1458,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "startTime": "2025-11-22T12:53:28.500Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1492,7 +1492,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "startTime": "2025-11-22T12:53:28.500Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1526,7 +1526,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.370Z",
+                      "startTime": "2025-11-22T12:53:28.500Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1560,7 +1560,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1594,7 +1594,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1636,7 +1636,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.592Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1670,7 +1670,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1704,7 +1704,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1738,7 +1738,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1772,7 +1772,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.635Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1806,7 +1806,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.636Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1840,7 +1840,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1874,7 +1874,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.201Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1908,7 +1908,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1942,7 +1942,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1976,7 +1976,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2010,7 +2010,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2044,7 +2044,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2078,7 +2078,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2112,7 +2112,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2146,7 +2146,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2180,7 +2180,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2214,7 +2214,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2256,7 +2256,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2290,7 +2290,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2324,7 +2324,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.636Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2358,7 +2358,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.636Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2392,7 +2392,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2426,7 +2426,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2460,7 +2460,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2494,7 +2494,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2528,7 +2528,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2562,7 +2562,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2596,7 +2596,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2630,7 +2630,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.501Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2672,7 +2672,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2706,7 +2706,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.802Z",
+                      "startTime": "2025-11-22T12:53:45.593Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2740,7 +2740,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.597Z",
+                      "startTime": "2025-11-22T12:53:58.636Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2774,7 +2774,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:27.598Z",
+                      "startTime": "2025-11-22T12:53:58.636Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2808,7 +2808,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2842,7 +2842,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.202Z",
+                      "startTime": "2025-11-22T12:53:51.607Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2876,7 +2876,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2910,7 +2910,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:20.253Z",
+                      "startTime": "2025-11-22T12:53:45.696Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2944,7 +2944,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.433Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -2978,7 +2978,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:23.083Z",
+                      "startTime": "2025-11-22T12:53:51.434Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -3012,7 +3012,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.502Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -3046,7 +3046,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-20T12:29:04.371Z",
+                      "startTime": "2025-11-22T12:53:28.502Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -3066,8 +3066,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-20T12:29:02.354Z",
-    "duration": 25272.232,
+    "startTime": "2025-11-22T12:53:26.298Z",
+    "duration": 32367.391000000003,
     "expected": 5,
     "skipped": 67,
     "unexpected": 6,
