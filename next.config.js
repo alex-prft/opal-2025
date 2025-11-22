@@ -161,6 +161,11 @@ const nextConfig = {
           destination: '/404',
         },
         {
+          // SECURITY PATTERN: Block admin UI routes while preserving API access
+          // Uses negative lookahead (?!api) to allow /api/admin/* routes
+          // Blocks: /admin/dashboard, /admin/users, /admin/settings
+          // Allows: /api/admin/osa/integration-status, /api/admin/health
+          // HOTFIX 2025-11-22: Fixed 404 errors for admin API endpoints
           source: '/admin/:path((?!api).*)',
           destination: '/404',
         },

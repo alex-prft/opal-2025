@@ -16,7 +16,52 @@ When debugging complex issues, follow this 7-step systematic approach:
 
 ## Common Failure Patterns & Solutions
 
-### 1. Edge Runtime Compatibility Issues
+### 1. Production API 404 Errors (Configuration-First Pattern)
+
+**Pattern Discovered**: Production API endpoints returning 404 despite existing in codebase
+**Session**: 2025-11-22 - Integration Status API Hotfix
+
+#### Root Cause Analysis
+- **Symptom**: `GET /api/admin/osa/integration-status 404 (Not Found)` in production
+- **Initial Assumption**: Missing API route file or compilation failure
+- **Actual Root Cause**: Security rewrite rule in `next.config.js` blocking all `/admin/*` routes
+
+#### Configuration-First Debugging Protocol
+```bash
+# Phase 1: Configuration Validation (5 minutes)
+# 1. Check next.config.js rewrite rules for overly broad patterns
+grep -A 10 "rewrite" next.config.js
+# 2. Verify API route exists and compiles
+ls -la src/app/api/admin/osa/integration-status/
+# 3. Test development vs production behavior
+npm run dev & curl http://localhost:3000/api/admin/osa/integration-status
+npm run build && npm run start & curl http://localhost:3000/api/admin/osa/integration-status
+```
+
+#### Technical Solution
+```typescript
+// ❌ PROBLEMATIC: Overly broad security pattern
+{
+  source: '/admin/:path*',  // Blocks ALL admin routes
+  destination: '/404',
+}
+
+// ✅ SOLUTION: Negative lookahead preserves API access
+{
+  source: '/admin/:path((?!api).*)',  // Blocks UI, allows API
+  destination: '/404',
+}
+```
+
+#### Prevention Strategy
+- **Configuration Review**: Always review rewrite rules when adding new admin API endpoints
+- **Testing Matrix**: Test both admin UI blocking (should 404) and admin API access (should work)
+- **Documentation**: Document security patterns and their regex logic in comments
+
+#### Key Learning
+**Always check configuration files before searching for missing implementations.** Security measures often inadvertently block legitimate endpoints.
+
+### 2. Edge Runtime Compatibility Issues
 
 **Problem**: Node.js modules imported in Edge Runtime environments (middleware, API routes)
 ```
