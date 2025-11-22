@@ -3,23 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Monitor, TrendingUp, Settings, Map, BarChart, Activity, Shield } from 'lucide-react';
+import { Monitor, TrendingUp, Settings, Map, BarChart } from 'lucide-react';
 
 const mainNavigation = [
   {
     name: 'OPAL Monitoring',
     href: '/engine/admin/opal-monitoring',
     icon: Monitor,
-  },
-  {
-    name: 'Data Governance',
-    href: '/engine/admin/governance',
-    icon: Shield,
-  },
-  {
-    name: 'Confidence Scores',
-    href: '/engine/admin/monitoring/confidence-scores',
-    icon: Activity,
   },
   {
     name: 'Strategy AI',

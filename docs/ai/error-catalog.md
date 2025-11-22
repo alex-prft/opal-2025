@@ -1,8 +1,8 @@
 # OSA Production Readiness Error Catalog
 
-**Last Updated**: 2025-11-20
+**Last Updated**: 2025-11-22
 **Review Type**: Comprehensive Code Review & Deployment Blocker Analysis
-**Build Status**: ❌ BLOCKED - Critical build failure detected
+**Build Status**: ❌ BLOCKED - Critical hydration error detected
 **TypeScript Errors**: 1,798 errors across codebase
 
 ---
@@ -12,6 +12,7 @@
 ### 🚨 DEPLOYMENT STATUS: **BLOCKED**
 
 **Primary Blocker**:
+- **P0 CRITICAL**: React hydration mismatch error due to DOM manipulation script in layout.tsx
 - **P0 CRITICAL**: Next.js 16 build fails with `TypeError: Cannot read properties of null (reading 'useContext')` during static generation of `/_global-error` page
 
 **Configuration Note**:
@@ -29,6 +30,75 @@
 ---
 
 ## P0 - CRITICAL ERRORS (Deployment Blockers)
+
+### P0-000: React Hydration Mismatch - DOM Manipulation Script
+
+**Status**: ✅ RESOLVED - 2025-11-22
+**File**: `src/app/layout.tsx:29-61`
+**Error**: `Hydration failed because the server rendered HTML didn't match the client`
+
+**Symptom**:
+```
+Uncaught Error: Hydration failed because the server rendered HTML didn't match the client.
+Expected server HTML to contain a matching <header> in <ModernHomepage>
++ className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100"
+- className={null}
+- style={{position:"fixed",top:"8px",left:"8px",z-index:"9999", ...}}
+```
+
+**Root Cause**:
+Inline script in layout.tsx was executing **between server-side render and React hydration**, creating DOM elements that didn't exist during SSR:
+
+1. **Server renders**: Clean ModernHomepage component with normal styling
+2. **Script executes**: Creates worktree indicator div with `textContent = 'review'` and `position:fixed` styling
+3. **React hydration**: Expects original server-rendered DOM but finds modified DOM → **HYDRATION MISMATCH**
+
+**Technical Impact**:
+- **Complete homepage rendering failure** with hydration errors in console
+- **User experience degraded** - page regenerated on client, causing flicker
+- **Development workflow broken** - constant console errors during development
+
+**Solution Implemented**:
+```typescript
+// BEFORE (causes hydration mismatch):
+(function() {
+  const indicator = document.createElement('div');
+  document.body.appendChild(indicator); // ❌ Immediate DOM modification
+})();
+
+// AFTER (hydration-safe):
+(function() {
+  function addWorktreeIndicator() {
+    if (!document.getElementById('worktree-indicator')) {
+      const indicator = document.createElement('div');
+      indicator.id = 'worktree-indicator'; // Duplicate prevention
+      indicator.textContent = 'review';
+      // ... styling
+      document.body.appendChild(indicator);
+    }
+  }
+
+  // ✅ Wait for React hydration to complete
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(addWorktreeIndicator, 100); // Delay for React
+    });
+  } else {
+    setTimeout(addWorktreeIndicator, 100);
+  }
+})();
+```
+
+**Prevention Pattern for Future**:
+- ✅ **Never manipulate DOM between SSR and hydration**
+- ✅ **Use setTimeout/DOMContentLoaded for post-hydration DOM changes**
+- ✅ **Add duplicate prevention with element IDs**
+- ✅ **Move debug/dev tools to useEffect hooks in client components**
+- ✅ **Test hydration by refreshing pages during development**
+
+**Priority**: 🟢 **RESOLVED - Critical hydration issue fixed**
+
+---
 
 ### P0-001: Next.js Build Failure - React Context Static Generation Error
 

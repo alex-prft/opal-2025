@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { generatePageTitle, updateDocumentTitle } from '@/lib/utils/page-titles';
-import { DiagnosticsPanel } from '@/components/DiagnosticsPanel';
 import RecentDataComponent from '@/components/RecentDataComponent';
 import RecentDataErrorBoundary from '@/components/shared/RecentDataErrorBoundary';
 
@@ -26,33 +25,18 @@ export default function AdminPage() {
         </p>
       </div>
 
-      {/* 2-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" id="admin-dashboard-content">
-
-        {/* Left Column */}
-        <div className="space-y-8" id="admin-left-column">
-          {/* Recent Data Component - Reusable webhook and agent status monitoring */}
-          <RecentDataErrorBoundary
-            onError={(error, errorInfo) => {
-              console.error('🚨 [AdminPage] RecentDataComponent error caught:', error, errorInfo);
-            }}
-          >
-            <RecentDataComponent />
-          </RecentDataErrorBoundary>
-        </div>
-        {/* End Left Column */}
-
-        {/* Right Column */}
-        <div className="space-y-8" id="admin-right-column">
-
-          {/* Diagnostics Panel */}
-          <DiagnosticsPanel className="" id="diagnostics-panel-block" />
-
-        </div>
-        {/* End Right Column */}
-
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto" id="admin-dashboard-content">
+        {/* OPAL Strategy Assistant Status & Force Sync Controls */}
+        <RecentDataErrorBoundary
+          onError={(error, errorInfo) => {
+            console.error('🚨 [AdminPage] RecentDataComponent error caught:', error, errorInfo);
+          }}
+        >
+          <RecentDataComponent />
+        </RecentDataErrorBoundary>
       </div>
-      {/* End 2-Column Layout */}
+      {/* End Main Content */}
     </div>
   );
 }

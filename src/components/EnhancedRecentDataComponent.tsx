@@ -376,11 +376,15 @@ export default function EnhancedRecentDataComponent({
   const fetchWebhookEvents = useCallback(async () => {
     try {
       setWebhookEventsLoading(true);
-      const response = await fetch('/api/diagnostics/last-webhook?limit=10&status=all&hours=24');
+      // Note: Diagnostics endpoint removed - using webhook-events/stats as alternative
+      const response = await fetch('/api/webhook-events/stats?hours=24&limit=10&include_events=true');
       const data = await response.json();
 
       if (data.success && data.events) {
         setWebhookEvents(data.events);
+      } else if (data.success && data.recentEvents) {
+        // Fallback to recentEvents if available
+        setWebhookEvents(data.recentEvents);
       } else {
         setWebhookEvents([]);
       }

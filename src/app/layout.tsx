@@ -25,18 +25,34 @@ export default function RootLayout({
         className="antialiased"
         suppressHydrationWarning={true}
       >
-        {/* Simple worktree indicator script for development */}
+        {/* Worktree indicator moved to after hydration to prevent hydration mismatch */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 if (typeof window !== 'undefined') {
-                  const hostname = window.location.hostname;
-                  if (hostname === 'localhost' || hostname === '192.168.1.64') {
-                    const indicator = document.createElement('div');
-                    indicator.textContent = 'review';
-                    indicator.style.cssText = 'position:fixed;top:8px;left:8px;z-index:9999;background:rgba(0,0,0,0.8);color:white;font-size:12px;font-family:monospace;padding:4px 8px;border-radius:4px;backdrop-filter:blur(4px);';
-                    document.body.appendChild(indicator);
+                  // Wait for React hydration to complete before DOM modifications
+                  function addWorktreeIndicator() {
+                    const hostname = window.location.hostname;
+                    if (hostname === 'localhost' || hostname === '192.168.1.64') {
+                      // Check if indicator already exists to prevent duplicates
+                      if (!document.getElementById('worktree-indicator')) {
+                        const indicator = document.createElement('div');
+                        indicator.id = 'worktree-indicator';
+                        indicator.textContent = 'review';
+                        indicator.style.cssText = 'position:fixed;top:8px;left:8px;z-index:9999;background:rgba(0,0,0,0.8);color:white;font-size:12px;font-family:monospace;padding:4px 8px;border-radius:4px;backdrop-filter:blur(4px);';
+                        document.body.appendChild(indicator);
+                      }
+                    }
+                  }
+
+                  // Wait for DOM content and React hydration to complete
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                      setTimeout(addWorktreeIndicator, 100); // Small delay for React hydration
+                    });
+                  } else {
+                    setTimeout(addWorktreeIndicator, 100);
                   }
                 }
               })();

@@ -127,7 +127,11 @@ export function OSAWidget({ data, context, className = '' }: OSAWidgetProps) {
               </CardDescription>
             </div>
             <div className="flex items-center gap-4">
-              <ConfidenceGauge value={confidenceScore} size={120} />
+              <ConfidenceGauge
+                title="Strategy Confidence"
+                score={confidenceScore}
+                description="Confidence in strategy recommendations"
+              />
             </div>
           </div>
         </CardHeader>

@@ -1,14 +1,11 @@
 /**
- * OPAL Webhook Diagnostics Endpoint - Phase 3 Implementation
- * Provides detailed diagnostics and troubleshooting information for OPAL webhook events
- * Uses Base API Handler for consistency and file-based storage for persistence
+ * OPAL Webhook Diagnostics Endpoint - DISABLED
+ * Note: DiagnosticsPanel functionality has been removed while preserving Force Sync operations
+ * This endpoint now returns empty responses to prevent 500 errors from legacy frontend polling
  */
 
 import { NextRequest } from 'next/server';
 import { createApiHandler } from '@/lib/api/base-api-handler';
-import { WebhookDatabase } from '@/lib/storage/webhook-database';
-import { loadOpalConfig } from '@/lib/config/opal-env';
-import { truncatePayloadForPreview } from '@/lib/schemas/opal-schemas';
 import { z } from 'zod';
 
 // Query parameters validation schema
@@ -38,211 +35,67 @@ const handler = createApiHandler({
 });
 
 /**
- * GET /api/diagnostics/last-webhook - Webhook Event Diagnostics
- * Returns recent webhook events with detailed diagnostic information
+ * GET /api/diagnostics/last-webhook - Webhook Event Diagnostics (DISABLED)
+ * Note: Diagnostics functionality has been disabled as part of DiagnosticsPanel removal
+ * Returns empty response to prevent 500 errors from legacy frontend polling
  */
 export async function GET(request: NextRequest) {
   return handler.handle(request, async (req, context) => {
-    // Extract and validate query parameters manually
-    const url = new URL(request.url);
-    const searchParams = url.searchParams;
-
-    const queryParams = {
-      limit: searchParams.get('limit') || '25',
-      workflow_id: searchParams.get('workflow_id'),
-      agent_id: searchParams.get('agent_id'),
-      status: searchParams.get('status') || 'all',
-      hours: searchParams.get('hours') || '24'
-    };
-
-    const validatedParams = DiagnosticsQuerySchema.parse(queryParams);
-
-    console.log('🔍 [Diagnostics] Last webhook request received', {
+    console.log('🔍 [Diagnostics] Legacy diagnostics request received (functionality disabled)', {
       correlation_id: context.correlationId,
-      filters: validatedParams
+      endpoint: '/api/diagnostics/last-webhook',
+      note: 'DiagnosticsPanel removed - returning empty response'
     });
 
-    // Load configuration for status checks
-    const config = loadOpalConfig();
-
-    // Get filtered events from file-based storage
-    const { events: filteredEvents, total_count } = await WebhookDatabase.getFilteredEvents({
-      limit: validatedParams.limit,
-      status: validatedParams.status,
-      agent_id: validatedParams.agent_id,
-      workflow_id: validatedParams.workflow_id,
-      hours: validatedParams.hours
-    });
-
-    // Transform events for response with Phase 3 required fields
-    const diagnosticEvents = filteredEvents.map(event => ({
-      id: event.id,
-      workflow_id: event.workflow_id,
-      agent_id: event.agent_id,
-      status: event.status,
-      signature_valid: event.signature_valid,
-      received_at: event.received_at,
-      processing_time_ms: event.processing_time_ms,
-      error_details: event.error_details,
-      payload_size_bytes: event.payload_size_bytes,
-      http_status: event.http_status,
-      dedup_hash: event.dedup_hash ? event.dedup_hash.substring(0, 12) + '...' : 'N/A', // Truncated for display
-      payload_preview: truncatePayloadForPreview(event.payload_json, 150)
-    }));
-
-    // Calculate summary statistics
-    const summary = {
-      total_count: total_count,
-      returned_count: diagnosticEvents.length,
-      signature_valid_count: filteredEvents.filter(e => e.signature_valid).length,
-      error_count: filteredEvents.filter(e => e.error_details).length,
-      date_range: {
-        from: filteredEvents.length > 0
-          ? filteredEvents[filteredEvents.length - 1].received_at
-          : null,
-        to: filteredEvents.length > 0
-          ? filteredEvents[0].received_at
-          : null
-      },
-      filters_applied: {
-        limit: validatedParams.limit,
-        workflow_id: validatedParams.workflow_id || null,
-        agent_id: validatedParams.agent_id || null,
-        status: validatedParams.status,
-        hours: validatedParams.hours
-      }
-    };
-
-    // Configuration diagnostic checks
-    const configDiagnostics = {
-      osa_webhook_secret_configured: !!config.osaWebhookSecret,
-      osa_webhook_url_configured: !!config.osaSelfWebhookUrl,
-      opal_tools_discovery_url_configured: !!config.opalToolsDiscoveryUrl,
-      external_opal_configured: !!config.opalWebhookUrl,
-
-      // URL validations
-      osa_webhook_url_accessible: config.osaSelfWebhookUrl?.startsWith('https://'),
-      discovery_url_accessible: config.opalToolsDiscoveryUrl?.startsWith('https://'),
-
-      // Secret validations
-      webhook_secret_length_ok: config.osaWebhookSecret ? config.osaWebhookSecret.length >= 32 : false,
-      auth_key_configured: !!config.opalAuthKey
-    };
-
-    // Common troubleshooting guidance
-    const troubleshootingGuidance = generateTroubleshootingGuidance(
-      summary,
-      configDiagnostics,
-      filteredEvents
-    );
-
+    // Return empty diagnostics response to prevent frontend errors
+    // Note: DiagnosticsPanel functionality has been removed as requested
     const response = {
-      events: diagnosticEvents,
-      summary,
-      config_diagnostics: configDiagnostics,
-      troubleshooting: troubleshootingGuidance,
+      success: true,
+      events: [],
+      summary: {
+        total_count: 0,
+        returned_count: 0,
+        signature_valid_count: 0,
+        error_count: 0,
+        date_range: {
+          from: null,
+          to: null
+        },
+        filters_applied: {
+          limit: 25,
+          workflow_id: null,
+          agent_id: null,
+          status: 'all',
+          hours: 24
+        }
+      },
+      config_diagnostics: {
+        diagnostics_disabled: true,
+        reason: 'DiagnosticsPanel functionality removed to preserve Force Sync operations',
+        alternative: 'Use /api/webhook-events/stats for webhook monitoring'
+      },
+      troubleshooting: {
+        overall_health: 'diagnostics_disabled',
+        issues_detected: ['Diagnostics functionality has been disabled'],
+        recommendations: ['Use Force Sync and admin monitoring tools instead'],
+        quick_fixes: ['Switch to /api/webhook-events/stats endpoint for basic webhook monitoring']
+      },
       query_info: {
-        parameters: validatedParams,
-        total_events_matching_filters: total_count,
-        events_returned: diagnosticEvents.length
-      }
+        parameters: { disabled: true },
+        total_events_matching_filters: 0,
+        events_returned: 0
+      },
+      message: 'Diagnostics endpoint disabled - DiagnosticsPanel functionality removed while preserving Force Sync'
     };
 
-    console.log('✅ [Diagnostics] Response generated', {
+    console.log('✅ [Diagnostics] Disabled response generated', {
       correlation_id: context.correlationId,
-      total_events: response.summary.total_count,
-      returned_events: response.summary.returned_count,
-      signature_valid_rate: response.summary.total_count > 0
-        ? (response.summary.signature_valid_count / response.summary.total_count * 100).toFixed(1) + '%'
-        : '0%'
+      status: 'disabled',
+      reason: 'DiagnosticsPanel removed'
     });
 
     return response;
   });
 }
 
-/**
- * Generate troubleshooting guidance based on diagnostic data
- */
-function generateTroubleshootingGuidance(
-  summary: any,
-  configDiagnostics: any,
-  events: any[]
-): any {
-  const guidance = {
-    overall_health: 'unknown',
-    issues_detected: [] as string[],
-    recommendations: [] as string[],
-    quick_fixes: [] as string[]
-  };
-
-  // Determine overall health
-  const signatureValidRate = summary.total_count > 0
-    ? summary.signature_valid_count / summary.total_count
-    : 0;
-
-  const errorRate = summary.total_count > 0
-    ? summary.error_count / summary.total_count
-    : 0;
-
-  if (summary.total_count === 0) {
-    guidance.overall_health = 'no_data';
-    guidance.issues_detected.push('No webhook events received in the specified time range');
-    guidance.recommendations.push('Verify OPAL agents are configured and running');
-    guidance.recommendations.push('Check OPAL_TOOLS_DISCOVERY_URL is accessible');
-  } else if (signatureValidRate >= 0.98 && errorRate <= 0.02) {
-    guidance.overall_health = 'healthy';
-  } else if (signatureValidRate >= 0.9 && errorRate <= 0.1) {
-    guidance.overall_health = 'degraded';
-    guidance.issues_detected.push(`Signature validation rate: ${(signatureValidRate * 100).toFixed(1)}%`);
-    guidance.issues_detected.push(`Error rate: ${(errorRate * 100).toFixed(1)}%`);
-  } else {
-    guidance.overall_health = 'unhealthy';
-    guidance.issues_detected.push(`High error rate: ${(errorRate * 100).toFixed(1)}%`);
-    guidance.issues_detected.push(`Low signature validation rate: ${(signatureValidRate * 100).toFixed(1)}%`);
-  }
-
-  // Configuration issues
-  if (!configDiagnostics.osa_webhook_secret_configured) {
-    guidance.issues_detected.push('OSA_WEBHOOK_SECRET not configured');
-    guidance.quick_fixes.push('Set OSA_WEBHOOK_SECRET environment variable (min 32 chars)');
-  }
-
-  if (!configDiagnostics.webhook_secret_length_ok) {
-    guidance.issues_detected.push('OSA_WEBHOOK_SECRET too short');
-    guidance.quick_fixes.push('Use webhook secret with at least 32 characters');
-  }
-
-  if (!configDiagnostics.osa_webhook_url_configured) {
-    guidance.issues_detected.push('OSA_WEBHOOK_URL not configured');
-    guidance.quick_fixes.push('Set OSA_WEBHOOK_URL environment variable');
-  }
-
-  if (!configDiagnostics.opal_tools_discovery_url_configured) {
-    guidance.issues_detected.push('OPAL_TOOLS_DISCOVERY_URL not configured');
-    guidance.quick_fixes.push('Set OPAL_TOOLS_DISCOVERY_URL environment variable');
-  }
-
-  // Event pattern analysis
-  if (summary.total_count > 0) {
-    const recentErrors = events
-      .filter(e => e.error_details)
-      .slice(0, 3)
-      .map(e => e.error_details);
-
-    if (recentErrors.length > 0) {
-      guidance.issues_detected.push(`Recent errors: ${recentErrors.length} different error types`);
-      guidance.recommendations.push('Review error patterns in recent events');
-    }
-
-    // Check for signature failures
-    const signatureFailures = events.filter(e => !e.signature_valid);
-    if (signatureFailures.length > 0) {
-      guidance.issues_detected.push(`${signatureFailures.length} signature validation failures`);
-      guidance.recommendations.push('Verify webhook secret consistency between sender and receiver');
-      guidance.recommendations.push('Check for time skew between systems (max 5 minutes)');
-    }
-  }
-
-  return guidance;
-}
+// Note: generateTroubleshootingGuidance function removed since diagnostics functionality is disabled
