@@ -99,9 +99,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           parameters: {
             type: 'object',
             properties: {
-              workflow_id: { type: 'string', required: true },
-              context_scope: { type: 'string', required: false },
-              include_execution_history: { type: 'boolean', required: false }
+              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
+              context_scope: { type: 'string', description: 'Scope of context to retrieve (full, minimal, metadata)', required: false },
+              include_execution_history: { type: 'boolean', description: 'Whether to include execution history in response', required: false }
             },
             required: ['workflow_id']
           }
@@ -113,10 +113,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           parameters: {
             type: 'object',
             properties: {
-              workflow_id: { type: 'string', required: true },
-              agent_name: { type: 'string', required: true },
-              execution_data: { type: 'object', required: true },
-              storage_tier: { type: 'string', required: false }
+              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
+              agent_name: { type: 'string', description: 'Name of the OPAL agent generating the data', required: true },
+              execution_data: { type: 'object', description: 'Agent execution results and metadata', required: true },
+              storage_tier: { type: 'string', description: 'Storage tier preference (standard, archive, ephemeral)', required: false }
             },
             required: ['workflow_id', 'agent_name', 'execution_data']
           }
@@ -128,10 +128,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           parameters: {
             type: 'object',
             properties: {
-              agent_name: { type: 'string', required: true },
-              execution_results: { type: 'object', required: true },
-              workflow_id: { type: 'string', required: true },
-              metadata: { type: 'object', required: true }
+              agent_name: { type: 'string', description: 'Name of the OPAL agent sending data', required: true },
+              execution_results: { type: 'object', description: 'Agent execution results and output data', required: true },
+              workflow_id: { type: 'string', description: 'Unique identifier for the workflow instance', required: true },
+              metadata: { type: 'object', description: 'Additional execution metadata and context', required: true }
             },
             required: ['agent_name', 'execution_results', 'workflow_id', 'metadata']
           }

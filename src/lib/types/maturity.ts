@@ -1,7 +1,13 @@
 // OSA Maturity Plan Types - 4 Phase Framework
 // Crawl → Walk → Run → Fly
 
-import type { AudienceSegment, ContentItem, PersonaContentSummary, ContentRecommendation } from '@/types/resultsContent';
+// Import types for OPAL workflow integration (demo-ready additions)
+import type {
+  AudienceSegment,
+  ContentItem,
+  PersonaContentSummary,
+  ContentRecommendation
+} from '@/types/resultsContent';
 
 export type MaturityPhase = 'crawl' | 'walk' | 'run' | 'fly';
 
@@ -232,7 +238,7 @@ export interface OSAWorkflowOutput {
     completed_agents: string[];
   };
 
-  // NEW optional fields for OPAL → OSA data
+  // NEW optional fields for OPAL → OSA canonical workflow data (demo-ready)
   segments?: AudienceSegment[];
   content_inventory?: ContentItem[];
   audience_content_matrix?: PersonaContentSummary[];

@@ -72,10 +72,10 @@ describe('Vercel Authorization Regression Tests', () => {
       expect(projectConfig.projectId).toMatch(/^prj_[A-Za-z0-9]+$/);
       expect(projectConfig.orgId).toBeDefined();
       expect(projectConfig.orgId).toMatch(/^team_[A-Za-z0-9]+$/);
-      expect(projectConfig.projectName).toBe('ifpa-strategy');
+      expect(projectConfig.projectName).toBe('my-nextjs-app-claude');
 
       // Validate project matches expected repository
-      expect(projectConfig.projectName).toBe('ifpa-strategy');
+      expect(projectConfig.projectName).toBe('my-nextjs-app-claude');
     });
 
     test('should prevent project unlinking issues', () => {
