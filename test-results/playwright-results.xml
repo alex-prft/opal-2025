@@ -1,8 +1,8 @@
-<testsuites id="" name="" tests="78" failures="6" skipped="67" errors="0" time="25.272232">
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="chromium" tests="13" failures="1" skipped="11" time="18.346" errors="0">
-<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="1.757">
+<testsuites id="" name="" tests="78" failures="6" skipped="67" errors="0" time="32.367391000000005">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="chromium" tests="13" failures="1" skipped="11" time="13.651" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="1.769">
 </testcase>
-<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="16.589">
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.882">
 <failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
 <![CDATA[  [chromium] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
 
@@ -25,7 +25,7 @@
       85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
       86 |
       87 |     // Should show progress updates
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-chromium/test-failed-1.png
@@ -87,10 +87,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="firefox" tests="13" failures="1" skipped="11" time="14.973" errors="0">
-<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.249">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="firefox" tests="13" failures="1" skipped="11" time="14.492" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="2.171">
 </testcase>
-<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.724">
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.321">
 <failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
 <![CDATA[  [firefox] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
 
@@ -113,7 +113,7 @@
       85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
       86 |
       87 |     // Should show progress updates
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-firefox/test-failed-1.png
@@ -175,10 +175,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="webkit" tests="13" failures="1" skipped="11" time="16.544" errors="0">
-<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.939">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="webkit" tests="13" failures="1" skipped="11" time="14.851" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="2.908">
 </testcase>
-<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.605">
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.943">
 <failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
 <![CDATA[  [webkit] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
 
@@ -201,7 +201,7 @@
       85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
       86 |
       87 |     // Should show progress updates
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-webkit/test-failed-1.png
@@ -263,10 +263,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Mobile Chrome" tests="13" failures="1" skipped="11" time="15.096" errors="0">
-<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="2.845">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="Mobile Chrome" tests="13" failures="1" skipped="11" time="13.841" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="1.931">
 </testcase>
-<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.251">
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.91">
 <failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
 <![CDATA[  [Mobile Chrome] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
 
@@ -289,7 +289,7 @@
       85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
       86 |
       87 |     // Should show progress updates
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Chrome/test-failed-1.png
@@ -351,10 +351,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Mobile Safari" tests="13" failures="1" skipped="11" time="16.484" errors="0">
-<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="3.701">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="Mobile Safari" tests="13" failures="1" skipped="11" time="14.588" errors="0">
+<testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="2.88">
 </testcase>
-<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="12.783">
+<testcase name="Force Sync Workflow › should show force sync progress when triggered" classname="force-sync-workflow.spec.ts" time="11.708">
 <failure message="force-sync-workflow.spec.ts:39:7 should show force sync progress when triggered" type="FAILURE">
 <![CDATA[  [Mobile Safari] › force-sync-workflow.spec.ts:39:7 › Force Sync Workflow › should show force sync progress when triggered 
 
@@ -377,7 +377,7 @@
       85 |     await expect(page.locator('[data-testid="force-sync-progress-bar"]')).toBeVisible();
       86 |
       87 |     // Should show progress updates
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:84:71
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:84:71
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     ../../test-results/playwright-artifacts/force-sync-workflow-Force--4889e-ync-progress-when-triggered-Mobile-Safari/test-failed-1.png
@@ -439,7 +439,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-20T12:29:02.717Z" hostname="Microsoft Edge" tests="13" failures="1" skipped="12" time="0.001" errors="0">
+<testsuite name="force-sync-workflow.spec.ts" timestamp="2025-11-22T12:53:26.652Z" hostname="Microsoft Edge" tests="13" failures="1" skipped="12" time="0.001" errors="0">
 <testcase name="Force Sync Workflow › should display force sync trigger button" classname="force-sync-workflow.spec.ts" time="0.001">
 <failure message="force-sync-workflow.spec.ts:31:7 should display force sync trigger button" type="FAILURE">
 <![CDATA[  [Microsoft Edge] › force-sync-workflow.spec.ts:31:7 › Force Sync Workflow › should display force sync trigger button 
@@ -456,7 +456,7 @@
       20 |   });
       21 |
       22 |   test.beforeEach(async () => {
-        at /Users/alexharris/Library/CloudStorage/OneDrive-Perficient,Inc/Perficient/clients/Perficient/opal-ai/dev-opal-ai/my-nextjs-app/__tests__/e2e/force-sync-workflow.spec.ts:19:16
+        at /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude/__tests__/e2e/force-sync-workflow.spec.ts:19:16
 ]]>
 </failure>
 </testcase>
