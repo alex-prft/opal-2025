@@ -334,9 +334,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     console.log('✅ [OPAL Discovery] Discovery response generated', {
       correlationId,
       functions_count: discoveryData.functions?.length || 0,
-      tools_count: discoveryData.tools?.length || discoveryData.discovery_info?.total_tools,
       processing_time_ms: processingTime,
-      source: discoveryData.functions ? 'opal_format' : 'static_data'
+      format: 'canonical_opal'
     });
 
     return NextResponse.json(discoveryData, {
@@ -346,7 +345,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         'X-Correlation-ID': correlationId,
         'X-Processing-Time': processingTime.toString(),
         'X-Functions-Count': (discoveryData.functions?.length || 0).toString(),
-        'X-Tools-Count': (discoveryData.tools?.length || discoveryData.discovery_info?.total_tools || 0).toString(),
         'Cache-Control': 'public, max-age=300', // Cache for 5 minutes
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, OPTIONS',
