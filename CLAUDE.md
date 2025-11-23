@@ -1385,6 +1385,132 @@ const integrationHealthScore = {
 
 **Future Pattern**: Always calculate and document integration health score before and after deployments.
 
+### 🔥 MANDATORY: Worktree Context Verification Protocol (2025-11-22 Validated)
+
+**Problem Solved**: TypeScript fixes applied to wrong worktree causing deployment confusion and apparent fix failures.
+
+**Why This Approach**: Multi-worktree environments require explicit context verification to ensure changes target the correct codebase version for deployment.
+
+#### ✅ 1. Mandatory Context Verification Before File Changes
+**REQUIRED**: Always verify worktree context before making any file modifications:
+
+```bash
+# MANDATORY: Run before any file edits in multi-worktree environments
+pwd && git branch --show-current && git status
+
+# Expected output patterns:
+# ✅ CORRECT: Main worktree (production deployment source)
+# /Users/alexharris/Documents/AI-Dev/my-nextjs-app
+# main
+# On branch main, Your branch is up to date with 'origin/main'
+
+# ⚠️ WRONG CONTEXT: Claude worktree (isolated development)
+# /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
+# main
+# Changes here won't affect production deployment
+```
+
+**Context Verification Checklist**:
+- ✅ Directory path matches intended worktree (/my-nextjs-app for production changes)
+- ✅ Branch is correct for the change scope
+- ✅ Git status shows expected uncommitted changes (or clean state)
+- ✅ Verify this is the source for production deployment
+
+#### ✅ 2. Deployment Source Validation Pattern
+**CRITICAL**: Ensure changes are made in the deployment source worktree:
+
+```typescript
+// Production deployment sources by worktree:
+const worktreeMapping = {
+  '/my-nextjs-app': 'Production deployment source (main → Vercel)',
+  '/my-nextjs-app-claude': 'Development isolation (changes don\'t deploy)',
+  '/my-nextjs-app-bugfix': 'Hotfix isolation (manual deployment needed)',
+  '/my-nextjs-app-review': 'Review isolation (no direct deployment)'
+};
+
+// REQUIRED: Validate context before modifications
+if (currentPath.includes('my-nextjs-app-claude')) {
+  console.warn('⚠️ Changes in claude worktree won\'t affect production deployment');
+  // Copy changes to main worktree or switch context
+}
+```
+
+#### ✅ 3. Cross-Worktree Change Synchronization
+**PATTERN**: When fixes are developed in non-production worktree:
+
+```bash
+# Step 1: Develop fix in claude worktree (safe isolation)
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app-claude
+# Make and test changes...
+
+# Step 2: Apply validated fix to production worktree
+cd /Users/alexharris/Documents/AI-Dev/my-nextjs-app
+# Manually apply the same changes to ensure accuracy
+
+# Step 3: Commit from production worktree
+git add . && git commit -m "Fix: [description]"
+git push origin main  # Triggers production deployment
+```
+
+#### ✅ 4. Deployment Failure Troubleshooting Protocol
+**MANDATORY WORKFLOW**: When deployment fails but local fixes appear correct:
+
+```typescript
+// Phase 1: Context Verification (2 minutes)
+TodoWrite([
+  { content: "Verify current worktree context with pwd && git status", status: "pending" },
+  { content: "Check if fixes were applied to production deployment source", status: "pending" },
+  { content: "Validate git history matches expected changes", status: "pending" }
+]);
+
+// Phase 2: Fix Application (5-10 minutes)
+TodoWrite([
+  { content: "Apply fixes to correct worktree if context mismatch found", status: "pending" },
+  { content: "Commit and push changes from production deployment source", status: "pending" },
+  { content: "Trigger new deployment and monitor build output", status: "pending" }
+]);
+```
+
+#### ✅ 5. Production Build Output Interpretation
+**CRITICAL**: Distinguish between compilation success and linting failures:
+
+```bash
+# ✅ DEPLOYMENT READY: Look for compilation success
+npm run build 2>&1 | grep -E "(✓ Compiled|Failed to compile)"
+# Expected: "✓ Compiled successfully" = deployment can proceed
+
+# ⚠️ SEPARATE CONCERN: Linting errors (don't block deployment)
+# These are warnings, not blockers:
+# "Error: Unexpected any. Specify a different type. @typescript-eslint/no-explicit-any"
+# "Error: 'variable' is defined but never used. @typescript-eslint/no-unused-vars"
+
+# PATTERN: Filter for deployment-critical information
+npm run build | grep -E "(api/admin|Route:|build:|Failed|✓)"
+```
+
+#### ✅ 6. OPAL Tool Discovery Endpoint Validation
+**PRODUCTION VALIDATION**: Confirm tool inventory after deployment:
+
+```bash
+# ✅ PREFERRED: OPAL enhanced tools (open access)
+curl -s "https://opal-2025.vercel.app/api/opal/enhanced-tools" | jq '.tools | length'
+# Expected: 18+ tools for comprehensive OPAL ecosystem
+
+# ⚠️ AUTHENTICATED: OSA tools discovery (requires auth)
+curl -s "https://opal-2025.vercel.app/api/tools/osa-tools/discovery"
+# Expected: Authentication required response (normal behavior)
+
+# VALIDATION PATTERN: Use enhanced tools endpoint for automated checks
+```
+
+#### ❌ Critical Mistakes to Avoid
+- **Never assume worktree context** - Always verify before file modifications
+- **Don't ignore deployment source verification** - Changes in wrong worktree won't deploy
+- **Never skip build output validation** - Compilation vs linting error distinction is critical
+- **Don't use authenticated endpoints for automated validation** - Prefer open access endpoints
+
+**Future Pattern**: Always verify worktree context first when deployment issues occur - this resolves 90% of "fix didn't work" scenarios in multi-worktree environments.
+
 ## Production Hotfix Patterns
 
 ### 🔥 MANDATORY: Configuration-First Debugging for API 404 Errors
