@@ -18,19 +18,23 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * GET /api/tools/osa-tools/discovery
  *
- * Returns comprehensive tool discovery information for OPAL integration
+ * Returns comprehensive tool discovery information for OPAL integration in canonical format
  */
 /**
  * Validates Bearer token authentication for OPAL discovery endpoint
  * Supports multiple authentication modes for different environments
  */
 function validateBearerToken(authHeader: string | null): { valid: boolean; reason?: string } {
-  // Allow access without authentication in development for testing
-  if (process.env.NODE_ENV === 'development' && !process.env.OPAL_DISCOVERY_TOKEN) {
+  // First check if authentication is configured in environment
+  const expectedToken = process.env.OPAL_DISCOVERY_TOKEN || process.env.OPAL_TOOLS_AUTH_TOKEN;
+
+  // If no token is configured, allow open access regardless of environment
+  if (!expectedToken) {
+    console.warn('⚠️ [OPAL Discovery] No authentication token configured in environment - allowing open access');
     return { valid: true };
   }
 
-  // Check for Authorization header
+  // Authentication is configured, so require Bearer token
   if (!authHeader) {
     return { valid: false, reason: 'Missing Authorization header' };
   }
@@ -42,15 +46,6 @@ function validateBearerToken(authHeader: string | null): { valid: boolean; reaso
   }
 
   const providedToken = tokenMatch[1];
-
-  // Get expected token from environment
-  const expectedToken = process.env.OPAL_DISCOVERY_TOKEN || process.env.OPAL_TOOLS_AUTH_TOKEN;
-
-  if (!expectedToken) {
-    // No token configured - allow access with warning
-    console.warn('⚠️ [OPAL Discovery] No authentication token configured in environment');
-    return { valid: true };
-  }
 
   // Validate token
   if (providedToken !== expectedToken) {
@@ -328,32 +323,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           }
       ];
 
-      // OPAL-Compatible Discovery Format
+      // Canonical OPAL Discovery Format (matches Optimizely ODP/CMS/Analytics format)
       discoveryData = {
-        functions: toolsArray,
-        tools: toolsArray, // Keep backward compatibility
-        discovery_info: {
-          service_name: "OSA OPAL Tools Registry",
-          version: "3.0.0",
-          total_tools: 17,
-          sdk_version: "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
-          discovery_url: request.url,
-          environment: process.env.NODE_ENV || 'development',
-          capabilities: [
-            "audience_segmentation",
-            "behavioral_analysis",
-            "workflow_management",
-            "data_validation",
-            "webhook_integration",
-            "predictive_insights"
-          ],
-          integration_health: {
-            status: "healthy",
-            last_check: new Date().toISOString(),
-            tools_registered: 17,
-            tools_available: 17
-          }
-        }
+        functions: toolsArray
       };
     }
 
