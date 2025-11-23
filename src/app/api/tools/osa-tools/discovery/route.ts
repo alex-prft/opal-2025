@@ -18,7 +18,7 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * GET /api/tools/osa-tools/discovery
  *
- * Returns comprehensive tool discovery information for OPAL integration
+ * Returns comprehensive tool discovery information for OPAL integration in canonical format
  */
 /**
  * Validates Bearer token authentication for OPAL discovery endpoint
@@ -323,32 +323,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           }
       ];
 
-      // OPAL-Compatible Discovery Format
+      // Canonical OPAL Discovery Format (matches Optimizely ODP/CMS/Analytics format)
       discoveryData = {
-        functions: toolsArray,
-        tools: toolsArray, // Keep backward compatibility
-        discovery_info: {
-          service_name: "OSA OPAL Tools Registry",
-          version: "3.0.0",
-          total_tools: 17,
-          sdk_version: "@optimizely-opal/opal-tools-sdk@0.1.3-dev",
-          discovery_url: request.url,
-          environment: process.env.NODE_ENV || 'development',
-          capabilities: [
-            "audience_segmentation",
-            "behavioral_analysis",
-            "workflow_management",
-            "data_validation",
-            "webhook_integration",
-            "predictive_insights"
-          ],
-          integration_health: {
-            status: "healthy",
-            last_check: new Date().toISOString(),
-            tools_registered: 17,
-            tools_available: 17
-          }
-        }
+        functions: toolsArray
       };
     }
 

@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
     // Create a fake error to trigger the direct execution path
     const error = { message: 'function exec_sql does not exist' };
 
-    // If exec_sql function doesn't exist, try direct query
     if (error && error.message?.includes('function exec_sql')) {
       console.log('⚡ [Migration] Using direct SQL execution...');
 
